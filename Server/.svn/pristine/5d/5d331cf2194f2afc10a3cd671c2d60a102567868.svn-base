@@ -1,0 +1,62 @@
+﻿<style>
+    .usb-register{
+        max-width:500px;
+        margin:0 auto;
+    }
+</style>
+
+<div class="usb-register">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>Register Usb</legend>
+    </fieldset>
+
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">Device Description</label>
+            <div class="layui-input-inline">
+                <input type="text" name="deviceDescription" value="Usb Mass Storage Device" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">Manufacturer</label>
+            <div class="layui-input-inline">
+                <input type="text" name="manufacturer" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">Product</label>
+            <div class="layui-input-inline">
+                <input type="text" name="product" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">Vid</label>
+            <div class="layui-input-inline">
+                <input type="text" name="vid" class="layui-input" required>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">Pid</label>
+            <div class="layui-input-inline">
+                <input type="text" name="pid" class="layui-input" required>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">SerialNumber</label>
+            <div class="layui-input-inline">
+                <input type="text" name="serialNumber" class="layui-input" required>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

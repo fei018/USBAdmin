@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "yKBPqzKZySZM1HMT9muwB2jOEGwNfmTpnnV2amZ57NvHX18b9kIuDa17wllPMAgm5Epct6vsjH3nkJc/8sOjlw==",
+  "success": true,
+  "projectFilePath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyAgent\\USBNotifyAgent.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\e_fei\\.nuget\\packages\\formsusbmonitor\\3.0.0\\formsusbmonitor.3.0.0.nupkg.sha512",
+    "C:\\Users\\e_fei\\.nuget\\packages\\namedpipewrapper\\1.5.0\\namedpipewrapper.1.5.0.nupkg.sha512",
+    "C:\\Users\\e_fei\\.nuget\\packages\\nativeusblib\\1.4.9\\nativeusblib.1.4.9.nupkg.sha512",
+    "C:\\Users\\e_fei\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

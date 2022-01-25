@@ -1,0 +1,71 @@
+﻿@model Tbl_AgentSetting
+
+<div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>AgentSetting</legend>
+    </fieldset>
+
+    <form id="setting" class="layui-form" action="~/AgentSetting/UpdateSetting" method="post">
+        <input type="hidden" name="Id" value="@Model.Id"/>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">AgentVersion</label>
+            <div class="layui-input-block">
+                <input type="text" name="AgentVersion" value="@Model.AgentVersion" required lay-verify="required" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">AgentTimer</label>
+            <div class="layui-input-inline">
+                <input type="number" name="AgentTimerMinute" value="@Model.AgentTimerMinute" placeholder="Minutes" required lay-verify="required" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">UsbFilter</label>
+            <div class="layui-input-block">
+                <input type="radio" asp-for="@Model.UsbFilterEnabled" value="True" title="Enable">
+                <input type="radio" asp-for="@Model.UsbFilterEnabled" value="False" title="Disable">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">UsbHistory</label>
+            <div class="layui-input-block">
+                <input type="radio" asp-for="@Model.UsbHistoryEnabled" value="True" title="Enable">
+                <input type="radio" asp-for="@Model.UsbHistoryEnabled" value="False" title="Disable">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="" onclick="submitForm('#setting','Update ?')">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Script{
+    <script>
+        layui.use(['form', 'layer'], function () {
+            var form = layui.form,
+                layer = layui.layer;
+        });
+
+        function submitForm(id, msg) {
+
+            layer.confirm(msg, { icon: 3, title: 'Confirm' }, function (index) {
+
+                let url = $(id).attr('action');
+                let data = $(id).serializeArray();
+
+                $.post(url, data, function (json) {
+                    window.location.reload();
+                });
+
+                layer.close(index);
+            });
+        }
+    </script>
+}

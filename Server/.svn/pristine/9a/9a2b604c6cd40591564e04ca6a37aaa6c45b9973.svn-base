@@ -1,0 +1,51 @@
+﻿@*@model List<UsbHistoryDetail>
+
+<div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>Usb History</legend>
+    </fieldset>
+
+    <table id="index" lay-filter="index" style="width:100%">
+        <thead>
+            <tr>
+                <th lay-data="{field:'pluginTime', width:200, sort:true}">Plugin Time</th>
+                <th lay-data="{field:'manufacturer', width:150, sort:true}">Manufacturer</th>
+                <th lay-data="{field:'product', width:200, sort:true}">Product</th>
+                <th lay-data="{field:'vid', width:100, sort:true}">Vid</th>
+                <th lay-data="{field:'pid', width:100}">Pid</th>
+                <th lay-data="{field:'serialNumber', width:250, sort:true}">SerialNumber</th>
+                <th lay-data="{field:'computer', width:150, sort:true}">Computer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model)
+            {
+                <tr>
+                    <td>@m.History.PluginTime</td>
+                    <td>@m.Usb.Manufacturer</td>
+                    <td>@m.Usb.Product</td>
+                    <td>@m.Usb.Vid_Hex</td>
+                    <td>@m.Usb.Pid_Hex</td>
+                    <td>@m.Usb.SerialNumber</td>
+                    <td><a href="/usb/computer/id/@m.Computer.Id" style="color:blue;text-decoration:underline">@m.Computer.HostName</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Script{
+    <script>
+        layui.use(['form', 'table', 'layer'], function () {
+            var form = layui.form,
+                table = layui.table,
+                layer = layui.layer;
+
+            table.init('index', {
+                limit: 10,
+                page:true
+            });
+        });
+    </script>
+
+}*@

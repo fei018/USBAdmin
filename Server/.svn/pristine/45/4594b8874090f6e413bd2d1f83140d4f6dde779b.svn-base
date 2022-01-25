@@ -1,0 +1,3 @@
+﻿@using USBAdminWebMVC
+@using USBModel;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

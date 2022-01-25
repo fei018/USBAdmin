@@ -1,0 +1,35 @@
+﻿@model Tbl_PrintTemplate
+
+
+<div>
+    <form class="layui-form" action="~/Printer/TemplateEdit" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">SiteName</label>
+            <div class="layui-input-block">
+                <input type="text" name="SiteName" value="@Model?.SiteName" required lay-verify="required" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">Subnet</label>
+            <div class="layui-input-block">
+                <input type="text" name="SubnetAddr" value="@Model?.SubnetAddr" required lay-verify="required" placeholder="Subnet Address" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">FilePath</label>
+            <div class="layui-input-block">
+                <input type="text" name="FilePath" value="@Model?.FilePath" required lay-verify="required" placeholder="Template File UNC Path" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit type="submit">Save</button>
+            </div>
+        </div>
+
+        <input type="hidden" name="Id" value="@Model?.Id"/>
+    </form>
+</div>

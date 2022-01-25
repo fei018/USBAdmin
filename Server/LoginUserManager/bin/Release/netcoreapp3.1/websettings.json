@@ -1,0 +1,16 @@
+﻿{
+  "ConnectionStrings": {
+    "PeopleDb": "Server=localhost\\sqlexpress;Database=PeopleManage;Trusted_Connection=True;"
+  },
+  "Path": {
+    "PeopleData": ""
+  },
+  "Mail": {
+    "From": "anfucarehome@qq.com",
+    "To": "anfucarehome@qq.com",
+    "Account": "2721451972",
+    "Password": "bvuyqyyppniydfci",
+    "Smtp": "smtp.qq.com",
+    "SmtpPort": "465"
+  }
+}

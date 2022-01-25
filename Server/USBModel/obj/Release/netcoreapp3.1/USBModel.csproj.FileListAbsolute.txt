@@ -1,0 +1,15 @@
+C:\CodeRepos\GitHub\USBTest\USBModel\bin\Release\netcoreapp3.1\USBModel.deps.json
+C:\CodeRepos\GitHub\USBTest\USBModel\bin\Release\netcoreapp3.1\USBModel.dll
+C:\CodeRepos\GitHub\USBTest\USBModel\bin\Release\netcoreapp3.1\USBModel.pdb
+C:\CodeRepos\GitHub\USBTest\USBModel\bin\Release\netcoreapp3.1\LoginUserManager.dll
+C:\CodeRepos\GitHub\USBTest\USBModel\bin\Release\netcoreapp3.1\USBCommon.dll
+C:\CodeRepos\GitHub\USBTest\USBModel\bin\Release\netcoreapp3.1\USBCommon.pdb
+C:\CodeRepos\GitHub\USBTest\USBModel\bin\Release\netcoreapp3.1\LoginUserManager.pdb
+C:\CodeRepos\GitHub\USBTest\USBModel\obj\Release\netcoreapp3.1\USBModel.AssemblyInfoInputs.cache
+C:\CodeRepos\GitHub\USBTest\USBModel\obj\Release\netcoreapp3.1\USBModel.AssemblyInfo.cs
+C:\CodeRepos\GitHub\USBTest\USBModel\obj\Release\netcoreapp3.1\USBModel.csproj.CoreCompileInputs.cache
+C:\CodeRepos\GitHub\USBTest\USBModel\obj\Release\netcoreapp3.1\USBModel.csproj.CopyComplete
+C:\CodeRepos\GitHub\USBTest\USBModel\obj\Release\netcoreapp3.1\USBModel.dll
+C:\CodeRepos\GitHub\USBTest\USBModel\obj\Release\netcoreapp3.1\USBModel.pdb
+C:\CodeRepos\GitHub\USBTest\USBModel\obj\Release\netcoreapp3.1\USBModel.csproj.AssemblyReference.cache
+C:\CodeRepos\GitHub\USBTest\USBModel\obj\Release\netcoreapp3.1\USBModel.GeneratedMSBuildEditorConfig.editorconfig

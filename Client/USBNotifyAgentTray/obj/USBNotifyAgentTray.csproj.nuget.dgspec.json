@@ -1,0 +1,148 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\CodeRepos\\USBAdmin\\USBNotifyAgentTray\\USBNotifyAgentTray.csproj": {}
+  },
+  "projects": {
+    "C:\\CodeRepos\\USBAdmin\\Common\\USBCommon.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Common\\USBCommon.csproj",
+        "projectName": "USBCommon",
+        "projectPath": "C:\\CodeRepos\\USBAdmin\\Common\\USBCommon.csproj",
+        "frameworks": {
+          "net461": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    },
+    "C:\\CodeRepos\\USBAdmin\\USBNotifyAgentTray\\USBNotifyAgentTray.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\USBNotifyAgentTray\\USBNotifyAgentTray.csproj",
+        "projectName": "USBNotifyAgentTray",
+        "projectPath": "C:\\CodeRepos\\USBAdmin\\USBNotifyAgentTray\\USBNotifyAgentTray.csproj",
+        "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
+        "outputPath": "C:\\CodeRepos\\USBAdmin\\USBNotifyAgentTray\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net461"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net461": {
+            "projectReferences": {
+              "C:\\CodeRepos\\USBAdmin\\Common\\USBCommon.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin\\Common\\USBCommon.csproj"
+              },
+              "C:\\CodeRepos\\USBAdmin\\USBNotifyLib\\USBNotifyLib.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin\\USBNotifyLib\\USBNotifyLib.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {
+          "dependencies": {
+            "NamedPipeWrapper": {
+              "target": "Package",
+              "version": "[1.5.0, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    },
+    "C:\\CodeRepos\\USBAdmin\\USBNotifyLib\\USBNotifyLib.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\USBNotifyLib\\USBNotifyLib.csproj",
+        "projectName": "USBNotifyLib",
+        "projectPath": "C:\\CodeRepos\\USBAdmin\\USBNotifyLib\\USBNotifyLib.csproj",
+        "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
+        "outputPath": "C:\\CodeRepos\\USBAdmin\\USBNotifyLib\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net461"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net461": {
+            "projectReferences": {
+              "C:\\CodeRepos\\USBAdmin\\Common\\USBCommon.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin\\Common\\USBCommon.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {
+          "dependencies": {
+            "NamedPipeWrapper": {
+              "target": "Package",
+              "version": "[1.5.0, )"
+            },
+            "NativeUsbLib": {
+              "target": "Package",
+              "version": "[1.4.9, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

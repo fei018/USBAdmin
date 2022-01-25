@@ -1,0 +1,114 @@
+﻿@model UsbRequestVM
+
+
+<div class="layui-row layui-col-space15">
+
+    <div class="layui-col-md6">
+
+        <div class="layui-panel">
+
+            <div style="padding: 30px;">
+                <div>USB Detial: ( current state: @Model.RequestState )</div>
+                <hr />
+                <div>Manufacturer: @Model.Manufacturer</div><br />
+                <div>Product: @Model.Product</div><br />
+                <div>Vid: @Model.Vid_Hex</div><br />
+                <div>Pid: @Model.Pid_Hex</div><br />
+                <div>SerialNumber: @Model.SerialNumber</div><br />
+                <div>Request State: @Model.RequestState</div><br />
+                <div>State Change Time: @Model.RequestStateChangeTimeString</div><br />
+                <div>Request Computer Name: @Model.ComputerName</div><br />
+                <div>Request IP: @Model.IP</div><br />
+                <div>Request User Email: @Model.RequestUserEmail</div><br />
+                <hr />
+                <div>Request Time: @Model.RequestTimeString</div><br />
+                <div>Request Reason:</div><br />
+                <div>@Model.RequestReason</div><br />
+
+                @if (Model.RequestState == UsbRequestStateType.Reject)
+                {
+                    <div class="layui-input-block">
+                        <textarea readonly class="layui-textarea" style="width:400px;">@Model.RejectReason</textarea>
+                    </div>
+                }
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr>
+    <div>
+        @if (Model.RequestState == UsbRequestStateType.UnderReview)
+        {
+            <form id="approveForm" action="~/USB/RequestToApprove" method="post" class="layui-form">
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn layui-btn-primary" onclick="submitForm('#approveForm', 'Approve ?')">Approve</button>
+                    </div>
+                </div>
+            </form>
+
+            <br />
+            <hr />
+
+            <form id="rejectForm" action="~/USB/RequestToReject" method="post" class="layui-form">
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">Reject</label>
+                    <div class="layui-input-block">
+                        <textarea name="RejectReason" placeholder="Reject reason" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn layui-btn-primary" onclick="submitForm('#rejectForm', 'Reject ?')">Reject</button>
+                    </div>
+                </div>
+            </form>
+
+            <br />
+            <hr />
+        }
+
+        <form id="deleteForm" action="~/USB/RequestToDelete" method="post" class="layui-form">
+            <input type="hidden" name="id" value="@Model.Id" />
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn layui-btn-danger" onclick="submitForm('#deleteForm', 'Delete ?')">Delete</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Script{
+    <script>
+        layui.use(['form', 'layer'], function () {
+            var form = layui.form,
+                layer = layui.layer;
+        });
+
+        function submitForm(id, msg) {
+
+            layer.confirm(msg, { icon: 3, title: 'Confirm' }, function (index) {
+
+                let url = $(id).attr('action');
+                let data = $(id).serializeArray();
+
+                $.post(url, data, function (json) {
+                    window.location.reload();
+                });
+
+                layer.close(index);
+            });
+        }
+    </script>
+}
+

@@ -1,0 +1,113 @@
+﻿{
+  "homeInfo": {
+    "title": "Home",
+    "href": "USBadmin/home/welcome"
+  },
+  "logoInfo": {
+    "title": "USB Admin",
+    "image": "USBadmin/images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "Menu",
+      "icon": "fa fa-bars",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "Home",
+          "href": "USBAdmin/home/welcome",
+          "icon": "fa fa-home",
+          "target": "_self"
+        },
+        {
+          "title": "USB",
+          "href": "",
+          "icon": "fa fa-hdd-o",
+          "target": "_self",
+          "child": [
+            {
+              "title": "History",
+              "href": "USBadmin/USB/History",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            },
+            {
+              "title": "Review",
+              "href": "USBadmin/USB/RequestReview",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            },
+            {
+              "title": "Approve",
+              "href": "USBadmin/USB/RequestApprove",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            },
+            {
+              "title": "Reject",
+              "href": "USBadmin/USB/RequestReject",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            },
+            {
+              "title": "Register",
+              "href": "USBadmin/USB/Register",
+              "icon": "fa fa-floppy-o",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "Computer",
+          "href": "",
+          "icon": "fa fa-desktop",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Index",
+              "href": "USBadmin/Computer/Index",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "Printer",
+          "href": "",
+          "icon": "fa fa-print",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Template",
+              "href": "USBadmin/Printer/Template",
+              "icon": "fa fa-list",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Admin",
+      "icon": "fa fa-gear",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "EmailSetting",
+          "href": "USBAdmin/EmailSetting/Index",
+          "icon": "fa fa-wrench",
+          "target": "_self"
+        },
+        {
+          "title": "AgentSetting",
+          "href": "USBAdmin/AgentSetting/Index",
+          "icon": "fa fa-wrench",
+          "target": "_self"
+        }
+      ]
+    }
+  ]
+}

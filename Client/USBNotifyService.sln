@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USBNotifyService", "USBNotifyService\USBNotifyService.csproj", "{88A32AB6-DA9D-45B3-A812-A0A57B9DDE60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USBNotifyAgent", "USBNotifyAgent\USBNotifyAgent.csproj", "{09F80C0B-BD6B-4F99-97AE-A02AED1E61CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USBNotifyAgentTray", "USBNotifyAgentTray\USBNotifyAgentTray.csproj", "{316A81C6-67B8-45CC-8783-4F96B56A151F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USBNotifyLib", "USBNotifyLib\USBNotifyLib.csproj", "{BBDB4699-103A-4CD5-92DB-6A9CF675161F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USBTestConsole", "USBTestConsole\USBTestConsole.csproj", "{A160B38C-8995-44C9-96E2-BF81CDFB4C6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USBCommon", "..\Server\Common\USBCommon.csproj", "{90FD865D-6202-4A76-B765-4D5414B4204D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetupClient", "SetupClient\SetupClient.csproj", "{AAB212AA-6818-4455-BD50-8AFAAA28850A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88A32AB6-DA9D-45B3-A812-A0A57B9DDE60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A32AB6-DA9D-45B3-A812-A0A57B9DDE60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A32AB6-DA9D-45B3-A812-A0A57B9DDE60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A32AB6-DA9D-45B3-A812-A0A57B9DDE60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F80C0B-BD6B-4F99-97AE-A02AED1E61CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F80C0B-BD6B-4F99-97AE-A02AED1E61CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F80C0B-BD6B-4F99-97AE-A02AED1E61CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F80C0B-BD6B-4F99-97AE-A02AED1E61CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{316A81C6-67B8-45CC-8783-4F96B56A151F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{316A81C6-67B8-45CC-8783-4F96B56A151F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{316A81C6-67B8-45CC-8783-4F96B56A151F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{316A81C6-67B8-45CC-8783-4F96B56A151F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBDB4699-103A-4CD5-92DB-6A9CF675161F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBDB4699-103A-4CD5-92DB-6A9CF675161F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBDB4699-103A-4CD5-92DB-6A9CF675161F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBDB4699-103A-4CD5-92DB-6A9CF675161F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A160B38C-8995-44C9-96E2-BF81CDFB4C6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A160B38C-8995-44C9-96E2-BF81CDFB4C6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A160B38C-8995-44C9-96E2-BF81CDFB4C6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A160B38C-8995-44C9-96E2-BF81CDFB4C6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90FD865D-6202-4A76-B765-4D5414B4204D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90FD865D-6202-4A76-B765-4D5414B4204D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90FD865D-6202-4A76-B765-4D5414B4204D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90FD865D-6202-4A76-B765-4D5414B4204D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAB212AA-6818-4455-BD50-8AFAAA28850A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAB212AA-6818-4455-BD50-8AFAAA28850A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAB212AA-6818-4455-BD50-8AFAAA28850A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAB212AA-6818-4455-BD50-8AFAAA28850A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6A8DDBDE-5924-45C8-98A7-A0B1EF1C4385}
+	EndGlobalSection
+EndGlobal

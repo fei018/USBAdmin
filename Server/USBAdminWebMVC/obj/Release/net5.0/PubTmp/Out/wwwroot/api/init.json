@@ -1,0 +1,73 @@
+﻿{
+  "homeInfo": {
+    "title": "Home",
+    "href": "usbadmin/home/welcome"
+  },
+  "logoInfo": {
+    "title": "USB Admin",
+    "image": "/images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "Menu",
+      "icon": "fa fa-bars",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "Home",
+          "href": "usbadmin/home/welcome",
+          "icon": "fa fa-home",
+          "target": "_self"
+        },
+        {
+          "title": "USB",
+          "href": "",
+          "icon": "fa fa-hdd-o",
+          "target": "_self",
+          "child": [
+            {
+              "title": "History",
+              "href": "usbadmin/USB/History",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            },
+            {
+              "title": "Registered",
+              "href": "/USB/Registered",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            },
+            {
+              "title": "Register",
+              "href": "/USB/Register",
+              "icon": "fa fa-floppy-o",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "Computer",
+          "href": "",
+          "icon": "fa fa-hdd-o",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Index",
+              "href": "/Computer/Index",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Admin",
+      "icon": "fa fa-gear",
+      "href": "",
+      "target": "_self"
+    }
+  ]
+}

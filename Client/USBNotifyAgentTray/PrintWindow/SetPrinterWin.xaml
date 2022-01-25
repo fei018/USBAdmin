@@ -1,0 +1,33 @@
+﻿<Window x:Class="USBNotifyAgentTray.PrintWindow.SetPrinterWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:USBNotifyAgentTray.PrintWindow"
+        mc:Ignorable="d"
+        Title="Set Printer" Height="400" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" 
+        Closed="SetPrinterWin_Closed">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="20px"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Canvas>
+                <Button x:Name="btnAddPrinter" Click="btnAddPrinter_Click" FontSize="14" Height="50px" Width="200" Canvas.Left="41" Canvas.Top="22">Add Local Network Printers</Button>
+                <Button x:Name="btnCancel" Click="btnCancel_Click" FontSize="14" Height="50px" Width="200px" Canvas.Left="41" Canvas.Top="95">Cancel</Button>
+            </Canvas>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="2">
+            <ProgressBar x:Name="progressBar1" IsIndeterminate="True" Visibility="Hidden"></ProgressBar>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <TextBox x:Name="txtResult" IsReadOnly="True" TextWrapping="Wrap" BorderBrush="Gray" BorderThickness="1" Margin="2"/>
+        </Grid>
+
+    </Grid>
+</Window>

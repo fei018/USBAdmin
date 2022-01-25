@@ -1,0 +1,151 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\CodeRepos\\USBAdmin2\\Client\\USBTestConsole\\USBTestConsole.csproj": {}
+  },
+  "projects": {
+    "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj",
+        "projectName": "USBNotifyLib",
+        "projectPath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj",
+        "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
+        "outputPath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net461"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net461": {
+            "projectReferences": {
+              "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {
+          "dependencies": {
+            "NamedPipeWrapper": {
+              "target": "Package",
+              "version": "[1.5.0, )"
+            },
+            "NativeUsbLib": {
+              "target": "Package",
+              "version": "[1.4.9, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    },
+    "C:\\CodeRepos\\USBAdmin2\\Client\\USBTestConsole\\USBTestConsole.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Client\\USBTestConsole\\USBTestConsole.csproj",
+        "projectName": "USBTestConsole",
+        "projectPath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBTestConsole\\USBTestConsole.csproj",
+        "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
+        "outputPath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBTestConsole\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net461"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net461": {
+            "projectReferences": {
+              "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {
+          "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.Windows.CsWin32": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.1.619-beta, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    },
+    "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj",
+        "projectName": "USBCommon",
+        "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj",
+        "frameworks": {
+          "net461": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    }
+  }
+}

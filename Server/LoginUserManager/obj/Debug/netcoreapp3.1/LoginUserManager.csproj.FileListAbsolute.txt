@@ -1,0 +1,75 @@
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\websettings.json
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.deps.json
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.dll
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.pdb
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\People.HostingConfig.dll
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\People.HostingConfig.pdb
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csprojAssemblyReference.cache
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfoInputs.cache
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfo.cs
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CoreCompileInputs.cache
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CopyComplete
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.dll
+D:\CodeReposAnFu\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.pdb
+C:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\websettings.json
+C:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.deps.json
+C:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.dll
+C:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.pdb
+C:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\People.HostingConfig.dll
+C:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\People.HostingConfig.pdb
+C:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.AssemblyReference.cache
+C:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfoInputs.cache
+C:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfo.cs
+C:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CoreCompileInputs.cache
+C:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CopyComplete
+C:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.dll
+C:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.pdb
+D:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\websettings.json
+D:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.deps.json
+D:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.dll
+D:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.pdb
+D:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\People.HostingConfig.dll
+D:\Code\HLY_WebSystem\LoginUserManager\bin\Debug\netcoreapp3.1\People.HostingConfig.pdb
+D:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csprojAssemblyReference.cache
+D:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfoInputs.cache
+D:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfo.cs
+D:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CoreCompileInputs.cache
+D:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CopyComplete
+D:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.dll
+D:\Code\HLY_WebSystem\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.pdb
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\bin\Debug\netcoreapp3.1\websettings.json
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.deps.json
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.dll
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.pdb
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\bin\Debug\netcoreapp3.1\People.HostingConfig.dll
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\bin\Debug\netcoreapp3.1\People.HostingConfig.pdb
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csprojAssemblyReference.cache
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfoInputs.cache
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfo.cs
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CoreCompileInputs.cache
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CopyComplete
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.dll
+D:\Code\HLY_WebSystem - 複製\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.pdb
+C:\Code\HLY_PeopleManage\LoginUserManager\bin\Debug\netcoreapp3.1\websettings.json
+C:\Code\HLY_PeopleManage\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.deps.json
+C:\Code\HLY_PeopleManage\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.dll
+C:\Code\HLY_PeopleManage\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.pdb
+C:\Code\HLY_PeopleManage\LoginUserManager\bin\Debug\netcoreapp3.1\People.HostingConfig.dll
+C:\Code\HLY_PeopleManage\LoginUserManager\bin\Debug\netcoreapp3.1\People.HostingConfig.pdb
+C:\Code\HLY_PeopleManage\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.AssemblyReference.cache
+C:\Code\HLY_PeopleManage\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfoInputs.cache
+C:\Code\HLY_PeopleManage\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfo.cs
+C:\Code\HLY_PeopleManage\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CoreCompileInputs.cache
+C:\Code\HLY_PeopleManage\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CopyComplete
+C:\Code\HLY_PeopleManage\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.dll
+C:\Code\HLY_PeopleManage\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.pdb
+C:\CodeRepos\GitHub\USBTest\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.deps.json
+C:\CodeRepos\GitHub\USBTest\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.dll
+C:\CodeRepos\GitHub\USBTest\LoginUserManager\bin\Debug\netcoreapp3.1\LoginUserManager.pdb
+C:\CodeRepos\GitHub\USBTest\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfoInputs.cache
+C:\CodeRepos\GitHub\USBTest\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.AssemblyInfo.cs
+C:\CodeRepos\GitHub\USBTest\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.CoreCompileInputs.cache
+C:\CodeRepos\GitHub\USBTest\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.dll
+C:\CodeRepos\GitHub\USBTest\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.pdb
+C:\CodeRepos\GitHub\USBTest\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.csproj.AssemblyReference.cache
+C:\CodeRepos\GitHub\USBTest\LoginUserManager\obj\Debug\netcoreapp3.1\LoginUserManager.GeneratedMSBuildEditorConfig.editorconfig
