@@ -8,7 +8,7 @@ namespace USBNotifyLib
 {
     public class AgentUpdate
     {
-        // C:\ProgramData\HHITSupport
+        // C:\ProgramData\HHITtools
         private string _baseDir;
 
         private string _downloadFileDir;

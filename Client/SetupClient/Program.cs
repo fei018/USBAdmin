@@ -22,7 +22,6 @@ namespace SetupClient
 
         static void Setup()
         {
-            var log = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setup_log.txt");
             try
             {
                 Console.WriteLine("Setup Start ...");
@@ -31,13 +30,13 @@ namespace SetupClient
                 new SetupHelp().Install();
 
                 Console.WriteLine("Setup Done !!!");
-                File.WriteAllText(log, "Setup done.");
+                File.AppendAllText(SetupHelp.LogPath, "Setup done.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
 
-                File.WriteAllText(log, ex.Message);
+                File.AppendAllText(SetupHelp.LogPath, ex.Message);
             }
 
             Environment.Exit(0);

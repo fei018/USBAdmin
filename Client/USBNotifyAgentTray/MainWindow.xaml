@@ -5,5 +5,5 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:USBNotifyAgentTray"
         mc:Ignorable="d"
-        Title="USBNotifyAgentTray" Height="100" Width="300"
+        Title="HHITtoolsTray" Height="100" Width="300"
         Visibility="Hidden" ResizeMode="NoResize" ShowInTaskbar="False" Closed="Window_Closed"/>

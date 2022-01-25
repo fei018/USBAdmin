@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Security.AccessControl;
 using System.ServiceProcess;
 using System.Text;
@@ -14,6 +15,8 @@ namespace SetupClient
 {
     public class SetupHelp
     {
+        public static string LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setup_log.txt");
+
         string _newAppDir;
         string _newDataDir;
         string InstallUtilExe;
@@ -25,10 +28,13 @@ namespace SetupClient
         string _dllDir;
         string _registryKeyLocation;
         string _oldRegistryKey;
+        string _serviceName;
 
         public SetupHelp()
         {
             InstallUtilExe = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\InstallUtil.exe";
+
+            _serviceName = "HHITtoolsService";
 
             _setupDir = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -36,7 +42,7 @@ namespace SetupClient
 
             GetNewAppAndDataDir();
 
-            _serviceExe = Path.Combine(_newAppDir, "usbnservice.exe");        
+            _serviceExe = Path.Combine(_newAppDir, "HHITtoolsService.exe");        
 
             _installServiceBatch = Path.Combine(_newAppDir, "Service_Install.bat");
 
@@ -44,7 +50,7 @@ namespace SetupClient
 
             _dllDir = Path.Combine(_setupDir, "dll");
 
-            _registryKeyLocation = "SOFTWARE\\Hiphing\\ITSupportTools";
+            _registryKeyLocation = "SOFTWARE\\HipHing\\HHITtools";
 
             _oldRegistryKey = "SOFTWARE\\Hiphing\\USBNotify";
         }
@@ -54,8 +60,14 @@ namespace SetupClient
         {
             try
             {
+                if (File.Exists(LogPath))
+                {
+                    File.Delete(LogPath);
+                }
+
                 UninstallService(out string error);
                 Console.WriteLine(error);
+                File.AppendAllText(LogPath, error);
 
                 CreateAndCopyNewAppDir();
 
@@ -65,10 +77,9 @@ namespace SetupClient
 
                 InstallService(out error);
                 Console.WriteLine(error);
+                File.AppendAllText(LogPath, error);
 
                 CheckNewDataDir();
-
-                DeleteOldDir();
             }
             catch (Exception)
             {
@@ -83,8 +94,8 @@ namespace SetupClient
             try
             {
 #if DEBUG
-                _setupiniPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setupDebug.ini");
-                Console.WriteLine(_setupiniPath);
+               // _setupiniPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setupDebug.ini");
+               // Console.WriteLine(_setupiniPath);
 #endif
 
                 Dictionary<string, string> registry = new Dictionary<string, string>();
@@ -242,30 +253,69 @@ namespace SetupClient
                 var run = p.Start();
 
                 p.StandardInput.WriteLine($"\"{InstallUtilExe}\" \"{_serviceExe}\"");
-                Thread.Sleep(new TimeSpan(0, 0, 5));
-
-                p.StandardInput.WriteLine("net start usbnservice");
-                Thread.Sleep(new TimeSpan(0, 0, 2));
 
                 p.StandardInput.WriteLine("exit");
 
-                error = p.StandardError.ReadToEnd();
+                p.WaitForExit();
 
-                return run;
+                error = p.StandardOutput.ReadToEnd();             
             }
 
+            // service
+
+            var serviceExist = ServiceController.GetServices().Any(s => s.ServiceName == _serviceName);
+            if (!serviceExist)
+            {
+                throw new Exception("HHITtoolsService install error and not exist.");
+            }
+
+            using (var serv = new ServiceController(_serviceName))
+            {
+                serv.Start();
+
+                serv.WaitForStatus(ServiceControllerStatus.Running, new TimeSpan(0, 0, 30));
+            }
+
+            return true;
         }
         #endregion
 
         #region + private bool UninstallService(out string error)
         private bool UninstallService(out string error)
         {
-            var serviceExist = ServiceController.GetServices().Any(s => s.ServiceName == "usbnservice");
+            var serviceExist = ServiceController.GetServices().Any(s => Regex.IsMatch(s.ServiceName,_serviceName, RegexOptions.IgnoreCase));
             if (!serviceExist)
             {
                 error = null;
                 return true;
             }
+
+            string unistallServicePath = null;
+
+            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Service"))
+            using (ManagementObjectCollection collection = searcher.Get())
+            {
+                foreach (ManagementObject obj in collection)
+                {
+                    string name = obj["Name"] as string;
+                    string pathName = obj["PathName"] as string;
+
+                    if (name.ToLower() == _serviceName.ToLower())
+                    {
+                        unistallServicePath = pathName;
+                    }
+                }
+            }
+
+            using (var serv = new ServiceController(_serviceName))
+            {
+                if (serv.CanStop)
+                {
+                    serv.Stop();
+                }
+
+                serv.WaitForStatus(ServiceControllerStatus.Stopped, new TimeSpan(0, 0, 30));
+            }               
 
             var start = new ProcessStartInfo();
             start.FileName = "cmd.exe";
@@ -282,19 +332,16 @@ namespace SetupClient
 
                 var run = p.Start();
 
-                p.StandardInput.WriteLine("net stop usbnservice");
-                Thread.Sleep(new TimeSpan(0, 0, 2));
-
-                p.StandardInput.WriteLine($"\"{InstallUtilExe}\" /u \"{_serviceExe}\"");
-                Thread.Sleep(new TimeSpan(0, 0, 5));
+                p.StandardInput.WriteLine($"\"{InstallUtilExe}\" /u {unistallServicePath}");
 
                 p.StandardInput.WriteLine("exit");
 
-                error = p.StandardError.ReadToEnd();
+                p.WaitForExit();
+
+                error = p.StandardOutput.ReadToEnd();
 
                 return run;
             }
-
         }
         #endregion
 
@@ -329,7 +376,7 @@ namespace SetupClient
                     var lines = File.ReadAllLines(_setupiniPath);
                     if (lines == null || lines.Length <= 0)
                     {
-                        throw new Exception("Setup.ini is empty.");
+                        return;
                     }
 
                     foreach (var l in lines)
@@ -354,8 +401,6 @@ namespace SetupClient
             }
             catch (Exception)
             {
-
-                throw;
             }
         }
         #endregion

@@ -6,7 +6,7 @@ namespace USBNotifyLib
 {
     public class AgentRegistry
     {
-        private const string _usbRegistryKey = "SOFTWARE\\Hiphing\\ITSupportTools";
+        private const string _usbRegistryKey = "SOFTWARE\\HipHing\\HHITtools";
 
 
         // Registry

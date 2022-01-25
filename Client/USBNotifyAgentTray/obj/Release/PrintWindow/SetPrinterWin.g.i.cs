@@ -84,7 +84,7 @@ namespace USBNotifyAgentTray.PrintWindow {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/usbntray;component/printwindow/setprinterwin.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/HHITtoolsTray;component/printwindow/setprinterwin.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\PrintWindow\SetPrinterWin.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

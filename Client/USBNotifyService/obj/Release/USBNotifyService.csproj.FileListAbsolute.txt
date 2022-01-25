@@ -37,11 +37,11 @@ C:\CodeRepos\USBAdmin\publish\SetupAgent\dll\usbnservice.exe
 C:\CodeRepos\USBAdmin2\Client\SetupResource\usbnservice.exe.config
 C:\CodeRepos\USBAdmin2\Client\SetupResource\usbnservice.exe
 C:\CodeRepos\USBAdmin2\publish\Agent\dll\RemoteSupport.exe
-C:\CodeRepos\USBAdmin2\publish\Agent\dll\usbnservice.exe.config
-C:\CodeRepos\USBAdmin2\publish\Agent\dll\usbnservice.exe
 C:\CodeRepos\USBAdmin2\Client\USBNotifyService\obj\Release\USBNotifyService.csproj.AssemblyReference.cache
 C:\CodeRepos\USBAdmin2\Client\USBNotifyService\obj\Release\USBNotifyService.ProjectInstaller.resources
 C:\CodeRepos\USBAdmin2\Client\USBNotifyService\obj\Release\USBNotifyService.csproj.GenerateResource.cache
 C:\CodeRepos\USBAdmin2\Client\USBNotifyService\obj\Release\USBNotifyService.csproj.CoreCompileInputs.cache
 C:\CodeRepos\USBAdmin2\Client\USBNotifyService\obj\Release\USBNotifyService.csproj.CopyComplete
-C:\CodeRepos\USBAdmin2\Client\USBNotifyService\obj\Release\usbnservice.exe
+C:\CodeRepos\USBAdmin2\publish\Agent\dll\HHITtoolsService.exe.config
+C:\CodeRepos\USBAdmin2\publish\Agent\dll\HHITtoolsService.exe
+C:\CodeRepos\USBAdmin2\Client\USBNotifyService\obj\Release\HHITtoolsService.exe

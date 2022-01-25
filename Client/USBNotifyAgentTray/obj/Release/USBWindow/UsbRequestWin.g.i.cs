@@ -60,7 +60,7 @@ namespace USBNotifyAgentTray.USBWindow {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/usbntray;component/usbwindow/usbrequestwin.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/HHITtoolsTray;component/usbwindow/usbrequestwin.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\USBWindow\UsbRequestWin.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

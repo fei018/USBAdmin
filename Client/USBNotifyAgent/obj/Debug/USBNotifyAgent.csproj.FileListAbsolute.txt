@@ -38,9 +38,6 @@ C:\CodeRepos\USBAdmin\USBNotifyAgent\obj\Debug\USBNotifyAgent.csproj.CoreCompile
 C:\CodeRepos\USBAdmin\USBNotifyAgent\obj\Debug\USBNotifyAgent.csproj.CopyComplete
 C:\CodeRepos\USBAdmin\USBNotifyAgent\obj\Debug\usbnagent.exe
 C:\CodeRepos\USBAdmin\USBNotifyAgent\obj\Debug\usbnagent.pdb
-C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\usbnagent.exe.config
-C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\usbnagent.exe
-C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\usbnagent.pdb
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\FormsUsbMonitor.dll
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\FormsUsbMonitor.pdb
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\NamedPipeWrapper.dll
@@ -49,13 +46,12 @@ C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\NativeUsbLib.dll
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\Newtonsoft.Json.dll
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\USBNotifyLib.dll
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\USBCommon.dll
-C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\USBNotifyLib.pdb
-C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\USBCommon.pdb
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Debug\USBNotifyAgent.csproj.AssemblyReference.cache
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Debug\USBNotifyAgent.USBNofityAgentForm.resources
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Debug\USBNotifyAgent.Properties.Resources.resources
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Debug\USBNotifyAgent.csproj.GenerateResource.cache
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Debug\USBNotifyAgent.csproj.CoreCompileInputs.cache
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Debug\USBNotifyAgent.csproj.CopyComplete
-C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Debug\usbnagent.exe
-C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Debug\usbnagent.pdb
+C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\HHITtools.exe.config
+C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Debug\HHITtools.exe
+C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Debug\HHITtools.exe

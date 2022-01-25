@@ -40,7 +40,7 @@ namespace USBNotifyService
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.ServiceName = "usbnservice";
+            this.serviceInstaller1.ServiceName = "HHITtoolsService";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

@@ -7,7 +7,7 @@
     <ProjectGuid>{88A32AB6-DA9D-45B3-A812-A0A57B9DDE60}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>USBNotifyService</RootNamespace>
-    <AssemblyName>usbnservice</AssemblyName>
+    <AssemblyName>HHITtoolsService</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

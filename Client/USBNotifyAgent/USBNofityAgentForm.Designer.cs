@@ -40,7 +40,7 @@ namespace USBNotifyAgent
             this.Name = "USBNofityAgentForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "USBAgent";
+            this.Text = "HHITtools";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.USBNofityAgentForm_FormClosed);
             this.ResumeLayout(false);
 

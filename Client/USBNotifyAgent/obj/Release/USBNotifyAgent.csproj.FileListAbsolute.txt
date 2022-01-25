@@ -33,8 +33,6 @@ C:\CodeRepos\USBAdmin\USBNotifyAgent\obj\Release\USBNotifyAgent.csproj.GenerateR
 C:\CodeRepos\USBAdmin\USBNotifyAgent\obj\Release\USBNotifyAgent.csproj.CoreCompileInputs.cache
 C:\CodeRepos\USBAdmin\USBNotifyAgent\obj\Release\USBNotifyAgent.csproj.CopyComplete
 C:\CodeRepos\USBAdmin\USBNotifyAgent\obj\Release\usbnagent.exe
-C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Release\usbnagent.exe.config
-C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Release\usbnagent.exe
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Release\FormsUsbMonitor.dll
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Release\FormsUsbMonitor.pdb
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Release\NamedPipeWrapper.dll
@@ -49,4 +47,6 @@ C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Release\USBNotifyAgent.Properti
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Release\USBNotifyAgent.csproj.GenerateResource.cache
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Release\USBNotifyAgent.csproj.CoreCompileInputs.cache
 C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Release\USBNotifyAgent.csproj.CopyComplete
-C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Release\usbnagent.exe
+C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Release\HHITtools.exe.config
+C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\bin\Release\HHITtools.exe
+C:\CodeRepos\USBAdmin2\Client\USBNotifyAgent\obj\Release\HHITtools.exe
