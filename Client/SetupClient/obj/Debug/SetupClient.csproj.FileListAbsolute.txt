@@ -42,3 +42,11 @@ C:\CodeRepos\USBAdmin2\Client\SetupClient\obj\Debug\SetupClient.csproj.AssemblyR
 C:\CodeRepos\USBAdmin2\Client\SetupClient\obj\Debug\SetupClient.csproj.CoreCompileInputs.cache
 C:\CodeRepos\USBAdmin2\Client\SetupClient\obj\Debug\Setup.exe
 C:\CodeRepos\USBAdmin2\Client\SetupClient\obj\Debug\Setup.pdb
+C:\CodeRepos\USBAdmin\Client\SetupClient\bin\Debug\setupDebug.ini
+C:\CodeRepos\USBAdmin\Client\SetupClient\bin\Debug\setup.ini
+C:\CodeRepos\USBAdmin\Client\SetupClient\bin\Debug\Setup.exe
+C:\CodeRepos\USBAdmin\Client\SetupClient\bin\Debug\Setup.pdb
+C:\CodeRepos\USBAdmin\Client\SetupClient\obj\Debug\SetupClient.csproj.AssemblyReference.cache
+C:\CodeRepos\USBAdmin\Client\SetupClient\obj\Debug\SetupClient.csproj.CoreCompileInputs.cache
+C:\CodeRepos\USBAdmin\Client\SetupClient\obj\Debug\Setup.exe
+C:\CodeRepos\USBAdmin\Client\SetupClient\obj\Debug\Setup.pdb
