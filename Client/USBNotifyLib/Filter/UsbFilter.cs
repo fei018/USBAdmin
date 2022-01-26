@@ -50,7 +50,7 @@ namespace USBNotifyLib
                     return;
                 }
 
-                if (!_usbBus.Find_NotifyUSB_Detail_In_UsbBus(usb))
+                if (!_usbBus.Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(usb))
                 {
                     Rule_NotFound_UsbDisk_Detail_In_UsbBus(usb);
                     return;
@@ -109,7 +109,7 @@ namespace USBNotifyLib
                 {
                     if (Find_UsbDeviceId_By_DiskPath_SetupDi(usb))
                     {
-                        if (_usbBus.Find_NotifyUSB_Detail_In_UsbBus(usb))
+                        if (_usbBus.Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(usb))
                         {
                             return usb;
                         }
@@ -132,7 +132,7 @@ namespace USBNotifyLib
                 var usb = new UsbDisk { DiskPath = diskPath };
                 if (Find_UsbDeviceId_By_DiskPath_SetupDi(usb))
                 {
-                    if (_usbBus.Find_NotifyUSB_Detail_In_UsbBus(usb))
+                    if (_usbBus.Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(usb))
                     {
                         return usb;
                     }
@@ -167,6 +167,9 @@ namespace USBNotifyLib
         private void Rule_NotFound_UsbDisk_Detail_In_UsbBus(UsbDisk usb)
         {
             // should not happen
+
+            // set readonly true
+            Set_Disk_IsReadOnly_by_DiskPath_WMI(usb.DiskPath, true);
         }
         #endregion
 

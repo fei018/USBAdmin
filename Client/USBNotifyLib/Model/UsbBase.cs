@@ -21,6 +21,10 @@ namespace USBNotifyLib
 
         public string DeviceDescription { get; set; }
 
+        public string UsbDevicePath { get; set; }
+
+        public string UsbDeviceId { get; set; }
+
         /// <summary>
         /// 
         /// </summary>

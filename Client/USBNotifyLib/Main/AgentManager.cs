@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.AccessControl;
 
@@ -55,6 +56,7 @@ namespace USBNotifyLib
 
             try
             {
+                Debugger.Break();
                 // 掃描過濾所有 usb disk
                 if (AgentRegistry.UsbFilterEnabled)
                 {

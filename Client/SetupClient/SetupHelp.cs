@@ -352,13 +352,13 @@ namespace SetupClient
 
             // service_install.bat
             sb.AppendLine($"\"{InstallUtilExe}\" \"{_serviceExe}\"");
-            sb.AppendLine("net start usbnservice");
+            sb.AppendLine($"net start {_serviceName}");
 
             File.WriteAllText(_installServiceBatch, sb.ToString(), new UTF8Encoding(false));
 
             // service_uninstall.bat
             sb.Clear();
-            sb.AppendLine("net stop usbnservice");
+            sb.AppendLine($"net stop {_serviceName}");
             sb.AppendLine($"\"{InstallUtilExe}\" /u \"{_serviceExe}\"");
             File.WriteAllText(_uninstallServiceBatch, sb.ToString(), new UTF8Encoding(false));
 

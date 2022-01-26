@@ -15,8 +15,8 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filter\UsbBusController2.cs" />
     <Compile Include="Filter\UsbBusController.cs" />
     <Compile Include="Filter\UsbFilter.cs" />
     <Compile Include="Filter\UsbFilter2.cs" />

@@ -42,3 +42,5 @@ C:\CodeRepos\USBAdmin\Client\USBNotifyLib\obj\Debug\USBNotifyLib.csproj.Assembly
 C:\CodeRepos\USBAdmin\Client\USBNotifyLib\obj\Debug\USBNotifyLib.csproj.CoreCompileInputs.cache
 C:\CodeRepos\USBAdmin\Client\USBNotifyLib\obj\Debug\USBNotifyLib.csproj.CopyComplete
 C:\CodeRepos\USBAdmin\Client\USBNotifyLib\obj\Debug\USBNotifyLib.dll
+C:\CodeRepos\USBAdmin\Client\USBNotifyLib\bin\Debug\USBNotifyLib.pdb
+C:\CodeRepos\USBAdmin\Client\USBNotifyLib\obj\Debug\USBNotifyLib.pdb

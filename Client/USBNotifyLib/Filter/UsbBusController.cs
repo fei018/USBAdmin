@@ -5,11 +5,55 @@ using System.Linq;
 
 namespace USBNotifyLib
 {
-    internal class UsbBusController
+    internal class UsbBusController3
     {
+       
         private List<Device> _busUsbList;
 
         private UsbBus _usbBus;
+
+
+        #region + Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(ref NotifyUSB notifyUsb)
+        /// <summary>
+        /// if found, set Vid, Pid, SerialNumber to notifyUsb
+        /// </summary>
+        /// <param name="pluginUsb"></param>
+        /// <returns></returns>
+        public bool Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(UsbDisk pluginUsb)
+        {
+            try
+            {
+                if (!ScanUsbBus())
+                {
+                    throw new Exception("Cannot find any usb device in USB Controller."); // should not happen
+                }
+
+                foreach (Device d in _busUsbList)
+                {
+                    if (d.InstanceId.Equals(pluginUsb.UsbDeviceId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        pluginUsb.Vid = d.DeviceDescriptor.idVendor;
+                        pluginUsb.Pid = d.DeviceDescriptor.idProduct;
+                        pluginUsb.SerialNumber = d.SerialNumber;
+                        pluginUsb.UsbDevicePath = d.DevicePath;
+                        pluginUsb.Manufacturer = d.Manufacturer;
+                        pluginUsb.Product = d.Product;
+                        pluginUsb.DeviceDescription = d.DeviceDescription;
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                DisposeUSB();
+            }
+        }
+        #endregion
 
         #region + ScanUsbBus()
         /// <summary>
@@ -32,11 +76,13 @@ namespace USBNotifyLib
                     {
                         if (hub != null)
                         {
-                            RecursionUsb(hub.ChildDevices, ref _busUsbList);
+                            if (hub.ChildDevices.Any())
+                            {
+                                RecursionUsb(hub.ChildDevices, ref _busUsbList);
+                            }
                         }
                     }
                 }
-
             }
 
             if (_busUsbList != null && _busUsbList.Count > 0)
@@ -61,7 +107,7 @@ namespace USBNotifyLib
             {
                 if (d != null)
                 {
-                    if (!d.IsHub && !string.IsNullOrEmpty(d.DevicePath))
+                    if (!d.IsHub && d.IsConnected && !string.IsNullOrEmpty(d.DevicePath))
                     {
                         deviceList.Add(d);
                     }
@@ -73,49 +119,7 @@ namespace USBNotifyLib
                 }
             }
         }
-        #endregion
-
-        #region + Find_VidPidSerial_In_UsbBus(ref NotifyUSB notifyUsb)
-        /// <summary>
-        /// if found, set Vid, Pid, SerialNumber to notifyUsb
-        /// </summary>
-        /// <param name="notifyUsb"></param>
-        /// <returns></returns>
-        public bool Find_NotifyUSB_Detail_In_UsbBus(UsbDisk notifyUsb)
-        {
-            try
-            {
-                if (!ScanUsbBus())
-                {
-                    throw new Exception("Cannot find any usb device in USB Controller."); // should not happen
-                }
-
-                foreach (Device d in _busUsbList)
-                {
-                    if (d.InstanceId.Equals(notifyUsb.UsbDeviceId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        notifyUsb.Vid = d.DeviceDescriptor.idVendor;
-                        notifyUsb.Pid = d.DeviceDescriptor.idProduct;
-                        notifyUsb.SerialNumber = d.SerialNumber;
-                        notifyUsb.UsbDevicePath = d.DevicePath;
-                        notifyUsb.Manufacturer = d.Manufacturer;
-                        notifyUsb.Product = d.Product;
-                        notifyUsb.DeviceDescription = d.DeviceDescription;
-                        return true;
-                    }
-                }
-                return false;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                DisposeUSB();
-            }
-        }
-        #endregion
+        #endregion    
 
         #region DisposeUSB
         private void DisposeUSB()
