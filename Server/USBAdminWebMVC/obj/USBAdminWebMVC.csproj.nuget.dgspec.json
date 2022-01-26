@@ -1,14 +1,14 @@
 {
   "format": 1,
   "restore": {
-    "C:\\CodeRepos\\USBAdmin2\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj": {}
+    "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj": {}
   },
   "projects": {
-    "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj": {
+    "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj",
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj",
         "projectName": "USBCommon",
-        "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj",
+        "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj",
         "frameworks": {
           "net461": {
             "projectReferences": {}
@@ -19,14 +19,14 @@
         "net461": {}
       }
     },
-    "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\LoginUserManager.csproj": {
+    "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\LoginUserManager.csproj",
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj",
         "projectName": "LoginUserManager",
-        "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\LoginUserManager.csproj",
+        "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj",
         "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-        "outputPath": "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\obj\\",
+        "outputPath": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -87,14 +87,14 @@
         }
       }
     },
-    "C:\\CodeRepos\\USBAdmin2\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj": {
+    "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj",
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj",
         "projectName": "USBAdminWebMVC",
-        "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj",
+        "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj",
         "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-        "outputPath": "C:\\CodeRepos\\USBAdmin2\\Server\\USBAdminWebMVC\\obj\\",
+        "outputPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminWebMVC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -115,14 +115,14 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj": {
-                "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj"
+              "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj"
               },
-              "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\LoginUserManager.csproj": {
-                "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\LoginUserManager.csproj"
+              "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj"
               },
-              "C:\\CodeRepos\\USBAdmin2\\Server\\USBModel\\USBModel.csproj": {
-                "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\USBModel\\USBModel.csproj"
+              "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj"
               }
             }
           }
@@ -168,14 +168,14 @@
         }
       }
     },
-    "C:\\CodeRepos\\USBAdmin2\\Server\\USBModel\\USBModel.csproj": {
+    "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Server\\USBModel\\USBModel.csproj",
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj",
         "projectName": "USBModel",
-        "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\USBModel\\USBModel.csproj",
+        "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj",
         "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-        "outputPath": "C:\\CodeRepos\\USBAdmin2\\Server\\USBModel\\obj\\",
+        "outputPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -196,11 +196,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj": {
-                "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj"
+              "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj"
               },
-              "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\LoginUserManager.csproj": {
-                "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\LoginUserManager.csproj"
+              "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj"
               }
             }
           }

@@ -34,8 +34,8 @@
               "target": "_self"
             },
             {
-              "title": "Registered",
-              "href": "/USB/Registered",
+              "title": "Request",
+              "href": "/USB/UsbRequest",
               "icon": "fa fa-list-alt",
               "target": "_self"
             },

@@ -273,7 +273,7 @@ namespace USBModel
             {
                 RefAsync<int> total = new RefAsync<int>();
                 var query = await _db.Queryable<Tbl_UsbRequest>()
-                                        .Where(u=> u.RequestState == stateType)
+                                        .Where(u => u.RequestState == stateType)
                                         .OrderBy(u => u.RequestStateChangeTime, OrderByType.Desc)
                                         .ToPageListAsync(pageIdnex, pageSize, total);
 
@@ -392,18 +392,24 @@ namespace USBModel
                 var usb = await _db.Queryable<Tbl_UsbRequest>().InSingleAsync(id);
                 if (usb == null)
                 {
-                    throw new Exception("Tbl_UsbRegRequest cannot find, Id: " + id);
+                    throw new Exception("Cannot find the Tbl_UsbRegRequest, Id: " + id);
                 }
 
-                var com = await PerComputer_Get_ByIdentity(usb.RequestComputerIdentity);
+                Tbl_PerComputer com = null;
+                try
+                {
+                    com = await PerComputer_Get_ByIdentity(usb.RequestComputerIdentity);
+                }
+                catch (Exception)
+                {
+                }
 
-                var vm = new UsbRequestVM(usb,com);
+                var vm = new UsbRequestVM(usb, com);
 
                 return vm;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -466,7 +472,7 @@ namespace USBModel
                 var total = new RefAsync<int>();
 
                 var query = await _db.Queryable<Tbl_PerUsbHistory>()
-                                        .LeftJoin<Tbl_PerComputer>((h,c)=>h.ComputerIdentity == c.ComputerIdentity)
+                                        .LeftJoin<Tbl_PerComputer>((h, c) => h.ComputerIdentity == c.ComputerIdentity)
                                         .OrderBy(h => h.PluginTime, OrderByType.Desc)
                                         .Select((h, c) => new { his = h, com = c })
                                         .ToPageListAsync(pageIndex, pageSize, total);
@@ -484,7 +490,7 @@ namespace USBModel
                 var usbList = new List<PerUsbHistoryVM>();
                 foreach (var q in query)
                 {
-                    usbList.Add(new PerUsbHistoryVM(q.his,q.com));
+                    usbList.Add(new PerUsbHistoryVM(q.his, q.com));
                 }
                 return (total.Value, usbList);
             }
@@ -610,10 +616,10 @@ namespace USBModel
                 var queryCom = await _db.Queryable<Tbl_PerComputer>()
                                      .Where(c => c.ComputerIdentity == com.ComputerIdentity)
                                      .FirstAsync();
-                
+
                 if (queryCom == null)
                 {
-                    
+
                     await _db.Insertable(com).ExecuteCommandAsync();
                 }
                 else
@@ -826,7 +832,7 @@ namespace USBModel
         {
             try
             {
-                await _db.Deleteable<Tbl_PrintTemplate>().In(t=> t.Id, id).ExecuteCommandAsync();
+                await _db.Deleteable<Tbl_PrintTemplate>().In(t => t.Id, id).ExecuteCommandAsync();
             }
             catch (Exception)
             {

@@ -18,3 +18,7 @@ C:\CodeRepos\USBAdmin\Common\obj\Debug\USBCommon.pdb
 C:\CodeRepos\USBAdmin2\Server\Common\bin\Debug\USBCommon.dll
 C:\CodeRepos\USBAdmin2\Server\Common\obj\Debug\USBCommon.csproj.CoreCompileInputs.cache
 C:\CodeRepos\USBAdmin2\Server\Common\obj\Debug\USBCommon.dll
+C:\CodeRepos\USBAdmin\Server\Common\bin\Debug\USBCommon.dll
+C:\CodeRepos\USBAdmin\Server\Common\obj\Debug\USBCommon.csproj.CoreCompileInputs.cache
+C:\CodeRepos\USBAdmin\Server\Common\obj\Debug\USBCommon.dll
+C:\CodeRepos\USBAdmin\Server\Common\obj\Debug\USBCommon.csproj.AssemblyReference.cache

@@ -68,6 +68,13 @@ namespace USBAdminWebMVC.Controllers
 
         // UsbRequest
 
+        #region UsbRequest()
+        public IActionResult UsbRequest()
+        {
+            return View();
+        }
+        #endregion
+
         #region RequestDetail(int id)
         public async Task<IActionResult> RequestDetail(int id)
         {

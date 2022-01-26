@@ -8512,11 +8512,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Server\\USBAdminDatabase\\USBAdminDatabase.csproj",
+      "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminDatabase\\USBAdminDatabase.csproj",
       "projectName": "USBAdminDatabase",
-      "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\USBAdminDatabase\\USBAdminDatabase.csproj",
+      "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminDatabase\\USBAdminDatabase.csproj",
       "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-      "outputPath": "C:\\CodeRepos\\USBAdmin2\\Server\\USBAdminDatabase\\obj\\",
+      "outputPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminDatabase\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -8537,8 +8537,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\CodeRepos\\USBAdmin2\\Server\\USBModel\\USBModel.csproj": {
-              "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\USBModel\\USBModel.csproj"
+            "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj": {
+              "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj"
             }
           }
         }

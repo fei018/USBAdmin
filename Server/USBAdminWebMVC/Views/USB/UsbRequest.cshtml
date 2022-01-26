@@ -1,0 +1,79 @@
+﻿@{
+    var usbDetailUrl = USBAdminHelp.WebHttpUrlPrefix + "/usb/RequestDetail";
+
+    var usbReviewUrl = USBAdminHelp.WebHttpUrlPrefix + "/usb/RequestReviewList";
+    var usbApproveUrl = USBAdminHelp.WebHttpUrlPrefix + "/usb/RequestApproveList";
+    var usbRejectUrl = USBAdminHelp.WebHttpUrlPrefix + "/usb/RequestRejectList";
+
+}
+
+<div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>USB Request</legend>
+    </fieldset>
+
+    <div class="layui-input-inline">
+        <button class="layui-btn layui-btn-primary" type="button" data-btn="click" data-url="@usbReviewUrl">
+            <i class="layui-icon">&#xe607;</i> Review
+        </button>
+    </div>
+
+    <div class="layui-input-inline">
+        <button class="layui-btn layui-btn-primary" type="button" data-btn="click" data-url="@usbApproveUrl">
+            <i class="layui-icon">&#xe605;</i> Approve
+        </button>
+    </div>
+
+    <div class="layui-input-inline">
+        <button class="layui-btn layui-btn-primary" type="button" data-btn="click" data-url="@usbRejectUrl">
+            <i class="layui-icon">&#x1006;</i> Reject
+        </button>
+    </div>
+
+    <hr />
+    <table id="index" lay-filter="index" class="layui-hide">
+    </table>
+</div>
+
+<script type="text/html" id="action">
+    <a class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs" href="javascript:;" layuimini-content-href="@usbDetailUrl?id={{d.id}}" data-title="USB Detail">Detail</a>
+</script>
+
+@section Script{
+    <script>
+        layui.use(['form', 'table', 'miniTab'], function () {
+            var form = layui.form;
+            var table = layui.table;
+            var miniTab = layui.miniTab;
+
+            var tableIns = table.render({
+                elem: '#index'
+                , url: '@usbReviewUrl'
+                , page: true
+                , cols: [[
+                    { field: 'id', title: 'Id', width: 60, sort: true },
+                    { field: 'requestTimeString', title: 'RequestTime', width: 200, sort: true },
+                    { field: 'manufacturer', title: 'Manufacturer', width: 150, sort: true },
+                    { field: 'product', title: 'Product', width: 200, sort: true },
+                    { field: 'vid_Hex', title: 'Vid', width: 100, sort: true },
+                    { field: 'pid_Hex', title: 'Pid', width: 100 },
+                    { field: 'serialNumber', title: 'SerialNumber', width: 250, sort: true },
+                    { field: 'requestUserEmail', title: 'UserEmail', width: 250, sort: true },
+                    { field: 'computerName', title: 'Computer', width: 150, sort: true },
+                    { field: 'ip', title: 'IP', width: 150, sort: true },
+                    { fixed: 'right', title: 'Action', toolbar: '#action', width: 100 }
+                ]]
+            });
+
+            let btnUsb = $('[data-btn="click"]');
+            $(btnUsb).on('click', function () {
+                let url = $(this).attr('data-url');
+                tableIns.reload({
+                    url:url
+                })
+            })
+
+            miniTab.listen();
+        });             
+    </script>
+}

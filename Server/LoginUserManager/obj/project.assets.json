@@ -8461,11 +8461,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\LoginUserManager.csproj",
+      "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj",
       "projectName": "LoginUserManager",
-      "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\LoginUserManager.csproj",
+      "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj",
       "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-      "outputPath": "C:\\CodeRepos\\USBAdmin2\\Server\\LoginUserManager\\obj\\",
+      "outputPath": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
