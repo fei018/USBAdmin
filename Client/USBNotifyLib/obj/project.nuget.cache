@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4x79d8zqpfDdaNqxhsykyIOSZA3LPYl5WSWgzfA0k6Ejcipdb6fT67oEvBfe41TbbLIe+7zGiqwvXHr6im07+A==",
+  "dgSpecHash": "Ep1byPGzAR+xeyeJYi9poIZ1hifd2e9RKUszzYskt0opX2rQs39rT70Xs8DM4EEqrL03ieSdzM7iWAPO4PY6yw==",
   "success": true,
-  "projectFilePath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj",
+  "projectFilePath": "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\e_fei\\.nuget\\packages\\namedpipewrapper\\1.5.0\\namedpipewrapper.1.5.0.nupkg.sha512",
     "C:\\Users\\e_fei\\.nuget\\packages\\nativeusblib\\1.4.9\\nativeusblib.1.4.9.nupkg.sha512",

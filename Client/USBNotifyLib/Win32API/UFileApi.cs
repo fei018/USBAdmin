@@ -24,6 +24,7 @@ namespace USBNotifyLib.Win32API
         public const int FILE_ATTRIBUTE_READONLY = 0x1;
         public const int FILE_ATTRIBUTE_NORMAL = 0x80;
         public const int FILE_FLAG_OVERLAPPED = 0x40000000;
+        public const int FILE_FLAG_BACKUP_SEMANTICS = 0x02000000;
 
         public const int ERROR_IO_PENDING = 997;
 
@@ -38,7 +39,9 @@ namespace USBNotifyLib.Win32API
         #region readonly
         public static IntPtr CreateFile_ReadOnly(string devicePath)
         {
-            return CreateFile(devicePath, FILE_SHARE_READ, FILE_SHARE_READ, IntPtr.Zero, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, IntPtr.Zero);
+            return CreateFile(devicePath, GENERIC_READ|GENERIC_WRITE, FILE_SHARE_READ, IntPtr.Zero, OPEN_EXISTING, 
+                                FILE_ATTRIBUTE_NORMAL| FILE_FLAG_BACKUP_SEMANTICS
+                                , IntPtr.Zero);
         }
         #endregion
     }

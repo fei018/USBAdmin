@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HAXuXpBLXtrzc0w6dPqfjpagX6QLp0Ti8wC7xkf4qBcsEx+ykXgItpN4VDRPfsSMQRz/oUI41/CFuYCdtWS22w==",
+  "dgSpecHash": "c7FcgXw+23P2JMdYU/yjF6JVelTVOv61Je3cNLSL5hz+jUrzSiX/q7EZMDeiQUyLpjiaTp8U0lgGgLa48vnCRg==",
   "success": true,
-  "projectFilePath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBTestConsole\\USBTestConsole.csproj",
+  "projectFilePath": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\e_fei\\.nuget\\packages\\mailkit\\3.0.0\\mailkit.3.0.0.nupkg.sha512",
     "C:\\Users\\e_fei\\.nuget\\packages\\microsoft.windows.cswin32\\0.1.619-beta\\microsoft.windows.cswin32.0.1.619-beta.nupkg.sha512",

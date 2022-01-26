@@ -1107,11 +1107,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Client\\USBTestConsole\\USBTestConsole.csproj",
+      "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
       "projectName": "USBTestConsole",
-      "projectPath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBTestConsole\\USBTestConsole.csproj",
+      "projectPath": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
       "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-      "outputPath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBTestConsole\\obj\\",
+      "outputPath": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -1132,8 +1132,8 @@
       "frameworks": {
         "net461": {
           "projectReferences": {
-            "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj": {
-              "projectPath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj"
+            "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj": {
+              "projectPath": "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj"
             }
           }
         }

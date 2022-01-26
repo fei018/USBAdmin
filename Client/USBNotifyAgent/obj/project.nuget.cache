@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yKBPqzKZySZM1HMT9muwB2jOEGwNfmTpnnV2amZ57NvHX18b9kIuDa17wllPMAgm5Epct6vsjH3nkJc/8sOjlw==",
+  "dgSpecHash": "oDXF9MTiZKavyGql/x7sE+XhpT1hqf2HhcWILPpnfcQLuaMm/TFPVC8ArsF+mxax6Z18J+gAUKjiNZRwj5r1ZA==",
   "success": true,
-  "projectFilePath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyAgent\\USBNotifyAgent.csproj",
+  "projectFilePath": "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyAgent\\USBNotifyAgent.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\e_fei\\.nuget\\packages\\formsusbmonitor\\3.0.0\\formsusbmonitor.3.0.0.nupkg.sha512",
     "C:\\Users\\e_fei\\.nuget\\packages\\namedpipewrapper\\1.5.0\\namedpipewrapper.1.5.0.nupkg.sha512",

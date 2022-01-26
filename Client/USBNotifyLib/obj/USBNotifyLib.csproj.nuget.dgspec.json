@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj": {}
+    "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj": {}
   },
   "projects": {
-    "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj": {
+    "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj",
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj",
         "projectName": "USBNotifyLib",
-        "projectPath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\USBNotifyLib.csproj",
+        "projectPath": "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj",
         "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-        "outputPath": "C:\\CodeRepos\\USBAdmin2\\Client\\USBNotifyLib\\obj\\",
+        "outputPath": "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyLib\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -32,8 +32,8 @@
         "frameworks": {
           "net461": {
             "projectReferences": {
-              "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj": {
-                "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj"
+              "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj": {
+                "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj"
               }
             }
           }
@@ -69,11 +69,11 @@
         }
       }
     },
-    "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj": {
+    "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj",
+        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj",
         "projectName": "USBCommon",
-        "projectPath": "C:\\CodeRepos\\USBAdmin2\\Server\\Common\\USBCommon.csproj",
+        "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj",
         "frameworks": {
           "net461": {
             "projectReferences": {}
