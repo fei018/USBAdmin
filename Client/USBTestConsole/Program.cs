@@ -12,7 +12,8 @@ using USBNotifyLib.Win32API;
 using USBNotifyLib;
 using MailKit.Net.Smtp;
 using MimeKit;
-using USBNotifyLib.PrintMon;
+using USBNotifyLib.PrintJob;
+using System.Printing;
 
 namespace USBTestConsole
 {
@@ -24,9 +25,7 @@ namespace USBTestConsole
             {
                 Console.WriteLine("Start...");
 
-                CreateFile_OnlyRead();
-
-
+                PrinterHelp.DeleteOldTcpIPPrinters();
             }
             catch (Exception ex)
             {

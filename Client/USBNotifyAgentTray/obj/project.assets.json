@@ -275,8 +275,8 @@
     },
     "USBCommon/1.0.0": {
       "type": "project",
-      "path": "../Common/USBCommon.csproj",
-      "msbuildProject": "../Common/USBCommon.csproj"
+      "path": "../../Server/Common/USBCommon.csproj",
+      "msbuildProject": "../../Server/Common/USBCommon.csproj"
     },
     "USBNotifyLib/1.0.0": {
       "type": "project",
@@ -287,31 +287,30 @@
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.6.1": [
       "NamedPipeWrapper >= 1.5.0",
-      "USBCommon >= 1.0.0",
       "USBNotifyLib >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\e_fei\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\USBNotifyAgentTray\\USBNotifyAgentTray.csproj",
+      "projectUniqueName": "C:\\Code\\GitHub\\USBAdmin\\Client\\USBNotifyAgentTray\\USBNotifyAgentTray.csproj",
       "projectName": "USBNotifyAgentTray",
-      "projectPath": "C:\\CodeRepos\\USBAdmin\\USBNotifyAgentTray\\USBNotifyAgentTray.csproj",
-      "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-      "outputPath": "C:\\CodeRepos\\USBAdmin\\USBNotifyAgentTray\\obj\\",
+      "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Client\\USBNotifyAgentTray\\USBNotifyAgentTray.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Code\\GitHub\\USBAdmin\\Client\\USBNotifyAgentTray\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net461"
@@ -323,11 +322,8 @@
       "frameworks": {
         "net461": {
           "projectReferences": {
-            "C:\\CodeRepos\\USBAdmin\\Common\\USBCommon.csproj": {
-              "projectPath": "C:\\CodeRepos\\USBAdmin\\Common\\USBCommon.csproj"
-            },
-            "C:\\CodeRepos\\USBAdmin\\USBNotifyLib\\USBNotifyLib.csproj": {
-              "projectPath": "C:\\CodeRepos\\USBAdmin\\USBNotifyLib\\USBNotifyLib.csproj"
+            "C:\\Code\\GitHub\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj": {
+              "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj"
             }
           }
         }

@@ -183,7 +183,7 @@ namespace USBNotifyLib
         private List<UsbDisk> Get_All_UsbDisk_DiskPath_by_BusType_USB_WMI()
         {
             var scope = new ManagementScope(@"\\.\ROOT\Microsoft\Windows\Storage");
-            var query = new ObjectQuery("SELECT * FROM MSFT_Disk where BusType=7"); // "BusType=7", 7=USB
+            var query = new ObjectQuery("SELECT * FROM MSFT_Disk where BusType=7"); // "BusType=7": USB Bus
             using (var searcher = new ManagementObjectSearcher(scope, query))
             {
                 using (var disks = searcher.Get())

@@ -15,9 +15,11 @@ namespace USBNotifyLib
 
         public string BiosSerial { get; set; }
 
+        public string MacAddress { get; set; }
+
         public string IPAddress { get; set; }
 
-        public string MacAddress { get; set; }
+        public string IPv4Mask { get; set; }
 
         public string NetwordAddress { get; set; }
 

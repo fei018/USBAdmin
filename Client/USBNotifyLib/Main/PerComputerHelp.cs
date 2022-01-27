@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace USBNotifyLib
 {
@@ -69,8 +67,8 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region + private static void SetNetworkInfo()
-        private static void SetNetworkInfo(PerComputer com)
+        #region + public static void SetNetworkInfo()
+        public static void SetNetworkInfo(PerComputer com)
         {
             var nic = NetworkInterface.GetAllNetworkInterfaces()
                                     .Where(n => n.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
@@ -98,8 +96,11 @@ namespace USBNotifyLib
             // set IP Address
             com.IPAddress = ipV4.Address.ToString();
 
+            // IPv4Mask
+            com.IPv4Mask = ipV4.IPv4Mask.ToString();
+
             // set NetwordAddress
-            com.NetwordAddress = GetNetworkAddress(ipV4.Address, ipV4.IPv4Mask).ToString();            
+            com.NetwordAddress = GetNetworkAddress(ipV4.Address, ipV4.IPv4Mask).ToString();
         }
         #endregion
 
@@ -160,7 +161,7 @@ namespace USBNotifyLib
         /// <param name="address"></param>
         /// <param name="subnetMask"></param>
         /// <returns></returns>
-        private static IPAddress GetNetworkAddress(IPAddress address, IPAddress subnetMask)
+        public static IPAddress GetNetworkAddress(IPAddress address, IPAddress subnetMask)
         {
             byte[] ipAdressBytes = address.GetAddressBytes();
             byte[] subnetMaskBytes = subnetMask.GetAddressBytes();

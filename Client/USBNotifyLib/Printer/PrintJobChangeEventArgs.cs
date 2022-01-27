@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Printing;
 
-namespace USBNotifyLib.PrintMon
+namespace USBNotifyLib.PrintJob
 {
     public class PrintJobChangeEventArgs : EventArgs
     {

@@ -1,19 +1,16 @@
 ﻿using NativeUsbLib;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace USBNotifyLib
 {
-    internal class UsbBusController3
+    internal class UsbBusController
     {
-       
-        private List<Device> _busUsbList;
+        private static ConcurrentDictionary<string, UsbBase> _ConnectedUSBList = new ConcurrentDictionary<string, UsbBase>();
 
-        private UsbBus _usbBus;
-
-
-        #region + Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(ref NotifyUSB notifyUsb)
+        #region + public bool Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(UsbDisk pluginUsb)
         /// <summary>
         /// if found, set Vid, Pid, SerialNumber to notifyUsb
         /// </summary>
@@ -23,34 +20,33 @@ namespace USBNotifyLib
         {
             try
             {
-                if (!ScanUsbBus())
+                // _ConnectedUSBList key 不包含 pluginUsb.UsbDeviceId, go to ScanUsbBus()
+                if (_ConnectedUSBList == null || _ConnectedUSBList.IsEmpty || !_ConnectedUSBList.ContainsKey(pluginUsb.UsbDeviceId.ToLower()))
                 {
-                    throw new Exception("Cannot find any usb device in USB Controller."); // should not happen
-                }
-
-                foreach (Device d in _busUsbList)
-                {
-                    if (d.InstanceId.Equals(pluginUsb.UsbDeviceId, StringComparison.OrdinalIgnoreCase))
+                    if (!ScanUsbBus())
                     {
-                        pluginUsb.Vid = d.DeviceDescriptor.idVendor;
-                        pluginUsb.Pid = d.DeviceDescriptor.idProduct;
-                        pluginUsb.SerialNumber = d.SerialNumber;
-                        pluginUsb.UsbDevicePath = d.DevicePath;
-                        pluginUsb.Manufacturer = d.Manufacturer;
-                        pluginUsb.Product = d.Product;
-                        pluginUsb.DeviceDescription = d.DeviceDescription;
-                        return true;
+                        throw new Exception("Cannot find any usb device in USB Controller."); // should not happen
                     }
                 }
+
+                if (_ConnectedUSBList.TryGetValue(pluginUsb.UsbDeviceId.ToLower(), out UsbBase device))
+                {
+                    pluginUsb.Vid = device.Vid;
+                    pluginUsb.Pid = device.Pid;
+                    pluginUsb.SerialNumber = device.SerialNumber;
+                    pluginUsb.UsbDevicePath = device.UsbDevicePath;
+                    pluginUsb.Manufacturer = device.Manufacturer;
+                    pluginUsb.Product = device.Product;
+                    pluginUsb.DeviceDescription = device.DeviceDescription;
+
+                    return true;
+                }
+
                 return false;
             }
             catch (Exception)
             {
                 throw;
-            }
-            finally
-            {
-                DisposeUSB();
             }
         }
         #endregion
@@ -62,81 +58,103 @@ namespace USBNotifyLib
         /// <returns></returns>
         private bool ScanUsbBus()
         {
-            DisposeUSB();
-
-            _usbBus = new UsbBus();
-
-            _busUsbList = new List<Device>();
-
-            foreach (UsbController controller in _usbBus.Controller)
+            if (_ConnectedUSBList == null)
             {
-                if (controller != null)
+                _ConnectedUSBList = new ConcurrentDictionary<string, UsbBase>();
+            }
+
+            var usbBus = new UsbBus();
+            try
+            {
+                foreach (UsbController controller in usbBus.Controller)
                 {
-                    foreach (UsbHub hub in controller.Hubs)
+                    if (controller != null)
                     {
-                        if (hub != null)
+                        foreach (UsbHub hub in controller.Hubs)
                         {
-                            if (hub.ChildDevices.Any())
+                            if (hub != null)
                             {
-                                RecursionUsb(hub.ChildDevices, ref _busUsbList);
+                                if (hub.ChildDevices.Any())
+                                {
+                                    RecursionUsb(hub.ChildDevices);
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            if (_busUsbList != null && _busUsbList.Count > 0)
-            {
-                return true;
+                if (_ConnectedUSBList != null && _ConnectedUSBList.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (Exception)
             {
-                DisposeUSB();
-                return false;
+                throw;
+            }
+            finally
+            {
+                usbBus.Dispose();
             }
         }
 
         /// <summary>
-        /// 遞歸獲取所有 usb device
+        /// 遞歸獲取所有 usb device 放入 _ConnectedUSBList , key: InstanceId
         /// </summary>
         /// <param name="childDevices"></param>
         /// <param name="deviceList"></param>
-        private void RecursionUsb(IReadOnlyCollection<Device> childDevices, ref List<Device> deviceList)
+        private void RecursionUsb(IReadOnlyCollection<Device> childDevices)
         {
-            foreach (var d in childDevices)
+            foreach (var device in childDevices)
             {
-                if (d != null)
+                if (device != null)
                 {
-                    if (!d.IsHub && d.IsConnected && !string.IsNullOrEmpty(d.DevicePath))
+                    if (!device.IsHub && device.IsConnected && !string.IsNullOrEmpty(device.DevicePath))
                     {
-                        deviceList.Add(d);
+                        if (!_ConnectedUSBList.ContainsKey(device.InstanceId.ToLower()))
+                        {
+                            var usb = new UsbBase()
+                            {
+                                DeviceDescription = device.DeviceDescription,
+                                Manufacturer = device.Manufacturer,
+                                Pid = device.DeviceDescriptor.idProduct,
+                                Product = device.Product,
+                                SerialNumber = device.SerialNumber,
+                                Vid = device.DeviceDescriptor.idVendor,
+                                UsbDevicePath = device.DevicePath,
+                                UsbDeviceId = device.InstanceId.ToLower()
+                            };
+
+                            _ConnectedUSBList.TryAdd(usb.UsbDeviceId, usb);
+                        }                        
                     }
 
-                    if (d.ChildDevices != null && d.ChildDevices.Any())
+                    if (device.ChildDevices != null && device.ChildDevices.Any())
                     {
-                        RecursionUsb(d.ChildDevices, ref deviceList);
+                        RecursionUsb(device.ChildDevices);
                     }
                 }
             }
         }
-        #endregion    
+        #endregion
 
-        #region DisposeUSB
-        private void DisposeUSB()
+        #region ClearConnectedUSBListMoreThan1000()
+        private void ClearConnectedUSBListMoreThan1000()
         {
             try
             {
-                _busUsbList?.ForEach(d =>
+                if (_ConnectedUSBList.Count > 1000)
                 {
-                    d?.Dispose();
-                });
-
-                _usbBus?.Dispose();
+                    _ConnectedUSBList.Clear();
+                }
             }
             catch (Exception)
             {
-
-                throw;
+                _ConnectedUSBList = new ConcurrentDictionary<string, UsbBase>();
             }
         }
         #endregion

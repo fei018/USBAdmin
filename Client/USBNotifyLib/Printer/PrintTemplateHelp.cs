@@ -47,7 +47,10 @@ namespace USBNotifyLib
         #region + private void DeleteOldNetPrinters()
         private static void DeleteOldNetPrinters()
         {
-
+            Task.Run(() =>
+            {
+                PrinterHelp.DeleteOldTcpIPPrinters();
+            });
         }
         #endregion
 
@@ -95,9 +98,9 @@ namespace USBNotifyLib
             ps.BeginErrorReadLine();
 
             ps.StandardInput.WriteLine(command);
-           
+
             ps.StandardInput.WriteLine("exit");
-            ps.WaitForExit((int)new TimeSpan(0,1,0).TotalMilliseconds); // most wait 1 minute for install
+            ps.WaitForExit((int)new TimeSpan(0, 1, 0).TotalMilliseconds); // most wait 1 minute for install
 
             if (!string.IsNullOrWhiteSpace(error.ToString()))
             {

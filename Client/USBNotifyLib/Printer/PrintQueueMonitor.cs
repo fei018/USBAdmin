@@ -6,7 +6,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace USBNotifyLib.PrintMon
+namespace USBNotifyLib.PrintJob
 {
     public delegate void PrintJobStatusChanged(object Sender, PrintJobChangeEventArgs e);
 
