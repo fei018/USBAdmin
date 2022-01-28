@@ -1,0 +1,72 @@
+﻿@model LoginUserManager.LoginUser
+
+@{
+    var user = Model;
+}
+
+<div style="max-width:600px">
+    <form class="layui-form" method="post" action="~/Account/Setting">
+        <div class="layui-form layuimini-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">LoginName</label>
+                <div class="layui-input-inline">
+                    <input type="text" asp-for="@Model.Name" lay-verify="required" lay-reqtext="required" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">Password</label>
+                <div class="layui-input-block">
+                    <input type="password" asp-for="@Model.Password" placeholder="Not change password by empty" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">Role</label>
+                <div class="layui-input-inline">
+                    <select asp-for="@Model.Role" lay-verify="required">
+                        <option value="@LoginUserManager.RolesName.RoleAdmin">ADMIN</option>
+                        <option value="@LoginUserManager.RolesName.RoleNormal">NORMAL</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">EmailAddress</label>
+                <div class="layui-input-block">
+                    <input type="email" asp-for="@Model.EmailAddress" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button id="btnSaveSetting" type="button" class="layui-btn layui-btn-normal" lay-submit>Save</button>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="@Model.Id" />
+    </form>
+</div>
+
+
+@section Script{
+    <script>
+        layui.use(['form', 'layer'], function () {
+            var form = layui.form,
+                layer = layui.layer;
+
+            $('#btnSaveSetting').on('click', function () {
+
+                let url = $('form').attr('action');
+                let data = $('form').serializeArray();
+
+                $.post(url, data, function (json) {
+                    layer.alert(json.msg, { title: 'Message' });
+
+                    //window.location.reload();
+                }, 'json');
+            })
+        });
+    </script>
+}

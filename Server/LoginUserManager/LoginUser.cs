@@ -16,6 +16,9 @@ namespace LoginUserManager
         [SugarColumn(ColumnDataType = "varchar(20)")]
         public string Role { get; set; }
 
+        [SugarColumn(IsNullable = true)]
+        public string EmailAddress { get; set; }
+
         [SugarColumn(DefaultValue ="0")]
         public int LoginErrorCount { get; set; }
 

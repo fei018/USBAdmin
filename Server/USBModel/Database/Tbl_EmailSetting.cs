@@ -16,10 +16,13 @@ namespace USBModel
 
         public int Port { get; set; }
 
-        public string FromName { get; set; }
+        public string AdminName { get; set; }
 
+        /// <summary>
+        /// email 之間用 ; 分割
+        /// </summary>
         [SugarColumn(ColumnDataType = "nvarchar(max)")]
-        public string FromAddress { get; set; }
+        public string AdminEmailAddr { get; set; }
 
         [SugarColumn(IsNullable = true)]
         public string Account { get; set; }
@@ -36,30 +39,30 @@ namespace USBModel
 
         // IsIgnore
 
-        #region + public List<string> GetFromAddressList()
-        public List<string> GetFromAddressList()
+        #region + public List<string> GetAdminEmailAddressList()
+        public List<string> GetAdminEmailAddressList()
         {
-            if (string.IsNullOrWhiteSpace(FromAddress))
+            if (string.IsNullOrWhiteSpace(AdminEmailAddr))
             {
                 return null;
             }
 
-            var list = FromAddress.Split(';');
+            var list = AdminEmailAddr.Split(';');
 
-            List<string> froms = new List<string>();
+            List<string> emails = new List<string>();
             if (list.Length > 0)
             {
                 foreach (var l in list)
                 {
-                    froms.Add(l.Trim());
+                    emails.Add(l.Trim());
                 }
             }
             else
             {
-                froms.Add(FromAddress);
+                emails.Add(AdminEmailAddr);
             }
 
-            return froms;
+            return emails;
         }
         #endregion
 

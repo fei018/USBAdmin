@@ -471,3 +471,4 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\USBAdminWebMVC.dl
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\ref\USBAdminWebMVC.dll
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\USBAdminWebMVC.pdb
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\USBAdminWebMVC.genruntimeconfig.cache
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Account\Setting.cshtml.g.cs

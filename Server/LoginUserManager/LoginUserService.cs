@@ -109,6 +109,11 @@ namespace LoginUserManager
             claimIndentity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
             claimIndentity.AddClaim(new Claim(ClaimTypes.Role, user.Role));
 
+            if (!string.IsNullOrWhiteSpace(user.EmailAddress))
+            {
+                claimIndentity.AddClaim(new Claim(ClaimTypes.Email, user.EmailAddress));
+            }
+
             var principal = new ClaimsPrincipal(claimIndentity);
 
             //验证参数内容
@@ -184,36 +189,31 @@ namespace LoginUserManager
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="newUser"></param>
+        /// <param name="user"></param>
         /// <returns>LoginUser</returns>
-        public async Task<LoginResult> UpdateLoginUser(LoginUser newUser)
+        public async Task<LoginResult> UpdateLoginUser(LoginUser user)
         {
             var result = new LoginResult();
 
-            if (newUser.Id <= 0)
+            if (user.Id <= 0)
             {
-                return result.ReturnError("id <= 0");
+                return result.ReturnError("LoginUser Id <= 0");
             }
-
 
             try
             {
-                var user = await _tblLoginUser.GetByIdAsync(newUser.Id);
-                if (user == null)
+                var userInDb = await _tblLoginUser.GetByIdAsync(user.Id);
+
+                if (string.IsNullOrWhiteSpace(user.Password))
                 {
-                    return result.ReturnError("Update fail.");
+                    user.Password = userInDb.Password;
                 }
 
-                if (string.IsNullOrWhiteSpace(newUser.Password))
-                {
-                    newUser.Password = user.Password;
-                }
-
-                var up = await _tblLoginUser.UpdateAsync(newUser);
+                var up = await _tblLoginUser.UpdateAsync(user);
 
                 if (up)
                 {
-                    return result.ReturnLoginUser(newUser);
+                    return result.ReturnLoginUser(user);
                 }
                 else
                 {
@@ -285,7 +285,7 @@ namespace LoginUserManager
         }
         #endregion
 
-        #region Get LoginUser
+        #region GetUserById(int id)
         public async Task<LoginResult> GetUserById(int id)
         {
             var result = new LoginResult();
@@ -297,6 +297,29 @@ namespace LoginUserManager
                 if (user == null)
                 {
                     return result.ReturnError($"Id={id} User not exist.");
+                }
+
+                return result.ReturnLoginUser(user);
+            }
+            catch (Exception ex)
+            {
+                return result.ReturnError(ex.Message);
+            }
+        }
+        #endregion
+
+        #region GetUserByName(string name)
+        public async Task<LoginResult> GetUserByName(string name)
+        {
+            var result = new LoginResult();
+
+            try
+            {
+                var user = await _tblLoginUser.GetSingleAsync(u => u.Name == name);
+
+                if (user == null)
+                {
+                    return result.ReturnError($"UserName={name} not exist.");
                 }
 
                 return result.ReturnLoginUser(user);

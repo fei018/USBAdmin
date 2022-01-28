@@ -111,7 +111,7 @@ namespace USBNotifyLib
         #region + private static void DeletePrinterByName(string name)
         private static object _Locker_DeletePrinter = new object();
 
-        private static void DeletePrinterByName(string name)
+        private static void DeletePrinter_ByName(string name)
         {
             lock (_Locker_DeletePrinter)
             {
@@ -125,6 +125,26 @@ namespace USBNotifyLib
                     {
                         printer.InvokeMethod("CancelAllJobs", null);
                         printer.Delete();
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region + private static void DeleteTcpIPPort_ByName(string name)
+        private static void DeleteTcpIPPort_ByName(string name)
+        {
+            lock (_Locker_DeletePrinter)
+            {
+                ManagementScope mgmtscope = new ManagementScope(@"\root\cimv2");
+                var query = new ObjectQuery($"Select * from Win32_TCPIPPrinterPort Where Name='{name}'");
+
+                using (var objsearcher = new ManagementObjectSearcher(mgmtscope, query))
+                using (var tcps = objsearcher.Get())
+                {
+                    foreach (ManagementObject tcp in tcps)
+                    {
+                        tcp.Delete();
                     }
                 }
             }
@@ -155,7 +175,9 @@ namespace USBNotifyLib
 
                         if (com.NetwordAddress != printerSubnet)
                         {
-                            DeletePrinterByName(printer.Name);
+                            DeletePrinter_ByName(printer.Name);
+
+                            DeleteTcpIPPort_ByName(printer.TCPIPPort.Name);
                         }
                     }
                     catch (Exception)

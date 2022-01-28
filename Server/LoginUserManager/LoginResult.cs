@@ -6,6 +6,9 @@ namespace LoginUserManager
     {
         public bool IsSucceed { get; set; }
 
+        /// <summary>
+        /// Succeed or Error Message
+        /// </summary>
         public string Message { get; set; }
 
         public LoginUser LoginUser { get; set; }

@@ -66,6 +66,10 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
+    <Reference Include="RemoteSupport, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\UVNCRemote\bin\Release\RemoteSupport.exe</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
@@ -137,11 +141,6 @@
       <Project>{bbdb4699-103a-4cd5-92db-6a9cf675161f}</Project>
       <Name>USBNotifyLib</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="RemoteSupport.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

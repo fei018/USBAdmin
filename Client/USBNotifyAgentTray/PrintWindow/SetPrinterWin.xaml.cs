@@ -40,6 +40,8 @@ namespace USBNotifyAgentTray.PrintWindow
         {
             try
             {
+                txtResult.Text = "";
+
                 EnableProgressBar(true);
 
                 Task.Run(() =>

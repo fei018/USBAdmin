@@ -6,47 +6,48 @@
     </fieldset>
 
     <form id="email" class="layui-form" action="~/EmailSetting/UpdateSetting" method="post">
-        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Id" value="@Model?.Id" />
 
         <div class="layui-form-item">
             <label class="layui-form-label">Smtp</label>
             <div class="layui-input-block">
-                <input type="text" name="Smtp" value="@Model.Smtp" required lay-verify="required" class="layui-input">
+                <input type="text" name="Smtp" value="@Model?.Smtp" required lay-verify="required" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">Port</label>
             <div class="layui-input-inline">
-                <input type="text" name="Port" value="@Model.Port" required lay-verify="required" class="layui-input">
+                <input type="text" name="Port" value="@Model?.Port" required lay-verify="required" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">AdminName</label>
             <div class="layui-input-inline">
-                <input type="text" name="FromName" value="@Model.FromName" required lay-verify="required" class="layui-input">
+                <input type="text" name="AdminName" value="@Model?.AdminName" required lay-verify="required" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">AdminEmail</label>
             <div class="layui-input-block">
-                <input type="text" name="FromAddress" value="@Model.FromAddress" placeholder="Admin email addresses, split ';'" required lay-verify="required" class="layui-input">
+                <input type="text" name="AdminEmailAddr" value="@Model?.AdminEmailAddr" required lay-verify="required" class="layui-input">
+                <tip>Admin email address list, split symbol is ;</tip>
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">NotifyUrl</label>
             <div class="layui-input-block">
-                <input type="text" name="NotifyUrl" value="@Model.NotifyUrl" required lay-verify="required" class="layui-input">
+                <input type="text" name="NotifyUrl" value="@Model?.NotifyUrl" required lay-verify="required" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">ApproveText</label>
             <div class="layui-input-block">
-                <textarea name="ApproveText" class="layui-textarea">@Model.ApproveText</textarea>
+                <textarea name="ApproveText" class="layui-textarea">@Model?.ApproveText</textarea>
             </div>
         </div>
 

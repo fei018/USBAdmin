@@ -1,6 +1,7 @@
 ﻿@{ 
-    var computerIndexUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/computerindex";
-    var comUsbHistoryUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/usbhistory";
+    var computerListUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/computerList";
+    var usbHistoryUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/usbhistory";
+    var deleteUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/delete";
 }
 
 <div>
@@ -12,8 +13,9 @@
     </table>
 </div>
 
-<script type="text/html" id="usbHistory">
-    <a style="color:blue;text-decoration:underline" href="javascript:;" layuimini-content-href="@comUsbHistoryUrl?comId={{d.id}}" data-title="History">Usb History</a>
+<script type="text/html" id="action">
+    <a class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs" href="javascript:;" layuimini-content-href="@usbHistoryUrl?Id={{d.id}}" data-title="History">USBHistory</a>
+    <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" data-id="{{d.id}}" onclick="delComputer(this)">Delete</button>
 </script>
 
 @section Script{
@@ -25,22 +27,35 @@
 
             table.render({
                 elem: '#index'
-                , url: '@computerIndexUrl'
+                , url: '@computerListUrl'
                 , page: true
                 , cols: [[
                     { field: 'hostName', title: 'HostName', width: 150, sort: true },
+                    { field: 'lastSeenString', title: 'LastSeen', width: 200, sort: true },
+                    { field: 'agentVersion', title: 'AgentVersion', width: 150, sort: true },
                     { field: 'domain', title: 'domain', width: 150, sort: true },
                     { field: 'biosSerial', title: 'BiosSerial', width: 150, sort: true },
                     { field: 'ipAddress', title: 'IP', width: 150, sort: true },
-                    { field: 'macAddress', title: 'MAC', width: 150 },
-                    { field: 'lastSeenString', title: 'LastSeen', width: 250, sort: true },
-                    { fixed: 'right', title: 'Action', toolbar: '#usbHistory', width: 150 }
+                    { field: 'macAddress', title: 'MAC', width: 180 },                   
+                    { fixed: 'right', title: 'Action', toolbar: '#action', width: 200 }
                 ]]
             });
 
             miniTab.listen();
             
         });
-    </script>
 
+        function delComputer(btn) {
+            layer.confirm('Delete ?', { icon: 3, title: 'Confirm' }, function (index) {
+                let id = $(btn).attr('data-id');
+
+                $.post('@deleteUrl', { Id: id }, function (json) {
+                    layer.alert(json.msg, { title: 'Message' });
+                    window.location.reload();
+                }, 'json');
+
+                layer.close(index);
+            });
+        }
+    </script>
 }

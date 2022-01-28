@@ -18,6 +18,7 @@
             <Canvas>
                 <Button x:Name="btnAddPrinter" Click="btnAddPrinter_Click" FontSize="14" Height="50px" Width="200" Canvas.Left="41" Canvas.Top="22">Add Local Network Printers</Button>
                 <Button x:Name="btnCancel" Click="btnCancel_Click" FontSize="14" Height="50px" Width="200px" Canvas.Left="41" Canvas.Top="95">Cancel</Button>
+               
             </Canvas>
         </Grid>
 

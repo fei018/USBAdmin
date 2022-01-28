@@ -45,7 +45,6 @@ C:\CodeRepos\USBAdmin2\Client\USBNotifyService\obj\Release\USBNotifyService.cspr
 C:\CodeRepos\USBAdmin2\publish\Agent\dll\HHITtoolsService.exe.config
 C:\CodeRepos\USBAdmin2\publish\Agent\dll\HHITtoolsService.exe
 C:\CodeRepos\USBAdmin2\Client\USBNotifyService\obj\Release\HHITtoolsService.exe
-C:\CodeRepos\USBAdmin\publish\Agent\dll\RemoteSupport.exe
 C:\CodeRepos\USBAdmin\publish\Agent\dll\HHITtoolsService.exe.config
 C:\CodeRepos\USBAdmin\publish\Agent\dll\HHITtoolsService.exe
 C:\CodeRepos\USBAdmin\Client\USBNotifyService\obj\Release\USBNotifyService.csproj.AssemblyReference.cache

@@ -100,7 +100,7 @@ namespace USBNotifyLib
             ps.StandardInput.WriteLine(command);
 
             ps.StandardInput.WriteLine("exit");
-            ps.WaitForExit((int)new TimeSpan(0, 1, 0).TotalMilliseconds); // most wait 1 minute for install
+            ps.WaitForExit((int)new TimeSpan(0, 5, 0).TotalMilliseconds); // most wait 5 minutes for install
 
             if (!string.IsNullOrWhiteSpace(error.ToString()))
             {

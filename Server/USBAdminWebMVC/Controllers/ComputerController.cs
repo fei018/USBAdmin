@@ -24,11 +24,11 @@ namespace USBAdminWebMVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ComputerIndex(int page, int limit)
+        public async Task<IActionResult> ComputerList(int page, int limit)
         {
             try
             {
-                var (totalCount, list) = await _usbDb.PerComputer_Get_All(page, limit);
+                var (totalCount, list) = await _usbDb.PerComputer_Get_List(page, limit);
                 return JsonResultHelp.LayuiTableData(totalCount, list);
             }
             catch (Exception ex)
@@ -39,11 +39,11 @@ namespace USBAdminWebMVC.Controllers
         #endregion
 
         #region UsbHistory
-        public async Task<IActionResult> UsbHistory(int comId)
+        public async Task<IActionResult> UsbHistory(int Id)
         {
             try
             {
-                var query = await _usbDb.PerComputer_Get_ById(comId);
+                var query = await _usbDb.PerComputer_Get_ById(Id);
                 return View(query);
             }
             catch (Exception)
@@ -64,6 +64,21 @@ namespace USBAdminWebMVC.Controllers
             {
 
                 throw;
+            }
+        }
+        #endregion
+
+        #region Delete()
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _usbDb.PerComputer_Delete_ById(id);
+                return Json(new { msg = "Delete succeed." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { msg = ex.Message });
             }
         }
         #endregion

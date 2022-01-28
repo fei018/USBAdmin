@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using USBModel;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace USBAdminWebMVC
 {
@@ -13,20 +15,24 @@ namespace USBAdminWebMVC
     {
         private readonly string _smtp;
         private readonly int _port;
-        private readonly List<string> _fromAdminAdress;
+        private readonly List<string> _adminEmailAdressList;
         private readonly string _notifyUrl;
         private readonly string _adminName;
-        private readonly Tbl_EmailSetting _emailDb;
+        private readonly Tbl_EmailSetting _emailSetting;
 
-        public EmailHelp(USBAdminDatabaseHelp databaseHelp)
+        private readonly HttpContext _httpContext;
+
+        public EmailHelp(IHttpContextAccessor httpContextAccessor, USBAdminDatabaseHelp databaseHelp)
         {
-            _emailDb = databaseHelp.EmailSetting_Get().Result;
+            _emailSetting = databaseHelp.EmailSetting_Get().Result;
+            
+            _smtp = _emailSetting.Smtp;
+            _port = _emailSetting.Port;
+            _adminEmailAdressList = _emailSetting.GetAdminEmailAddressList();
+            _notifyUrl = _emailSetting.NotifyUrl;
+            _adminName = _emailSetting.AdminName;
 
-            _smtp = _emailDb.Smtp;
-            _port = _emailDb.Port;
-            _fromAdminAdress = _emailDb.GetFromAddressList();
-            _notifyUrl = _emailDb.NotifyUrl;
-            _adminName = _emailDb.FromName;
+            _httpContext = httpContextAccessor.HttpContext;
         }
 
         #region private async Task SendEmail(string subject, string content, string toAddress = null, List<string> toAddressList = null)
@@ -34,11 +40,21 @@ namespace USBAdminWebMVC
         {
             try
             {
+                var loginUserEmail = _httpContext?.User?.Claims?.First(c => c.Type == ClaimTypes.Email).Value;
+
                 MimeMessage message = new MimeMessage();
 
-                MailboxAddress from = new MailboxAddress(_adminName, _fromAdminAdress.First());
-                message.From.Add(from);
-
+                if (string.IsNullOrWhiteSpace(loginUserEmail))
+                {
+                    MailboxAddress from = new MailboxAddress(_adminName, loginUserEmail);
+                    message.From.Add(from);
+                }
+                else
+                {
+                    MailboxAddress from = new MailboxAddress(_adminName, _adminEmailAdressList.First());
+                    message.From.Add(from);
+                }
+                
                 if (!string.IsNullOrWhiteSpace(toAddress))
                 {
                     message.To.Add(new MailboxAddress(toAddress, toAddress));
@@ -95,7 +111,7 @@ namespace USBAdminWebMVC
                 // send to admin
                 body.AppendLine("Approve or Reject Url: " + _notifyUrl + "/" + usb.Id);
 
-                await SendEmail(subject, body.ToString(), null, _fromAdminAdress);
+                await SendEmail(subject, body.ToString(), null, _adminEmailAdressList);
             }
             catch (Exception ex)
             {
@@ -125,7 +141,7 @@ namespace USBAdminWebMVC
 
                 if (usb.RequestState == UsbRequestStateType.Approve)
                 {
-                    body.AppendLine(_emailDb.ApproveText);
+                    body.AppendLine(_emailSetting.ApproveText);
                 }
 
                 if (usb.RequestState == UsbRequestStateType.Reject)

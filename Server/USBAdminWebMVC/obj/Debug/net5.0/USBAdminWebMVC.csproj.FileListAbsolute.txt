@@ -473,3 +473,4 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\ref\USBAdminWebMVC.
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.pdb
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.genruntimeconfig.cache
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\USB\UsbRequest.cshtml.g.cs
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Account\Setting.cshtml.g.cs

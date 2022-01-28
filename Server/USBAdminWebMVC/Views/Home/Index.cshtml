@@ -1,7 +1,10 @@
 ﻿@{ 
     Layout = null;
 
+    string loginName = User?.Identity?.Name ?? "Null";
+
     var menuUrl = USBAdminHelp.WebHttpUrlPrefix + "/home/initmenu";
+    var accountSettingUrl = USBAdminHelp.WebHttpUrlPrefix + "/Account/Setting";
 }
 
 <!DOCTYPE html>
@@ -57,13 +60,13 @@
                     </li>
 
                     <li class="layui-nav-item layuimini-setting">
-                        <a href="javascript:;">admin</a>
+                        <a href="javascript:;">@loginName</a>
                         <dl class="layui-nav-child">
                             <!-- <dd>
                                 <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
                             </dd> -->
                             <dd>
-                                <a href="javascript:;" layuimini-content-href="" data-title="ChangePassword" data-icon="fa fa-gears">ChangePassword</a>
+                                <a href="javascript:;" layuimini-content-href="@accountSettingUrl" data-title="Setting" data-icon="fa fa-gears">Setting</a>
                             </dd>
                             <dd>
                                 <hr>

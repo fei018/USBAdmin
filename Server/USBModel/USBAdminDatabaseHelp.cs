@@ -47,7 +47,7 @@ namespace USBModel
                     _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_EmailSetting>();
                     _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PrintTemplate>();
 
-                    _db.CodeFirst.InitTables<LoginUser>();
+                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<LoginUser>();
                     _db.CodeFirst.InitTables<LoginErrorCountLimit>();
                 }
             }
@@ -564,13 +564,15 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<(int totalCount,List<Tbl_PerComputer> list)> PerComputer_Get_All(int index, int size)
-        public async Task<(int totalCount, List<Tbl_PerComputer> list)> PerComputer_Get_All(int index, int size)
+        #region + public async Task<(int totalCount,List<Tbl_PerComputer> list)> PerComputer_Get_List(int index, int size)
+        public async Task<(int totalCount, List<Tbl_PerComputer> list)> PerComputer_Get_List(int index, int size)
         {
             try
             {
                 var total = new RefAsync<int>();
-                var query = await _db.Queryable<Tbl_PerComputer>().ToPageListAsync(index, size, total);
+                var query = await _db.Queryable<Tbl_PerComputer>()
+                                        .OrderBy(c=>c.LastSeen, OrderByType.Desc)
+                                        .ToPageListAsync(index, size, total);
 
                 if (query == null || query.Count <= 0)
                 {
@@ -636,6 +638,26 @@ namespace USBModel
         }
         #endregion
 
+        #region + public async Task PerComputer_Delete_ById(int id)
+        public async Task PerComputer_Delete_ById(int id)
+        {
+            try
+            {
+                if (await _db.Deleteable<Tbl_PerComputer>().In(c => c.Id, id).ExecuteCommandHasChangeAsync())
+                {
+                    return;
+                }
+                else
+                {
+                    throw new Exception("Computer delete fail. Id: " + id);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
 
         // AgentSetting
 
@@ -690,11 +712,6 @@ namespace USBModel
             {
                 var query = await _db.Queryable<Tbl_EmailSetting>().FirstAsync();
 
-                if (query == null)
-                {
-                    throw new Exception("Cannot find Tbl_EmailSetting.");
-                }
-
                 return query;
             }
             catch (Exception)
@@ -709,14 +726,28 @@ namespace USBModel
         {
             try
             {
-                var isUpdate = await _db.Updateable(email).ExecuteCommandHasChangeAsync();
+                Tbl_EmailSetting email2 = null;
 
-                if (!isUpdate)
+                if (email.Id <= 0)
                 {
-                    throw new Exception("Tbl_EmailSetting update fail.");
+                    email2 = await _db.Insertable(email).ExecuteReturnEntityAsync();
+
+                    if (email2 == null)
+                    {
+                        throw new Exception("EmailSetting insert fail.");
+                    }
+                }
+                else
+                {
+                    var isUpdate = await _db.Updateable(email).ExecuteCommandHasChangeAsync();
+
+                    if (!isUpdate)
+                    {
+                        throw new Exception("EmailSetting update fail.");
+                    }
                 }
 
-                return email;
+                return email2;
             }
             catch (Exception)
             {

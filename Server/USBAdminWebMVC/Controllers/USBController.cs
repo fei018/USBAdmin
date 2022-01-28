@@ -11,13 +11,10 @@ namespace USBAdminWebMVC.Controllers
     public class USBController : Controller
     {
         private readonly USBAdminDatabaseHelp _usbDb;
-        private readonly HttpContext _httpContext;
         private readonly EmailHelp _email;
 
-        public USBController(IHttpContextAccessor httpContextAccessor, USBAdminDatabaseHelp usbDb, EmailHelp emailHelp)
+        public USBController(USBAdminDatabaseHelp usbDb, EmailHelp emailHelp)
         {
-            _httpContext = httpContextAccessor.HttpContext;
-
             _usbDb = usbDb;          
             _email = emailHelp;
         }
