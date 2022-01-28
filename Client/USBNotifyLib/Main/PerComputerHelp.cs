@@ -154,7 +154,7 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region + private static IPAddress GetNetworkAddress(IPAddress address, IPAddress subnetMask)
+        #region + public static IPAddress GetNetworkAddress(IPAddress address, IPAddress subnetMask)
         /// <summary>
         /// https://docs.microsoft.com/en-us/archive/blogs/knom/ip-address-calculations-with-c-subnetmasks-networks
         /// </summary>

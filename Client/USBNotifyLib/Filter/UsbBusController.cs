@@ -58,6 +58,8 @@ namespace USBNotifyLib
         /// <returns></returns>
         private bool ScanUsbBus()
         {
+            ClearConnectedUSBListMoreThan1000();
+
             if (_ConnectedUSBList == null)
             {
                 _ConnectedUSBList = new ConcurrentDictionary<string, UsbBase>();
