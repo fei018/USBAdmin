@@ -53,6 +53,7 @@
     <Compile Include="Main\AgentUpdate.cs" />
     <Compile Include="Main\AgentManager.cs" />
     <Compile Include="Main\AgentTimer.cs" />
+    <Compile Include="Printer\IPPrinterInfo.cs" />
     <Compile Include="Printer\PrinterHelp.cs" />
     <Compile Include="Printer\PrinterInfo.cs" />
     <Compile Include="Printer\PrintTemplateHelp.cs" />

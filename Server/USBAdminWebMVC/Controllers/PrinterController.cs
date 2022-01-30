@@ -101,5 +101,23 @@ namespace USBAdminWebMVC.Controllers
             }
         }
         #endregion
+
+        //
+
+        #region MyRegion
+        public async Task<IActionResult> Site()
+        {
+            try
+            {
+                var vms = await _usbDb.IPPrinterSiteVM_Get();
+                return View(vms);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+        #endregion
     }
 }

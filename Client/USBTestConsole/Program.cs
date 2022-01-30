@@ -14,6 +14,9 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using USBNotifyLib.PrintJob;
 using System.Printing;
+using System.Management;
+using System.Printing.IndexedProperties;
+using System.Collections;
 
 namespace USBTestConsole
 {
@@ -25,16 +28,26 @@ namespace USBTestConsole
             {
                 Console.WriteLine("Start...");
 
-                PrinterHelp.DeleteOldTcpIPPrinters();
+                //var p = new IPPrinterInfo();
+                //p.PrinterName = "test printer";
+                //p.PrinterDrvName = "RICOH PCL6 V4 UniversalDriver V4.10";
+                //p.PrinterDrvINFPath = @"C:\temp\ricoh\disk1\r4600.inf";
+                //p.PrinterPortIPAddr = "10.20.4.5";
+
+                //PrinterHelp.AddNewPrinter(p);
+
+                Console.WriteLine(Guid.NewGuid().ToString());
+
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                Console.WriteLine("!!!!!!!!!!!!!!!!!!$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                //Console.WriteLine("!!!!!!!!!!!!!!!!!!$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             }
 
             Console.WriteLine("##############################################");
-           Console.ReadLine();
+            Console.ReadLine();
         }
 
         #region UsbFormProcess
@@ -141,7 +154,7 @@ namespace USBTestConsole
 
                 using (SmtpClient client = new SmtpClient())
                 {
-                    client.Connect("mailgw.hiphing.com.hk", 25,false);
+                    client.Connect("mailgw.hiphing.com.hk", 25, false);
                     //client.Authenticate("e_fei", "fei");
 
                     client.Send(message);
@@ -153,7 +166,7 @@ namespace USBTestConsole
 
                 throw;
             }
-               
+
         }
         #endregion
 
@@ -169,7 +182,7 @@ namespace USBTestConsole
 
         private static void PrintMon_OnJobStatusChange(object Sender, PrintJobChangeEventArgs e)
         {
-            if (e.JobInfo != null && e.JobInfo.JobStatus == (System.Printing.PrintJobStatus.Printing| System.Printing.PrintJobStatus.Retained))
+            if (e.JobInfo != null && e.JobInfo.JobStatus == (System.Printing.PrintJobStatus.Printing | System.Printing.PrintJobStatus.Retained))
             {
                 Console.WriteLine("JobStatus: " + e.JobInfo.JobStatus);
                 Console.WriteLine("JobName: " + e.JobInfo.JobName);
@@ -192,6 +205,75 @@ namespace USBTestConsole
         static void Template()
         {
             //PrintTemplateHelp.Start();
+        }
+        #endregion
+
+        #region print driver
+        static void PrintDriver()
+        {
+            ManagementClass mc = new ManagementClass(@"\\.\root\Cimv2:Win32_PrinterConfiguration");
+            var objs = mc.GetInstances();
+            foreach (ManagementBaseObject o in objs)
+            {
+                var ps = o.Properties;
+                foreach (var p in ps)
+                {
+                    Console.WriteLine(p.Name+" = "+ p.Value);
+                }
+                break;
+            }
+
+            //ManagementScope mgmtscope = new ManagementScope(@"\root\StandardCimv2");
+            //var query = new ObjectQuery("Select * from MSFT_Printer");
+
+            //using (var objsearcher = new ManagementObjectSearcher(mgmtscope, query))
+            //using (var drivers = objsearcher.Get())
+            //{
+            //    foreach (ManagementObject driver in drivers)
+            //    {
+            //        var ev = driver.ge
+            //    }
+            //}
+
+            //ManagementClass mc = new ManagementClass(@"\\.\root\StandardCimv2:MSFT_PrinterConfiguration");
+            //var inParams = mc.GetMethodParameters("SetByPrinterName");
+            //inParams["Color"] = false;
+            //inParams["PrinterName"] = "Ricoh PCL6 V4";
+            //inParams["DuplexingMode"] = 3;
+            //mc.InvokeMethod("SetByPrinterName", inParams, null);
+
+            //using (ManagementClass mc = new ManagementClass(@"\root\cimv2:Win32_PrinterDriver"))
+            //using (var dirver = mc.CreateInstance())
+            //{
+            //    dirver["Name"] = "RICOH MP C4504 PCL 6";
+            //    dirver["InfName"] = @"C:\temp\z94580L16\disk1\oemsetup.inf";
+            //    //dirver["FilePath"] = "";
+
+            //    var inParam = mc.GetMethodParameters("AddPrinterDriver");
+            //    inParam["DriverInfo"] = dirver;
+
+            //    var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromSeconds(30));
+            //    mc.InvokeMethod("AddPrinterDriver", inParam, invokeOption);
+            //}
+
+
+            //using (ManagementClass portClass = new ManagementClass(@"\root\cimv2:Win32_TCPIPPrinterPort"))
+            //using (ManagementObject portObject = portClass.CreateInstance())
+            //{
+            //    portObject["Name"] = "test_10.20.11.111";
+            //    portObject["HostAddress"] = "174.30.164.15";
+            //    portObject["PortNumber"] = 9100;
+            //    portObject["Protocol"] = 1;
+            //    portObject["SNMPCommunity"] = "public";
+            //    portObject["SNMPEnabled"] = true;
+            //    portObject["SNMPDevIndex"] = 1;
+
+            //    PutOptions options = new PutOptions(null, TimeSpan.FromSeconds(10), false, PutType.UpdateOrCreate);
+            //    //options.Type = PutType.UpdateOrCreate;
+            //    //put a newly created object to WMI objects set             
+            //    portObject.Put(options);
+            //}
+
         }
         #endregion
     }

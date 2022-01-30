@@ -565,7 +565,7 @@ dmPanningHeight == {26}",
         public uint Version;
         public uint Flags;
         public uint Count;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)] // support 64bit system
         public PRINTER_NOTIFY_INFO_DATA[] aData;
     }
 

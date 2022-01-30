@@ -54,6 +54,7 @@
     <Compile Include="IPerUsbHistory.cs" />
     <Compile Include="MimeTypeMap.cs" />
     <Compile Include="IUsbInfo.cs" />
+    <Compile Include="IIPPrinterInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

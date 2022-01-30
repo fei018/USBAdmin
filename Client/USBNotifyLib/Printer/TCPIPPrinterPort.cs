@@ -1,4 +1,7 @@
-﻿namespace USBNotifyLib
+﻿using System;
+using System.Management;
+
+namespace USBNotifyLib
 {
     public class TCPIPPrinterPort
     {
@@ -7,5 +10,7 @@
         public string HostAddress { get; set; }
 
         public string PortNumber { get; set; }
+
+        
     }
 }

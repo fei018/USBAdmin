@@ -128,7 +128,8 @@ namespace USBNotifyLib
                 {
                     Converters = {
                         new AbstractJsonConverter<AgentSetting, IAgentSetting>(),
-                        new AbstractJsonConverter<PrintTemplate, IPrintTemplate>()
+                        new AbstractJsonConverter<PrintTemplate, IPrintTemplate>(),
+                        new AbstractJsonConverter<IPPrinterInfo, IIPPrinterInfo>()
                     }
                 };
 

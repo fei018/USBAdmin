@@ -18,6 +18,8 @@
 
         public IPrintTemplate PrintTemplate { get; set; }
 
+        public IIPPrinterInfo IPPrinterInfo { get; set; }
+
         public string DownloadFileBase64 { get; set; }
     }
 }

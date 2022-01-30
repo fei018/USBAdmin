@@ -46,3 +46,15 @@ C:\CodeRepos\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.
 C:\CodeRepos\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\ref\LoginUserManager.dll
 C:\CodeRepos\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.pdb
 C:\CodeRepos\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.csproj.AssemblyReference.cache
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\bin\Debug\net5.0\LoginUserManager.deps.json
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\bin\Debug\net5.0\LoginUserManager.dll
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\bin\Debug\net5.0\ref\LoginUserManager.dll
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\bin\Debug\net5.0\LoginUserManager.pdb
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.csproj.AssemblyReference.cache
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.AssemblyInfoInputs.cache
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.AssemblyInfo.cs
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.csproj.CoreCompileInputs.cache
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.dll
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\ref\LoginUserManager.dll
+C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.pdb

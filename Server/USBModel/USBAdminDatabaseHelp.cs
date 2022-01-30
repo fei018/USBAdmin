@@ -46,6 +46,8 @@ namespace USBModel
                     _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_UsbRequest>();
                     _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_EmailSetting>();
                     _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PrintTemplate>();
+                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterInfo>();
+                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterSite>();
 
                     _db.CodeFirst.SetStringDefaultLength(100).InitTables<LoginUser>();
                     _db.CodeFirst.InitTables<LoginErrorCountLimit>();
@@ -864,6 +866,133 @@ namespace USBModel
             try
             {
                 await _db.Deleteable<Tbl_PrintTemplate>().In(t => t.Id, id).ExecuteCommandAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        // IPPrinter
+
+        #region + public async Task<List<IPPrinterSiteVM>> IPPrinterSiteVM_Get()
+        public async Task<List<IPPrinterSiteVM>> IPPrinterSiteVM_Get()
+        {
+            try
+            {
+                var result = new List<IPPrinterSiteVM>();
+
+                var siteList = await _db.Queryable<Tbl_IPPrinterSite>().ToListAsync();
+
+                if (siteList == null || siteList.Count <= 0)
+                {
+                    throw new Exception("Cannot find any Tbl_IPPrinterSite.");
+                }
+
+                foreach (var site in siteList)
+                {
+                    var printers = await _db.Queryable<Tbl_IPPrinterInfo>().Where(p => p.SiteId == site.Id.ToString()).ToListAsync();
+
+                    var siteVM = new IPPrinterSiteVM(site, printers);
+
+                    result.Add(siteVM);
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public async Task<Tbl_IPPrinterSite> IPPrinterSite_Get_ById(int id)
+        public async Task<Tbl_IPPrinterSite> IPPrinterSite_Get_ById(int id)
+        {
+            try
+            {
+                var query = await _db.Queryable<Tbl_IPPrinterSite>().InSingleAsync(id);
+                if (query == null)
+                {
+                    throw new Exception("Cannot find the Tbl_IPPrinterSite, Id: " + id);
+                }
+
+                return query;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterSite_Get_BySubnetAddr(string subnetAddr)
+        public async Task<List<Tbl_IPPrinterInfo>> IPPrinterSite_Get_BySubnetAddr(string subnetAddr)
+        {
+            try
+            {
+                var site = await _db.Queryable<Tbl_IPPrinterSite>().FirstAsync(s => s.SubnetAddr == subnetAddr);
+                if (site == null)
+                {
+                    throw new Exception("Cannot find the PrinterSite, Subnet Address: " + subnetAddr);
+                }
+
+                var printers = await _db.Queryable<Tbl_IPPrinterInfo>().Where(p => p.SiteId == site.Id.ToString()).ToListAsync();
+                if (printers == null || printers.Count <= 0)
+                {
+                    throw new Exception("Cannot find any printers, subnet: " + subnetAddr);
+                }
+
+                return printers;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public async Task IPPrinterSite_Insert(Tbl_IPPrinterSite site)
+        public async Task IPPrinterSite_Insert(Tbl_IPPrinterSite site)
+        {
+            try
+            {
+                var insert = await _db.Insertable(site).ExecuteCommandIdentityIntoEntityAsync();
+                if (!insert)
+                {
+                    throw new Exception("Tbl_IPPrinterSite insert new fail.");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public async Task IPPrinterSite_Update(Tbl_IPPrinterSite site)
+        public async Task IPPrinterSite_Update(Tbl_IPPrinterSite site)
+        {
+            try
+            {
+                await _db.Updateable(site).ExecuteCommandAsync();
+                return;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public async Task IPPrinterSite_Delete_ById(int id)
+        public async Task IPPrinterSite_Delete_ById(int id)
+        {
+            try
+            {
+                await _db.Deleteable<Tbl_IPPrinterSite>().In(t => t.Id, id).ExecuteCommandAsync();
             }
             catch (Exception)
             {

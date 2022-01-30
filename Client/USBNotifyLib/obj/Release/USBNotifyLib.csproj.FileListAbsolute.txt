@@ -39,3 +39,6 @@ C:\CodeRepos\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.csproj.Assemb
 C:\CodeRepos\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.csproj.CoreCompileInputs.cache
 C:\CodeRepos\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.csproj.CopyComplete
 C:\CodeRepos\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.dll
+C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.csproj.AssemblyReference.cache
+C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.csproj.CoreCompileInputs.cache
+C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.dll

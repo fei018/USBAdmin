@@ -84,21 +84,29 @@ namespace USBNotifyLib.PrintJob
         #region StartMonitoring
         public void Start()
         {
-            OpenPrinter(_spoolerName, out _printerHandle, 0);
-            if (_printerHandle != IntPtr.Zero)
+            try
             {
-                //We got a valid Printer handle.  Let us register for change notification....
-                _changeHandle = FindFirstPrinterChangeNotification(_printerHandle, (int)PRINTER_CHANGES.PRINTER_CHANGE_JOB, 0, _notifyOptions);
-                // We have successfully registered for change notification.  Let us capture the handle...
-                _mrEvent.SafeWaitHandle = new Microsoft.Win32.SafeHandles.SafeWaitHandle(_changeHandle, false);
-                //Now, let us wait for change notification from the printer queue....
-                _waitHandle = ThreadPool.RegisterWaitForSingleObject(_mrEvent, new WaitOrTimerCallback(PrinterNotifyWaitCallback), _mrEvent, -1, true);
-            }
+                OpenPrinter(_spoolerName, out _printerHandle, 0);
+                if (_printerHandle != IntPtr.Zero)
+                {
+                    //We got a valid Printer handle.  Let us register for change notification....
+                    _changeHandle = FindFirstPrinterChangeNotification(_printerHandle, (int)PRINTER_CHANGES.PRINTER_CHANGE_JOB, 0, _notifyOptions);
+                    // We have successfully registered for change notification.  Let us capture the handle...
+                    _mrEvent.SafeWaitHandle = new Microsoft.Win32.SafeHandles.SafeWaitHandle(_changeHandle, false);
+                    //Now, let us wait for change notification from the printer queue....
+                    _waitHandle = ThreadPool.RegisterWaitForSingleObject(_mrEvent, new WaitOrTimerCallback(PrinterNotifyWaitCallback), _mrEvent, -1, true);
+                }
 
-            _spooler = new PrintQueue(new PrintServer(), _spoolerName);
-            foreach (PrintSystemJobInfo psi in _spooler.GetPrintJobInfoCollection())
+                _spooler = new PrintQueue(new PrintServer(), _spoolerName);
+                foreach (PrintSystemJobInfo psi in _spooler.GetPrintJobInfoCollection())
+                {
+                    objJobDict[psi.JobIdentifier] = psi.Name;
+                }
+            }
+            catch (Exception)
             {
-                objJobDict[psi.JobIdentifier] = psi.Name;
+
+                throw;
             }
         }
         #endregion
@@ -148,10 +156,14 @@ namespace USBNotifyLib.PrintJob
             #endregion 
 
             #region populate Notification Information
+
             //Now, let us initialize and populate the Notify Info data           
             PRINTER_NOTIFY_INFO info = (PRINTER_NOTIFY_INFO)Marshal.PtrToStructure(pNotifyInfo, typeof(PRINTER_NOTIFY_INFO)); // support 64bit
+
             long pData = (long)pNotifyInfo + Marshal.OffsetOf(typeof(PRINTER_NOTIFY_INFO), "aData").ToInt64();
+
             PRINTER_NOTIFY_INFO_DATA[] data = new PRINTER_NOTIFY_INFO_DATA[info.Count];
+
             for (uint i = 0; i < info.Count; i++)
             {
                 data[i] = (PRINTER_NOTIFY_INFO_DATA)Marshal.PtrToStructure((IntPtr)pData, typeof(PRINTER_NOTIFY_INFO_DATA));
@@ -166,27 +178,27 @@ namespace USBNotifyLib.PrintJob
                 if ((data[i].Field == (ushort)PRINTERJOBNOTIFICATIONTYPES.JOB_NOTIFY_FIELD_STATUS) &&
                     (data[i].Type == (ushort)PRINTERNOTIFICATIONTYPES.JOB_NOTIFY_TYPE))
                 {
-                    JOBSTATUS jStatus = (JOBSTATUS)Enum.Parse(typeof(JOBSTATUS), data[i].NotifyData.Data.cbBuf.ToString());
-                    int intJobID = (int)data[i].Id;
+                    JOBSTATUS jobStatus = (JOBSTATUS)Enum.Parse(typeof(JOBSTATUS), data[i].NotifyData.Data.cbBuf.ToString());
+                    int jobID = (int)data[i].Id;
                     string strJobName = "";
-                    PrintSystemJobInfo pji = null;
+                    PrintSystemJobInfo printJobInfo = null;
                     try
                     {
                         _spooler = new PrintQueue(new PrintServer(), _spoolerName);
-                        pji = _spooler.GetJob(intJobID);
-                        if (!objJobDict.ContainsKey(intJobID))
-                            objJobDict[intJobID] = pji.Name;
-                        strJobName = pji.Name;
+                        printJobInfo = _spooler.GetJob(jobID);
+                        if (!objJobDict.ContainsKey(jobID))
+                            objJobDict[jobID] = printJobInfo.Name;
+                        strJobName = printJobInfo.Name;
                     }
                     catch
                     {
-                        pji = null;
-                        objJobDict.TryGetValue(intJobID, out strJobName);
+                        printJobInfo = null;
+                        objJobDict.TryGetValue(jobID, out strJobName);
                         if (strJobName == null) strJobName = "";
                     }
 
                     //Let us raise the event
-                    OnJobStatusChange?.Invoke(this, new PrintJobChangeEventArgs(intJobID, strJobName, jStatus, pji));
+                    OnJobStatusChange?.Invoke(this, new PrintJobChangeEventArgs(jobID, strJobName, jobStatus, printJobInfo));
                 }
             }
             #endregion

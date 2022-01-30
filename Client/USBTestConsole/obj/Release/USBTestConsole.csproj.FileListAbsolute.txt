@@ -46,3 +46,8 @@ C:\CodeRepos\USBAdmin\Client\USBTestConsole\obj\Release\USBTestConsole.csproj.Co
 C:\CodeRepos\USBAdmin\Client\USBTestConsole\obj\Release\USBTestConsole.csproj.CopyComplete
 C:\CodeRepos\USBAdmin\Client\USBTestConsole\obj\Release\USBTestConsole.exe
 C:\CodeRepos\USBAdmin\Client\USBTestConsole\obj\Release\USBTestConsole.pdb
+C:\Code\GitHub\USBAdmin\Client\USBTestConsole\obj\Release\USBTestConsole.csproj.AssemblyReference.cache
+C:\Code\GitHub\USBAdmin\Client\USBTestConsole\obj\Release\USBTestConsole.GeneratedMSBuildEditorConfig.editorconfig
+C:\Code\GitHub\USBAdmin\Client\USBTestConsole\obj\Release\USBTestConsole.csproj.CoreCompileInputs.cache
+C:\Code\GitHub\USBAdmin\Client\USBTestConsole\obj\Release\USBTestConsole.exe
+C:\Code\GitHub\USBAdmin\Client\USBTestConsole\obj\Release\USBTestConsole.pdb

@@ -72,6 +72,12 @@
               "href": "/Printer/Template",
               "icon": "fa fa-list",
               "target": "_self"
+            },
+            {
+              "title": "Site",
+              "href": "/Printer/Site",
+              "icon": "fa fa-list",
+              "target": "_self"
             }
           ]
         }
