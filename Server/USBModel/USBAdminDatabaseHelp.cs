@@ -874,10 +874,10 @@ namespace USBModel
         }
         #endregion
 
-        // IPPrinter
+        // IPPrinterSite
 
-        #region + public async Task<List<IPPrinterSiteVM>> IPPrinterSiteVM_Get()
-        public async Task<List<IPPrinterSiteVM>> IPPrinterSiteVM_Get()
+        #region + public async Task<List<IPPrinterSiteVM>> IPPrinterSiteVM_GetList()
+        public async Task<List<IPPrinterSiteVM>> IPPrinterSiteVM_GetList()
         {
             try
             {
@@ -887,12 +887,14 @@ namespace USBModel
 
                 if (siteList == null || siteList.Count <= 0)
                 {
-                    throw new Exception("Cannot find any Tbl_IPPrinterSite.");
+                    throw new Exception("Tbl_IPPrinterSite is empty.");
                 }
 
                 foreach (var site in siteList)
                 {
-                    var printers = await _db.Queryable<Tbl_IPPrinterInfo>().Where(p => p.SiteId == site.Id.ToString()).ToListAsync();
+                    var printers = await _db.Queryable<Tbl_IPPrinterInfo>()
+                                            .Where(p => p.SiteId == site.Id.ToString())
+                                            .ToListAsync();
 
                     var siteVM = new IPPrinterSiteVM(site, printers);
 
@@ -959,6 +961,8 @@ namespace USBModel
         {
             try
             {
+                site.Id = Guid.NewGuid();
+
                 var insert = await _db.Insertable(site).ExecuteCommandIdentityIntoEntityAsync();
                 if (!insert)
                 {
@@ -977,6 +981,11 @@ namespace USBModel
         {
             try
             {
+                if (site.Id == Guid.Empty)
+                {
+                    throw new Exception("Id is empty.");
+                }
+
                 await _db.Updateable(site).ExecuteCommandAsync();
                 return;
             }
@@ -1000,5 +1009,53 @@ namespace USBModel
             }
         }
         #endregion
+
+        // IPPrinterInfo
+
+        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_GetList()
+        public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_GetList()
+        {
+            try
+            {
+                var list = await _db.Queryable<Tbl_IPPrinterInfo>().ToListAsync();
+                if (list == null || list.Count <= 0)
+                {
+                    throw new Exception("Tbl_IPPrinterInfo is empty.");
+                }
+
+                return list;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_GetList_BySiteId(string siteId)
+        public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_GetList_BySiteId(string siteId)
+        {
+            try
+            {
+                var list = await _db.Queryable<Tbl_IPPrinterInfo>()
+                                    .Where(p=>p.SiteId == siteId)
+                                    .ToListAsync();
+
+                if (list == null || list.Count <= 0)
+                {
+                    throw new Exception("Tbl_IPPrinterInfo is empty.");
+                }
+
+                return list;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+
     }
 }

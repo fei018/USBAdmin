@@ -16,7 +16,7 @@
     </fieldset>
 
     <div class="layui-input-inline">
-        <button class="layui-btn" type="button" onclick="newSite()">
+        <button class="layui-btn" type="button" onclick="siteAddNew()">
             <i class="layui-icon">&#xe654;</i> New Site
         </button>
     </div>
@@ -29,7 +29,7 @@
                 <tr>
                     <th lay-data="{field:'siteName' ,width:150, sort: true}">SiteName</th>
                     <th lay-data="{field:'subnetAddr' ,width:150, sort: true}">Subnet</th>
-                    <th lay-data="{field:'printerList' ,width:400 }">PrinterList</th>
+                    <th lay-data="{field:'id' ,width:400 }">Id</th>
                     <th lay-data="{field:'action' ,width:200, fixed:'right'}">Action</th>
                 </tr>
             </thead>
@@ -39,28 +39,10 @@
                     <tr>
                         <td>@site.SiteName</td>
                         <td>@site.SubnetAddr</td>
+                        <td>@site.Id</td>
                         <td>
-                            @{
-                                var printlist = site.PrinterList;
-                                if (printlist != null || printlist.Count > 0)
-                                {
-
-                                    <ul>
-                                        @foreach (var print in printlist)
-                                        {
-                                            <li>
-                                                <a data-id="@print.Id" href="javescript:;" onclick="">
-                                                    <span class="layui-font-blue">@print.PrinterName : @print.PortIPAddr</span>
-                                                </a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                            }
-                        </td>
-                        <td>
-                            <button data-id="@site.Id" type="button" class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm">Edit</button>
-                            <button data-id="@site.Id" type="button" class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm">Add</button>
+                            <button data-id="@site.Id" type="button" class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs">Edit</button>
+                            <button data-id="@site.Id" type="button" class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs">Add</button>
                         </td>
                     </tr>
                 }
@@ -92,15 +74,34 @@
     </script>
 
     <script>
-        function newSite() {
+        function isReloadPage(yesORno) {
+            if (yesORno === undefined) {
+                let reload = sessionStorage.getItem('isReloadPage');
+                if (reload === 'yes') {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                sessionStorage.setItem('isReloadPage', yesORno);
+            }
+        }
+
+        function siteAddNew() {
+            isReloadPage('no');
+
+            let siteAddNewTpl = document.getElementById('siteAddNewTpl').innerHTML;
+
             layer.open({
-                type: 2,
+                type: 1,
                 title: 'New Site',
                 shade: 0.3,
                 area: ['480px', '400px'],
-                content: '@siteNewUrl',
+                content: siteAddNewTpl,
                 end: function () {
-                    window.location.reload();
+                    if (isReloadPage() === 'yes') {
+                        window.location.reload();
+                    }
                 }
             });
         }
@@ -132,5 +133,36 @@
                 layer.close(index);
             });
         }
+
+        $('form').on('submit', function () {
+            isReloadPage('yes');
+        })
+    </script>
+
+    <script type="text/html" id="siteAddNewTpl">
+        <div style="padding:15px;">
+            <form class="layui-form" action="~/Printer/SiteAddNew" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">SiteName</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="SiteName" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Subnet</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="SubnetAddr" required lay-verify="required" placeholder="Subnet Address" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </script>
 }
+

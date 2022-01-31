@@ -109,7 +109,8 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                var vms = await _usbDb.IPPrinterSiteVM_Get();
+                var vms = await _usbDb.IPPrinterSiteVM_GetList();
+                
                 return View(vms);
             }
             catch (Exception ex)

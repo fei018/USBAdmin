@@ -598,3 +598,5 @@ C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.dl
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\ref\USBAdminWebMVC.dll
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.pdb
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.genruntimeconfig.cache
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\Site.cshtml.g.cs
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\SiteEdit.cshtml.g.cs
