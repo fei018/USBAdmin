@@ -5,14 +5,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">SiteName</label>
             <div class="layui-input-block">
-                <input type="text" name="SiteName" value="@Model?.SiteName" required lay-verify="required" class="layui-input">
+                <input type="text" name="SiteName" value="@Model.SiteName" required lay-verify="required" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">SubnetAddr</label>
             <div class="layui-input-block">
-                <input type="text" name="SubnetAddr" value="@Model?.SubnetAddr" required lay-verify="required" placeholder="Subnet Address" class="layui-input">
+                <input type="text" name="SubnetAddr" value="@Model.SubnetAddr" required lay-verify="required" placeholder="Subnet Address" class="layui-input">
             </div>
         </div>
 
@@ -22,6 +22,6 @@
             </div>
         </div>
 
-        <input type="hidden" name="Id" value="@Model?.Id" />
+        <input type="hidden" name="Id" value="@Model.Id" />
     </form>
 </div>

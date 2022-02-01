@@ -1,14 +1,14 @@
 {
   "format": 1,
   "restore": {
-    "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj": {}
+    "C:\\Code\\GitHub\\USBAdmin\\Server\\USBModel\\USBModel.csproj": {}
   },
   "projects": {
-    "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj": {
+    "C:\\Code\\GitHub\\USBAdmin\\Server\\Common\\USBCommon.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj",
+        "projectUniqueName": "C:\\Code\\GitHub\\USBAdmin\\Server\\Common\\USBCommon.csproj",
         "projectName": "USBCommon",
-        "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj",
+        "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\Common\\USBCommon.csproj",
         "frameworks": {
           "net461": {
             "projectReferences": {}
@@ -19,22 +19,22 @@
         "net461": {}
       }
     },
-    "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj": {
+    "C:\\Code\\GitHub\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj",
+        "projectUniqueName": "C:\\Code\\GitHub\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj",
         "projectName": "LoginUserManager",
-        "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj",
-        "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-        "outputPath": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\obj\\",
+        "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\LoginUserManager\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -83,26 +83,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj": {
+    "C:\\Code\\GitHub\\USBAdmin\\Server\\USBModel\\USBModel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj",
+        "projectUniqueName": "C:\\Code\\GitHub\\USBAdmin\\Server\\USBModel\\USBModel.csproj",
         "projectName": "USBModel",
-        "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj",
-        "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-        "outputPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\obj\\",
+        "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\USBModel\\USBModel.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\USBModel\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -115,11 +115,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj": {
-                "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj"
+              "C:\\Code\\GitHub\\USBAdmin\\Server\\Common\\USBCommon.csproj": {
+                "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\Common\\USBCommon.csproj"
               },
-              "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj": {
-                "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj"
+              "C:\\Code\\GitHub\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj": {
+                "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj"
               }
             }
           }
@@ -148,7 +148,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,4 +1,4 @@
-﻿@model List<IPPrinterSiteVM>
+﻿@model List<Tbl_IPPrinterSite>
 
 @{
     var siteNewUrl = USBAdminHelp.WebHttpUrlPrefix + "/printer/siteNew";
@@ -41,8 +41,8 @@
                         <td>@site.SubnetAddr</td>
                         <td>@site.Id</td>
                         <td>
-                            <button data-id="@site.Id" type="button" class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs">Edit</button>
-                            <button data-id="@site.Id" type="button" class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs">Add</button>
+                            <button onclick="siteEdit(this)" data-id="@site.Id" class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs">Edit</button>
+                            <button onclick="siteAddIPPrinter(this)" data-id="@site.Id" data-siteName="@site.SiteName" class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs">Add</button>
                         </td>
                     </tr>
                 }
@@ -65,6 +65,7 @@
             var form = layui.form,
                 table = layui.table,
                 layer = layui.layer;
+
             //var miniTab = layui.miniTab;
 
             table.init('index');
@@ -87,11 +88,25 @@
             }
         }
 
+        function submitForm(form) {
+            isReloadPage('no');
+            let data = $(form).serializeArray();
+            let url = $(form).attr('action');
+            $.post(url, data, function (json) {
+                layui.layer.alert(json.msg, { title: 'Message' });
+                isReloadPage('yes');
+            },'json'
+            ).fail(function (jqXHR, textStatus, errorThrown) {
+                let error = textStatus + ':' + errorThrown;
+                layer.alert(error, { title: 'Error' });
+            });
+            return false;
+        }       
+
+
         function siteAddNew() {
             isReloadPage('no');
-
             let siteAddNewTpl = document.getElementById('siteAddNewTpl').innerHTML;
-
             layer.open({
                 type: 1,
                 title: 'New Site',
@@ -99,16 +114,16 @@
                 area: ['480px', '400px'],
                 content: siteAddNewTpl,
                 end: function () {
-                    if (isReloadPage() === 'yes') {
+                    if (isReloadPage()) {
                         window.location.reload();
                     }
                 }
             });
         }
 
-        function editSite(btn) {
+        function siteEdit(btn) {
+            isReloadPage('no');
             let id = $(btn).attr('data-id');
-
             layer.open({
                 type: 2,
                 title: 'Edit',
@@ -116,32 +131,60 @@
                 area: ['480px', '400px'],
                 content: '@siteEditUrl' + '?Id=' + id,
                 end: function () {
-                    window.location.reload();
+                    if (isReloadPage()) {
+                        window.location.reload();
+                    }
                 }
             });
         }
 
-        function deleteSite(btn) {
+        function siteDelete(btn) {
+            isReloadPage('no');
             layer.confirm('Delete ?', { icon: 3, title: 'Confirm' }, function (index) {
                 let id = $(btn).attr('data-id');
 
                 $.post('@siteDeleteUrl', { Id: id }, function (json) {
                     layer.alert(json.msg, { title: 'Message' });
-                    window.location.reload();
+                    if (isReloadPage()) {
+                        window.location.reload();
+                    }
                 }, 'json');
 
                 layer.close(index);
             });
         }
 
-        $('form').on('submit', function () {
-            isReloadPage('yes');
-        })
+        function siteAddIPPrinter(btn) {
+            let laytpl = layui.laytpl;
+            let siteId = $(btn).attr('data-id');
+            let siteName = $(btn).attr('data-siteName');
+            let siteAddIPPrinterTpl = document.getElementById('siteAddIPPrinterTpl').innerHTML;
+            siteAddIPPrinterTpl = laytpl(siteAddIPPrinterTpl).render({
+                siteId: siteId,
+                siteName:siteName
+            });
+
+            layer.open({
+                type: 1,
+                title: 'New IP Printer',
+                shade: 0.3,
+                area: ['600px', '400px'],
+                content: siteAddIPPrinterTpl,
+                end: function () {
+                    if (isReloadPage()) {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
     </script>
+
+
+    <!----  Template  ---->
 
     <script type="text/html" id="siteAddNewTpl">
         <div style="padding:15px;">
-            <form class="layui-form" action="~/Printer/SiteAddNew" method="post">
+            <form onsubmit="return submitForm(this);" class="layui-form" action="~/Printer/SiteAddNew" method="post">
                 <div class="layui-form-item">
                     <label class="layui-form-label">SiteName</label>
                     <div class="layui-input-block">
@@ -161,6 +204,57 @@
                         <button class="layui-btn" lay-submit type="submit">Save</button>
                     </div>
                 </div>
+            </form>
+        </div>
+
+    </script>
+
+    <script type="text/html" id="siteAddIPPrinterTpl">
+        <div style="padding:15px;">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">SiteName</label>
+                <div class="layui-input-block">
+                    <input type="text" value="{{d.siteName}}" readonly class="layui-input">
+                </div>
+            </div>
+
+            <form onsubmit="return submitForm(this);" class="layui-form" action="~/Printer/SiteAddIPPrinter" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">PrinterName</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="PrinterName" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">IP</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="PortIPAddr" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">DriverName</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="DriverName" required lay-verify="required" placeholder="Printer Driver Name" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">DriverINFPath</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="DriverINFPath" required lay-verify="required" placeholder="Driver INF File UNC Path" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit type="submit">Save</button>
+                    </div>
+                </div>
+
+                <input type="hidden" name="SiteId" value="{{d.siteId}}" />
             </form>
         </div>
     </script>

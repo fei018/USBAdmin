@@ -102,14 +102,14 @@ namespace USBAdminWebMVC.Controllers
         }
         #endregion
 
-        //
+        // site
 
-        #region MyRegion
+        #region + public async Task<IActionResult> Site()
         public async Task<IActionResult> Site()
         {
             try
             {
-                var vms = await _usbDb.IPPrinterSiteVM_GetList();
+                var vms = await _usbDb.IPPrinterSite_Get_ALL();
                 
                 return View(vms);
             }
@@ -119,6 +119,78 @@ namespace USBAdminWebMVC.Controllers
                 return View();
             }
         }
+        #endregion
+
+        #region + public async Task<IActionResult> SiteAddNew(Tbl_IPPrinterSite site)
+        [HttpPost]
+        public async Task<IActionResult> SiteAddNew(Tbl_IPPrinterSite site)
+        {
+            try
+            {
+                await _usbDb.IPPrinterSite_Insert(site);
+                
+                return Json(new { Msg = "Add a new site succeed." });
+            }
+            catch (Exception ex)
+            {               
+                return Json(new { Msg = ex.GetBaseException().Message });
+            }
+        }
+        #endregion
+
+        #region + public async Task<IActionResult> SiteEdit(Tbl_IPPrinterSite site)
+        [HttpPost]
+        public async Task<IActionResult> SiteEdit(Tbl_IPPrinterSite site)
+        {
+            try
+            {
+                await _usbDb.IPPrinterSite_Update(site);
+
+                return Json(new { Msg = "Site update succeed." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Msg = ex.GetBaseException().Message });
+            }
+        }
+        #endregion
+
+        #region + public async Task<IActionResult> SiteDelete(int id)
+        public async Task<IActionResult> SiteDelete(int id)
+        {
+            try
+            {
+                await _usbDb.IPPrinterSite_Delete_ById(id);
+                return Json(new { msg = "Delete succeed." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { msg = ex.Message });
+            }
+        }
+        #endregion
+
+        // ipprinter
+
+        #region + public async Task<IActionResult> SiteAddIPPrinter(Tbl_IPPrinterInfo printer)
+        public async Task<IActionResult> SiteAddIPPrinter(Tbl_IPPrinterInfo printer)
+        {
+            try
+            {
+                await _usbDb.IPPrinterInfo_Insert(printer);
+                ViewBag.OK = "IPPrinterInfo update succeed.";
+                return View("OK");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.GetBaseException().Message;
+                return View("Error");
+            }
+        }
+        #endregion
+
+        #region MyRegion
+        //public async Task<IActionResult> IPPrinter
         #endregion
     }
 }
