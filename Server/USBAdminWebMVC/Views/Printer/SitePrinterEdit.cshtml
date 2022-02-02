@@ -1,0 +1,49 @@
+﻿@model Tbl_IPPrinterInfo
+@{ 
+    var printer = Model;
+}
+
+<div>
+    <form onsubmit="return onsubmitFormByAjax(this);" class="layui-form" action="~/Printer/SitePrinterEdit" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">PrinterName</label>
+            <div class="layui-input-block">
+                <input type="text" name="PrinterName" value="@printer.PrinterName" required lay-verify="required" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">IP</label>
+            <div class="layui-input-block">
+                <input type="text" name="PortIPAddr" value="@printer.PortIPAddr" required lay-verify="required" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">DriverName</label>
+            <div class="layui-input-block">
+                <input type="text" name="DriverName" value="@printer.DriverName" required lay-verify="required" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">DriverINFPath</label>
+            <div class="layui-input-block">
+                <input type="text" name="DriverINFPath" value="@printer.DriverINFPath" placeholder=".Inf file unc path" required lay-verify="required" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit type="submit">Save</button>
+            </div>
+        </div>
+
+        <input type="hidden" name="Id" value="@printer.Id" />
+        <input type="hidden" name="SiteId" value="@printer.SiteId" />
+    </form>
+</div>
+
+@section Script{ 
+    <script src="~/js/custom.js"></script>
+}

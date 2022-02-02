@@ -573,7 +573,6 @@ C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Compu
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\EmailSetting\Index.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Home\Welcome.cshtml.g.cs
-C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\Site.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\SiteEdit.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\Template.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\TemplateEdit.cshtml.g.cs
@@ -600,3 +599,6 @@ C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.pd
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.genruntimeconfig.cache
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\Site.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\SiteEdit.cshtml.g.cs
+C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\SiteIndex.cshtml.g.cs
+C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\SitePrinterEdit.cshtml.g.cs
+C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Printer\SitePrinterIndex.cshtml.g.cs

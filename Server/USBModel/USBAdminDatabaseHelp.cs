@@ -899,32 +899,25 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<List<IPPrinterSiteVM>> IPPrinterSiteVM_GetList()
-        public async Task<List<IPPrinterSiteVM>> IPPrinterSiteVM_GetList()
+        #region + public async Task<IPPrinterSiteVM> IPPrinterSiteVM_Get_BySiteId(Guid siteId)
+        public async Task<IPPrinterSiteVM> IPPrinterSiteVM_Get_BySiteId(Guid siteId)
         {
             try
             {
-                var result = new List<IPPrinterSiteVM>();
+                var site = await _db.Queryable<Tbl_IPPrinterSite>().InSingleAsync(siteId);
 
-                var siteList = await _db.Queryable<Tbl_IPPrinterSite>().ToListAsync();
-
-                if (siteList == null || siteList.Count <= 0)
+                if (site == null)
                 {
-                    throw new Exception("Tbl_IPPrinterSite is empty.");
+                    throw new Exception("Tbl_IPPrinterSite is empty. Id: " + siteId);
                 }
 
-                foreach (var site in siteList)
-                {
-                    var printers = await _db.Queryable<Tbl_IPPrinterInfo>()
-                                            .Where(p => p.SiteId == site.Id.ToString())
-                                            .ToListAsync();
+                var printers = await _db.Queryable<Tbl_IPPrinterInfo>()
+                                           .Where(p => p.SiteId == site.Id.ToString())
+                                           .ToListAsync();
 
-                    var siteVM = new IPPrinterSiteVM(site, printers);
+                var siteVM = new IPPrinterSiteVM(site, printers);
 
-                    result.Add(siteVM);
-                }
-
-                return result;
+                return siteVM;
             }
             catch (Exception)
             {
@@ -933,8 +926,8 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<Tbl_IPPrinterSite> IPPrinterSite_Get_ById(int id)
-        public async Task<Tbl_IPPrinterSite> IPPrinterSite_Get_ById(int id)
+        #region + public async Task<Tbl_IPPrinterSite> IPPrinterSite_Get_ById(Guid id)
+        public async Task<Tbl_IPPrinterSite> IPPrinterSite_Get_ById(Guid id)
         {
             try
             {
@@ -945,32 +938,6 @@ namespace USBModel
                 }
 
                 return query;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterSite_Get_BySubnetAddr(string subnetAddr)
-        public async Task<List<Tbl_IPPrinterInfo>> IPPrinterSite_Get_BySubnetAddr(string subnetAddr)
-        {
-            try
-            {
-                var site = await _db.Queryable<Tbl_IPPrinterSite>().FirstAsync(s => s.SubnetAddr == subnetAddr);
-                if (site == null)
-                {
-                    throw new Exception("Cannot find the PrinterSite, Subnet Address: " + subnetAddr);
-                }
-
-                var printers = await _db.Queryable<Tbl_IPPrinterInfo>().Where(p => p.SiteId == site.Id.ToString()).ToListAsync();
-                if (printers == null || printers.Count <= 0)
-                {
-                    throw new Exception("Cannot find any printers, subnet: " + subnetAddr);
-                }
-
-                return printers;
             }
             catch (Exception)
             {
@@ -1027,12 +994,15 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task IPPrinterSite_Delete_ById(int id)
-        public async Task IPPrinterSite_Delete_ById(int id)
+        #region + public async Task IPPrinterSite_Delete_ById(Guid siteId)
+        public async Task IPPrinterSite_Delete_ById(Guid id)
         {
             try
-            {
+            {                
                 await _db.Deleteable<Tbl_IPPrinterSite>().In(t => t.Id, id).ExecuteCommandAsync();
+
+                // delete ipprinter
+                await _db.Deleteable<Tbl_IPPrinterInfo>().Where(p => p.SiteId == id.ToString()).ExecuteCommandAsync();
             }
             catch (Exception)
             {
@@ -1043,8 +1013,49 @@ namespace USBModel
 
         // IPPrinterInfo
 
-        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_GetList()
-        public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_GetList()
+        #region + public async Task<Tbl_IPPrinterInfo> IPPrinterInfo_Get_ById(int id)
+        public async Task<Tbl_IPPrinterInfo> IPPrinterInfo_Get_ById(int id)
+        {
+            try
+            {
+                var printer = await _db.Queryable<Tbl_IPPrinterInfo>().InSingleAsync(id);
+                return printer;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_Get_List_BySubnetAddr(string subnetAddr)
+        public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_Get_List_BySubnetAddr(string subnetAddr)
+        {
+            try
+            {
+                var site = await _db.Queryable<Tbl_IPPrinterSite>().FirstAsync(s => s.SubnetAddr == subnetAddr);
+                if (site == null)
+                {
+                    throw new Exception("Cannot find the PrinterSite, Subnet Address: " + subnetAddr);
+                }
+
+                var printers = await _db.Queryable<Tbl_IPPrinterInfo>().Where(p => p.SiteId == site.Id.ToString()).ToListAsync();
+                if (printers == null || printers.Count <= 0)
+                {
+                    throw new Exception("Printers is empty, subnet: " + subnetAddr);
+                }
+
+                return printers;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_Get_List()
+        public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_Get_List()
         {
             try
             {
@@ -1064,8 +1075,8 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_GetList_BySiteId(string siteId)
-        public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_GetList_BySiteId(string siteId)
+        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_Get_List_BySiteId(string siteId)
+        public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_Get_List_BySiteId(string siteId)
         {
             try
             {
@@ -1120,6 +1131,20 @@ namespace USBModel
                 {
                     throw new Exception("IPPrinterInfo update fail, name:" + printer.PrinterName);
                 }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public async Task IPPrinterInfo_Delete_ById(int id)
+        public async Task IPPrinterInfo_Delete_ById(int id)
+        {
+            try
+            {
+                await _db.Deleteable<Tbl_IPPrinterInfo>().In(p => p.Id, id).ExecuteCommandAsync();
             }
             catch (Exception)
             {

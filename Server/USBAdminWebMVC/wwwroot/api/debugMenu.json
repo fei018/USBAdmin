@@ -74,8 +74,8 @@
               "target": "_self"
             },
             {
-              "title": "Site",
-              "href": "/Printer/Site",
+              "title": "PrinterSite",
+              "href": "/Printer/SiteIndex",
               "icon": "fa fa-list",
               "target": "_self"
             }

@@ -1,7 +1,7 @@
 ﻿@model Tbl_IPPrinterSite
 
 <div>
-    <form class="layui-form" action="~/Printer/SiteEdit" method="post">
+    <form onsubmit="return onsubmitFormByAjax(this);" class="layui-form" action="~/Printer/SiteEdit" method="post">
         <div class="layui-form-item">
             <label class="layui-form-label">SiteName</label>
             <div class="layui-input-block">
@@ -25,3 +25,8 @@
         <input type="hidden" name="Id" value="@Model.Id" />
     </form>
 </div>
+
+@section Script{ 
+    <script src="~/js/custom.js"></script>
+}
+

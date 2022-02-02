@@ -13,6 +13,7 @@ namespace USBModel
         [SugarColumn(ColumnDataType = "varchar(15)")]
         public string SubnetAddr { get; set; }      
 
+        [SugarColumn(IsNullable = true)]
         public DateTime UpdateTime { get; set; }
     }
 }

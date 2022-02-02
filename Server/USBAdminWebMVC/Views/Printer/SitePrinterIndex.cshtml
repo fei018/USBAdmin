@@ -1,0 +1,184 @@
+﻿@model IPPrinterSiteVM
+@{
+    var siteName = Model.SiteName;
+    var siteId = Model.Id;
+    var printerList = Model.PrinterList;
+
+    var printerEditUrl = USBAdminHelp.WebHttpUrlPrefix + "/Printer/SitePrinterEdit";
+    var printerDeleteUrl = USBAdminHelp.WebHttpUrlPrefix + "/Printer/SitePrinterDelete";
+}
+
+<div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>Site: @siteName</legend>
+    </fieldset>
+
+    <div class="layui-input-inline">
+        <button onclick="printerAddNew()" data class="layui-btn" type="button" >
+            <i class="layui-icon">&#xe654;</i> New Printer
+        </button>
+    </div>
+    <hr />
+
+    @if (printerList != null || printerList.Count > 0)
+    {
+        <table id="index" lay-filter="index">
+            <thead>
+                <tr>
+                    <th lay-data="{field:'id' ,width:60 }">Id</th>
+                    <th lay-data="{field:'printerName' ,width:200, sort: true}">PrinterName</th>
+                    <th lay-data="{field:'ip' ,width:150, sort: true}">IP</th>
+                    <th lay-data="{field:'driverName' ,width:250, sort: true}">DriverName</th>
+                    <th lay-data="{field:'infPath' ,width:600, sort: true}">DriverINFPath</th>
+                    <th lay-data="{field:'action' ,width:300, fixed:'right'}"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in printerList)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.PrinterName</td>
+                        <td>@p.PortIPAddr</td>
+                        <td>@p.DriverName</td>
+                        <td>@p.DriverINFPath</td>
+                        <td>
+                            <button onclick="printerEdit(this)" data-id="@p.Id" class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs">Edit</button>
+                            <button onclick="printerDelete(this)" data-id="@p.Id" class="layui-btn layui-btn-danger layui-btn-xs">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div>
+            @ViewBag.Error
+        </div>
+    }
+</div>
+
+@section Script{
+    <script src="~/js/custom.js"></script>
+
+    <script>
+        layui.use(['form', 'table', 'miniTab'], function () {
+            var form = layui.form,
+                table = layui.table;
+
+            var miniTab = layui.miniTab;
+
+            table.init('index');
+
+            miniTab.listen();
+        });
+    </script>
+
+    <script>
+        function printerAddNew() {
+            let laytpl = layui.laytpl;
+
+            let addPrinterTpl = document.getElementById('addPrinterTpl').innerHTML;
+            addPrinterTpl = laytpl(`${addPrinterTpl}`).render({
+                siteId: '@siteId',
+                siteName: '@siteName'
+            });
+
+            layer.open({
+                type: 1,
+                title: 'New IP Printer',
+                shade: 0.3,
+                area: ['600px', '400px'],
+                content: addPrinterTpl,
+                end: function () {
+                    if (isReloadPage()) {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
+        function printerEdit(btn) {
+            isReloadPage('no');
+            let id = $(btn).attr('data-id');
+            layer.open({
+                type: 2,    // iframe
+                title: 'Edit',
+                shade: 0.3,
+                area: ['480px', '400px'],
+                content: '@printerEditUrl' + '?Id=' + id,
+                end: function () {
+                    if (isReloadPage()) {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
+        function printerDelete(btn) {
+            isReloadPage('no');
+            layer.confirm('Delete ?', { icon: 3, title: 'Confirm' }, function (index) {
+                let id = $(btn).attr('data-id');
+
+                $.post('@printerDeleteUrl', { Id: id }, function (json) {
+                    layer.alert(json.msg, { title: 'Message' });
+                    window.location.reload();
+                }, 'json');
+
+                layer.close(index);
+            });
+        }
+    </script>
+
+    <!--  addPrinterTpl -->
+    <script type="text/html" id="addPrinterTpl">
+        <div style="padding:15px;">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">SiteName</label>
+                <div class="layui-input-block">
+                    <input type="text" value="{{d.siteName}}" readonly class="layui-input">
+                </div>
+            </div>
+
+            <form onsubmit="return onsubmitFormByAjax(this);" class="layui-form" action="~/Printer/SiteAddPrinter" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">PrinterName</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="PrinterName" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">IP</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="PortIPAddr" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">DriverName</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="DriverName" required lay-verify="required" placeholder="Printer Driver Name" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">DriverINFPath</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="DriverINFPath" required lay-verify="required" placeholder="Driver INF File UNC Path" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit type="submit">Save</button>
+                    </div>
+                </div>
+
+                <input type="hidden" name="SiteId" value="{{d.siteId}}" />
+            </form>
+        </div>
+    </script>
+}
