@@ -1,6 +1,6 @@
 ﻿namespace USBNotifyLib
 {
-    public class PrinterInfo
+    public class LocalPrinterInfo
     {
         public string Name { get; set; }
 

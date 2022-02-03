@@ -12,12 +12,12 @@ namespace SetupClient
     {
         static void Main(string[] args)
         {
-//#if DEBUG
-//            InitKey();
-//#else
-//            Setup();
-//#endif
+#if DEBUG
+            InitKey();
+#else
             Setup();
+#endif
+           
         }
 
         static void Setup()

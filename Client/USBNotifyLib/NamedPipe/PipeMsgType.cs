@@ -15,6 +15,8 @@ namespace USBNotifyLib
         CloseAgent,
         CloseTray,
         AddPrintTemplate,
-        AddPrintTemplateCompleted
+        AddPrintTemplateCompleted,
+        PrinterDeleteOldAndInstallDriver,
+        PrinterDeleteOldAndInstallDriverCompleted
     }
 }

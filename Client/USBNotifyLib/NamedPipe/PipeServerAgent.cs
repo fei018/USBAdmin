@@ -2,8 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Pipes;
+using System.Linq;
 using System.Security.AccessControl;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -171,7 +174,8 @@ namespace USBNotifyLib
                 { PipeMsgType.UpdateSetting, Handler_UpdateSetting},
                 { PipeMsgType.CloseAgent, Handler_CloseAgent },
                 { PipeMsgType.CloseTray, Handler_CloseTray },
-                { PipeMsgType.AddPrintTemplate, Handler_AddPrintTemplate }
+                { PipeMsgType.AddPrintTemplate, Handler_AddPrintTemplate },
+                { PipeMsgType.PrinterDeleteOldAndInstallDriver, Handler_PrinterDeleteOldAndInstallDriver }
             };
         }
         #endregion
@@ -283,6 +287,67 @@ namespace USBNotifyLib
         }
         #endregion
 
+        #region + private void Handler_PrinterDeleteOldAndInstallDriver(PipeMsg pipeMsg)
+        private void Handler_PrinterDeleteOldAndInstallDriver(PipeMsg pipeMsg)
+        {
+            Task.Run(() =>
+            {
+#if DEBUG
+                //Debugger.Break();
+#endif
+                try
+                {
+                    pipeMsg.PipeMsgType = PipeMsgType.PrinterDeleteOldAndInstallDriverCompleted;
+
+                    // delete old subnet printer
+                    PrinterHelp.DeleteOldIPPrinters_OtherSubnet();
+
+                    // delete old same name printer
+                    foreach (var p in pipeMsg.SitePrinterToAddList.PrinterList)
+                    {
+                        try
+                        {
+                            PrinterHelp.DeletePrinter_ByName(p.PrinterName);
+                            PrinterHelp.DeleteTcpIPPort_ByName(p.PortIPAddr);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+
+                    StringBuilder output = new StringBuilder();
+
+                    //// add driver
+                    var driverList = pipeMsg.SitePrinterToAddList.DriverList;
+                    if (driverList != null && driverList.Any())
+                    {
+                        foreach (var p in driverList)
+                        {                           
+                            try
+                            {
+                                PrinterHelp.AddPrinterDriver_WMI(p.DriverName, p.DriverInfLocalPath);
+                                output.AppendLine("Add printer driver: " + p.DriverName);
+                            }
+                            catch (Exception ex)
+                            {
+                                output.AppendLine(ex.GetBaseException().Message);
+                            }
+                        }
+                    }
+
+                    pipeMsg.Message = pipeMsg.Message + "\r\n" + output.ToString() + "\r\n";
+                    PushMsg_ToTray_By_PipeMsg(pipeMsg);
+                }
+                catch (Exception ex)
+                {
+
+                    pipeMsg.Message = pipeMsg.Message + "\r\n" + ex.GetBaseException().Message + "\r\n";
+                    PushMsg_ToTray_By_PipeMsg(pipeMsg);
+                }
+            });
+        }
+        #endregion
+
         // push message
 
         #region + public void PushMsg_ToTray_Message(string message)
@@ -339,7 +404,7 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region + public void PushMsg_ToTray_AddPrintTemplateCompleted()
+        #region + public void PushMsg_ToTray_AddPrintTemplateCompleted(string ms)
         public void PushMsg_ToTray_AddPrintTemplateCompleted(string msg)
         {
             try
@@ -351,6 +416,21 @@ namespace USBNotifyLib
             catch (Exception ex)
             {
                 AgentLogger.Error("PushMsg_ToTray_AddPrintTemplateCompleted : " + ex.Message);
+            }
+        }
+        #endregion
+
+        #region + public void PushMsg_ToTray_By_PipeMsg(PipeMsg pipeMsg)
+        public void PushMsg_ToTray_By_PipeMsg(PipeMsg pipeMsg)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(pipeMsg);
+                _server.PushMessage(json);
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error("PushMsg_ToTray_By_PipeMsg: " + ex.GetBaseException().Message);
             }
         }
         #endregion

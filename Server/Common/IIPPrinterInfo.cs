@@ -14,9 +14,9 @@ namespace USBCommon
         string DriverName { get; set; }
 
         /// <summary>
-        /// Printer Driver INF File UNC Path
+        /// Printer Driver Inf File UNC Path
         /// </summary>
-        string DriverINFPath { get; set; }
+        string DriverInfPath { get; set; }
 
         /// <summary>
         /// Printer Name

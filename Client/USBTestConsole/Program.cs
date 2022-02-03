@@ -28,15 +28,15 @@ namespace USBTestConsole
             {
                 Console.WriteLine("Start...");
 
-                //var p = new IPPrinterInfo();
-                //p.PrinterName = "test printer";
-                //p.PrinterDrvName = "RICOH PCL6 V4 UniversalDriver V4.10";
-                //p.PrinterDrvINFPath = @"C:\temp\ricoh\disk1\r4600.inf";
-                //p.PrinterPortIPAddr = "10.20.4.5";
+                var p = new IPPrinterInfo();
+                p.PrinterName = "test printer111";
+                p.DriverName   = "Kyocera TASKalfa 3554ci KX";
+                p.DriverInfPath = @"C:\Users\User\Downloads\64bit\OEMSETUP.INF";
+                p.PortIPAddr = "10.20.4.5";
+                PrinterHelp.AddPrinterDriver_WMI(p.DriverName, p.DriverInfPath);
+                PrinterHelp.AddNewPrinter(p);
 
-                //PrinterHelp.AddNewPrinter(p);
 
-                Console.WriteLine(Guid.NewGuid().ToString());
 
 
             }

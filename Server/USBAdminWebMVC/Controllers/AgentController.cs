@@ -18,13 +18,21 @@ namespace USBAdminWebMVC.Controllers
     {
         private readonly USBAdminDatabaseHelp _usbDb;
         private readonly HttpContext _httpContext;
-        private readonly EmailHelp _email;
 
-        public AgentController(IHttpContextAccessor httpContextAccessor, USBAdminDatabaseHelp usbDb, EmailHelp emailHelp)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public AgentController(IHttpContextAccessor httpContextAccessor, USBAdminDatabaseHelp usbDb)
         {
-            _usbDb = usbDb;
-            _httpContext = httpContextAccessor.HttpContext;
-            _email = emailHelp;
+            try
+            {
+                _usbDb = usbDb;
+                _httpContextAccessor = httpContextAccessor;
+                _httpContext = httpContextAccessor.HttpContext;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         // Usb Whitelist
@@ -121,7 +129,7 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                //Debugger.Break();
+                var emailHelp = new EmailHelp(_httpContextAccessor, _usbDb);
 
                 StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
                 var post = await body.ReadToEndAsync();
@@ -132,13 +140,13 @@ namespace USBAdminWebMVC.Controllers
 
                 var com = await _usbDb.PerComputer_Get_ByIdentity(usbInDb.RequestComputerIdentity);
 
-                await _email.Send_UsbRequest_Notify_Submit_ToUser(usbInDb, com);
+                await emailHelp.Send_UsbRequest_Notify_Submit_ToUser(usbInDb, com);
 
                 return Json(new AgentHttpResponseResult());
             }
             catch(EmailException)
             {
-                return Json(new AgentHttpResponseResult(false,"Email notification error, please notify your IT support."));
+                return Json(new AgentHttpResponseResult(false,"Email notification error, please notify your IT Admin."));
             }
             catch (Exception ex)
             {
@@ -156,6 +164,24 @@ namespace USBAdminWebMVC.Controllers
             {
                 var template = await _usbDb.PrintTemplate_Get_BySubnetAddr(SubnetAddr);
                 var result = new AgentHttpResponseResult { Succeed = true, PrintTemplate = template };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json(new AgentHttpResponseResult(false, ex.Message));
+            }
+        }
+        #endregion
+
+        // IPPrinterInfo
+
+        #region SitePrinterList(string subnetAddr)
+        public async Task<IActionResult> SitePrinterList(string subnetAddr)
+        {
+            try
+            {
+                var list = await _usbDb.IPPrinterInfo_Get_IList_BySiteSubnetAddr(subnetAddr);
+                var result = new AgentHttpResponseResult(true) { SitePrinterList = list };
                 return Json(result);
             }
             catch (Exception ex)

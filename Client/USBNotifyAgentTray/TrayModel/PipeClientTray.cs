@@ -7,6 +7,9 @@ using System.Windows;
 using USBNotifyAgentTray.USBWindow;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace USBNotifyAgentTray
 {
@@ -18,10 +21,12 @@ namespace USBNotifyAgentTray
         private NamedPipeClient<string> _client;
 
         // public static
-        public static PipeClientTray Entity_Tray {get;set;}
+        public static PipeClientTray Entity_Tray { get; set; }
 
         #region Event
         public event EventHandler<PipeEventArgs> AddPrintTemplateCompletedEvent;
+
+        public event EventHandler<PipeEventArgs> AddSitePrinterCompletedEvent;
         #endregion
 
         #region Construction
@@ -138,7 +143,8 @@ namespace USBNotifyAgentTray
                 { PipeMsgType.Message, Handler_FromAgentMsg_MessageBox },
                 { PipeMsgType.UsbDiskNotInWhitelist, Handler_FromAgentMsg_UsbNotifyWindow},
                 { PipeMsgType.CloseTray, Handler_FromAgentMsg_ToCloseTray },
-                { PipeMsgType.AddPrintTemplateCompleted, Handler_FromAgentMsg_AddPrintTemplateCompleted }
+                { PipeMsgType.AddPrintTemplateCompleted, Handler_FromAgentMsg_AddPrintTemplateCompleted },
+                { PipeMsgType.PrinterDeleteOldAndInstallDriverCompleted, Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted }
             };
         }
         #endregion
@@ -177,7 +183,8 @@ namespace USBNotifyAgentTray
         {
             try
             {
-                App.Current.Dispatcher.Invoke(new Action(()=> {
+                App.Current.Dispatcher.Invoke(new Action(() =>
+                {
                     App.Current.MainWindow.Close();
                 }));
             }
@@ -205,6 +212,46 @@ namespace USBNotifyAgentTray
                 Debug.WriteLine(ex.Message);
 #endif
             }
+        }
+        #endregion
+
+        #region Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted(PipeMsg pipeMsg) 
+        private void Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted(PipeMsg pipeMsg)
+        {
+            Task.Run(() =>
+            {
+                StringBuilder sb = new StringBuilder();
+                try
+                {
+                    if (pipeMsg.PipeMsgType == PipeMsgType.Message)
+                    {
+                        throw new Exception(pipeMsg.Message);
+                    }
+
+                    sb.AppendLine(pipeMsg.Message);
+
+                    // add printer
+                    foreach (var sp in pipeMsg.SitePrinterToAddList.PrinterList)
+                    {
+                        try
+                        {
+                            PrinterHelp.AddNewPrinter(sp);
+                            sb.AppendLine("Add Printer: " + sp.PrinterName);
+                        }
+                        catch (Exception ex)
+                        {
+                            sb.AppendLine(ex.GetBaseException().Message);
+                        }
+                    }
+
+                    AddSitePrinterCompletedEvent?.Invoke(null, new PipeEventArgs(sb.ToString()));
+                }
+                catch (Exception ex)
+                {
+                    sb.AppendLine().AppendLine(ex.GetBaseException().Message);
+                    AddSitePrinterCompletedEvent?.Invoke(null, new PipeEventArgs(sb.ToString()));
+                }
+            });
         }
         #endregion
 
@@ -266,6 +313,75 @@ namespace USBNotifyAgentTray
             {
                 throw;
             }
+        }
+        #endregion
+
+        // 
+
+        #region + public void PushMsg_ToAgent_SitePrinterToAdd()
+        public void PushMsg_ToAgent_SitePrinterToAdd()
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    var addPrinterList = new AgentHttpHelp().GetSitePrinterList();
+
+                    // 獲取 需要 install driver list
+                    List<IPPrinterInfo> addDriverList = new List<IPPrinterInfo>();
+                    foreach (var addPrinter in addPrinterList)
+                    {
+                        try
+                        {
+                            if (!PrinterHelp.PrinterDriverExist(addPrinter.DriverName))
+                            {
+                                // copy inf to local from unc path
+                                var infFile = new FileInfo(addPrinter.DriverInfPath);
+                                if (infFile.Exists)
+                                {
+                                    var infDir = infFile.Directory;
+                                    string destDriverDir = Path.Combine(AgentRegistry.AgentDataDir, "PrinterDriver", infDir.Name);
+
+                                    if (Directory.Exists(destDriverDir))
+                                    {
+                                        Directory.Delete(destDriverDir, true);
+                                    }
+
+                                    AgentManager.CopyDirectory(infDir.FullName, destDriverDir, true);
+                                    addPrinter.DriverInfLocalPath = Path.Combine(destDriverDir, infFile.Name);
+
+                                    addDriverList.Add(addPrinter);
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            continue;
+                        }
+                    }
+
+                    // to printer delete old and add driver by Agent
+
+                    SitePrinterToAddList sitePrinterToAddList = new SitePrinterToAddList
+                    {
+                        PrinterList = addPrinterList,
+                        DriverList = addDriverList
+                    };
+
+                    var pipemsg = new PipeMsg()
+                    {
+                        PipeMsgType = PipeMsgType.PrinterDeleteOldAndInstallDriver,
+                        SitePrinterToAddList = sitePrinterToAddList
+                    };
+
+                    var json = JsonConvert.SerializeObject(pipemsg);
+                    _client?.PushMessage(json);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            });
         }
         #endregion
     }

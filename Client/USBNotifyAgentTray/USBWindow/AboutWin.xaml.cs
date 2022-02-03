@@ -38,7 +38,7 @@ namespace USBNotifyAgentTray.USBWindow
 
         private void AboutWin_Closed(object sender, EventArgs e)
         {
-            TrayIcon.Entity.Item_About_IsOpen = false;
+            WinSingleOpen.AboutWin = false;
         }
     }
 }

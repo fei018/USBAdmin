@@ -25,11 +25,20 @@ namespace USBNotifyAgentTray.PrintWindow
             InitializeComponent();
           
             PipeClientTray.Entity_Tray.AddPrintTemplateCompletedEvent += TrayPipe_AddPrintTemplateCompletedEvent;
+            PipeClientTray.Entity_Tray.AddSitePrinterCompletedEvent += Entity_Tray_AddSitePrinterListCompletedEvent;
+        }
+
+        private void Entity_Tray_AddSitePrinterListCompletedEvent(object sender, USBNotifyLib.PipeEventArgs e)
+        {
+            Dispatcher.Invoke(new Action(() =>{
+                EnableProgressBar(false);
+                txtResult.Text = e.Msg;
+            }));
         }
 
         private void TrayPipe_AddPrintTemplateCompletedEvent(object sender, USBNotifyLib.PipeEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(new Action(() =>
             {
                 EnableProgressBar(false);
                 txtResult.Text = e.Msg;
@@ -44,11 +53,27 @@ namespace USBNotifyAgentTray.PrintWindow
 
                 EnableProgressBar(true);
 
+                //Task.Run(() =>
+                //{
+                //    try
+                //    {
+                //        PipeClientTray.Entity_Tray?.PushMsg_ToAgent_AddPrintTemplate();
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Dispatcher.Invoke(() =>
+                //        {
+                //            EnableProgressBar(false);
+                //            txtResult.Text = ex.GetBaseException().Message;
+                //        });
+                //    }
+                //});
+
                 Task.Run(() =>
                 {
                     try
                     {
-                        PipeClientTray.Entity_Tray?.PushMsg_ToAgent_AddPrintTemplate();
+                        PipeClientTray.Entity_Tray?.PushMsg_ToAgent_SitePrinterToAdd();
                     }
                     catch (Exception ex)
                     {
@@ -73,7 +98,7 @@ namespace USBNotifyAgentTray.PrintWindow
 
         private void SetPrinterWin_Closed(object sender, EventArgs e)
         {
-            TrayIcon.Entity.Item_SetPrinter_IsOpen = false;
+            WinSingleOpen.SetPrinterWin = false;
         }
 
         private void EnableProgressBar(bool enable)

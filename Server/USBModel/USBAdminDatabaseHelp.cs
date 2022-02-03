@@ -713,7 +713,10 @@ namespace USBModel
             try
             {
                 var query = await _db.Queryable<Tbl_EmailSetting>().FirstAsync();
-
+                if (query == null)
+                {
+                    throw new Exception("EmailSetting is null.");
+                }
                 return query;
             }
             catch (Exception)
@@ -1028,15 +1031,15 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_Get_List_BySubnetAddr(string subnetAddr)
-        public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_Get_List_BySubnetAddr(string subnetAddr)
+        #region + public async Task<List<Tbl_IPPrinterInfo>> IPPrinterInfo_Get_IList_BySiteSubnetAddr(string subnetAddr)
+        public async Task<List<IIPPrinterInfo>> IPPrinterInfo_Get_IList_BySiteSubnetAddr(string subnetAddr)
         {
             try
             {
                 var site = await _db.Queryable<Tbl_IPPrinterSite>().FirstAsync(s => s.SubnetAddr == subnetAddr);
                 if (site == null)
                 {
-                    throw new Exception("Cannot find the PrinterSite, Subnet Address: " + subnetAddr);
+                    throw new Exception("PrinterSite is empty, Subnet Address: " + subnetAddr);
                 }
 
                 var printers = await _db.Queryable<Tbl_IPPrinterInfo>().Where(p => p.SiteId == site.Id.ToString()).ToListAsync();
@@ -1045,7 +1048,12 @@ namespace USBModel
                     throw new Exception("Printers is empty, subnet: " + subnetAddr);
                 }
 
-                return printers;
+                var list = new List<IIPPrinterInfo>();
+                foreach (var p in printers)
+                {
+                    list.Add(p);
+                }
+                return list;
             }
             catch (Exception)
             {

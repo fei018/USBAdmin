@@ -17,8 +17,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -64,6 +64,7 @@
     <Compile Include="PrintWindow\SetPrinterWin.xaml.cs">
       <DependentUpon>SetPrinterWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TrayModel\WinSingleOpen.cs" />
     <Compile Include="USBWindow\AboutWin.xaml.cs">
       <DependentUpon>AboutWin.xaml</DependentUpon>
     </Compile>

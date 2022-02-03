@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using USBCommon;
@@ -257,12 +258,37 @@ namespace USBNotifyLib
         {
             try
             {
-                var SubnetAddr = PerComputerHelp.GetSubnetAddr();
-                string url = AgentRegistry.PrintTemplateUrl + "?SubnetAddr=" + SubnetAddr;
+                var subnetAddr = PerComputerHelp.GetSubnetAddr();
+                string url = AgentRegistry.PrintTemplateUrl + "?SubnetAddr=" + subnetAddr;
 
                 var agentResult = HttpClient_Get(url);
                 var template = agentResult.PrintTemplate as PrintTemplate;
                 return template;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public List<IIPPrinterInfo> GetSitePrinterList()
+        public List<IPPrinterInfo> GetSitePrinterList()
+        {
+            try
+            {
+                var subnetAddr = PerComputerHelp.GetSubnetAddr();
+                string url = AgentRegistry.SitePrinterListUrl + "?subnetAddr=" + subnetAddr;
+
+                var agentResult = HttpClient_Get(url);
+                var printerList = agentResult.SitePrinterList;
+
+                var list = new List<IPPrinterInfo>();
+                foreach (var p in printerList)
+                {
+                    list.Add(p as IPPrinterInfo);
+                }
+                return list;
             }
             catch (Exception)
             {

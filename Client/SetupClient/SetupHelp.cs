@@ -27,7 +27,7 @@ namespace SetupClient
         string _uninstallServiceBatch;
         string _dllDir;
         string _registryKeyLocation;
-        string _oldRegistryKey;
+
         string _serviceName;
 
         public SetupHelp()
@@ -52,7 +52,6 @@ namespace SetupClient
 
             _registryKeyLocation = "SOFTWARE\\HipHing\\HHITtools";
 
-            _oldRegistryKey = "SOFTWARE\\Hiphing\\USBNotify";
         }
 
         #region + public void Install()
@@ -94,8 +93,8 @@ namespace SetupClient
             try
             {
 #if DEBUG
-               // _setupiniPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setupDebug.ini");
-               // Console.WriteLine(_setupiniPath);
+                _setupiniPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setupDebug.ini");
+                Console.WriteLine(_setupiniPath);
 #endif
 
                 Dictionary<string, string> registry = new Dictionary<string, string>();
@@ -158,8 +157,6 @@ namespace SetupClient
 
                     // delete old key
                     hklm.DeleteSubKey(subKey, false);
-
-                    hklm.DeleteSubKey(_oldRegistryKey, false);
 
                     using (var usbKey = hklm.CreateSubKey(subKey, true))
                     {
@@ -395,49 +392,6 @@ namespace SetupClient
                             var dir = Environment.ExpandEnvironmentVariables(path);
 
                             _newDataDir = dir;
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-        #endregion
-
-        #region DeleteOldDir()
-        private void DeleteOldDir()
-        {
-            try
-            {
-                if (File.Exists(_setupiniPath))
-                {
-                    var lines = File.ReadAllLines(_setupiniPath);
-                    if (lines == null || lines.Length <= 0)
-                    {
-                        return;
-                    }
- 
-                    foreach (var l in lines)
-                    {
-                        if (l.Contains("oldAppDir"))
-                        {
-                            var path = l.Split('=')[1];
-                            var dir = Environment.ExpandEnvironmentVariables(path);
-                            if (Directory.Exists(dir))
-                            {
-                                Directory.Delete(dir);
-                            }
-                        }
-
-                        if (l.Contains("oldDataDir"))
-                        {
-                            var path = l.Split('=')[1];
-                            var dir = Environment.ExpandEnvironmentVariables(path);
-                            if (Directory.Exists(dir))
-                            {
-                                Directory.Delete(dir);
-                            }
                         }
                     }
                 }

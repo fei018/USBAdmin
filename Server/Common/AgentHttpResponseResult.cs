@@ -1,4 +1,6 @@
-﻿namespace USBCommon
+﻿using System.Collections.Generic;
+
+namespace USBCommon
 {
     public class AgentHttpResponseResult
     {
@@ -18,7 +20,7 @@
 
         public IPrintTemplate PrintTemplate { get; set; }
 
-        public IIPPrinterInfo IPPrinterInfo { get; set; }
+        public List<IIPPrinterInfo> SitePrinterList { get; set; }
 
         public string DownloadFileBase64 { get; set; }
     }

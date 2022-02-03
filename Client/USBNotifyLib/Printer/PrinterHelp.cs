@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Management;
 using System.Net;
 using System.Printing;
+using System.Text;
 
 namespace USBNotifyLib
 {
@@ -43,9 +44,9 @@ namespace USBNotifyLib
         #endregion
 
         #region + private static List<PrinterInfo> GetPrinterList()
-        private static List<PrinterInfo> GetPrinterList()
+        private static List<LocalPrinterInfo> GetPrinterList()
         {
-            var printerList = new List<PrinterInfo>();
+            var printerList = new List<LocalPrinterInfo>();
 
             ManagementScope mgmtscope = new ManagementScope(@"\root\cimv2");
             var query = new ObjectQuery("Select * from Win32_Printer");
@@ -57,7 +58,7 @@ namespace USBNotifyLib
                 {
                     try
                     {
-                        var p = new PrinterInfo()
+                        var p = new LocalPrinterInfo()
                         {
                             Name = printer["Name"]?.ToString(),
                             Local = (bool)printer["Local"],
@@ -79,9 +80,9 @@ namespace USBNotifyLib
         #endregion
 
         #region + private static List<PrinterInfo> GetTcpIPPrinterList()
-        private static List<PrinterInfo> GetTcpIPPrinterList()
+        private static List<LocalPrinterInfo> GetTcpIPPrinterList()
         {
-            var tcpPrinters = new List<PrinterInfo>();
+            var tcpPrinters = new List<LocalPrinterInfo>();
 
             var printers = GetPrinterList();
             if (printers.Count <= 0)
@@ -111,10 +112,10 @@ namespace USBNotifyLib
 
         // delete printer method
 
-        #region + private static void DeletePrinterByName(string name)
+        #region + public static void DeletePrinterByName(string name)
         private static object _Locker_DeletePrinter = new object();
 
-        private static void DeletePrinter_ByName(string name)
+        public static void DeletePrinter_ByName(string name)
         {
             lock (_Locker_DeletePrinter)
             {
@@ -128,14 +129,15 @@ namespace USBNotifyLib
                     {
                         printer.InvokeMethod("CancelAllJobs", null);
                         printer.Delete();
+                        printer.Dispose();
                     }
                 }
             }
         }
         #endregion
 
-        #region + private static void DeleteTcpIPPort_ByName(string name)
-        private static void DeleteTcpIPPort_ByName(string name)
+        #region + public static void DeleteTcpIPPort_ByName(string name)
+        public static void DeleteTcpIPPort_ByName(string name)
         {
             lock (_Locker_DeletePrinter)
             {
@@ -148,14 +150,15 @@ namespace USBNotifyLib
                     foreach (ManagementObject tcp in tcps)
                     {
                         tcp.Delete();
+                        tcp.Dispose();
                     }
                 }
             }
         }
         #endregion
 
-        #region + public static void DeleteOldTcpIPPrinters()
-        public static void DeleteOldTcpIPPrinters()
+        #region + public static void DeleteOldIPPrinters_OtherSubnet()
+        public static void DeleteOldIPPrinters_OtherSubnet()
         {
             try
             {
@@ -197,14 +200,14 @@ namespace USBNotifyLib
 
         // add printer method
 
-        #region + public static void AddNewPrinter(IPPrinterTemplate printer)
+        #region + public static void AddNewPrinter(IPPrinterInfo printer)
         public static void AddNewPrinter(IPPrinterInfo printer)
         {
             try
             {
-                if (PrinterExist(printer.PrinterName))
+                if (!PrinterDriverExist(printer.DriverName))
                 {
-                    throw new Exception("Pinter is exist. Name: " + printer.PrinterName);
+                    throw new Exception("Printer driver not exist: " + printer.DriverName);
                 }
 
                 if (!AddOrUpdatePrinterIPPort(printer.PortIPAddr, out string error))
@@ -212,17 +215,13 @@ namespace USBNotifyLib
                     throw new Exception(error);
                 }
 
-                if (!AddPrinterDriver(printer.DriverName, printer.DriverINFPath, out string error1))
-                {
-                    throw new Exception(error1);
-                }
-
-                if (!AddPrinter_PrintQueue(printer.PrinterName, printer.DriverName, printer.DriverINFPath, out string error2))
+                if (!AddPrinter_Printing(printer.PrinterName, printer.DriverName, printer.PortIPAddr, out string error2))
                 {
                     throw new Exception(error2);
                 }
 
-                SetPrinterConfig(printer.PrinterName);
+                //SetPrinterConfig_WMI(printer.PrinterName);
+                SetPrinterConfig_Printing(printer.PrinterName);
             }
             catch (Exception)
             {
@@ -259,8 +258,36 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region + private static bool AddPrinter_PrintQueue(string printerName, string driverName, string portName, out string error)
-        private static bool AddPrinter_PrintQueue(string printerName, string driverName, string portName, out string error)
+        #region + public static bool PrinterDriverExist(string driverName)
+        public static bool PrinterDriverExist(string driverName)
+        {
+            try
+            {
+                ManagementScope mgmtscope = new ManagementScope(@"\ROOT\StandardCimv2");
+                var query = new ObjectQuery($"Select * from MSFT_PrinterDriver Where Name = '{driverName}'");
+
+                using (ManagementObjectSearcher objsearcher = new ManagementObjectSearcher(mgmtscope, query))
+                using (ManagementObjectCollection drivers = objsearcher.Get())
+                {
+                    if (drivers.Count >= 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + private static bool AddPrinter_Printing(string printerName, string driverName, string portName, out string error)
+        private static bool AddPrinter_Printing(string printerName, string driverName, string portName, out string error)
         {
             error = null;
             try
@@ -278,11 +305,11 @@ namespace USBNotifyLib
                     }
                     else
                     {
-                        error = "Add printer fail. name: " + printerName;
+                        error = "Add printer fail: " + printerName;
                         return false;
                     }
                 }
-                    
+
             }
             catch (Exception)
             {
@@ -309,6 +336,7 @@ namespace USBNotifyLib
 
                     var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromMinutes(5));
                     mc.InvokeMethod(methodName, inParam, invokeOption);
+                    mc.Dispose();
                 }
 
                 // check add succeed
@@ -325,7 +353,7 @@ namespace USBNotifyLib
                     }
                     else
                     {
-                        throw new Exception("Add Printer Fail, Name: " + printerName);
+                        throw new Exception("Add Printer Fail: " + printerName);
                     }
                 }
             }
@@ -354,7 +382,7 @@ namespace USBNotifyLib
                     portObject["SNMPEnabled"] = false;
                     portObject["SNMPDevIndex"] = 1;
 
-                    PutOptions options = new PutOptions(null, TimeSpan.FromSeconds(10), false, PutType.UpdateOrCreate);
+                    PutOptions options = new PutOptions(null, TimeSpan.FromSeconds(30), false, PutType.UpdateOrCreate);
                     //options.Type = PutType.UpdateOrCreate;
                     //put a newly created object to WMI objects set             
                     portObject.Put(options);
@@ -386,10 +414,9 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region + private static bool AddPrinterDriver(string driverName, string infPath, out string error)
-        private static bool AddPrinterDriver(string driverName, string infPath, out string error)
+        #region + private static bool AddPrinterDriver_WMI(string driverName, string infPath)
+        public static bool AddPrinterDriver_WMI(string driverName, string infPath)
         {
-            error = null;
             try
             {
                 using (ManagementClass mc = new ManagementClass(@"\root\cimv2:Win32_PrinterDriver"))
@@ -402,39 +429,51 @@ namespace USBNotifyLib
                     var inParam = mc.GetMethodParameters("AddPrinterDriver");
                     inParam["DriverInfo"] = dirver;
 
-                    var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromMinutes(1));
+                    var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromMinutes(5));
                     mc.InvokeMethod("AddPrinterDriver", inParam, invokeOption);
                 }
 
                 // check whether driver add succeed
 
-                ManagementScope mgmtscope = new ManagementScope(@"\ROOT\StandardCimv2");
-                var query = new ObjectQuery($"Select * from MSFT_PrinterDriver Where Name = '{driverName}'");
-
-                using (ManagementObjectSearcher objsearcher = new ManagementObjectSearcher(mgmtscope, query))
-                using (var driver = objsearcher.Get())
+                if (PrinterDriverExist(driverName))
                 {
-                    if (driver.Count >= 1)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        error = "Add Printer Driver Fail.";
-                        return false;
-                    }
+                    return true;
+                }
+                else
+                {
+                    throw new Exception("Add printer driver fail: " + driverName);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                error = ex.GetBaseException().Message;
-                return false;
+                throw;
             }
         }
         #endregion
 
-        #region + private static void SetPrinterConfig(string printerName)
-        private static void SetPrinterConfig(string printerName)
+        #region public static bool SetPrinterConfig_Printing(string printerName)
+        public static bool SetPrinterConfig_Printing(string printerName)
+        {
+            try
+            {
+                using (var printServer = new PrintServer())
+                using (var printQ = printServer.GetPrintQueue(printerName))
+                {
+                    printQ.UserPrintTicket.Duplexing = Duplexing.OneSided;
+                    printQ.UserPrintTicket.OutputColor = OutputColor.Monochrome;
+                    printQ.Commit();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + private static void SetPrinterConfig_WMI(string printerName)
+        private static void SetPrinterConfig_WMI(string printerName)
         {
             /**
              * DuplexingMode:
@@ -456,7 +495,7 @@ namespace USBNotifyLib
                     inParams["Color"] = false;
                     inParams["DuplexingMode"] = 0;
 
-                    var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromSeconds(10));
+                    var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromSeconds(30));
                     mc.InvokeMethod("SetByPrinterName", inParams, invokeOption);
                 }
             }
@@ -467,47 +506,6 @@ namespace USBNotifyLib
         }
         #endregion
 
-        // print job
 
-        //private static Dictionary<string,>
-        //#region MyRegion
-        //public void PrintJob_Notify_Start()
-        //{
-        //    try
-        //    {
-        //        var printerList = GetTcpIPPrinterList();
-        //        if (printerList.Count <= 0)
-        //        {
-        //            return;
-        //        }
-
-        //        foreach (var printer in printerList)
-        //        {
-        //            var jobMon = new PrintQueueMonitor(printer.Name);
-        //            jobMon.Start();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw;
-        //    }
-        //}
-        //#endregion
-
-        #region MyRegion
-        public void PrintJob_Notify_Stop()
-        {
-            try
-            {
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        #endregion
     }
 }

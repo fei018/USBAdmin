@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using USBNotifyLib;
 
 namespace USBNotifyLib
 {
@@ -16,6 +12,10 @@ namespace USBNotifyLib
         public string Message { get; set; }
 
         public string PrintTemplateFile { get; set; }
+
+        public List<IPPrinterInfo> AddPrinterDriverList { get; set; }
+
+        public SitePrinterToAddList SitePrinterToAddList { get; set; }
 
         public PipeMsg() { }
 

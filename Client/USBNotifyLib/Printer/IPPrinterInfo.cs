@@ -12,7 +12,7 @@ namespace USBNotifyLib
         /// <summary>
         /// Printer Driver INF File UNC Path
         /// </summary>
-        public string DriverINFPath { get; set; }
+        public string DriverInfPath { get; set; }
 
         /// <summary>
         /// Printer Name
@@ -23,5 +23,7 @@ namespace USBNotifyLib
         /// Printer TCPIP Port Address
         /// </summary>
         public string PortIPAddr { get; set; }
+
+        public string DriverInfLocalPath { get; set; }
     }
 }

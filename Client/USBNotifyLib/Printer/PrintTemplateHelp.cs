@@ -49,7 +49,7 @@ namespace USBNotifyLib
         {
             Task.Run(() =>
             {
-                PrinterHelp.DeleteOldTcpIPPrinters();
+                PrinterHelp.DeleteOldIPPrinters_OtherSubnet();
             });
         }
         #endregion

@@ -110,13 +110,11 @@ namespace USBNotifyAgentTray
         #endregion
 
         #region SetPrinter_Click
-        public bool Item_SetPrinter_IsOpen { get; set; } = false;
-
         private void SetPrinter_Click(object sender, EventArgs e)
         {
             try
             {
-                if (Item_SetPrinter_IsOpen)
+                if (WinSingleOpen.SetPrinterWin)
                 {
                     return;
                 }
@@ -128,7 +126,7 @@ namespace USBNotifyAgentTray
                         var prnWin = new SetPrinterWin();
                         prnWin.Show();
 
-                        Item_SetPrinter_IsOpen = true;
+                        WinSingleOpen.SetPrinterWin = true;
                     }
                     catch (Exception ex)
                     {
@@ -145,23 +143,22 @@ namespace USBNotifyAgentTray
         #endregion
 
         #region AboutItem_Click
-        public bool Item_About_IsOpen { get; set; } = false;
         private void AboutItem_Click(object sender, EventArgs e)
         {
             try
             {
-                if (Item_About_IsOpen)
+                if (WinSingleOpen.AboutWin)
                 {
                     return;
                 }
 
-                App.Current.Dispatcher.Invoke(new Action(()=>
+                App.Current.Dispatcher.Invoke(new Action(() =>
                 {
                     var about = new AboutWin();
                     about.txtAgentVersion.Text = AgentRegistry.AgentVersion;
                     about.Show();
 
-                    Item_About_IsOpen = true;
+                    WinSingleOpen.AboutWin = true;
                 }));
             }
             catch (Exception ex)
