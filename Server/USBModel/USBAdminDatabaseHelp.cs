@@ -38,20 +38,19 @@ namespace USBModel
         {
             try
             {
-                if (_db.DbMaintenance.CreateDatabase())
-                {
-                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PerUsbHistory>();
-                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PerComputer>();
-                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_AgentSetting>();
-                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_UsbRequest>();
-                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_EmailSetting>();
-                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PrintTemplate>();
-                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterInfo>();
-                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterSite>();
+                _db.DbMaintenance.CreateDatabase();
 
-                    _db.CodeFirst.SetStringDefaultLength(100).InitTables<LoginUser>();
-                    _db.CodeFirst.InitTables<LoginErrorCountLimit>();
-                }
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<LoginUser>();
+                _db.CodeFirst.InitTables<LoginErrorCountLimit>();
+
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PerUsbHistory>();
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PerComputer>();
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_AgentSetting>();
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_UsbRequest>();
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_EmailSetting>();
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PrintTemplate>();
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterInfo>();
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterSite>();
             }
             catch (Exception)
             {

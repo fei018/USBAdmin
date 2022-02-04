@@ -72,6 +72,12 @@
               "href": "USBadmin/Printer/Template",
               "icon": "fa fa-list",
               "target": "_self"
+            },
+            {
+              "title": "PrinterSite",
+              "href": "USBadmin/Printer/SiteIndex",
+              "icon": "fa fa-list",
+              "target": "_self"
             }
           ]
         }

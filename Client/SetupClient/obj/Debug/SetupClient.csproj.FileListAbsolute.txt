@@ -57,3 +57,4 @@ C:\Code\GitHub\USBAdmin\Client\SetupClient\obj\Debug\SetupClient.csproj.CoreComp
 C:\Code\GitHub\USBAdmin\Client\SetupClient\obj\Debug\Setup.exe
 C:\Code\GitHub\USBAdmin\Client\SetupClient\obj\Debug\Setup.pdb
 C:\Code\GitHub\USBAdmin\Client\SetupClient\obj\Debug\SetupClient.csproj.AssemblyReference.cache
+C:\CodeRepos\USBAdmin\Client\SetupClient\obj\Debug\SetupClient.csproj.AssemblyReference.cache

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Management;
 using System.Net;
 using System.Printing;
@@ -220,7 +222,7 @@ namespace USBNotifyLib
                     throw new Exception(error2);
                 }
 
-                //SetPrinterConfig_WMI(printer.PrinterName);
+                SetPrinterConfig_WMI(printer.PrinterName);
                 SetPrinterConfig_Printing(printer.PrinterName);
             }
             catch (Exception)
@@ -365,6 +367,35 @@ namespace USBNotifyLib
         }
         #endregion
 
+        #region + private static bool PrinterIPPortExist(string ipAddress)
+        private static bool PrinterIPPortExist(string ipAddress)
+        {
+            try
+            {
+                ManagementScope mgmtscope = new ManagementScope(@"\root\cimv2");
+                var query = new ObjectQuery($"Select * from Win32_TCPIPPrinterPort Where Name = '{ipAddress}'");
+
+                using (ManagementObjectSearcher objsearcher = new ManagementObjectSearcher(mgmtscope, query))
+                using (var tcps = objsearcher.Get())
+                {
+                    if (tcps.Count >= 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
         #region + private static bool AddOrUpdatePrinterIPPort(string ipAddress, out string error)
         private static bool AddOrUpdatePrinterIPPort(string ipAddress, out string error)
         {
@@ -389,21 +420,14 @@ namespace USBNotifyLib
                 }
 
                 // check whether add succeed
-                ManagementScope mgmtscope = new ManagementScope(@"\root\cimv2");
-                var query = new ObjectQuery($"Select * from Win32_TCPIPPrinterPort Where Name = '{ipAddress}'");
 
-                using (ManagementObjectSearcher objsearcher = new ManagementObjectSearcher(mgmtscope, query))
-                using (var tcps = objsearcher.Get())
+                if (PrinterIPPortExist(ipAddress))
                 {
-                    if (tcps.Count >= 1)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        error = "Create Or Update Printer TCPIP Port Fail.";
-                        return false;
-                    }
+                    return true;
+                }
+                else
+                {
+                    throw new Exception("Create Or Update Printer TCPIP Port Fail: " + ipAddress);
                 }
             }
             catch (Exception ex)
@@ -414,23 +438,33 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region + private static bool AddPrinterDriver_WMI(string driverName, string infPath)
-        public static bool AddPrinterDriver_WMI(string driverName, string infPath)
+        #region + private static bool InstallPrinterDriver_WMI(string driverName, string infPath)
+        public static bool InstallPrinterDriver_WMI(string driverName, string infPath)
         {
             try
             {
-                using (ManagementClass mc = new ManagementClass(@"\root\cimv2:Win32_PrinterDriver"))
-                using (var dirver = mc.CreateInstance())
+                var mScope = CreateManagementScope_Cimv2();
+
+                using (ManagementClass mc = new ManagementClass(mScope, new ManagementPath("Win32_PrinterDriver"), new ObjectGetOptions()))
+                using (var driverInfo = mc.CreateInstance())
                 {
-                    dirver["Name"] = driverName;
-                    dirver["InfName"] = infPath;
-                    //dirver["FilePath"] = "";
+                    driverInfo.SetPropertyValue("Name", driverName);
+                    driverInfo.SetPropertyValue("InfName", infPath);
+                    //dirver["FilePath"] = infDir;
 
-                    var inParam = mc.GetMethodParameters("AddPrinterDriver");
-                    inParam["DriverInfo"] = dirver;
+                    using (var inParam = mc.GetMethodParameters("AddPrinterDriver"))
+                    {
+                        inParam["DriverInfo"] = driverInfo;
 
-                    var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromMinutes(5));
-                    mc.InvokeMethod("AddPrinterDriver", inParam, invokeOption);
+                        var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromMinutes(5));
+                        var result = mc.InvokeMethod("AddPrinterDriver", inParam, invokeOption);
+                        var code = (int)result.Properties["ReturnValue"].Value;
+
+                        if (code != 0)
+                        {
+                            throw new Exception("Install printer driver fail, return code: " + code);
+                        }
+                    }
                 }
 
                 // check whether driver add succeed
@@ -441,7 +475,7 @@ namespace USBNotifyLib
                 }
                 else
                 {
-                    throw new Exception("Add printer driver fail: " + driverName);
+                    throw new Exception("Install printer driver fail: " + driverName);
                 }
             }
             catch (Exception)
@@ -452,17 +486,16 @@ namespace USBNotifyLib
         #endregion
 
         #region public static bool SetPrinterConfig_Printing(string printerName)
-        public static bool SetPrinterConfig_Printing(string printerName)
+        public static void SetPrinterConfig_Printing(string printerName)
         {
             try
             {
-                using (var printServer = new PrintServer())
-                using (var printQ = printServer.GetPrintQueue(printerName))
+                using (var pServer = new PrintServer())
+                using (var printQ = pServer.GetPrintQueue(printerName))
                 {
                     printQ.UserPrintTicket.Duplexing = Duplexing.OneSided;
                     printQ.UserPrintTicket.OutputColor = OutputColor.Monochrome;
                     printQ.Commit();
-                    return true;
                 }
             }
             catch (Exception)
@@ -488,15 +521,16 @@ namespace USBNotifyLib
 
             try
             {
-                using (ManagementClass mc = new ManagementClass(@"\root\StandardCimv2:MSFT_PrinterConfiguration"))
-                using (var inParams = mc.GetMethodParameters("SetByPrinterName"))
+                var mScope = CreateManagementScope_StandardCimv2();
+                using (ManagementClass mc = new ManagementClass(mScope, new ManagementPath("MSFT_PrinterConfiguration"), new ObjectGetOptions()))
+                using (var methodParams = mc.GetMethodParameters("SetByPrinterName"))
                 {
-                    inParams["PrinterName"] = printerName;
-                    inParams["Color"] = false;
-                    inParams["DuplexingMode"] = 0;
+                    methodParams.SetPropertyValue("PrinterName", printerName);
+                    methodParams.SetPropertyValue("Color", false);
+                    methodParams.SetPropertyValue("DuplexingMode", 0);
 
                     var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromSeconds(30));
-                    mc.InvokeMethod("SetByPrinterName", inParams, invokeOption);
+                    mc.InvokeMethod("SetByPrinterName", methodParams, invokeOption);
                 }
             }
             catch (Exception)
@@ -506,6 +540,34 @@ namespace USBNotifyLib
         }
         #endregion
 
+        #region + private static ManagementScope CreateManagementScope_Cimv2()
+        private static ManagementScope CreateManagementScope_Cimv2()
+        {
+            var wmiConnectionOptions = new ConnectionOptions();
+            wmiConnectionOptions.Impersonation = ImpersonationLevel.Impersonate;
+            wmiConnectionOptions.Authentication = AuthenticationLevel.Default;
+            wmiConnectionOptions.EnablePrivileges = true; // required to load/install the driver.
+                                                          // Supposed equivalent to VBScript objWMIService.Security_.Privileges.AddAsString "SeLoadDriverPrivilege", True 
 
+            var managementScope = new ManagementScope("\\root\\cimv2", wmiConnectionOptions);
+            managementScope.Connect();
+            return managementScope;
+        }
+        #endregion
+
+        #region + private static ManagementScope CreateManagementScope_StandardCimv2()
+        private static ManagementScope CreateManagementScope_StandardCimv2()
+        {
+            var wmiConnectionOptions = new ConnectionOptions();
+            wmiConnectionOptions.Impersonation = ImpersonationLevel.Impersonate;
+            wmiConnectionOptions.Authentication = AuthenticationLevel.Default;
+            wmiConnectionOptions.EnablePrivileges = true; // required to load/install the driver.
+                                                          // Supposed equivalent to VBScript objWMIService.Security_.Privileges.AddAsString "SeLoadDriverPrivilege", True 
+
+            var managementScope = new ManagementScope("\\root\\StandardCimv2", wmiConnectionOptions);
+            managementScope.Connect();
+            return managementScope;
+        }
+        #endregion
     }
 }

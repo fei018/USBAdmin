@@ -293,7 +293,7 @@ namespace USBNotifyLib
             Task.Run(() =>
             {
 #if DEBUG
-                //Debugger.Break();
+                Debugger.Break();
 #endif
                 try
                 {
@@ -325,7 +325,7 @@ namespace USBNotifyLib
                         {                           
                             try
                             {
-                                PrinterHelp.AddPrinterDriver_WMI(p.DriverName, p.DriverInfLocalPath);
+                                PrinterHelp.InstallPrinterDriver_WMI(p.DriverName, p.DriverInfLocalPath);
                                 output.AppendLine("Add printer driver: " + p.DriverName);
                             }
                             catch (Exception ex)

@@ -33,7 +33,7 @@ namespace USBTestConsole
                 p.DriverName   = "Kyocera TASKalfa 3554ci KX";
                 p.DriverInfPath = @"C:\Users\User\Downloads\64bit\OEMSETUP.INF";
                 p.PortIPAddr = "10.20.4.5";
-                PrinterHelp.AddPrinterDriver_WMI(p.DriverName, p.DriverInfPath);
+                PrinterHelp.InstallPrinterDriver_WMI(p.DriverName, p.DriverInfPath);
                 PrinterHelp.AddNewPrinter(p);
 
 

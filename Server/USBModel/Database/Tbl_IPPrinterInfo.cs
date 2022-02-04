@@ -15,7 +15,7 @@ namespace USBModel
         public string DriverName { get; set; }
 
         [SugarColumn(ColumnDataType = "nvarchar(max)")]
-        public string DriverINFPath { get; set; }
+        public string DriverInfPath { get; set; }
 
         public string PrinterName { get; set; }
 

@@ -130,3 +130,5 @@ C:\Code\GitHub\USBAdmin\Client\USBNotifyAgentTray\obj\Debug\USBNotifyAgentTray.c
 C:\Code\GitHub\USBAdmin\Client\USBNotifyAgentTray\obj\Debug\HHITtoolsTray.exe
 C:\Code\GitHub\USBAdmin\Client\USBNotifyAgentTray\bin\Debug\HHITtoolsTray.pdb
 C:\Code\GitHub\USBAdmin\Client\USBNotifyAgentTray\obj\Debug\HHITtoolsTray.pdb
+C:\CodeRepos\USBAdmin\Client\USBNotifyAgentTray\bin\Debug\HHITtoolsTray.pdb
+C:\CodeRepos\USBAdmin\Client\USBNotifyAgentTray\obj\Debug\HHITtoolsTray.pdb
