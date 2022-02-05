@@ -46,7 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AgentHttpResponseResult.cs" />
-    <Compile Include="Base64CodeHelp.cs" />
+    <Compile Include="IPrintJobInfo.cs" />
+    <Compile Include="UtilityTools.cs" />
     <Compile Include="IAgentSetting.cs" />
     <Compile Include="IPrintTemplate.cs" />
     <Compile Include="IUsbRequest.cs" />

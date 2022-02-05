@@ -69,9 +69,16 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region + public static void HttpClient_Post(string url, string postJson)
-        public static void HttpClient_Post(string url, string postJson)
+        #region + public static void HttpClient_Post(string url, object post)
+        public static void HttpClient_Post(string url, object postObject)
         {
+            if (postObject == null)
+            {
+                return;
+            }
+
+            var postJson = JsonConvert.SerializeObject(postObject);
+
             var http = new HttpClient();
 
             try
@@ -185,9 +192,8 @@ namespace USBNotifyLib
             try
             {
                 var com = PerComputerHelp.GetPerComputer() as IPerComputer;
-                var comJson = JsonConvert.SerializeObject(com);
 
-                HttpClient_Post(AgentRegistry.PostPerComputerUrl, comJson);
+                HttpClient_Post(AgentRegistry.PostPerComputerUrl, com);
             }
             catch (Exception)
             {
@@ -216,9 +222,7 @@ namespace USBNotifyLib
                     PluginTime = DateTime.Now
                 };
 
-                var usbHistoryJosn = JsonConvert.SerializeObject(usbHistory);
-
-                HttpClient_Post(AgentRegistry.PostPerUsbHistoryUrl, usbHistoryJosn);
+                HttpClient_Post(AgentRegistry.PostPerUsbHistoryUrl, usbHistory);
             }
             catch (Exception)
             {
@@ -237,14 +241,7 @@ namespace USBNotifyLib
         {
             try
             {
-                if (post == null)
-                {
-                    throw new Exception("UsbRequest null reference.");
-                }
-
-                var usbJson = JsonConvert.SerializeObject(post);
-
-                HttpClient_Post(AgentRegistry.PostUsbRequestUrl, usbJson);
+                HttpClient_Post(AgentRegistry.PostUsbRequestUrl, post);
             }
             catch (Exception)
             {
@@ -272,8 +269,8 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region + public List<IIPPrinterInfo> GetSitePrinterList()
-        public List<IPPrinterInfo> GetSitePrinterList()
+        #region + public List<IIPPrinterInfo> GetSitePrinterList_Http()
+        public List<IPPrinterInfo> GetSitePrinterList_Http()
         {
             try
             {
@@ -289,6 +286,20 @@ namespace USBNotifyLib
                     list.Add(p as IPPrinterInfo);
                 }
                 return list;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public void PostPerPrintJob_Http(PerPrintJob printJob)
+        public void PostPerPrintJob_Http(PerPrintJob printJob)
+        {
+            try
+            {
+                HttpClient_Post(AgentRegistry.PostPerPrintJobUrl, printJob);
             }
             catch (Exception)
             {

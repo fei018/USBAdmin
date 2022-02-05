@@ -125,6 +125,12 @@ namespace USBNotifyLib
             set => SetRegKey(nameof(SitePrinterListUrl), value, RegistryValueKind.String);
         }
 
+        public static string PostPerPrintJobUrl
+        {
+            get => ReadRegKey(nameof(PostPerPrintJobUrl));
+            set => SetRegKey(nameof(PostPerPrintJobUrl), value, RegistryValueKind.String);
+        }
+
 
         #region + private string ReadRegKey(string name)
         private static string ReadRegKey(string name)

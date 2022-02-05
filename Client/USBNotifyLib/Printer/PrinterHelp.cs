@@ -112,7 +112,7 @@ namespace USBNotifyLib
         }
         #endregion
 
-        // delete printer method
+        //// delete printer method
 
         #region + public static void DeletePrinterByName(string name)
         private static object _Locker_DeletePrinter = new object();
@@ -200,7 +200,9 @@ namespace USBNotifyLib
         #endregion
 
 
-        // add printer method
+        //// add printer method
+
+        // public
 
         #region + public static void AddNewPrinter(IPPrinterInfo printer)
         public static void AddNewPrinter(IPPrinterInfo printer)
@@ -223,35 +225,6 @@ namespace USBNotifyLib
                 }
 
                 SetPrinterConfig_WMI(printer.PrinterName);
-                SetPrinterConfig_Printing(printer.PrinterName);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region + private static bool PrinterExist(string printerName)
-        private static bool PrinterExist(string printerName)
-        {
-            try
-            {
-                ManagementScope mgmtscope = new ManagementScope(@"\root\StandardCimv2");
-                var query = new ObjectQuery($"Select * from MSFT_Printer Where Name = '{printerName}'");
-
-                using (var objsearcher = new ManagementObjectSearcher(mgmtscope, query))
-                using (var printers = objsearcher.Get())
-                {
-                    if (printers.Count >= 1)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
             }
             catch (Exception)
             {
@@ -271,7 +244,42 @@ namespace USBNotifyLib
                 using (ManagementObjectSearcher objsearcher = new ManagementObjectSearcher(mgmtscope, query))
                 using (ManagementObjectCollection drivers = objsearcher.Get())
                 {
-                    if (drivers.Count >= 1)
+                    int count = drivers.Count;
+                    drivers.Dispose();
+                    objsearcher.Dispose();
+
+                    if (count >= 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+
+        // private
+
+        #region + private static bool PrinterExist(string printerName)
+        private static bool PrinterExist(string printerName)
+        {
+            try
+            {
+                ManagementScope mgmtscope = new ManagementScope(@"\root\StandardCimv2");
+                var query = new ObjectQuery($"Select * from MSFT_Printer Where Name = '{printerName}'");
+
+                using (var objsearcher = new ManagementObjectSearcher(mgmtscope, query))
+                using (var printers = objsearcher.Get())
+                {
+                    if (printers.Count >= 1)
                     {
                         return true;
                     }
@@ -303,6 +311,23 @@ namespace USBNotifyLib
                 {
                     if (printQ != null)
                     {
+                        try
+                        {
+                            printQ.DefaultPrintTicket.OutputColor = OutputColor.Grayscale;
+                            printQ.DefaultPrintTicket.Duplexing = Duplexing.OneSided;
+                            printQ.Commit();
+                        }
+                        catch (Exception) { }
+
+                        try
+                        {
+                            printQ.UserPrintTicket.OutputColor = OutputColor.Grayscale;
+                            printQ.UserPrintTicket.Duplexing = Duplexing.OneSided;
+                            printQ.Commit();
+                        }
+                        catch (Exception) { }
+
+                        printQ.Dispose();
                         return true;
                     }
                     else
@@ -452,12 +477,12 @@ namespace USBNotifyLib
                     driverInfo.SetPropertyValue("InfName", infPath);
                     //dirver["FilePath"] = infDir;
 
-                    using (var inParam = mc.GetMethodParameters("AddPrinterDriver"))
+                    using (var methodParam = mc.GetMethodParameters("AddPrinterDriver"))
                     {
-                        inParam["DriverInfo"] = driverInfo;
+                        methodParam["DriverInfo"] = driverInfo;
 
-                        var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromMinutes(5));
-                        var result = mc.InvokeMethod("AddPrinterDriver", inParam, invokeOption);
+                        //var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromMinutes(5));
+                        var result = mc.InvokeMethod("AddPrinterDriver", methodParam, null);
                         var code = (int)result.Properties["ReturnValue"].Value;
 
                         if (code != 0)
@@ -485,17 +510,32 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region public static bool SetPrinterConfig_Printing(string printerName)
-        public static void SetPrinterConfig_Printing(string printerName)
+        #region + private static bool SetPrinterConfig_Printing(string printerName)
+        private static void SetPrinterConfig_Printing(string printerName)
         {
             try
             {
                 using (var pServer = new PrintServer())
                 using (var printQ = pServer.GetPrintQueue(printerName))
                 {
-                    printQ.UserPrintTicket.Duplexing = Duplexing.OneSided;
-                    printQ.UserPrintTicket.OutputColor = OutputColor.Monochrome;
-                    printQ.Commit();
+                    try
+                    {
+                        printQ.DefaultPrintTicket.Duplexing = Duplexing.OneSided;
+                        printQ.DefaultPrintTicket.OutputColor = OutputColor.Monochrome;
+                        printQ.Commit();
+                    }
+                    catch (Exception) { }
+
+                    try
+                    {
+                        printQ.UserPrintTicket.Duplexing = Duplexing.OneSided;
+                        printQ.UserPrintTicket.OutputColor = OutputColor.Monochrome;
+                        printQ.Commit();
+                    }
+                    catch (Exception) { }
+
+                    printQ.Dispose();
+                    pServer.Dispose();
                 }
             }
             catch (Exception)
@@ -529,8 +569,11 @@ namespace USBNotifyLib
                     methodParams.SetPropertyValue("Color", false);
                     methodParams.SetPropertyValue("DuplexingMode", 0);
 
-                    var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromSeconds(30));
-                    mc.InvokeMethod("SetByPrinterName", methodParams, invokeOption);
+                    //var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromSeconds(30));
+                    mc.InvokeMethod("SetByPrinterName", methodParams, null);
+
+                    methodParams.Dispose();
+                    mc.Dispose();
                 }
             }
             catch (Exception)
@@ -539,6 +582,9 @@ namespace USBNotifyLib
             }
         }
         #endregion
+
+
+        //// CreateManagementScope
 
         #region + private static ManagementScope CreateManagementScope_Cimv2()
         private static ManagementScope CreateManagementScope_Cimv2()

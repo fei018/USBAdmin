@@ -10,8 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using USBNotifyLib.Win32API;
 using USBNotifyLib;
-using MailKit.Net.Smtp;
-using MimeKit;
 using USBNotifyLib.PrintJob;
 using System.Printing;
 using System.Management;
@@ -28,15 +26,16 @@ namespace USBTestConsole
             {
                 Console.WriteLine("Start...");
 
-                var p = new IPPrinterInfo();
-                p.PrinterName = "test printer111";
-                p.DriverName   = "Kyocera TASKalfa 3554ci KX";
-                p.DriverInfPath = @"C:\Users\User\Downloads\64bit\OEMSETUP.INF";
-                p.PortIPAddr = "10.20.4.5";
-                PrinterHelp.InstallPrinterDriver_WMI(p.DriverName, p.DriverInfPath);
-                PrinterHelp.AddNewPrinter(p);
+                //var p = new IPPrinterInfo();
+                //p.PrinterName = "test printer111";
+                //p.DriverName   = "Kyocera TASKalfa 3554ci KX";
+                //p.DriverInfPath = @"C:\Users\User\Downloads\64bit\OEMSETUP.INF";
+                //p.PortIPAddr = "10.20.4.5";
+                //PrinterHelp.InstallPrinterDriver_WMI(p.DriverName, p.DriverInfPath);
+                //PrinterHelp.AddNewPrinter(p);
 
-
+                PrintJobNotify.Entity = new PrintJobNotify();
+                PrintJobNotify.Entity.Start();
 
 
             }
@@ -48,6 +47,8 @@ namespace USBTestConsole
 
             Console.WriteLine("##############################################");
             Console.ReadLine();
+
+            PrintJobNotify.Entity.Stop();
         }
 
         #region UsbFormProcess
@@ -133,42 +134,7 @@ namespace USBTestConsole
         }
         #endregion
 
-        #region email
-        static void Email()
-        {
-            try
-            {
-                MimeMessage message = new MimeMessage();
 
-                MailboxAddress from = new MailboxAddress("USBAdmin",
-                "e_fei_huang@hiphing.com.hk");
-                message.From.Add(from);
-
-                MailboxAddress to = new MailboxAddress("fei",
-                "e_fei_huang@hiphing.com.hk");
-                message.To.Add(to);
-
-                message.Subject = "USBAdmin Test";
-                BodyBuilder bodyBuilder = new BodyBuilder { TextBody = "test!!!" };
-                message.Body = bodyBuilder.ToMessageBody();
-
-                using (SmtpClient client = new SmtpClient())
-                {
-                    client.Connect("mailgw.hiphing.com.hk", 25, false);
-                    //client.Authenticate("e_fei", "fei");
-
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-        #endregion
 
         #region print
         static void Print()
@@ -276,5 +242,7 @@ namespace USBTestConsole
 
         }
         #endregion
+
+ 
     }
 }

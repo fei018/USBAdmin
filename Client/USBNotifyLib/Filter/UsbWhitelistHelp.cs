@@ -32,7 +32,7 @@ namespace USBNotifyLib
                     {
                         if (!string.IsNullOrWhiteSpace(line))
                         {
-                            var data = Base64CodeHelp.Base64Decode(line.Trim());
+                            var data = UtilityTools.Base64Decode(line.Trim());
                             cache.Add(data);
                         }
                     }

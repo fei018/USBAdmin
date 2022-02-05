@@ -38,6 +38,21 @@ namespace USBNotifyAgentTray
         }
         #endregion
 
+        #region private void SendPipeMsgToServer_Agent(PipeMsg pipeMsg)
+        private void SendPipeMsgToServer_Agent(PipeMsg pipeMsg)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(pipeMsg);
+                _client?.PushMessage(json);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
         #region Start()
         public void Stop()
         {
@@ -319,17 +334,15 @@ namespace USBNotifyAgentTray
         // 
 
         #region + public void PushMsg_ToAgent_SitePrinterToAdd()
-        public void PushMsg_ToAgent_SitePrinterToAdd()
+        public void PushMsg_ToAgent_SitePrinterToAdd(List<IPPrinterInfo> sitePrinterList)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    var addPrinterList = new AgentHttpHelp().GetSitePrinterList();
-
                     // 獲取 需要 install driver list
                     List<IPPrinterInfo> addDriverList = new List<IPPrinterInfo>();
-                    foreach (var addPrinter in addPrinterList)
+                    foreach (var addPrinter in sitePrinterList)
                     {
                         try
                         {
@@ -364,18 +377,18 @@ namespace USBNotifyAgentTray
 
                     SitePrinterToAddList sitePrinterToAddList = new SitePrinterToAddList
                     {
-                        PrinterList = addPrinterList,
+                        PrinterList = sitePrinterList,
                         DriverList = addDriverList
                     };
 
+                    // set PipeMsgType: PrinterDeleteOldAndInstallDriver
                     var pipemsg = new PipeMsg()
                     {
                         PipeMsgType = PipeMsgType.PrinterDeleteOldAndInstallDriver,
                         SitePrinterToAddList = sitePrinterToAddList
                     };
 
-                    var json = JsonConvert.SerializeObject(pipemsg);
-                    _client?.PushMessage(json);
+                    SendPipeMsgToServer_Agent(pipemsg);
                 }
                 catch (Exception)
                 {

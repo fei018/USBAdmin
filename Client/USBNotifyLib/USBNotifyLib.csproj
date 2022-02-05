@@ -75,9 +75,11 @@
     <Compile Include="NamedPipe\PipeMsg.cs" />
     <Compile Include="NamedPipe\PipeMsgType.cs" />
     <Compile Include="NamedPipe\PipeClientService.cs" />
-    <Compile Include="Printer\PrintJobChangeEventArgs.cs" />
-    <Compile Include="Printer\PrintQueueMonitor.cs" />
-    <Compile Include="Printer\PrintSpoolAPI.cs" />
+    <Compile Include="PrintJob\PerPrintJob.cs" />
+    <Compile Include="PrintJob\PrintJobChangeEventArgs.cs" />
+    <Compile Include="PrintJob\PrintJobNotify.cs" />
+    <Compile Include="PrintJob\PrintQueueMonitor.cs" />
+    <Compile Include="PrintJob\PrintSpoolAPI.cs" />
     <Compile Include="Printer\SitePrinterToAddList.cs" />
     <Compile Include="Printer\TCPIPPrinterPort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -14,7 +14,10 @@ namespace USBNotifyLib
         {
             try
             {
-                var com = GetPerComputer();
+                var com = new PerComputer();
+                SetNetworkInfo(com);
+                SetBiosSerial(com);
+
                 if (string.IsNullOrWhiteSpace(com.ComputerIdentity))
                 {
                     throw new Exception("ComputerIdentity is null or empty.");
@@ -118,6 +121,7 @@ namespace USBNotifyLib
                     foreach (var b in wmi)
                     {
                         userComputer.BiosSerial = Convert.ToString(b["SerialNumber"])?.Trim();
+                        b?.Dispose();
                     }
                 }
             }
@@ -131,6 +135,7 @@ namespace USBNotifyLib
                         foreach (var b in wmi)
                         {
                             userComputer.BiosSerial = Convert.ToString(b["SerialNumber"])?.Trim();
+                            b?.Dispose();
                         }
                     }
                 }

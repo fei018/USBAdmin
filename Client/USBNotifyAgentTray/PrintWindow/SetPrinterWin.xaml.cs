@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using USBNotifyAgentTray;
+using USBNotifyLib;
 
 namespace USBNotifyAgentTray.PrintWindow
 {
@@ -73,7 +74,8 @@ namespace USBNotifyAgentTray.PrintWindow
                 {
                     try
                     {
-                        PipeClientTray.Entity_Tray?.PushMsg_ToAgent_SitePrinterToAdd();
+                        var sitePrinterList = new AgentHttpHelp().GetSitePrinterList_Http();
+                        PipeClientTray.Entity_Tray?.PushMsg_ToAgent_SitePrinterToAdd(sitePrinterList);
                     }
                     catch (Exception ex)
                     {
