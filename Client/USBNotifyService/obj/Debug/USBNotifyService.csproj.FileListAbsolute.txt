@@ -59,7 +59,6 @@ C:\Code\GitHub\USBAdmin\Client\USBNotifyService\obj\Debug\USBNotifyService.cspro
 C:\Code\GitHub\USBAdmin\Client\USBNotifyService\obj\Debug\USBNotifyService.ProjectInstaller.resources
 C:\Code\GitHub\USBAdmin\Client\USBNotifyService\obj\Debug\USBNotifyService.csproj.GenerateResource.cache
 C:\Code\GitHub\USBAdmin\Client\USBNotifyService\obj\Debug\USBNotifyService.csproj.CoreCompileInputs.cache
-C:\Code\GitHub\USBAdmin\Client\USBNotifyService\bin\Debug\RemoteSupport.exe
 C:\Code\GitHub\USBAdmin\Client\USBNotifyService\bin\Debug\HHITtoolsService.exe.config
 C:\Code\GitHub\USBAdmin\Client\USBNotifyService\bin\Debug\HHITtoolsService.exe
 C:\Code\GitHub\USBAdmin\Client\USBNotifyService\bin\Debug\HHITtools.exe
@@ -99,3 +98,4 @@ C:\CodeRepos\USBAdmin\Client\USBNotifyService\obj\Debug\USBNotifyService.csproj.
 C:\CodeRepos\USBAdmin\Client\USBNotifyService\obj\Debug\HHITtoolsService.exe
 C:\CodeRepos\USBAdmin\Client\USBNotifyService\bin\Debug\HHITtoolsTray.pdb
 C:\CodeRepos\USBAdmin\Client\USBNotifyService\bin\Debug\RemoteSupport.exe.config
+C:\Code\GitHub\USBAdmin\Client\USBNotifyService\bin\Debug\HHITtoolsTray.pdb

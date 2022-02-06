@@ -42,3 +42,10 @@ C:\CodeRepos\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.dll
 C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.csproj.AssemblyReference.cache
 C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.csproj.CoreCompileInputs.cache
 C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.dll
+C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\bin\Release\USBNotifyLib.dll
+C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\bin\Release\NamedPipeWrapper.dll
+C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\bin\Release\NamedPipeWrapper.pdb
+C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\bin\Release\NativeUsbLib.dll
+C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\bin\Release\Newtonsoft.Json.dll
+C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\bin\Release\USBCommon.dll
+C:\Code\GitHub\USBAdmin\Client\USBNotifyLib\obj\Release\USBNotifyLib.csproj.CopyComplete
