@@ -81,5 +81,20 @@ namespace USBAdminWebMVC
             return temp;
         }
         #endregion
+
+        #region + public static Tbl_PerPrintJob Deserialize_IPrintJobInfo(string json)
+        public static Tbl_PerPrintJob Deserialize_IPrintJobInfo(string json)
+        {
+            var settings = new JsonSerializerSettings
+            {
+                Converters = {
+                        new AbstractJsonConverter<Tbl_PerPrintJob, IPrintJobInfo>()
+                    }
+            };
+
+            var temp = JsonConvert.DeserializeObject<Tbl_PerPrintJob>(json, settings);
+            return temp;
+        }
+        #endregion
     }
 }

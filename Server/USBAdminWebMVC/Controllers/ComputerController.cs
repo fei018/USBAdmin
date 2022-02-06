@@ -60,10 +60,37 @@ namespace USBAdminWebMVC.Controllers
 
                 return JsonResultHelp.LayuiTableData(totalCount, list);
             }
+            catch (Exception ex)
+            {
+                return JsonResultHelp.LayuiTableData(ex.Message);
+            }
+        }
+        #endregion
+
+        #region PrintJob
+        public async Task<IActionResult> PrintJob(int Id)
+        {
+            try
+            {
+                var query = await _usbDb.PerComputer_Get_ById(Id);
+                return View(query);
+            }
             catch (Exception)
             {
-
                 throw;
+            }
+        }
+
+        public async Task<IActionResult> PrintJobList(string computerIdentity, int page, int limit)
+        {
+            try
+            {
+                var (total, list) = await _usbDb.PerPrintJob_Get_List_ByComputerIdentity(computerIdentity, page, limit);
+                return JsonResultHelp.LayuiTableData(total, list);
+            }
+            catch (Exception ex)
+            {
+                return JsonResultHelp.LayuiTableData(ex.Message);
             }
         }
         #endregion

@@ -31,27 +31,8 @@ namespace USBNotifyAgentTray
             Visibility = Visibility.Visible;
 #endif
 
-            Startup();
+            TrayManager.Start();
         }
-
-
-        #region Startup()
-        private void Startup()
-        {
-            try
-            {
-                PipeClientTray.Entity_Tray = new PipeClientTray();
-                PipeClientTray.Entity_Tray.Start();
-
-                TrayIcon.Entity = new TrayIcon();
-                TrayIcon.Entity.AddTrayIcon();                
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        #endregion
 
         #region This.Close()
         private void Window_Closed(object sender, EventArgs e)
@@ -59,8 +40,7 @@ namespace USBNotifyAgentTray
 #if DEBUG
             //Debugger.Break();
 #endif
-            TrayIcon.Entity.RemoveTrayIcon();
-            PipeClientTray.Entity_Tray.Stop();
+            TrayManager.Stop();
         }
         #endregion
 

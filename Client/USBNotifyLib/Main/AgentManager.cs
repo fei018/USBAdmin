@@ -83,7 +83,11 @@ namespace USBNotifyLib
         #region Stop()
         public static void Stop()
         {
-            AgentTimer.ClearTimerTask();
+            try
+            {
+                AgentTimer.ClearTimerTask();
+            }
+            catch (Exception) { }
         }
         #endregion
 

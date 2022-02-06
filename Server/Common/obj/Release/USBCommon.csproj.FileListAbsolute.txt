@@ -21,6 +21,5 @@ C:\CodeRepos\USBAdmin\Server\Common\bin\Release\USBCommon.dll
 C:\CodeRepos\USBAdmin\Server\Common\obj\Release\USBCommon.csproj.CoreCompileInputs.cache
 C:\CodeRepos\USBAdmin\Server\Common\obj\Release\USBCommon.dll
 C:\Code\GitHub\USBAdmin\Server\Common\bin\Release\USBCommon.dll
-C:\Code\GitHub\USBAdmin\Server\Common\obj\Release\USBCommon.csproj.AssemblyReference.cache
 C:\Code\GitHub\USBAdmin\Server\Common\obj\Release\USBCommon.csproj.CoreCompileInputs.cache
 C:\Code\GitHub\USBAdmin\Server\Common\obj\Release\USBCommon.dll

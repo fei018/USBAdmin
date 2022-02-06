@@ -1,18 +1,13 @@
 ﻿@model Tbl_PerComputer
 @{ 
     var comIdentity = Model.ComputerIdentity;
-    var usbHistoryListUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/usbHistoryList";
+    var usbHistoryListUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/UsbHistoryList";
 }
 
 <div>
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-        <legend>Usb History of Computer</legend>
+        <legend>USB History: @Model.HostName</legend>
     </fieldset>
-
-    <div>
-        Host Name: @Model.HostName
-    </div>
-    <br />
 
     <table id="index" lay-filter="index" class="layui-hide">
     </table>

@@ -8,7 +8,7 @@ namespace USBNotifyLib
         public int JobId { get; set; }
         public string FileName { get; set; }
 
-        public string FileSize { get; set; }
+        public int FilePages { get; set; }
 
         public string UserName { get; set; }
 

@@ -51,6 +51,7 @@ namespace USBModel
                 _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PrintTemplate>();
                 _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterInfo>();
                 _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterSite>();
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PerPrintJob>();
             }
             catch (Exception)
             {
@@ -103,7 +104,7 @@ namespace USBModel
                 // UsbIdentity encode to Base64                   
                 foreach (var u in query)
                 {
-                    whitelist.AppendLine(Base64CodeHelp.Base64Encode(u.UsbIdentity));
+                    whitelist.AppendLine(UtilityTools.Base64Encode(u.UsbIdentity));
                 }
                 return whitelist.ToString();
             }
@@ -1152,6 +1153,47 @@ namespace USBModel
             try
             {
                 await _db.Deleteable<Tbl_IPPrinterInfo>().In(p => p.Id, id).ExecuteCommandAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        // PerPrintJob
+
+        #region + public async Task PerPrintJob_Insert(Tbl_PerPrintJob printJob)
+        public async Task PerPrintJob_Insert(Tbl_PerPrintJob printJob)
+        {
+            try
+            {
+                await _db.Insertable(printJob).ExecuteCommandAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public async Task<(int total,List<Tbl_PerPrintJob> list)> PerPrintJob_Get_List_ByComputerIdentity(string comIdentity, int pageIndex, int size)
+        public async Task<(int total,List<Tbl_PerPrintJob> list)> PerPrintJob_Get_List_ByComputerIdentity(string comIdentity, int pageIndex, int size)
+        {
+            try
+            {
+                RefAsync<int> total = new RefAsync<int>();
+                var list = await _db.Queryable<Tbl_PerPrintJob>()
+                                    .Where(p => p.ComputerIdentity == comIdentity)
+                                    .OrderBy(p => p.PrintingTime, OrderByType.Desc)
+                                    .ToPageListAsync(pageIndex, size, total);
+
+                if (list == null || list.Count <= 0)
+                {
+                    throw new Exception("PrintJob is empty.");
+                }
+
+                return (total.Value,list);
             }
             catch (Exception)
             {

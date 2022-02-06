@@ -17,10 +17,21 @@ namespace USBNotifyLib
 
         public static PrintJobNotify Entity { get; set; }
 
-        #region Start
-        public void Start()
+        public static void Start()
         {
-            Stop();
+            Entity = new PrintJobNotify();
+            Entity.Start_Entity();
+        }
+
+        public static void Stop()
+        {
+            Entity?.Stop_Entity();
+        }
+
+        #region Start_Entity
+        private void Start_Entity()
+        {
+            Stop_Entity();
 
             try
             {
@@ -52,8 +63,8 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region Stop
-        public void Stop()
+        #region Stop_Entity
+        private void Stop_Entity()
         {
             try
             {
@@ -78,14 +89,12 @@ namespace USBNotifyLib
         static int _JobID = -1;
         private void PrintJobMonitor_OnJobStatusChange(object Sender, PrintJobChangeEventArgs e)
         {
-            //Console.WriteLine((int)e.JobStatus);
-            //Console.WriteLine("@@@@");
-
-            if (e.JobInfo == null) return;
+            var jobInfo = e.JobInfo;
+            if (jobInfo == null) return;
 
             try
             {
-                var jobInfo = e.JobInfo;
+                
 
                 //Console.WriteLine(jobInfo.JobIdentifier);
                 //Console.WriteLine((int)jobInfo.JobStatus);
@@ -111,7 +120,7 @@ namespace USBNotifyLib
                         JobId = jobInfo.JobIdentifier,
                         ComputerName = jobInfo.HostingPrintServer.Name,
                         FileName = jobInfo.Name,
-                        FileSize = UtilityTools.BytesToSizeSuffix(jobInfo.JobSize),
+                        FilePages = jobInfo.NumberOfPages,
                         PrinterName = jobInfo.HostingPrintQueue.Name,
                         PrintingTime = jobInfo.TimeJobSubmitted,
                         UserName = jobInfo.Submitter,
@@ -120,20 +129,12 @@ namespace USBNotifyLib
 
 #if DEBUG
                     //Debugger.Break();
+#endif
                     Task.Run(() =>
                     {
-                       
-                        
-                        Console.WriteLine(job.ComputerName);
-                        Console.WriteLine(job.FileName);
-                        Console.WriteLine(job.PrinterName);
-                        Console.WriteLine(job.UserName);
-
-                        Console.WriteLine("--------------");
+                        new AgentHttpHelp().PostPerPrintJob_Http(job);
                     });
-#endif
-
-                    //new AgentHttpHelp().PostPerPrintJob_Http(job);
+                    
                 }
             }
             catch (Exception ex)
@@ -141,7 +142,7 @@ namespace USBNotifyLib
             }
             finally
             {
-                e.JobInfo?.Dispose();
+                jobInfo?.Dispose();
             }
         }
         #endregion

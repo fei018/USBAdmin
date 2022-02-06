@@ -64,6 +64,7 @@
     <Compile Include="PrintWindow\SetPrinterWin.xaml.cs">
       <DependentUpon>SetPrinterWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TrayModel\TrayManager.cs" />
     <Compile Include="TrayModel\WinSingleOpen.cs" />
     <Compile Include="USBWindow\AboutWin.xaml.cs">
       <DependentUpon>AboutWin.xaml</DependentUpon>

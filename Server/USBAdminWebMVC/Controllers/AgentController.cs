@@ -82,7 +82,7 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
+                using StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
                 var comjosn = await body.ReadToEndAsync();
 
                 var com = JsonHttpConvert.Deserialize_PerComputer(comjosn);
@@ -105,7 +105,7 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
+                using StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
                 var post = await body.ReadToEndAsync();
 
                 var info = JsonHttpConvert.Deserialize_PerUsbHistory(post);
@@ -131,7 +131,7 @@ namespace USBAdminWebMVC.Controllers
             {
                 var emailHelp = new EmailHelp(_httpContextAccessor, _usbDb);
 
-                StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
+                using StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
                 var post = await body.ReadToEndAsync();
 
                 Tbl_UsbRequest userPost_UsbRequest = JsonHttpConvert.Deserialize_UsbRequest(post);
@@ -187,6 +187,29 @@ namespace USBAdminWebMVC.Controllers
             catch (Exception ex)
             {
                 return Json(new AgentHttpResponseResult(false, ex.Message));
+            }
+        }
+        #endregion
+
+        // PerPrintJob
+
+        #region PostPerPrintJob()
+        public async Task<IActionResult> PostPerPrintJob()
+        {
+            try
+            {
+                using StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
+                var post = await body.ReadToEndAsync();
+
+                Tbl_PerPrintJob printJob = JsonHttpConvert.Deserialize_IPrintJobInfo(post);
+
+                await _usbDb.PerPrintJob_Insert(printJob);
+
+                return Json(new AgentHttpResponseResult());
+            }
+            catch (Exception ex)
+            {
+                return Json(new AgentHttpResponseResult(false, ex.GetBaseException().Message));
             }
         }
         #endregion

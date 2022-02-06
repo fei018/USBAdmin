@@ -6,7 +6,7 @@ namespace USBCommon
     {
         string FileName { get; set; }
 
-        string FileSize { get; set; }
+        int FilePages { get; set; }
 
         string UserName { get; set; }
 
