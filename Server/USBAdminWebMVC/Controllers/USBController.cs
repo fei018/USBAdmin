@@ -168,17 +168,19 @@ namespace USBAdminWebMVC.Controllers
         }
         #endregion
 
-        #region RequestToReject(int id)
+        #region RequestToReject(Tbl_UsbRequest usbRequest)
         [HttpPost]
-        public async Task<IActionResult> RequestToReject(int id)
+        public async Task<IActionResult> RequestToReject(int id, string RejectReason)
         {
             try
             {
-                var usb = await _usbDb.UsbRequest_ToReject_ById(id);
+                var usb = await _usbDb.UsbRequest_Get_ById(id);
+                usb.RejectReason = RejectReason;
+
+                await _usbDb.UsbRequest_ToReject(usb);
 
                 await _email.Send_UsbReuqest_Notify_Result_ToUser(usb);
 
-                //ViewBag.OK = "Reject Succeed: " + usb.ToString();
                 return Ok();
             }
             catch (Exception)

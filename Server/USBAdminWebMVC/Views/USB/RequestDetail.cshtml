@@ -28,9 +28,9 @@
 
                 @if (Model.RequestState == UsbRequestStateType.Reject)
                 {
-                    <div class="layui-input-block">
-                        <textarea readonly class="layui-textarea" style="width:400px;">@Model.RejectReason</textarea>
-                    </div>
+                    <hr />
+                    <div>Reject Reason:</div>
+                    <textarea readonly class="layui-textarea" style="width:400px;">@Model.RejectReason</textarea>
                 }
             </div>
 

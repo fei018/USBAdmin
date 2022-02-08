@@ -175,7 +175,8 @@ namespace USBNotifyLib
                 { PipeMsgType.CloseAgent, Handler_CloseAgent },
                 { PipeMsgType.CloseTray, Handler_CloseTray },
                 { PipeMsgType.AddPrintTemplate, Handler_AddPrintTemplate },
-                { PipeMsgType.PrinterDeleteOldAndInstallDriver, Handler_PrinterDeleteOldAndInstallDriver }
+                { PipeMsgType.PrinterDeleteOldAndInstallDriver, Handler_PrinterDeleteOldAndInstallDriver },
+                { PipeMsgType.PrintJobNotifyRestart, Handler_PrintJobNotifyRestart }
             };
         }
         #endregion
@@ -345,6 +346,21 @@ namespace USBNotifyLib
                     PushMsg_ToTray_By_PipeMsg(pipeMsg);
                 }
             });
+        }
+        #endregion
+
+        #region + private void Handler_PrintJobNotifyRestart(PipeMsg pipeMsg)
+        private void Handler_PrintJobNotifyRestart(PipeMsg pipeMsg)
+        {
+            try
+            {
+                PrintJobNotify.Stop();
+                PrintJobNotify.Start();
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error("Handler_PrintJobNotifyRestart: " + ex.Message);
+            }
         }
         #endregion
 

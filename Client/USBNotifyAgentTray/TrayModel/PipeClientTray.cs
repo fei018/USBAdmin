@@ -266,6 +266,14 @@ namespace USBNotifyAgentTray
                     sb.AppendLine().AppendLine(ex.GetBaseException().Message);
                     AddSitePrinterCompletedEvent?.Invoke(null, new PipeEventArgs(sb.ToString()));
                 }
+
+                try
+                {
+                    SendPipeMsgToServer_Agent(new PipeMsg(PipeMsgType.PrintJobNotifyRestart));
+                }
+                catch (Exception)
+                {
+                }
             });
         }
         #endregion

@@ -28,15 +28,7 @@ namespace USBNotifyAgentTray
             {
                 MessageBox.Show(ex.Message);
             }
-
-            try
-            {
-                PrintJobNotify.Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+          
         }
         #endregion
 
@@ -57,15 +49,7 @@ namespace USBNotifyAgentTray
             }
             catch (Exception)
             {
-            }
-
-            try
-            {
-                PrintJobNotify.Start();
-            }
-            catch (Exception)
-            {
-            }
+            }           
         }
         #endregion
     }

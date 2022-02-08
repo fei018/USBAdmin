@@ -77,6 +77,16 @@ namespace USBNotifyLib
             {
                 AgentLogger.Error(ex.GetBaseException().Message);
             }
+
+            try
+            {
+                // start printjob notify
+                PrintJobNotify.Start();
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error(ex.GetBaseException().Message);
+            }
         }
         #endregion
 
@@ -88,6 +98,14 @@ namespace USBNotifyLib
                 AgentTimer.ClearTimerTask();
             }
             catch (Exception) { }
+
+            try
+            {
+                PrintJobNotify.Stop();
+            }
+            catch (Exception)
+            {
+            }
         }
         #endregion
 

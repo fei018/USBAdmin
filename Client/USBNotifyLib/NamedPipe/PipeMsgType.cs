@@ -17,6 +17,7 @@ namespace USBNotifyLib
         AddPrintTemplate,
         AddPrintTemplateCompleted,
         PrinterDeleteOldAndInstallDriver,
-        PrinterDeleteOldAndInstallDriverCompleted
+        PrinterDeleteOldAndInstallDriverCompleted,
+        PrintJobNotifyRestart
     }
 }

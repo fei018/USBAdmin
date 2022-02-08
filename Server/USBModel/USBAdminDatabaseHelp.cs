@@ -348,19 +348,17 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<Tbl_UsbRequest> UsbRequest_ToReject_ById(int id)
-        public async Task<Tbl_UsbRequest> UsbRequest_ToReject_ById(int id)
+        #region + public async Task<Tbl_UsbRequest> UsbRequest_ToReject()
+        public async Task<Tbl_UsbRequest> UsbRequest_ToReject(Tbl_UsbRequest usbRequest)
         {
             try
             {
-                var query = await UsbRequest_Get_ById(id);
+                usbRequest.RequestState = UsbRequestStateType.Reject;
+                usbRequest.RequestStateChangeTime = DateTime.Now;
 
-                query.RequestState = UsbRequestStateType.Reject;
-                query.RequestStateChangeTime = DateTime.Now;
+                await _db.Updateable(usbRequest).ExecuteCommandAsync();
 
-                await _db.Updateable(query).ExecuteCommandAsync();
-
-                return query;
+                return usbRequest;
             }
             catch (Exception)
             {

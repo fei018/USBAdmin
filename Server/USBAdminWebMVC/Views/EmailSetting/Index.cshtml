@@ -31,9 +31,16 @@
 
         <div class="layui-form-item">
             <label class="layui-form-label">AdminEmail</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="text" name="AdminEmailAddr" value="@Model?.AdminEmailAddr" required lay-verify="required" class="layui-input">
-                <tip>Admin email address list, split symbol is ;</tip>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">ForwardEmail</label>
+            <div class="layui-input-block">
+                <input type="text" name="ForwardEmailAddrList" value="@Model?.ForwardEmailAddrList" required lay-verify="required" class="layui-input">
+                <tip> " Forward email address list, split symbol is ; "</tip>
             </div>
         </div>
 

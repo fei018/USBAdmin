@@ -18,11 +18,15 @@ namespace USBModel
 
         public string AdminName { get; set; }
 
+        
+        [SugarColumn(ColumnDataType = "varchar(255)")]
+        public string AdminEmailAddr { get; set; }
+
         /// <summary>
         /// email 之間用 ; 分割
         /// </summary>
-        [SugarColumn(ColumnDataType = "nvarchar(max)")]
-        public string AdminEmailAddr { get; set; }
+        [SugarColumn(ColumnDataType = "varchar(max)", IsNullable = true)]
+        public string ForwardEmailAddrList { get; set; }
 
         [SugarColumn(IsNullable = true)]
         public string Account { get; set; }
@@ -39,19 +43,20 @@ namespace USBModel
 
         // IsIgnore
 
-        #region + public List<string> GetAdminEmailAddressList()
-        public List<string> GetAdminEmailAddressList()
+        #region + public List<string> GetForwardEmailAddrList()
+        public List<string> GetForwardEmailAddrList()
         {
-            if (string.IsNullOrWhiteSpace(AdminEmailAddr))
+            List<string> emails = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(ForwardEmailAddrList))
             {
-                return null;
+                return emails;
             }
 
-            var list = AdminEmailAddr.Split(';');
-
-            List<string> emails = new List<string>();
-            if (list.Length > 0)
+           
+            if (ForwardEmailAddrList.Contains(';'))
             {
+                var list = ForwardEmailAddrList.Split(';');
                 foreach (var l in list)
                 {
                     emails.Add(l.Trim());
@@ -59,7 +64,7 @@ namespace USBModel
             }
             else
             {
-                emails.Add(AdminEmailAddr);
+                emails.Add(ForwardEmailAddrList);
             }
 
             return emails;

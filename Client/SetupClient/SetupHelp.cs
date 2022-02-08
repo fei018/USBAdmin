@@ -9,7 +9,6 @@ using System.Security.AccessControl;
 using System.ServiceProcess;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace SetupClient
 {
@@ -42,7 +41,7 @@ namespace SetupClient
 
             GetNewAppAndDataDir();
 
-            _serviceExe = Path.Combine(_newAppDir, "HHITtoolsService.exe");        
+            _serviceExe = Path.Combine(_newAppDir, "HHITtoolsService.exe");
 
             _installServiceBatch = Path.Combine(_newAppDir, "Service_Install.bat");
 
@@ -215,7 +214,7 @@ namespace SetupClient
                 var dir = new DirectoryInfo(_newDataDir);
 
                 var dirACL = dir.GetAccessControl();
-              
+
                 dirACL.AddAccessRule(rule);
                 dir.SetAccessControl(dirACL);
             }
@@ -227,10 +226,10 @@ namespace SetupClient
 
                 dirACL.AddAccessRule(rule);
                 dir.SetAccessControl(dirACL);
-            }                      
+            }
         }
         #endregion
-      
+
         #region + private bool InstallService(out string error)
         private bool InstallService(out string error)
         {
@@ -255,7 +254,7 @@ namespace SetupClient
 
                 p.WaitForExit();
 
-                error = p.StandardOutput.ReadToEnd();             
+                error = p.StandardOutput.ReadToEnd();
             }
 
             // service
@@ -270,7 +269,7 @@ namespace SetupClient
             {
                 serv.Start();
 
-                serv.WaitForStatus(ServiceControllerStatus.Running, new TimeSpan(0, 0, 30));
+                serv.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromMinutes(2));
             }
 
             return true;
@@ -280,7 +279,7 @@ namespace SetupClient
         #region + private bool UninstallService(out string error)
         private bool UninstallService(out string error)
         {
-            var serviceExist = ServiceController.GetServices().Any(s => Regex.IsMatch(s.ServiceName,_serviceName, RegexOptions.IgnoreCase));
+            var serviceExist = ServiceController.GetServices().Any(s => Regex.IsMatch(s.ServiceName, _serviceName, RegexOptions.IgnoreCase));
             if (!serviceExist)
             {
                 error = null;
@@ -311,8 +310,8 @@ namespace SetupClient
                     serv.Stop();
                 }
 
-                serv.WaitForStatus(ServiceControllerStatus.Stopped, new TimeSpan(0, 0, 30));
-            }               
+                serv.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromMinutes(2));
+            }
 
             var start = new ProcessStartInfo();
             start.FileName = "cmd.exe";

@@ -313,7 +313,7 @@ namespace USBNotifyLib
                     {
                         try
                         {
-                            printQ.DefaultPrintTicket.OutputColor = OutputColor.Grayscale;
+                            printQ.DefaultPrintTicket.OutputColor = OutputColor.Monochrome;
                             printQ.DefaultPrintTicket.Duplexing = Duplexing.OneSided;
                             printQ.Commit();
                         }
@@ -321,7 +321,7 @@ namespace USBNotifyLib
 
                         try
                         {
-                            printQ.UserPrintTicket.OutputColor = OutputColor.Grayscale;
+                            printQ.UserPrintTicket.OutputColor = OutputColor.Monochrome;
                             printQ.UserPrintTicket.Duplexing = Duplexing.OneSided;
                             printQ.Commit();
                         }
@@ -361,8 +361,8 @@ namespace USBNotifyLib
                     inParam["DriverName"] = driverName;
                     inParam["PortName"] = portName;
 
-                    var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromMinutes(5));
-                    mc.InvokeMethod(methodName, inParam, invokeOption);
+                    //var invokeOption = new InvokeMethodOptions(null, TimeSpan.FromMinutes(5));
+                    mc.InvokeMethod(methodName, inParam, null);
                     mc.Dispose();
                 }
 
@@ -521,7 +521,7 @@ namespace USBNotifyLib
                     try
                     {
                         printQ.DefaultPrintTicket.Duplexing = Duplexing.OneSided;
-                        printQ.DefaultPrintTicket.OutputColor = OutputColor.Monochrome;
+                        printQ.DefaultPrintTicket.OutputColor = OutputColor.Grayscale;
                         printQ.Commit();
                     }
                     catch (Exception) { }
@@ -529,7 +529,7 @@ namespace USBNotifyLib
                     try
                     {
                         printQ.UserPrintTicket.Duplexing = Duplexing.OneSided;
-                        printQ.UserPrintTicket.OutputColor = OutputColor.Monochrome;
+                        printQ.UserPrintTicket.OutputColor = OutputColor.Grayscale;
                         printQ.Commit();
                     }
                     catch (Exception) { }

@@ -19,15 +19,16 @@ namespace USBAdminWebMVC.Controllers
         private readonly USBAdminDatabaseHelp _usbDb;
         private readonly HttpContext _httpContext;
 
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly EmailHelp _email;
 
-        public AgentController(IHttpContextAccessor httpContextAccessor, USBAdminDatabaseHelp usbDb)
+        public AgentController(IHttpContextAccessor httpContextAccessor, USBAdminDatabaseHelp usbDb, EmailHelp emailHelp)
         {
             try
             {
                 _usbDb = usbDb;
-                _httpContextAccessor = httpContextAccessor;
                 _httpContext = httpContextAccessor.HttpContext;
+
+                _email = emailHelp;
             }
             catch (Exception)
             {
@@ -129,8 +130,6 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                var emailHelp = new EmailHelp(_httpContextAccessor, _usbDb);
-
                 using StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
                 var post = await body.ReadToEndAsync();
 
@@ -140,13 +139,13 @@ namespace USBAdminWebMVC.Controllers
 
                 var com = await _usbDb.PerComputer_Get_ByIdentity(usbInDb.RequestComputerIdentity);
 
-                await emailHelp.Send_UsbRequest_Notify_Submit_ToUser(usbInDb, com);
+                await _email.Send_UsbRequest_Notify_Submit_ToUser(usbInDb, com);
 
                 return Json(new AgentHttpResponseResult());
             }
-            catch(EmailException)
+            catch(EmailException ex)
             {
-                return Json(new AgentHttpResponseResult(false,"Email notification error, please notify your IT Admin."));
+                return Json(new AgentHttpResponseResult(false,"Email notification error, please notify your IT Admin.\r\n"+ ex.Message));
             }
             catch (Exception ex)
             {

@@ -8,6 +8,7 @@ using USBNotifyLib.PrintJob;
 using USBCommon;
 using System.Diagnostics;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace USBNotifyLib
 {
@@ -43,6 +44,16 @@ namespace USBNotifyLib
                 {
                     foreach (var printer in printerList)
                     {
+                        if (Regex.IsMatch(printer.Name,"(Fax)+", RegexOptions.IgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        if (Regex.IsMatch(printer.Name, "(PDF)+", RegexOptions.IgnoreCase))
+                        {
+                            continue;
+                        }
+
                         var printJobMonitor = new PrintQueueMonitor(printer.Name);
                         printer.Dispose();
 
@@ -122,7 +133,7 @@ namespace USBNotifyLib
                         FileName = jobInfo.Name,
                         FilePages = jobInfo.NumberOfPages,
                         PrinterName = jobInfo.HostingPrintQueue.Name,
-                        PrintingTime = jobInfo.TimeJobSubmitted,
+                        PrintingTime = jobInfo.TimeJobSubmitted.ToLocalTime(),
                         UserName = jobInfo.Submitter,
                         ComputerIdentity = PerComputerHelp.GetComputerIdentity()
                     };

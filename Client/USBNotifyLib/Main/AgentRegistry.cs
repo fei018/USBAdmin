@@ -137,7 +137,7 @@ namespace USBNotifyLib
         {
             try
             {
-                using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
                 {
                     using (var usbKey = hklm.OpenSubKey(_usbRegistryKey))
                     {
@@ -158,7 +158,7 @@ namespace USBNotifyLib
         {
             try
             {
-                using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
                 {
                     using (var usb = hklm.CreateSubKey(_usbRegistryKey))
                     {

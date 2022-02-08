@@ -52,6 +52,7 @@ namespace USBNotifyAgentTray
                 _trayIcon.ContextMenuStrip.Items.Add("Update Setting", null, UpdateSettingItem_Click);
                 //_trayIcon.ContextMenuStrip.Items.Add("Update Agent", null, UpdateAgentItem_Click);           
                 _trayIcon.ContextMenuStrip.Items.Add("About", null, AboutItem_Click);
+                _trayIcon.ContextMenuStrip.Items.Add("Close", null, CloseTrayItem_Click);
                 _trayIcon.ContextMenuStrip.Items.Add("");
 
                 _trayIcon.Visible = true;
@@ -159,6 +160,22 @@ namespace USBNotifyAgentTray
                     about.Show();
 
                     WinSingleOpen.AboutWin = true;
+                }));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region CloseTrayItem_Click
+        private void CloseTrayItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                App.Current.Dispatcher.Invoke(new Action(()=>{
+                    App.Current.MainWindow.Close();
                 }));
             }
             catch (Exception ex)

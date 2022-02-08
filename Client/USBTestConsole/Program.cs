@@ -34,8 +34,8 @@ namespace USBTestConsole
                 //PrinterHelp.InstallPrinterDriver_WMI(p.DriverName, p.DriverInfPath);
                 //PrinterHelp.AddNewPrinter(p);
 
-                PrintJobNotify.Entity = new PrintJobNotify();
-                PrintJobNotify.Entity.Start();
+                //PrintJobNotify.Entity = new PrintJobNotify();
+                //PrintJobNotify.Entity.Start();
 
 
             }
@@ -48,7 +48,7 @@ namespace USBTestConsole
             Console.WriteLine("##############################################");
             Console.ReadLine();
 
-            PrintJobNotify.Entity.Stop();
+            //PrintJobNotify.Entity.Stop();
         }
 
         #region UsbFormProcess

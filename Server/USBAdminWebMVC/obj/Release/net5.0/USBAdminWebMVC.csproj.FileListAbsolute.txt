@@ -603,3 +603,4 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Print
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Printer\SitePrinterEdit.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Printer\SitePrinterIndex.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Computer\PrintJob.cshtml.g.cs
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Computer\PrintJob.cshtml.g.cs
