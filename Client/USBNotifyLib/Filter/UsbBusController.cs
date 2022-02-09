@@ -58,7 +58,7 @@ namespace USBNotifyLib
         /// <returns></returns>
         private bool ScanUsbBus()
         {
-            ClearConnectedUSBListMoreThan1000();
+            //ClearConnectedUSBListMoreThan1000();
 
             if (_ConnectedUSBList == null)
             {
@@ -139,6 +139,8 @@ namespace USBNotifyLib
                     {
                         RecursionUsb(device.ChildDevices);
                     }
+
+                    device?.Dispose();
                 }
             }
         }

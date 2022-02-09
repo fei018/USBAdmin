@@ -65,7 +65,7 @@ namespace SetupClient
 
                 UninstallService(out string error);
                 Console.WriteLine(error);
-                File.AppendAllText(LogPath, error);
+                File.AppendAllText(LogPath, error + "\r\n");
 
                 CreateAndCopyNewAppDir();
 
@@ -75,7 +75,7 @@ namespace SetupClient
 
                 InstallService(out error);
                 Console.WriteLine(error);
-                File.AppendAllText(LogPath, error);
+                File.AppendAllText(LogPath, error + "\r\n");
 
                 CheckNewDataDir();
             }
@@ -178,26 +178,40 @@ namespace SetupClient
         {
             // _newAppDir
 
-            if (Directory.Exists(_newAppDir))
+            DirectoryInfo dir;
+            if (!Directory.Exists(_newAppDir))
             {
-                Directory.Delete(_newAppDir, true);
+                dir = Directory.CreateDirectory(_newAppDir);
+            }
+            else
+            {
+                dir = new DirectoryInfo(_newAppDir);
             }
 
-            var dir = Directory.CreateDirectory(_newAppDir);
-            var dirACL = dir.GetAccessControl();
-
-            var rule = new FileSystemAccessRule("Authenticated Users",
-                            FileSystemRights.ReadAndExecute,
-                            InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-                            PropagationFlags.None,
-                            AccessControlType.Allow);
-            dirACL.AddAccessRule(rule);
-            dir.SetAccessControl(dirACL);
+            try
+            {
+                var dirACL = dir.GetAccessControl();
+                var rule = new FileSystemAccessRule("Authenticated Users",
+                                FileSystemRights.ReadAndExecute,
+                                InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+                                PropagationFlags.None,
+                                AccessControlType.Allow);
+                dirACL.AddAccessRule(rule);
+                dir.SetAccessControl(dirACL);
+            }
+            catch (Exception) { }
 
             var files = Directory.GetFiles(_dllDir);
             foreach (var f in files)
             {
-                File.Copy(f, Path.Combine(_newAppDir, Path.GetFileName(f)), true);
+                try
+                {
+                    File.Copy(f, Path.Combine(_newAppDir, Path.GetFileName(f)), true);
+                }
+                catch (Exception ex)
+                {
+                    File.AppendAllText(LogPath,ex.Message + "\r\n");
+                }
             }
         }
 
@@ -209,23 +223,29 @@ namespace SetupClient
                                 PropagationFlags.None,
                                 AccessControlType.Allow);
 
-            if (Directory.Exists(_newDataDir))
+            try
             {
-                var dir = new DirectoryInfo(_newDataDir);
+                if (Directory.Exists(_newDataDir))
+                {
+                    var dir = new DirectoryInfo(_newDataDir);
 
-                var dirACL = dir.GetAccessControl();
+                    var dirACL = dir.GetAccessControl();
 
-                dirACL.AddAccessRule(rule);
-                dir.SetAccessControl(dirACL);
+                    dirACL.AddAccessRule(rule);
+                    dir.SetAccessControl(dirACL);
+                }
+                else
+                {
+                    var dir = Directory.CreateDirectory(_newDataDir);
+
+                    var dirACL = dir.GetAccessControl();
+
+                    dirACL.AddAccessRule(rule);
+                    dir.SetAccessControl(dirACL);
+                }
             }
-            else
+            catch (Exception)
             {
-                var dir = Directory.CreateDirectory(_newDataDir);
-
-                var dirACL = dir.GetAccessControl();
-
-                dirACL.AddAccessRule(rule);
-                dir.SetAccessControl(dirACL);
             }
         }
         #endregion
@@ -267,9 +287,13 @@ namespace SetupClient
 
             using (var serv = new ServiceController(_serviceName))
             {
-                serv.Start();
+                if (serv.Status == ServiceControllerStatus.Stopped)
+                {
+                    serv.Start();
 
-                serv.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromMinutes(2));
+                    serv.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromMinutes(2));
+                }
+               
             }
 
             return true;
@@ -296,7 +320,7 @@ namespace SetupClient
                     string name = obj["Name"] as string;
                     string pathName = obj["PathName"] as string;
 
-                    if (name.ToLower() == _serviceName.ToLower())
+                    if (name.Trim().ToLower() == _serviceName.ToLower())
                     {
                         unistallServicePath = pathName;
                     }
@@ -346,17 +370,24 @@ namespace SetupClient
         {
             var sb = new StringBuilder();
 
-            // service_install.bat
-            sb.AppendLine($"\"{InstallUtilExe}\" \"{_serviceExe}\"");
-            sb.AppendLine($"net start {_serviceName}");
+            try
+            {
+                // service_install.bat
+                sb.AppendLine($"\"{InstallUtilExe}\" \"{_serviceExe}\"");
+                sb.AppendLine($"net start {_serviceName}");
 
-            File.WriteAllText(_installServiceBatch, sb.ToString(), new UTF8Encoding(false));
+                File.WriteAllText(_installServiceBatch, sb.ToString(), new UTF8Encoding(false));
 
-            // service_uninstall.bat
-            sb.Clear();
-            sb.AppendLine($"net stop {_serviceName}");
-            sb.AppendLine($"\"{InstallUtilExe}\" /u \"{_serviceExe}\"");
-            File.WriteAllText(_uninstallServiceBatch, sb.ToString(), new UTF8Encoding(false));
+                // service_uninstall.bat
+                sb.Clear();
+                sb.AppendLine($"net stop {_serviceName}");
+                sb.AppendLine($"\"{InstallUtilExe}\" /u \"{_serviceExe}\"");
+                File.WriteAllText(_uninstallServiceBatch, sb.ToString(), new UTF8Encoding(false));
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(LogPath, ex.Message+"\r\n");
+            }
 
             return _installServiceBatch;
         }
