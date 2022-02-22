@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Security.AccessControl;
+using USBCommon;
 
 namespace USBNotifyLib
 {
@@ -112,14 +113,14 @@ namespace USBNotifyLib
                     Directory.Delete(_updateDir, true);
                 }
                 Directory.CreateDirectory(_updateDir);
-                AgentManager.SetDirACL_AuthenticatedUsers_Modify(_updateDir);
+                UtilityTools.SetDirACL_AuthenticatedUsers_Modify(_updateDir);
 
                 if (Directory.Exists(_downloadFileDir))
                 {
                     Directory.Delete(_downloadFileDir, true);
                 }
                 Directory.CreateDirectory(_downloadFileDir);
-                AgentManager.SetDirACL_AuthenticatedUsers_Modify(_downloadFileDir);
+                UtilityTools.SetDirACL_AuthenticatedUsers_Modify(_downloadFileDir);
             }
             catch (Exception)
             {

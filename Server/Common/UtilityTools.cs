@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,6 +56,59 @@ namespace USBCommon
             return string.Format("{0:n" + decimalPlaces + "} {1}",
                 adjustedSize,
                 SizeSuffixes[mag]);
+        }
+        #endregion
+
+        #region + public static void SetDirACL_AuthenticatedUsers_Modify(string dirPath)
+        public static void SetDirACL_AuthenticatedUsers_Modify(string dirPath)
+        {
+            var dirInfo = new DirectoryInfo(dirPath);
+
+            var dirACL = dirInfo.GetAccessControl();
+
+            var rule = new FileSystemAccessRule("Authenticated Users",
+                    FileSystemRights.Modify,
+                    InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+                    PropagationFlags.None,
+                    AccessControlType.Allow);
+
+            dirACL.AddAccessRule(rule);
+            dirInfo.SetAccessControl(dirACL);
+        }
+        #endregion
+
+        #region + public static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+        public static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+        {
+            // Get information about the source directory
+            var dir = new DirectoryInfo(sourceDir);
+
+            // Check if the source directory exists
+            if (!dir.Exists)
+                throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+
+            // Cache directories before we start copying
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            // Create the destination directory
+            Directory.CreateDirectory(destinationDir);
+
+            // Get the files in the source directory and copy to the destination directory
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                string targetFilePath = Path.Combine(destinationDir, file.Name);
+                file.CopyTo(targetFilePath);
+            }
+
+            // If recursive and copying subdirectories, recursively call this method
+            if (recursive)
+            {
+                foreach (DirectoryInfo subDir in dirs)
+                {
+                    string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
+                    CopyDirectory(subDir.FullName, newDestinationDir, true);
+                }
+            }
         }
         #endregion
     }

@@ -189,6 +189,10 @@
     <None Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Server\Common\USBCommon.csproj">
+      <Project>{90fd865d-6202-4a76-b765-4d5414b4204d}</Project>
+      <Name>USBCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\USBNotifyLib\USBNotifyLib.csproj">
       <Project>{bbdb4699-103a-4cd5-92db-6a9cf675161f}</Project>
       <Name>USBNotifyLib</Name>

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Security.AccessControl;
+using System.Threading.Tasks;
 
 namespace USBNotifyLib
 {
@@ -13,7 +11,7 @@ namespace USBNotifyLib
             try
             {
                 // update agent setting
-                new AgentHttpHelp().GetAgentSetting_Http();                        
+                new AgentHttpHelp().GetAgentSetting_Http();
             }
             catch (Exception ex)
             {
@@ -33,7 +31,7 @@ namespace USBNotifyLib
             try
             {
                 // 上載 本機資訊
-                new AgentHttpHelp().PostPerComputer_Http();                
+                new AgentHttpHelp().PostPerComputer_Http();
             }
             catch (Exception ex)
             {
@@ -46,8 +44,8 @@ namespace USBNotifyLib
                 if (AgentRegistry.UsbFilterEnabled)
                 {
                     // 載入 UsbWhitelist cache
-                    UsbWhitelistHelp.Reload_UsbWhitelist();                   
-                }               
+                    UsbWhitelistHelp.Reload_UsbWhitelist();
+                }
             }
             catch (Exception ex)
             {
@@ -61,7 +59,7 @@ namespace USBNotifyLib
                 if (AgentRegistry.UsbFilterEnabled)
                 {
                     new UsbFilter().Filter_Scan_All_USB_Disk();
-                }                   
+                }
             }
             catch (Exception ex)
             {
@@ -109,57 +107,70 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region + public static void SetDirACL_AuthenticatedUsers_Modify(string dirPath)
-        public static void SetDirACL_AuthenticatedUsers_Modify(string dirPath)
+
+        #region + public static void PostUsbHistoryToHttpServer()
+        public static void PostUsbHistoryToHttpServer(string diskPath)
         {
-            var dirInfo = new DirectoryInfo(dirPath);
-            
-            var dirACL = dirInfo.GetAccessControl();
-
-            var rule = new FileSystemAccessRule("Authenticated Users",
-                    FileSystemRights.Modify,
-                    InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-                    PropagationFlags.None,
-                    AccessControlType.Allow);
-
-            dirACL.AddAccessRule(rule);
-            dirInfo.SetAccessControl(dirACL);
-        }
-        #endregion
-
-        #region + public static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
-        public static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
-        {
-            // Get information about the source directory
-            var dir = new DirectoryInfo(sourceDir);
-
-            // Check if the source directory exists
-            if (!dir.Exists)
-                throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
-
-            // Cache directories before we start copying
-            DirectoryInfo[] dirs = dir.GetDirectories();
-
-            // Create the destination directory
-            Directory.CreateDirectory(destinationDir);
-
-            // Get the files in the source directory and copy to the destination directory
-            foreach (FileInfo file in dir.GetFiles())
+            Task.Run(() =>
             {
-                string targetFilePath = Path.Combine(destinationDir, file.Name);
-                file.CopyTo(targetFilePath);
-            }
-
-            // If recursive and copying subdirectories, recursively call this method
-            if (recursive)
-            {
-                foreach (DirectoryInfo subDir in dirs)
+                try
                 {
-                    string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
-                    CopyDirectory(subDir.FullName, newDestinationDir, true);
+                    if (!AgentRegistry.UsbHistoryEnabled) return;
+
+                    // post usb history to server
+                    new AgentHttpHelp().PostPerUsbHistory_byDisk_Http(diskPath);
                 }
-            }
+                catch (Exception ex)
+                {
+                    AgentLogger.Error(ex.Message);
+                }
+            });
         }
         #endregion
+
+        #region + public static void CheckUsbWhitelist_PluginUSB()
+        public static void CheckUsbWhitelist_PluginUSB(string diskPath)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    if (!AgentRegistry.UsbFilterEnabled) return;
+
+                    // push usbmessage to agent tray pipe
+                    var usb = new UsbFilter().Find_UsbDisk_By_DiskPath(diskPath);
+                    if (!UsbWhitelistHelp.IsFind(usb))
+                    {
+                        PipeServerAgent.Entity_Agent.PushMsg_ToTray_UsbDiskNotInWhitelist(usb);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AgentLogger.Error(ex.ToString());
+                }
+            });
+        }
+        #endregion
+
+        #region + public static void FilterUsbDisk(string diskPath)
+        public static void FilterUsbDisk(string diskPath)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    if (!AgentRegistry.UsbFilterEnabled) return;
+
+                    var disk = new UsbDisk { DiskPath = diskPath };
+                    new UsbFilter().Filter_UsbDisk_By_DiskPath(disk);
+                }
+                catch (Exception ex)
+                {
+                    AgentLogger.Error(ex.Message);
+                }
+            });
+        }
+        #endregion
+
     }
 }

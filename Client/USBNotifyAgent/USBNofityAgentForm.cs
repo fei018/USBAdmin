@@ -74,79 +74,16 @@ namespace USBNotifyAgent
             {
                 if (args.DeviceInterface == UsbMonitor.UsbDeviceInterface.Disk)
                 {
-                    FilterUsbDisk(args.Name);
+                    AgentManager.FilterUsbDisk(args.Name);
 
-                    CheckUsbWhitelist_PluginUSB(args.Name);
+                    AgentManager.CheckUsbWhitelist_PluginUSB(args.Name);
 
-                    PostUsbHistoryToHttpServer(args.Name);
+                    AgentManager.PostUsbHistoryToHttpServer(args.Name);
                 }
             }
         }
         #endregion
-
-        #region + private void PostUsbHistoryToHttpServer()
-        private void PostUsbHistoryToHttpServer(string diskPath)
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    if (!AgentRegistry.UsbHistoryEnabled) return;
-
-                    // post usb history to server
-                    new AgentHttpHelp().PostPerUsbHistory_byDisk_Http(diskPath);
-                }
-                catch (Exception ex)
-                {
-                    AgentLogger.Error(ex.Message);
-                }
-            });
-        }
-        #endregion
-
-        #region + private void CheckUsbWhitelist_PluginUSB()
-        private void CheckUsbWhitelist_PluginUSB(string diskPath)
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    if (!AgentRegistry.UsbFilterEnabled) return;
-
-                    // push usbmessage to agent tray pipe
-                    var usb = new UsbFilter().Find_UsbDisk_By_DiskPath(diskPath);
-                    if (!UsbWhitelistHelp.IsFind(usb))
-                    {
-                        PipeServerAgent.Entity_Agent.PushMsg_ToTray_UsbDiskNotInWhitelist(usb);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AgentLogger.Error(ex.ToString());
-                }
-            });
-        }
-        #endregion
-
-        #region + private void FilterUsbDisk(string diskPath)
-        private void FilterUsbDisk(string diskPath)
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    if (!AgentRegistry.UsbFilterEnabled) return;
-
-                    var disk = new UsbDisk { DiskPath = diskPath };
-                    new UsbFilter().Filter_UsbDisk_By_DiskPath(disk);
-                }
-                catch (Exception ex)
-                {
-                    AgentLogger.Error(ex.Message);
-                }
-            });
-        }
-        #endregion
+      
 
         // OnUsbVolume
 

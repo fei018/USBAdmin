@@ -1,15 +1,14 @@
 ﻿using NamedPipeWrapper;
 using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
-using USBNotifyLib;
-using System.Windows;
-using USBNotifyAgentTray.USBWindow;
-using System.IO;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using USBCommon;
+using USBNotifyAgentTray.USBWindow;
+using USBNotifyLib;
 
 namespace USBNotifyAgentTray
 {
@@ -368,7 +367,7 @@ namespace USBNotifyAgentTray
                                         Directory.Delete(destDriverDir, true);
                                     }
 
-                                    AgentManager.CopyDirectory(infDir.FullName, destDriverDir, true);
+                                    UtilityTools.CopyDirectory(infDir.FullName, destDriverDir, true);
                                     addPrinter.DriverInfLocalPath = Path.Combine(destDriverDir, infFile.Name);
 
                                     addDriverList.Add(addPrinter);

@@ -148,7 +148,7 @@ namespace USBNotifyLib
                     
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
             finally

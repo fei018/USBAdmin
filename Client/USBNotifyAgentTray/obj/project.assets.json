@@ -288,6 +288,7 @@
     ".NETFramework,Version=v4.6.1": [
       "NamedPipeWrapper >= 1.5.0",
       "Newtonsoft.Json >= 13.0.1",
+      "USBCommon >= 1.0.0",
       "USBNotifyLib >= 1.0.0"
     ]
   },
@@ -325,6 +326,9 @@
           "projectReferences": {
             "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj": {
               "projectPath": "C:\\CodeRepos\\USBAdmin\\Client\\USBNotifyLib\\USBNotifyLib.csproj"
+            },
+            "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj": {
+              "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\Common\\USBCommon.csproj"
             }
           }
         }
