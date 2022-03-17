@@ -97,12 +97,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\USBNotifyLib\USBNotifyLib.csproj">
-      <Project>{bbdb4699-103a-4cd5-92db-6a9cf675161f}</Project>
-      <Name>USBNotifyLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
@@ -118,6 +112,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AgentLib\AgentLib.csproj">
+      <Project>{bbdb4699-103a-4cd5-92db-6a9cf675161f}</Project>
+      <Name>AgentLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

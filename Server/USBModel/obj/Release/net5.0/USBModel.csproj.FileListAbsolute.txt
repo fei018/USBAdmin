@@ -68,7 +68,6 @@ C:\Code\GitHub\USBAdmin\Server\USBModel\bin\Release\net5.0\USBModel.dll
 C:\Code\GitHub\USBAdmin\Server\USBModel\bin\Release\net5.0\ref\USBModel.dll
 C:\Code\GitHub\USBAdmin\Server\USBModel\bin\Release\net5.0\USBModel.pdb
 C:\Code\GitHub\USBAdmin\Server\USBModel\bin\Release\net5.0\LoginUserManager.dll
-C:\Code\GitHub\USBAdmin\Server\USBModel\bin\Release\net5.0\USBCommon.dll
 C:\Code\GitHub\USBAdmin\Server\USBModel\bin\Release\net5.0\LoginUserManager.pdb
 C:\Code\GitHub\USBAdmin\Server\USBModel\obj\Release\net5.0\USBModel.csproj.AssemblyReference.cache
 C:\Code\GitHub\USBAdmin\Server\USBModel\obj\Release\net5.0\USBModel.GeneratedMSBuildEditorConfig.editorconfig
@@ -79,3 +78,4 @@ C:\Code\GitHub\USBAdmin\Server\USBModel\obj\Release\net5.0\USBModel.csproj.CopyC
 C:\Code\GitHub\USBAdmin\Server\USBModel\obj\Release\net5.0\USBModel.dll
 C:\Code\GitHub\USBAdmin\Server\USBModel\obj\Release\net5.0\ref\USBModel.dll
 C:\Code\GitHub\USBAdmin\Server\USBModel\obj\Release\net5.0\USBModel.pdb
+C:\Code\GitHub\USBAdmin\Server\USBModel\bin\Release\net5.0\HHITtoolsCommon.dll

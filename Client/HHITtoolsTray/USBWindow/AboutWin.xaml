@@ -1,0 +1,23 @@
+﻿<Window x:Class="HHITtoolsTray.USBWindow.AboutWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HHITtoolsTray.USBWindow"
+        mc:Ignorable="d"
+        Title="IT Support Tools" Height="300" Width="250" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closed="AboutWin_Closed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Image Source="logo.jpg" Width="230"/>
+        <Canvas Grid.Row="1">
+            <TextBlock Text="About IT Support Tools" FontSize="14" Canvas.Left="10" Canvas.Top="10"/>
+            <TextBlock Text="Version :" FontSize="14" Canvas.Left="10" Canvas.Top="38"/>
+            <Button x:Name="btnCheckUpdate" Click="btnCheckUpdate_Click" FontSize="14" Canvas.Left="10" Canvas.Top="67">Check Update</Button>
+            <TextBlock x:Name="txtAgentVersion" Text="?" FontSize="14" Canvas.Left="72" Canvas.Top="38"/>
+            <TextBlock Text="Built by IT Dept" FontSize="14" Canvas.Left="125" Canvas.Top="105"/>
+        </Canvas>
+    </Grid>
+</Window>

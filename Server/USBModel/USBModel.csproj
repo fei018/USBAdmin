@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\USBCommon.csproj" />
+    <ProjectReference Include="..\HHITtoolsCommon\HHITtoolsCommon.csproj" />
     <ProjectReference Include="..\LoginUserManager\LoginUserManager.csproj" />
   </ItemGroup>
 

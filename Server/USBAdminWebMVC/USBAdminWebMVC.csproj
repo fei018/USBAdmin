@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\USBCommon.csproj" />
+    <ProjectReference Include="..\HHITtoolsCommon\HHITtoolsCommon.csproj" />
     <ProjectReference Include="..\LoginUserManager\LoginUserManager.csproj" />
     <ProjectReference Include="..\USBModel\USBModel.csproj" />
   </ItemGroup>

@@ -1,5 +1,5 @@
 ﻿using SqlSugar;
-using USBCommon;
+using HHITtoolsCommon;
 
 namespace USBModel
 {

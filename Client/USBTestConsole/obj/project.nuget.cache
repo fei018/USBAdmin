@@ -1,22 +1,22 @@
 {
   "version": 2,
-  "dgSpecHash": "c7FcgXw+23P2JMdYU/yjF6JVelTVOv61Je3cNLSL5hz+jUrzSiX/q7EZMDeiQUyLpjiaTp8U0lgGgLa48vnCRg==",
+  "dgSpecHash": "ToDHDGxh3auvLIkXgvgBQ4Tro6O6chHVDKEgXFjby6/qSe55udIs9IzUI7+04GrTmWLXqHHpAxmPfrQgPUb+ug==",
   "success": true,
-  "projectFilePath": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
+  "projectFilePath": "C:\\Code\\GitHub\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\e_fei\\.nuget\\packages\\mailkit\\3.0.0\\mailkit.3.0.0.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\microsoft.windows.cswin32\\0.1.619-beta\\microsoft.windows.cswin32.0.1.619-beta.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\microsoft.windows.sdk.win32docs\\0.1.7-alpha\\microsoft.windows.sdk.win32docs.0.1.7-alpha.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\microsoft.windows.sdk.win32metadata\\15.0.2-preview\\microsoft.windows.sdk.win32metadata.15.0.2-preview.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\mimekit\\3.0.0\\mimekit.3.0.0.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\namedpipewrapper\\1.5.0\\namedpipewrapper.1.5.0.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\nativeusblib\\1.4.9\\nativeusblib.1.4.9.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
-    "C:\\Users\\e_fei\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.3\\system.runtime.compilerservices.unsafe.4.5.3.nupkg.sha512"
+    "C:\\Users\\User\\.nuget\\packages\\mailkit\\3.0.0\\mailkit.3.0.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.windows.cswin32\\0.1.619-beta\\microsoft.windows.cswin32.0.1.619-beta.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.windows.sdk.win32docs\\0.1.7-alpha\\microsoft.windows.sdk.win32docs.0.1.7-alpha.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.windows.sdk.win32metadata\\15.0.2-preview\\microsoft.windows.sdk.win32metadata.15.0.2-preview.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\mimekit\\3.0.0\\mimekit.3.0.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\namedpipewrapper\\1.5.0\\namedpipewrapper.1.5.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\nativeusblib\\1.4.9\\nativeusblib.1.4.9.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.3\\system.runtime.compilerservices.unsafe.4.5.3.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using USBCommon;
+using HHITtoolsCommon;
 using USBModel;
 
 namespace USBAdminWebMVC
