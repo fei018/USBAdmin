@@ -50,7 +50,7 @@ namespace USBNotifyAgent
 
             PipeServerAgent.Entity_Agent.Stop();
 
-            AgentManager.Stop();           
+            AgentManager.CloseApp();           
         }
         #endregion
 

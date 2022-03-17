@@ -90,6 +90,7 @@
 </div>
 
 @section Script{
+    <script src="~/js/custom.js"></script>
     <script>
         layui.use(['form', 'layer'], function () {
             var form = layui.form,
@@ -103,8 +104,8 @@
                 let url = $(id).attr('action');
                 let data = $(id).serializeArray();
 
-                $.post(url, data, function (json) {
-                    window.location.reload();
+                $.post(url, data, function () {
+                    loadingToReloadPage(2);
                 });
 
                 layer.close(index);

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Management;
 using System.Net;
 using System.Printing;
-using System.Text;
+using USBCommon;
 
 namespace USBNotifyLib
 {
@@ -74,6 +72,10 @@ namespace USBNotifyLib
                     catch (Exception)
                     {
                     }
+                    finally
+                    {
+                        printer.Dispose();
+                    }
                 }
             }
 
@@ -81,34 +83,34 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region + private static List<PrinterInfo> GetTcpIPPrinterList()
-        private static List<LocalPrinterInfo> GetTcpIPPrinterList()
+        #region + public static List<PrinterInfo> GetIPPrinterList()
+        public static List<LocalPrinterInfo> GetIPPrinterList()
         {
-            var tcpPrinters = new List<LocalPrinterInfo>();
+            var ipPrinters = new List<LocalPrinterInfo>();
 
             var printers = GetPrinterList();
             if (printers.Count <= 0)
             {
-                return tcpPrinters;
+                return ipPrinters;
             }
 
             var tcpIPPorts = GetTcpIPPrinterPortList();
             if (tcpIPPorts.Count <= 0)
             {
-                return tcpPrinters;
+                return ipPrinters;
             }
 
-            foreach (var tcp in tcpIPPorts)
+            foreach (var port in tcpIPPorts)
             {
-                var printer = printers.Find(p => p.PortName == tcp.Name);
+                var printer = printers.Find(p => p.PortName == port.Name);
                 if (printer != null)
                 {
-                    printer.TCPIPPort = tcp;
-                    tcpPrinters.Add(printer);
+                    printer.TCPIPPort = port;
+                    ipPrinters.Add(printer);
                 }
             }
 
-            return tcpPrinters;
+            return ipPrinters;
         }
         #endregion
 
@@ -164,7 +166,7 @@ namespace USBNotifyLib
         {
             try
             {
-                var tcpPrinters = GetTcpIPPrinterList();
+                var tcpPrinters = GetIPPrinterList();
                 if (tcpPrinters.Count <= 0)
                 {
                     return;
@@ -177,7 +179,7 @@ namespace USBNotifyLib
                 {
                     try
                     {
-                        var printerSubnet = PerComputerHelp.GetNetworkAddress(IPAddress.Parse(printer.GetIP()),
+                        var printerSubnet = UtilityTools.GetNetworkAddress(IPAddress.Parse(printer.GetIP()),
                                                                                 IPAddress.Parse(com.IPv4Mask))
                                                                                 .ToString();
 

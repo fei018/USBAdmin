@@ -39,37 +39,54 @@ namespace USBNotifyLib
                 _PrintJobMonitorList = _PrintJobMonitorList ?? new Dictionary<string, PrintQueueMonitor>();
 
                 // get all IP Printer
-                using (var pQServer = new LocalPrintServer())
-                using (var printerList = pQServer.GetPrintQueues())
-                {
-                    foreach (var printer in printerList)
+                //using (var pQServer = new LocalPrintServer())
+                //using (var printerList = pQServer.GetPrintQueues())
+                //{
+                //    foreach (var printer in printerList)
+                //    {
+                //        if (Regex.IsMatch(printer.Name,"(Fax)+", RegexOptions.IgnoreCase))
+                //        {
+                //            continue;
+                //        }
+
+                //        if (Regex.IsMatch(printer.Name, "(PDF)+", RegexOptions.IgnoreCase))
+                //        {
+                //            continue;
+                //        }
+
+                //        var printJobMonitor = new PrintQueueMonitor(printer.Name);
+                //        printer.Dispose();
+
+                //        _PrintJobMonitorList.Add(printJobMonitor.PrinterName, printJobMonitor);
+
+                //        printJobMonitor.OnJobStatusChange += PrintJobMonitor_OnJobStatusChange;
+
+                //        // start printJob monitor
+                //        printJobMonitor.Start();
+                //    }
+                //}
+
+                var ipPrinters = PrinterHelp.GetIPPrinterList();
+                foreach (var printer in ipPrinters)
+                {                  
+                    try
                     {
-                        if (Regex.IsMatch(printer.Name,"(Fax)+", RegexOptions.IgnoreCase))
-                        {
-                            continue;
-                        }
-
-                        if (Regex.IsMatch(printer.Name, "(PDF)+", RegexOptions.IgnoreCase))
-                        {
-                            continue;
-                        }
-
                         var printJobMonitor = new PrintQueueMonitor(printer.Name);
-                        printer.Dispose();
-
-                        _PrintJobMonitorList.Add(printJobMonitor.PrinterName, printJobMonitor);
 
                         printJobMonitor.OnJobStatusChange += PrintJobMonitor_OnJobStatusChange;
 
                         // start printJob monitor
                         printJobMonitor.Start();
+
+                        _PrintJobMonitorList.Add(printJobMonitor.PrinterName, printJobMonitor);
+                    }
+                    catch (Exception)
+                    {
                     }
                 }
             }
             catch (Exception)
             {
-
-                throw;
             }
         }
         #endregion
@@ -143,7 +160,10 @@ namespace USBNotifyLib
 #endif
                     Task.Run(() =>
                     {
-                        new AgentHttpHelp().PostPerPrintJob_Http(job);
+                        if (AgentRegistry.PrintJobHistoryEnabled)
+                        {
+                            new AgentHttpHelp().PostPerPrintJob_Http(job);
+                        }
                     });
                     
                 }

@@ -1,4 +1,12 @@
-﻿function isReloadPage(yesORno) {
+﻿
+function loadingToReloadPage(second) {
+    layer.load(1, { time: second * 1000 });
+    setTimeout(function () {
+        window.location.reload();
+    }, second * 1000)
+}
+
+function isReloadPage(yesORno) {
     if (yesORno === undefined) {
         let reload = sessionStorage.getItem('isReloadPage');
         if (reload === 'yes') {

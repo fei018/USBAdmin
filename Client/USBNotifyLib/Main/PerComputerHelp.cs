@@ -4,6 +4,7 @@ using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
+using USBCommon;
 
 namespace USBNotifyLib
 {
@@ -103,7 +104,7 @@ namespace USBNotifyLib
             com.IPv4Mask = ipV4.IPv4Mask.ToString();
 
             // set NetwordAddress
-            com.NetwordAddress = GetNetworkAddress(ipV4.Address, ipV4.IPv4Mask).ToString();
+            com.NetwordAddress = UtilityTools.GetNetworkAddress(ipV4.Address, ipV4.IPv4Mask).ToString();
         }
         #endregion
 
@@ -158,29 +159,6 @@ namespace USBNotifyLib
             return mac.ToString();
         }
         #endregion
-
-        #region + public static IPAddress GetNetworkAddress(IPAddress address, IPAddress subnetMask)
-        /// <summary>
-        /// https://docs.microsoft.com/en-us/archive/blogs/knom/ip-address-calculations-with-c-subnetmasks-networks
-        /// </summary>
-        /// <param name="address"></param>
-        /// <param name="subnetMask"></param>
-        /// <returns></returns>
-        public static IPAddress GetNetworkAddress(IPAddress address, IPAddress subnetMask)
-        {
-            byte[] ipAdressBytes = address.GetAddressBytes();
-            byte[] subnetMaskBytes = subnetMask.GetAddressBytes();
-
-            if (ipAdressBytes.Length != subnetMaskBytes.Length)
-                throw new ArgumentException("Lengths of IP address and subnet mask do not match.");
-
-            byte[] broadcastAddress = new byte[ipAdressBytes.Length];
-            for (int i = 0; i < broadcastAddress.Length; i++)
-            {
-                broadcastAddress[i] = (byte)(ipAdressBytes[i] & (subnetMaskBytes[i]));
-            }
-            return new IPAddress(broadcastAddress);
-        }
-        #endregion
+        
     }
 }

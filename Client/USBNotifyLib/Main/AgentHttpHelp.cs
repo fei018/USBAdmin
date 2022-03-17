@@ -172,12 +172,16 @@ namespace USBNotifyLib
         {
             try
             {
+                var comid = PerComputerHelp.GetComputerIdentity();
+                var url = AgentRegistry.AgentSettingUrl + "?computerIdentity=" + comid;
                 var agentResult = HttpClient_Get(AgentRegistry.AgentSettingUrl);
+
                 var agentSetting = agentResult.AgentSetting;
 
                 AgentRegistry.AgentTimerMinute = agentSetting.AgentTimerMinute;
                 AgentRegistry.UsbFilterEnabled = agentSetting.UsbFilterEnabled;
                 AgentRegistry.UsbHistoryEnabled = agentSetting.UsbHistoryEnabled;
+                AgentRegistry.PrintJobHistoryEnabled = agentSetting.PrintJobHistoryEnabled;
             }
             catch (Exception)
             {

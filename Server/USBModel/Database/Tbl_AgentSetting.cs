@@ -15,5 +15,8 @@ namespace USBModel
         public bool UsbFilterEnabled { get; set; }
 
         public bool UsbHistoryEnabled { get; set; }
+
+        [SugarColumn(IsNullable =true)]
+        public bool PrintJobHistoryEnabled { get; set; }
     }
 }

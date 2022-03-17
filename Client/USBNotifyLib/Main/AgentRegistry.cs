@@ -65,6 +65,12 @@ namespace USBNotifyLib
             set => SetRegKey(nameof(UsbHistoryEnabled), value, RegistryValueKind.String);
         }
 
+        public static bool PrintJobHistoryEnabled
+        {
+            get => Convert.ToBoolean(ReadRegKey(nameof(PrintJobHistoryEnabled)));
+            set => SetRegKey(nameof(PrintJobHistoryEnabled), value, RegistryValueKind.String);
+        }
+
         public static string UsbWhitelistUrl
         {
             get => ReadRegKey(nameof(UsbWhitelistUrl));

@@ -364,7 +364,7 @@ namespace USBNotifyLib
         }
         #endregion
 
-        // push message
+        // push message func
 
         #region + public void PushMsg_ToTray_Message(string message)
         public void PushMsg_ToTray_Message(string message)

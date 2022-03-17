@@ -59,13 +59,23 @@ namespace USBAdminWebMVC.Controllers
         // AgentSetting
 
         #region AgentSetting()
-        public async Task<IActionResult> AgentSetting()
+        public async Task<IActionResult> AgentSetting(string computerIdentity)
         {
             try
             {
-                IAgentSetting query = await _usbDb.Get_AgentSetting();
-                var agent = new AgentHttpResponseResult { Succeed = true, AgentSetting = query };
+                IAgentSetting setting = null;
 
+                if (string.IsNullOrEmpty(computerIdentity))
+                {
+                    // global agent setting
+                    setting = await _usbDb.Get_AgentSetting();
+                }
+                else
+                {
+                    // group agent setting
+                }
+
+                var agent = new AgentHttpResponseResult { Succeed = true, AgentSetting = setting };
                 return Json(agent);
             }
             catch (Exception ex)

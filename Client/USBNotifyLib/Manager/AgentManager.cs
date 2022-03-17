@@ -5,7 +5,7 @@ namespace USBNotifyLib
 {
     public class AgentManager
     {
-        #region + public static void Startup()
+        #region Startup()
         public static void Startup()
         {
             try
@@ -88,8 +88,8 @@ namespace USBNotifyLib
         }
         #endregion
 
-        #region Stop()
-        public static void Stop()
+        #region CloseApp()
+        public static void CloseApp()
         {
             try
             {
@@ -107,6 +107,7 @@ namespace USBNotifyLib
         }
         #endregion
 
+        // for Agent app
 
         #region + public static void PostUsbHistoryToHttpServer()
         public static void PostUsbHistoryToHttpServer(string diskPath)
