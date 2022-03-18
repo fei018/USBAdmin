@@ -218,7 +218,6 @@ C:\CodeRepos\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\runtimes\win\li
 C:\CodeRepos\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\CodeRepos\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\CodeRepos\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\LoginUserManager.dll
-C:\CodeRepos\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\USBCommon.dll
 C:\CodeRepos\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\USBModel.dll
 C:\CodeRepos\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\USBModel.pdb
 C:\CodeRepos\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\LoginUserManager.pdb
@@ -349,3 +348,4 @@ C:\Code\GitHub\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\LoginUserMana
 C:\Code\GitHub\USBAdmin\Server\USBAdminDatabase\obj\Release\net5.0\USBAdminDatabase.csproj.CopyComplete
 C:\Code\GitHub\USBAdmin\Server\USBAdminDatabase\obj\Release\net5.0\USBAdminDatabase.genruntimeconfig.cache
 C:\Code\GitHub\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\HHITtoolsCommon.dll
+C:\CodeRepos\USBAdmin\Server\USBAdminDatabase\bin\Release\net5.0\ToolsCommon.dll

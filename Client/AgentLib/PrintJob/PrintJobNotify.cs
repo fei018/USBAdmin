@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Printing;
 using AgentLib.PrintJob;
-using HHITtoolsCommon;
+using ToolsCommon;
 using System.Diagnostics;
 using System.Threading;
 using System.Text.RegularExpressions;

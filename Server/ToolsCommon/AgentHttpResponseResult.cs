@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HHITtoolsCommon
+namespace ToolsCommon
 {
     public class AgentHttpResponseResult
     {

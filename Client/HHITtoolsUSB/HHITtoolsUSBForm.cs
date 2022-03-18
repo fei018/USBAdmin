@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UsbMonitor;
-using AgentLib;
 
 namespace HHITtoolsUSB
 {
@@ -12,58 +11,27 @@ namespace HHITtoolsUSB
     {
         public HHITtoolsUSBForm()
         {
-            OpenAppOneOnly();
-
             InitializeComponent();
 
 #if DEBUG
             this.ShowInTaskbar = true;
 #endif
 
-            PipeAgentStart();
-
-            ToolsManager.Startup();
+            AppManager.Startup();
         }
 
-        #region OpenAppOneOnly()
-        private const string _mutexGuid = "32956814-4b61-4bd0-9571-cb6905995f23";
-        private void OpenAppOneOnly()
-        {
-            Mutex mutex = new Mutex(true, _mutexGuid, out bool flag);
-            if (!flag)
-            {
-                Environment.Exit(1);
-            }
-        }
-        #endregion
+       
 
         #region this.Closed()
         private void USBNofityAgentForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-#if DEBUG
-            //Debugger.Break();
-#endif
+            // unregister usb notify
+            Stop();
 
-            base.Stop();
-
-            PipeServerAgent.Entity_Agent.PushMsg_ToTray_CloseTray();
-
-            PipeServerAgent.Entity_Agent.Stop();
-
-            ToolsManager.CloseApp();           
+            AppManager.Close();          
         }
         #endregion
 
-        // AgentPipe
-        #region AgentPipe
-
-        private void PipeAgentStart()
-        {
-            PipeServerAgent.Entity_Agent = new PipeServerAgent();
-            PipeServerAgent.Entity_Agent.CloseAgentAppEvent += (s, e) => { this.Close(); };
-            PipeServerAgent.Entity_Agent.Start();
-        }
-        #endregion
 
         // OnUsbInterface
 
@@ -74,11 +42,11 @@ namespace HHITtoolsUSB
             {
                 if (args.DeviceInterface == UsbMonitor.UsbDeviceInterface.Disk)
                 {
-                    ToolsManager.FilterUsbDisk(args.Name);
+                    AppManager.FilterUsbDisk(args.Name);
 
-                    ToolsManager.CheckUsbWhitelist_PluginUSB(args.Name);
+                    AppManager.CheckUsbRegister_PluginUSB(args.Name);
 
-                    ToolsManager.PostUsbHistoryToHttpServer(args.Name);
+                    AppManager.PostUsbHistoryToHttpServer(args.Name);
                 }
             }
         }

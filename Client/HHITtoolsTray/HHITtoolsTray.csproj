@@ -189,9 +189,9 @@
     <None Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Server\HHITtoolsCommon\HHITtoolsCommon.csproj">
+    <ProjectReference Include="..\..\Server\ToolsCommon\ToolsCommon.csproj">
       <Project>{90fd865d-6202-4a76-b765-4d5414b4204d}</Project>
-      <Name>HHITtoolsCommon</Name>
+      <Name>ToolsCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\AgentLib\AgentLib.csproj">
       <Project>{bbdb4699-103a-4cd5-92db-6a9cf675161f}</Project>

@@ -4,7 +4,7 @@ using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
-using HHITtoolsCommon;
+using ToolsCommon;
 
 namespace AgentLib
 {

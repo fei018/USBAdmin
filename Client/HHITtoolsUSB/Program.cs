@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace HHITtoolsUSB
@@ -13,7 +14,23 @@ namespace HHITtoolsUSB
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new HHITtoolsUSBForm());
+
+            OpenAppOneOnly();
+            AppManager.Startup();
+
+            Application.Run(AppManager_Entity.HHITtoolsUSBForm);
         }
+
+        #region OpenAppOneOnly()
+        private const string _mutexGuid = "32956814-4b61-4bd0-9571-cb6905995f23";
+        private static void OpenAppOneOnly()
+        {
+            Mutex mutex = new Mutex(true, _mutexGuid, out bool flag);
+            if (!flag)
+            {
+                Environment.Exit(1);
+            }
+        }
+        #endregion
     }
 }

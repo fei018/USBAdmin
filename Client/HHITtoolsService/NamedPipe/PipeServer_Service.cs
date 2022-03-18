@@ -1,4 +1,5 @@
-﻿using NamedPipeWrapper;
+﻿using AgentLib;
+using NamedPipeWrapper;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,26 +11,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AgentLib
+namespace HHITtoolsService
 {
-    public class PipeServerAgent
+    public class PipeServer_Service
     {
         private string _pipeName;
 
         private NamedPipeServer<string> _server;
 
-        // public static Entity
-        public static PipeServerAgent Entity_Agent { get; set; }
-
-        #region Event
-        /// <summary>
-        /// To Close Agent app event
-        /// </summary>
-        public event EventHandler CloseAgentAppEvent;
-        #endregion
-
         #region Construction
-        public PipeServerAgent()
+        public PipeServer_Service()
         {
             _pipeName = AgentRegistry.AgentHttpKey;
             InitialPipeMsgHandler();
@@ -43,7 +34,7 @@ namespace AgentLib
             {
                 if (string.IsNullOrWhiteSpace(_pipeName))
                 {
-                    AgentLogger.Error("PipeName is empty");
+                    AgentLogger.Error("PipeServer_Service.Start(): PipeName is empty");
                     return;
                 }
 
@@ -63,7 +54,7 @@ namespace AgentLib
 
                 _server = new NamedPipeServer<string>(_pipeName, pipeSecurity);
 
-                _server.ClientMessage += ReceiveMsg_FromClientPipe;
+                _server.ClientMessage += Pipe_ReceiveMsg;
 
                 _server.Error += pipeConnection_Error;
 
@@ -76,7 +67,7 @@ namespace AgentLib
 
         private void pipeConnection_Error(Exception exception)
         {
-            AgentLogger.Error("AgentPipe Error: " + exception.Message);
+            AgentLogger.Error("PipeServer_Service pipeConnection_Error(): " + exception.Message);
         }
         #endregion
 
@@ -88,7 +79,7 @@ namespace AgentLib
                 if (_server != null)
                 {
                     _server.Error -= pipeConnection_Error;
-                    _server.ClientMessage -= ReceiveMsg_FromClientPipe;
+                    _server.ClientMessage -= Pipe_ReceiveMsg;
                     _server.Stop();
                     _server = null;
                 }
@@ -103,18 +94,18 @@ namespace AgentLib
         // Receive message from client
 
         #region ReceiveMsg_FromClientPipe(NamedPipeConnection<string, string> connection, string message)
-        private void ReceiveMsg_FromClientPipe(NamedPipeConnection<string, string> connection, string message)
+        private void Pipe_ReceiveMsg(NamedPipeConnection<string, string> connection, string message)
         {
             try
             {
                 //Debugger.Break();
 
-                var pipeMsg = JsonConvert.DeserializeObject<PipeMsg>(message);
-
-                if (pipeMsg == null)
+                if (string.IsNullOrEmpty(message))
                 {
-                    throw new Exception("AgentPipe : PipeMsg is Null");
+                    throw new Exception("PipeServer_Service.Pipe_ReceiveMsg(): message IsNullOrEmpty.");
                 }
+
+                var pipeMsg = JsonConvert.DeserializeObject<PipeMsg>(message);
 
                 if (_pipeMsgHandler.ContainsKey(pipeMsg.PipeMsgType))
                 {
@@ -122,43 +113,10 @@ namespace AgentLib
                 }
 
                 return;
-
-                #region switch
-                //switch (pipeMsg.PipeMsgType)
-                //{
-                //    // check and update agent
-                //    case PipeMsgType.UpdateAgent:
-                //        Handler_UpdateAgent();
-                //        break;
-
-                //    // Update Setting and USB Whitelist
-                //    case PipeMsgType.UpdateSetting:
-                //        Handler_UpdateSetting();
-                //        break;
-
-                //    // To Close Agent
-                //    case PipeMsgType.CloseAgent:
-                //        Handler_CloseAgent();
-                //        break;
-
-                //    // To Close Tray
-                //    case PipeMsgType.CloseTray:
-                //        Handler_CloseTray();
-                //        break;
-
-                //    // Add Print Template
-                //    case PipeMsgType.AddPrintTemplate:
-                //        Handler_AddPrintTemplate();
-                //        break;
-
-                //    default:
-                //        break;
-                //}
-                #endregion
             }
             catch (Exception ex)
             {
-                AgentLogger.Error(ex.Message);
+                AgentLogger.Error("PipeServer_Service.Pipe_ReceiveMsg(): " + ex.Message);
             }
         }
         #endregion
@@ -170,12 +128,10 @@ namespace AgentLib
         {
             _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>()
             {
-                { PipeMsgType.UpdateAgent, Handler_UpdateAgent },
-                { PipeMsgType.UpdateSetting, Handler_UpdateSetting},
-                { PipeMsgType.CloseAgent, Handler_CloseAgent },
-                { PipeMsgType.CloseTray, Handler_CloseTray },
-                { PipeMsgType.AddPrintTemplate, Handler_AddPrintTemplate },
-                { PipeMsgType.PrinterDeleteOldAndInstallDriver, Handler_PrinterDeleteOldAndInstallDriver },
+                { PipeMsgType.UpdateAgent, ReceiveMsgHandler_UpdateAgent },
+                { PipeMsgType.UpdateSetting, ReceiveMsgHandler_UpdateSetting},
+                { PipeMsgType.UsbDiskNoRegister, ReceiveMsgHandler_UsbDiskNoRegister },
+                { PipeMsgType.DeleteOldPrintersAndInstallDriver, Handler_PrinterDeleteOldAndInstallDriver },
                 { PipeMsgType.PrintJobNotifyRestart, Handler_PrintJobNotifyRestart }
             };
         }
@@ -183,8 +139,22 @@ namespace AgentLib
 
         // Receive Message  handler
 
+        #region + private void ReceiveMsgHandler_UsbDiskNoRegister(PipeMsg pipeMsg)
+        private void ReceiveMsgHandler_UsbDiskNoRegister(PipeMsg pipeMsg)
+        {
+            try
+            {
+                PushMsgToClient_By_PipeMsg(pipeMsg);
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error("PipeServer_Service.ReceiveMsgHandler_UsbDiskNoRegister(): " + ex.Message);
+            }
+        }
+        #endregion
+
         #region + private void Handler_UpdateAgent(PipeMsg pipeMsg)
-        private void Handler_UpdateAgent(PipeMsg pipeMsg)
+        private void ReceiveMsgHandler_UpdateAgent(PipeMsg pipeMsg)
         {
             Task.Run(() =>
             {
@@ -193,27 +163,31 @@ namespace AgentLib
                     if (new AgentUpdate().CheckNeedUpdate())
                     {
                         new AgentUpdate().Update();
-                        PushMsg_ToTray_Message("Download Agent done, wait for installation...");
+
+                        var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, "Download Agent done, wait for installation...");
+                        PushMsgToClient_By_PipeMsg(msg);
                     }
                     else
                     {
-                        PushMsg_ToTray_Message("Agent is newest version.");
+                        var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, "Agent is newest version.");
+                        PushMsgToClient_By_PipeMsg(msg);
                     }
                 }
                 catch (Exception ex)
                 {
                     AgentLogger.Error(ex.GetBaseException().Message);
-                    PushMsg_ToTray_Message(ex.GetBaseException().Message);
+                    var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, ex.GetBaseException().Message);
+                    PushMsgToClient_By_PipeMsg(msg);
                 }
             });
         }
         #endregion
 
-        #region + private void Handler_UpdateSetting(PipeMsg pipeMsg)
+        #region + private void ReceiveMsgHandler_UpdateSetting(PipeMsg pipeMsg)
         /// <summary>
         /// update AgentSetting and UsbWhitelist
         /// </summary>
-        private void Handler_UpdateSetting(PipeMsg pipeMsg)
+        private void ReceiveMsgHandler_UpdateSetting(PipeMsg pipeMsg)
         {
             Task.Run(() =>
             {
@@ -229,60 +203,14 @@ namespace AgentLib
 
                     AgentTimer.ReloadTask();                    // reload agent timer
 
-                    PushMsg_ToTray_Message("Update Setting done.");
+                    var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, "Update Setting done.");
+                    PushMsgToClient_By_PipeMsg(msg);
                 }
                 catch (Exception ex)
                 {
                     AgentLogger.Error(ex.GetBaseException().Message);
-                    PushMsg_ToTray_Message(ex.GetBaseException().Message);
-                }
-            });
-        }
-        #endregion
-
-        #region + private void Handler_CloseAgent(PipeMsg pipeMsg)
-        private void Handler_CloseAgent(PipeMsg pipeMsg)
-        {
-            try
-            {
-                CloseAgentAppEvent?.Invoke(this, null);
-            }
-            catch (Exception ex)
-            {
-                AgentLogger.Error("AgentPipe.Handler_CloseAgent(): " + ex.GetBaseException().Message);
-            }
-        }
-        #endregion
-
-        #region + private void Handler_CloseTray(PipeMsg pipeMsg)
-        private void Handler_CloseTray(PipeMsg pipeMsg)
-        {
-            try
-            {
-                PushMsg_ToTray_CloseTray();
-            }
-            catch (Exception)
-            {
-            }
-        }
-        #endregion
-
-        #region + private void Handler_AddPrintTemplate()
-        private void Handler_AddPrintTemplate(PipeMsg pipeMsg)
-        {
-            Task.Run(() =>
-            {
-                //Debugger.Break();
-                try
-                {
-                    var output = PrintTemplateHelp.Start(pipeMsg.PrintTemplateFile);
-
-                    PushMsg_ToTray_AddPrintTemplateCompleted(output);
-                }
-                catch (Exception ex)
-                {
-                    PushMsg_ToTray_AddPrintTemplateCompleted(ex.GetBaseException().Message);
-                    AgentLogger.Error(ex.GetBaseException().Message);
+                    var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, ex.GetBaseException().Message);
+                    PushMsgToClient_By_PipeMsg(msg);
                 }
             });
         }
@@ -298,7 +226,7 @@ namespace AgentLib
 #endif
                 try
                 {
-                    pipeMsg.PipeMsgType = PipeMsgType.PrinterDeleteOldAndInstallDriverCompleted;
+                    pipeMsg.PipeMsgType = PipeMsgType.DeleteOldPrintersAndInstallDriverCompleted;
 
                     // delete old subnet printer
                     PrinterHelp.DeleteOldIPPrinters_OtherSubnet();
@@ -337,13 +265,13 @@ namespace AgentLib
                     }
 
                     pipeMsg.Message = pipeMsg.Message + "\r\n" + output.ToString() + "\r\n";
-                    PushMsg_ToTray_By_PipeMsg(pipeMsg);
+                    PushMsgToClient_By_PipeMsg(pipeMsg);
                 }
                 catch (Exception ex)
                 {
 
                     pipeMsg.Message = pipeMsg.Message + "\r\n" + ex.GetBaseException().Message + "\r\n";
-                    PushMsg_ToTray_By_PipeMsg(pipeMsg);
+                    PushMsgToClient_By_PipeMsg(pipeMsg);
                 }
             });
         }
@@ -365,43 +293,6 @@ namespace AgentLib
         #endregion
 
         // push message func
-
-        #region + public void PushMsg_ToTray_Message(string message)
-        public void PushMsg_ToTray_Message(string message)
-        {
-            try
-            {
-                var pipe = new PipeMsg(PipeMsgType.Message, message);
-                var json = JsonConvert.SerializeObject(pipe);
-                _server.PushMessage(json);
-            }
-            catch (Exception ex)
-            {
-                AgentLogger.Error("PushMessageToTray : " + ex.Message);
-            }
-        }
-        #endregion
-
-        #region + public void PushMsg_ToTray_UsbDiskNotInWhitelist(UsbDisk usb)
-        public void PushMsg_ToTray_UsbDiskNotInWhitelist(UsbDisk usb)
-        {
-            try
-            {
-                if (_server == null) throw new Exception("NamedPipeServer is null.");
-
-                if (usb != null)
-                {
-                    var pipeMsg = new PipeMsg(usb);
-                    var msgJson = JsonConvert.SerializeObject(pipeMsg);
-                    _server.PushMessage(msgJson);
-                }
-            }
-            catch (Exception ex)
-            {
-                AgentLogger.Error("PushMsg_ToTray_UsbDiskNotInWhitelist(UsbDisk usb) : " + ex.Message);
-            }
-        }
-        #endregion
 
         #region + public void PushMsg_ToTray_CloseTray()
         public void PushMsg_ToTray_CloseTray()
@@ -425,7 +316,7 @@ namespace AgentLib
         {
             try
             {
-                var pipe = new PipeMsg(PipeMsgType.AddPrintTemplateCompleted, msg);
+                var pipe = new PipeMsg(PipeMsgType.DeleteOldPrintersAndInstallDriverCompleted, msg);
                 var json = JsonConvert.SerializeObject(pipe);
                 _server.PushMessage(json);
             }
@@ -436,17 +327,17 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public void PushMsg_ToTray_By_PipeMsg(PipeMsg pipeMsg)
-        public void PushMsg_ToTray_By_PipeMsg(PipeMsg pipeMsg)
+        #region + private void PushMsgToClient_By_PipeMsg(PipeMsg pipeMsg)
+        private void PushMsgToClient_By_PipeMsg(PipeMsg pipeMsg)
         {
             try
             {
                 var json = JsonConvert.SerializeObject(pipeMsg);
                 _server.PushMessage(json);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                AgentLogger.Error("PushMsg_ToTray_By_PipeMsg: " + ex.GetBaseException().Message);
+                throw;
             }
         }
         #endregion

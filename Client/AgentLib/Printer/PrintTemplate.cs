@@ -1,4 +1,4 @@
-﻿using HHITtoolsCommon;
+﻿using ToolsCommon;
 
 namespace AgentLib
 {

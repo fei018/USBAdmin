@@ -2539,15 +2539,6 @@
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
       },
-      "HHITtoolsCommon/1.0.0": {
-        "type": "project",
-        "compile": {
-          "bin/placeholder/HHITtoolsCommon.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/HHITtoolsCommon.dll": {}
-        }
-      },
       "LoginUserManager/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -2562,12 +2553,21 @@
           "bin/placeholder/LoginUserManager.dll": {}
         }
       },
+      "ToolsCommon/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/ToolsCommon.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ToolsCommon.dll": {}
+        }
+      },
       "USBModel/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
-          "HHITtoolsCommon": "1.0.0",
-          "LoginUserManager": "1.0.0"
+          "LoginUserManager": "1.0.0",
+          "ToolsCommon": "1.0.0"
         },
         "compile": {
           "bin/placeholder/USBModel.dll": {}
@@ -8209,15 +8209,15 @@
         "system.xml.xpath.xmldocument.nuspec"
       ]
     },
-    "HHITtoolsCommon/1.0.0": {
-      "type": "project",
-      "path": "../HHITtoolsCommon/HHITtoolsCommon.csproj",
-      "msbuildProject": "../HHITtoolsCommon/HHITtoolsCommon.csproj"
-    },
     "LoginUserManager/1.0.0": {
       "type": "project",
       "path": "../LoginUserManager/LoginUserManager.csproj",
       "msbuildProject": "../LoginUserManager/LoginUserManager.csproj"
+    },
+    "ToolsCommon/1.0.0": {
+      "type": "project",
+      "path": "../ToolsCommon/ToolsCommon.csproj",
+      "msbuildProject": "../ToolsCommon/ToolsCommon.csproj"
     },
     "USBModel/1.0.0": {
       "type": "project",
@@ -8227,33 +8227,33 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "HHITtoolsCommon >= 1.0.0",
       "LoginUserManager >= 1.0.0",
       "MailKit >= 3.0.0",
       "Newtonsoft.Json >= 13.0.1",
+      "ToolsCommon >= 1.0.0",
       "USBModel >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\e_fei\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Code\\GitHub\\USBAdmin\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj",
+      "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj",
       "projectName": "USBAdminWebMVC",
-      "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\USBAdminWebMVC\\obj\\",
+      "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminWebMVC\\USBAdminWebMVC.csproj",
+      "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
+      "outputPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBAdminWebMVC\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -8266,14 +8266,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Code\\GitHub\\USBAdmin\\Server\\HHITtoolsCommon\\HHITtoolsCommon.csproj": {
-              "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\HHITtoolsCommon\\HHITtoolsCommon.csproj"
+            "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj": {
+              "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj"
             },
-            "C:\\Code\\GitHub\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj": {
-              "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\LoginUserManager\\LoginUserManager.csproj"
+            "C:\\CodeRepos\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj": {
+              "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj"
             },
-            "C:\\Code\\GitHub\\USBAdmin\\Server\\USBModel\\USBModel.csproj": {
-              "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\USBModel\\USBModel.csproj"
+            "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj": {
+              "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\USBModel\\USBModel.csproj"
             }
           }
         }
@@ -8315,7 +8315,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
       }
     }
   }

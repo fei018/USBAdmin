@@ -7,8 +7,8 @@
     <ProjectGuid>{90FD865D-6202-4A76-B765-4D5414B4204D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HHITtoolsCommon</RootNamespace>
-    <AssemblyName>HHITtoolsCommon</AssemblyName>
+    <RootNamespace>ToolsCommon</RootNamespace>
+    <AssemblyName>ToolsCommon</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractJsonConverter.cs" />
     <Compile Include="AgentHttpResponseResult.cs" />
     <Compile Include="IPrintJobInfo.cs" />
     <Compile Include="UtilityTools.cs" />
@@ -87,6 +88,11 @@
     <Compile Include="IUsbInfo.cs" />
     <Compile Include="IIPPrinterInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

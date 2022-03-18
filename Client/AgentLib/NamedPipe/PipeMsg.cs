@@ -10,10 +10,6 @@ namespace AgentLib
 
         public string Message { get; set; }
 
-        public string PrintTemplateFile { get; set; }
-
-        public List<IPPrinterInfo> AddPrinterDriverList { get; set; }
-
         public SitePrinterToAddList SitePrinterToAddList { get; set; }
 
         public PipeMsg() { }
@@ -34,5 +30,6 @@ namespace AgentLib
             PipeMsgType = PipeMsgType.UsbDiskNoRegister;
             UsbDisk = usbDisk;
         }
+
     }
 }

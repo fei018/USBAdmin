@@ -92,7 +92,6 @@
     <Compile Include="Printer\PrinterHelp.cs" />
     <Compile Include="Printer\LocalPrinterInfo.cs" />
     <Compile Include="Printer\PrintTemplateHelp.cs" />
-    <Compile Include="Main\AbstractJsonConverter.cs" />
     <Compile Include="Main\AgentSetting.cs" />
     <Compile Include="Main\PerComputer.cs" />
     <Compile Include="Printer\PrintTemplate.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="Main\PerComputerHelp.cs" />
     <Compile Include="USBFilter\UsbRequest.cs" />
     <Compile Include="NamedPipe\PipeEventArgs.cs" />
-    <Compile Include="NamedPipe\PipeServerAgent.cs" />
     <Compile Include="NamedPipe\PipeMsg.cs" />
     <Compile Include="NamedPipe\PipeMsgType.cs" />
     <Compile Include="NamedPipe\PipeClientService.cs" />
@@ -136,9 +134,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Server\HHITtoolsCommon\HHITtoolsCommon.csproj">
+    <ProjectReference Include="..\..\Server\ToolsCommon\ToolsCommon.csproj">
       <Project>{90fd865d-6202-4a76-b765-4d5414b4204d}</Project>
-      <Name>HHITtoolsCommon</Name>
+      <Name>ToolsCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

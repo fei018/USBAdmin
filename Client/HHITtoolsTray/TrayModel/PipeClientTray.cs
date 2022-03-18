@@ -6,9 +6,10 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using HHITtoolsCommon;
+using ToolsCommon;
 using HHITtoolsTray.USBWindow;
 using AgentLib;
+using System.Diagnostics;
 
 namespace HHITtoolsTray
 {
@@ -154,11 +155,11 @@ namespace HHITtoolsTray
         {
             _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>()
             {
-                { PipeMsgType.Message, Handler_FromAgentMsg_MessageBox },
+                { PipeMsgType.Msg_ServerToTray, Handler_FromAgentMsg_MessageBox },
                 { PipeMsgType.UsbDiskNoRegister, Handler_FromAgentMsg_UsbNotifyWindow},
-                { PipeMsgType.CloseTray, Handler_FromAgentMsg_ToCloseTray },
+                { PipeMsgType.CloseHHITtoolsTray, Handler_FromAgentMsg_ToCloseTray },
                 { PipeMsgType.AddPrintTemplateCompleted, Handler_FromAgentMsg_AddPrintTemplateCompleted },
-                { PipeMsgType.PrinterDeleteOldAndInstallDriverCompleted, Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted }
+                { PipeMsgType.DeleteOldPrintersAndInstallDriverCompleted, Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted }
             };
         }
         #endregion
@@ -237,7 +238,7 @@ namespace HHITtoolsTray
                 StringBuilder sb = new StringBuilder();
                 try
                 {
-                    if (pipeMsg.PipeMsgType == PipeMsgType.Message)
+                    if (pipeMsg.PipeMsgType == PipeMsgType.Msg_ServerToTray)
                     {
                         throw new Exception(pipeMsg.Message);
                     }
@@ -391,7 +392,7 @@ namespace HHITtoolsTray
                     // set PipeMsgType: PrinterDeleteOldAndInstallDriver
                     var pipemsg = new PipeMsg()
                     {
-                        PipeMsgType = PipeMsgType.PrinterDeleteOldAndInstallDriver,
+                        PipeMsgType = PipeMsgType.DeleteOldPrintersAndInstallDriver,
                         SitePrinterToAddList = sitePrinterToAddList
                     };
 

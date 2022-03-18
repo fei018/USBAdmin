@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginUserManager", "LoginUs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "USBAdminDatabase", "USBAdminDatabase\USBAdminDatabase.csproj", "{FC8CF3A8-8100-4975-9119-6BABF0DF0E6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HHITtoolsCommon", "HHITtoolsCommon\HHITtoolsCommon.csproj", "{90FD865D-6202-4A76-B765-4D5414B4204D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsCommon", "ToolsCommon\ToolsCommon.csproj", "{90FD865D-6202-4A76-B765-4D5414B4204D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

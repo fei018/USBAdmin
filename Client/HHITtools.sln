@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentLib", "AgentLib\AgentL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USBTestConsole", "USBTestConsole\USBTestConsole.csproj", "{A160B38C-8995-44C9-96E2-BF81CDFB4C6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HHITtoolsCommon", "..\Server\HHITtoolsCommon\HHITtoolsCommon.csproj", "{90FD865D-6202-4A76-B765-4D5414B4204D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsCommon", "..\Server\ToolsCommon\ToolsCommon.csproj", "{90FD865D-6202-4A76-B765-4D5414B4204D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetupClient", "SetupClient\SetupClient.csproj", "{AAB212AA-6818-4455-BD50-8AFAAA28850A}"
 EndProject

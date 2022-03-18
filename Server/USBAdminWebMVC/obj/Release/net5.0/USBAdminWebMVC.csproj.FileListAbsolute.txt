@@ -423,7 +423,6 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\runtimes\win\lib\
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\LoginUserManager.dll
-C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\USBCommon.dll
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\USBModel.dll
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\LoginUserManager.pdb
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\USBModel.pdb
@@ -604,3 +603,4 @@ C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dro
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\RequestReview.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\Template.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\TemplateEdit.cshtml.g.cs
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\ToolsCommon.dll

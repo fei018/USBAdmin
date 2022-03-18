@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HHITtoolsCommon
+namespace ToolsCommon
 {
     public interface IPrintJobInfo
     {

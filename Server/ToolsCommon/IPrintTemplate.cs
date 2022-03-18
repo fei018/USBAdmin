@@ -1,4 +1,4 @@
-﻿namespace HHITtoolsCommon
+﻿namespace ToolsCommon
 {
     public interface IPrintTemplate
     {

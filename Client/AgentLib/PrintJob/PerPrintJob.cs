@@ -1,5 +1,5 @@
 ﻿using System;
-using HHITtoolsCommon;
+using ToolsCommon;
 
 namespace AgentLib
 {

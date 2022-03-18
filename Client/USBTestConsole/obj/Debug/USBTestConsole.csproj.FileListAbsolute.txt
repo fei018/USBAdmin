@@ -66,8 +66,6 @@ C:\CodeRepos\USBAdmin\Client\USBTestConsole\bin\Debug\System.Buffers.dll
 C:\CodeRepos\USBAdmin\Client\USBTestConsole\bin\Debug\System.Memory.dll
 C:\CodeRepos\USBAdmin\Client\USBTestConsole\bin\Debug\System.Numerics.Vectors.dll
 C:\CodeRepos\USBAdmin\Client\USBTestConsole\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
-C:\CodeRepos\USBAdmin\Client\USBTestConsole\bin\Debug\USBNotifyLib.dll
-C:\CodeRepos\USBAdmin\Client\USBTestConsole\bin\Debug\USBCommon.dll
 C:\CodeRepos\USBAdmin\Client\USBTestConsole\obj\Debug\USBTestConsole.csproj.AssemblyReference.cache
 C:\CodeRepos\USBAdmin\Client\USBTestConsole\obj\Debug\USBTestConsole.GeneratedMSBuildEditorConfig.editorconfig
 C:\CodeRepos\USBAdmin\Client\USBTestConsole\obj\Debug\USBTestConsole.csproj.CoreCompileInputs.cache
@@ -99,4 +97,6 @@ C:\Code\GitHub\USBAdmin\Client\USBTestConsole\obj\Debug\USBTestConsole.csproj.Co
 C:\Code\GitHub\USBAdmin\Client\USBTestConsole\obj\Debug\USBTestConsole.csproj.CopyComplete
 C:\Code\GitHub\USBAdmin\Client\USBTestConsole\obj\Debug\USBTestConsole.exe
 C:\Code\GitHub\USBAdmin\Client\USBTestConsole\obj\Debug\USBTestConsole.pdb
-C:\CodeRepos\USBAdmin\Client\USBTestConsole\bin\Debug\USBNotifyLib.pdb
+C:\CodeRepos\USBAdmin\Client\USBTestConsole\bin\Debug\AgentLib.dll
+C:\CodeRepos\USBAdmin\Client\USBTestConsole\bin\Debug\ToolsCommon.dll
+C:\CodeRepos\USBAdmin\Client\USBTestConsole\bin\Debug\AgentLib.pdb

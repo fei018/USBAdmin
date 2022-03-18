@@ -3,7 +3,7 @@ using System.Linq;
 using System.Management;
 using System.Net.NetworkInformation;
 using System.Text;
-using HHITtoolsCommon;
+using ToolsCommon;
 
 namespace AgentLib
 {

@@ -1,6 +1,6 @@
 ﻿using SqlSugar;
 using System;
-using HHITtoolsCommon;
+using ToolsCommon;
 
 namespace USBModel
 {

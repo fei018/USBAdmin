@@ -69,7 +69,7 @@ namespace AgentLib
         {
             try
             {
-                var json = JsonConvert.SerializeObject(new PipeMsg(PipeMsgType.CloseAgent));
+                var json = JsonConvert.SerializeObject(new PipeMsg(PipeMsgType.CloseHHITtoolsUSB));
                 _client?.PushMessage(json);
             }
             catch (Exception ex)
@@ -84,7 +84,7 @@ namespace AgentLib
         {
             try
             {
-                var json = JsonConvert.SerializeObject(new PipeMsg(PipeMsgType.CloseTray));
+                var json = JsonConvert.SerializeObject(new PipeMsg(PipeMsgType.CloseHHITtoolsTray));
                 _client?.PushMessage(json);
             }
             catch (Exception ex)

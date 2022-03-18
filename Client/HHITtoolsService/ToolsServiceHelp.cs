@@ -8,7 +8,7 @@ using AgentLib.Win32API;
 
 namespace HHITtoolsService
 {
-    public partial class ToolsService
+    public class ToolsServiceHelp
     {
         private bool _autoBootUsbAgent = true;
         private bool _autoBootUsbAgentTray = true;
@@ -16,7 +16,7 @@ namespace HHITtoolsService
         private PipeClientService _servicePipe;
 
         #region ServiceStart()
-        private void Start_Service()
+        public static void Start_Service()
         {
             _autoBootUsbAgent = true;
             StartProcess_Agent();
@@ -35,7 +35,7 @@ namespace HHITtoolsService
         #endregion
 
         #region ServiceStop()
-        private void Stop_Service()
+        public static void Stop_Service()
         {
             _autoBootUsbAgentTray = false;
             _autoBootUsbAgent = false;
@@ -162,27 +162,6 @@ namespace HHITtoolsService
         }
         #endregion
 
-        #region + protected override void OnSessionChange(SessionChangeDescription changeDescription)
-        protected override void OnSessionChange(SessionChangeDescription changeDescription)
-        {
-            base.OnSessionChange(changeDescription);
-
-            // user logon windows
-            // startup Agent tray
-            if (changeDescription.Reason == SessionChangeReason.SessionLogon)
-            {
-                _autoBootUsbAgentTray = true;
-                StartProcess_AgentTray();
-            }
-
-            // user logoff windows
-            // close Agent tray
-            if (changeDescription.Reason == SessionChangeReason.SessionLogoff)
-            {
-                _autoBootUsbAgentTray = false;
-                CloseProcess_AgentTray();
-            }          
-        }
-        #endregion
+       
     }
 }

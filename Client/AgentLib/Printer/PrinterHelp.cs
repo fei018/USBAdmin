@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Management;
 using System.Net;
 using System.Printing;
-using HHITtoolsCommon;
+using ToolsCommon;
 
 namespace AgentLib
 {

@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HHITtoolsCommon\HHITtoolsCommon.csproj" />
     <ProjectReference Include="..\LoginUserManager\LoginUserManager.csproj" />
+    <ProjectReference Include="..\ToolsCommon\ToolsCommon.csproj" />
   </ItemGroup>
 
 </Project>
