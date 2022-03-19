@@ -26,17 +26,12 @@ namespace USBTestConsole
             {
                 Console.WriteLine("Start...");
 
-                //var p = new IPPrinterInfo();
-                //p.PrinterName = "test printer111";
-                //p.DriverName   = "Kyocera TASKalfa 3554ci KX";
-                //p.DriverInfPath = @"C:\Users\User\Downloads\64bit\OEMSETUP.INF";
-                //p.PortIPAddr = "10.20.4.5";
-                //PrinterHelp.InstallPrinterDriver_WMI(p.DriverName, p.DriverInfPath);
-                //PrinterHelp.AddNewPrinter(p);
+                var proces = Process.GetProcesses();
 
-                //PrintJobNotify.Entity = new PrintJobNotify();
-                //PrintJobNotify.Entity.Start();
-
+                foreach (var p in proces)
+                {
+                    Console.WriteLine(p.ProcessName);
+                }
 
             }
             catch (Exception ex)

@@ -16,6 +16,7 @@ namespace HHITtoolsUSB
             Application.SetCompatibleTextRenderingDefault(false);
 
             OpenAppOneOnly();
+
             AppManager.Startup();
 
             Application.Run(AppManager_Entity.HHITtoolsUSBForm);

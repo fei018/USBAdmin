@@ -16,11 +16,7 @@ namespace HHITtoolsUSB
 #if DEBUG
             this.ShowInTaskbar = true;
 #endif
-
-            AppManager.Startup();
         }
-
-       
 
         #region this.Closed()
         private void USBNofityAgentForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -42,11 +38,11 @@ namespace HHITtoolsUSB
             {
                 if (args.DeviceInterface == UsbMonitor.UsbDeviceInterface.Disk)
                 {
-                    AppManager.FilterUsbDisk(args.Name);
+                    UsbHelp.FilterUsbDisk(args.Name);
 
-                    AppManager.CheckUsbRegister_PluginUSB(args.Name);
+                    UsbHelp.CheckUsbRegister_PluginUSB(args.Name);
 
-                    AppManager.PostUsbHistoryToHttpServer(args.Name);
+                    UsbHelp.PostUsbHistoryToHttpServer(args.Name);
                 }
             }
         }

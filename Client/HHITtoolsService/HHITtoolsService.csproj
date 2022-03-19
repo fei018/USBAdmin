@@ -112,6 +112,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Main\AppManager.cs" />
+    <Compile Include="Main\AppManager_Entity.cs" />
+    <Compile Include="Main\AppProcessInfo.cs" />
     <Compile Include="NamedPipe\PipeServer_Service.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -119,7 +122,7 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="ToolsServiceHelp.cs" />
+    <Compile Include="Main\ToolsServiceHelp.cs" />
     <Compile Include="ToolsService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -175,8 +178,6 @@
       <Version>13.0.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Main\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -127,8 +127,8 @@ namespace HHITtoolsUSB
         #endregion
 
         // PushMsg
-        #region + private void PushMsg_By_PipeMsg(PipeMsg pipeMsg)
-        private void PushMsg_By_PipeMsg(PipeMsg pipeMsg)
+        #region + private void SendMsgToServer_By_PipeMsg(PipeMsg pipeMsg)
+        private void SendMsgToServer_By_PipeMsg(PipeMsg pipeMsg)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace HHITtoolsUSB
             try
             {
                 var msg = new PipeMsg(usbDisk);
-                PushMsg_By_PipeMsg(msg);
+                SendMsgToServer_By_PipeMsg(msg);
             }
             catch (Exception ex)
             {

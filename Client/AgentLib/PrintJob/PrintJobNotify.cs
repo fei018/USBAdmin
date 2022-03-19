@@ -16,23 +16,10 @@ namespace AgentLib
     {
         private Dictionary<string, PrintQueueMonitor> _PrintJobMonitorList { get; set; }
 
-        public static PrintJobNotify Entity { get; set; }
-
-        public static void Start()
+        #region Start
+        public void Start()
         {
-            Entity = new PrintJobNotify();
-            Entity.Start_Entity();
-        }
-
-        public static void Stop()
-        {
-            Entity?.Stop_Entity();
-        }
-
-        #region Start_Entity
-        private void Start_Entity()
-        {
-            Stop_Entity();
+            Stop();
 
             try
             {
@@ -91,8 +78,8 @@ namespace AgentLib
         }
         #endregion
 
-        #region Stop_Entity
-        private void Stop_Entity()
+        #region Stop
+        public void Stop()
         {
             try
             {

@@ -156,7 +156,7 @@ namespace HHITtoolsTray
             _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>()
             {
                 { PipeMsgType.Msg_ServerToTray, Handler_FromAgentMsg_MessageBox },
-                { PipeMsgType.UsbDiskNoRegister, Handler_FromAgentMsg_UsbNotifyWindow},
+                { PipeMsgType.UsbDiskNoRegister_USBToTray, Handler_FromAgentMsg_UsbNotifyWindow},
                 { PipeMsgType.CloseHHITtoolsTray, Handler_FromAgentMsg_ToCloseTray },
                 { PipeMsgType.AddPrintTemplateCompleted, Handler_FromAgentMsg_AddPrintTemplateCompleted },
                 { PipeMsgType.DeleteOldPrintersAndInstallDriverCompleted, Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted }

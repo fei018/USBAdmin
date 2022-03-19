@@ -106,7 +106,6 @@
     <Compile Include="NamedPipe\PipeEventArgs.cs" />
     <Compile Include="NamedPipe\PipeMsg.cs" />
     <Compile Include="NamedPipe\PipeMsgType.cs" />
-    <Compile Include="NamedPipe\PipeClientService.cs" />
     <Compile Include="PrintJob\PerPrintJob.cs" />
     <Compile Include="PrintJob\PrintJobChangeEventArgs.cs" />
     <Compile Include="PrintJob\PrintJobNotify.cs" />

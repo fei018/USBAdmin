@@ -130,7 +130,7 @@ namespace HHITtoolsService
             {
                 { PipeMsgType.UpdateAgent, ReceiveMsgHandler_UpdateAgent },
                 { PipeMsgType.UpdateSetting, ReceiveMsgHandler_UpdateSetting},
-                { PipeMsgType.UsbDiskNoRegister, ReceiveMsgHandler_UsbDiskNoRegister },
+                { PipeMsgType.UsbDiskNoRegister_USBToTray, ReceiveMsgHandler_UsbDiskNoRegister },
                 { PipeMsgType.DeleteOldPrintersAndInstallDriver, Handler_PrinterDeleteOldAndInstallDriver },
                 { PipeMsgType.PrintJobNotifyRestart, Handler_PrintJobNotifyRestart }
             };
@@ -144,7 +144,7 @@ namespace HHITtoolsService
         {
             try
             {
-                PushMsgToClient_By_PipeMsg(pipeMsg);
+                SendMsgToClient_By_PipeMsg(pipeMsg);
             }
             catch (Exception ex)
             {
@@ -153,7 +153,7 @@ namespace HHITtoolsService
         }
         #endregion
 
-        #region + private void Handler_UpdateAgent(PipeMsg pipeMsg)
+        #region + private void ReceiveMsgHandler_UpdateAgent(PipeMsg pipeMsg)
         private void ReceiveMsgHandler_UpdateAgent(PipeMsg pipeMsg)
         {
             Task.Run(() =>
@@ -165,19 +165,19 @@ namespace HHITtoolsService
                         new AgentUpdate().Update();
 
                         var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, "Download Agent done, wait for installation...");
-                        PushMsgToClient_By_PipeMsg(msg);
+                        SendMsgToClient_By_PipeMsg(msg);
                     }
                     else
                     {
                         var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, "Agent is newest version.");
-                        PushMsgToClient_By_PipeMsg(msg);
+                        SendMsgToClient_By_PipeMsg(msg);
                     }
                 }
                 catch (Exception ex)
                 {
                     AgentLogger.Error(ex.GetBaseException().Message);
                     var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, ex.GetBaseException().Message);
-                    PushMsgToClient_By_PipeMsg(msg);
+                    SendMsgToClient_By_PipeMsg(msg);
                 }
             });
         }
@@ -204,13 +204,13 @@ namespace HHITtoolsService
                     AgentTimer.ReloadTask();                    // reload agent timer
 
                     var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, "Update Setting done.");
-                    PushMsgToClient_By_PipeMsg(msg);
+                    SendMsgToClient_By_PipeMsg(msg);
                 }
                 catch (Exception ex)
                 {
                     AgentLogger.Error(ex.GetBaseException().Message);
                     var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, ex.GetBaseException().Message);
-                    PushMsgToClient_By_PipeMsg(msg);
+                    SendMsgToClient_By_PipeMsg(msg);
                 }
             });
         }
@@ -265,13 +265,13 @@ namespace HHITtoolsService
                     }
 
                     pipeMsg.Message = pipeMsg.Message + "\r\n" + output.ToString() + "\r\n";
-                    PushMsgToClient_By_PipeMsg(pipeMsg);
+                    SendMsgToClient_By_PipeMsg(pipeMsg);
                 }
                 catch (Exception ex)
                 {
 
                     pipeMsg.Message = pipeMsg.Message + "\r\n" + ex.GetBaseException().Message + "\r\n";
-                    PushMsgToClient_By_PipeMsg(pipeMsg);
+                    SendMsgToClient_By_PipeMsg(pipeMsg);
                 }
             });
         }
@@ -292,43 +292,10 @@ namespace HHITtoolsService
         }
         #endregion
 
-        // push message func
+        // Sned message func
 
-        #region + public void PushMsg_ToTray_CloseTray()
-        public void PushMsg_ToTray_CloseTray()
-        {
-            try
-            {
-                var pipe = new PipeMsg(PipeMsgType.CloseTray);
-                var json = JsonConvert.SerializeObject(pipe);
-                _server?.PushMessage(json);
-                Thread.Sleep(new TimeSpan(0, 0, 1));
-            }
-            catch (Exception ex)
-            {
-                AgentLogger.Error("PushMessageToCloseTray : " + ex.Message);
-            }
-        }
-        #endregion
-
-        #region + public void PushMsg_ToTray_AddPrintTemplateCompleted(string ms)
-        public void PushMsg_ToTray_AddPrintTemplateCompleted(string msg)
-        {
-            try
-            {
-                var pipe = new PipeMsg(PipeMsgType.DeleteOldPrintersAndInstallDriverCompleted, msg);
-                var json = JsonConvert.SerializeObject(pipe);
-                _server.PushMessage(json);
-            }
-            catch (Exception ex)
-            {
-                AgentLogger.Error("PushMsg_ToTray_AddPrintTemplateCompleted : " + ex.Message);
-            }
-        }
-        #endregion
-
-        #region + private void PushMsgToClient_By_PipeMsg(PipeMsg pipeMsg)
-        private void PushMsgToClient_By_PipeMsg(PipeMsg pipeMsg)
+        #region + private void SendMsgToClient_By_PipeMsg(PipeMsg pipeMsg)
+        private void SendMsgToClient_By_PipeMsg(PipeMsg pipeMsg)
         {
             try
             {
@@ -338,6 +305,37 @@ namespace HHITtoolsService
             catch (Exception)
             {
                 throw;
+            }
+        }
+        #endregion
+
+        #region + public void SendMsg_CloseHHITtoolsTray()
+        public void SendMsg_CloseHHITtoolsTray()
+        {
+            try
+            {
+                var msg = new PipeMsg(PipeMsgType.CloseHHITtoolsTray);
+
+                SendMsgToClient_By_PipeMsg(msg);
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error("PipeServer_Service.SendMsg_CloseHHITtoolsTray() : " + ex.Message);
+            }
+        }
+        #endregion
+
+        #region + public void SendMsg_CloseHHITtoolsUSB()
+        public void SendMsg_CloseHHITtoolsUSB()
+        {
+            try
+            {
+                var msg = new PipeMsg(PipeMsgType.CloseHHITtoolsUSB);
+                SendMsgToClient_By_PipeMsg(msg);
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error(ex.Message);
             }
         }
         #endregion
