@@ -2,8 +2,9 @@
 {
     public enum PipeMsgType
     {
-        Msg_ServerToTray = 10,
-        UsbDiskNoRegister_USBToTray,
+        Msg_ServiceToTray = 10,
+        UsbDiskNoRegister_NotifyTray_USBToService,
+        UsbDiskNoRegister_NotifyTray_ServiceToTray,
         UpdateAgent,
         UpdateSetting,
         CloseHHITtoolsUSB,

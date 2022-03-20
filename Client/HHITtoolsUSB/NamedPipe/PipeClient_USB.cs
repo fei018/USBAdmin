@@ -18,6 +18,8 @@ namespace HHITtoolsUSB
 
         private NamedPipeClient<string> _client;
 
+        public event EventHandler ToCloseHHITtoolsUSBEvent;
+
         #region Construction
         public PipeClient_USB()
         {
@@ -122,7 +124,7 @@ namespace HHITtoolsUSB
         #region + private void ReceiveMsgHandler_CloseHHITtoolsUSBApp(PipeMsg pipeMsg)
         private void ReceiveMsgHandler_CloseHHITtoolsUSBApp(PipeMsg pipeMsg)
         {
-            AppManager_Entity.HHITtoolsUSBForm?.Close();
+            ToCloseHHITtoolsUSBEvent?.Invoke(null, null);
         }
         #endregion
 

@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace HHITtoolsTray
 {
-    public class PipeClientTray
+    public class PipeClient_Tray
     {
         // private
         private string _pipeName;
@@ -21,16 +21,15 @@ namespace HHITtoolsTray
         private NamedPipeClient<string> _client;
 
         // public static
-        public static PipeClientTray Entity_Tray { get; set; }
+        public static PipeClient_Tray Entity_Tray { get; set; }
 
         #region Event
-        public event EventHandler<PipeEventArgs> AddPrintTemplateCompletedEvent;
 
         public event EventHandler<PipeEventArgs> AddSitePrinterCompletedEvent;
         #endregion
 
         #region Construction
-        public PipeClientTray()
+        public PipeClient_Tray()
         {
             _pipeName = AgentRegistry.AgentHttpKey;
 
@@ -60,7 +59,7 @@ namespace HHITtoolsTray
             {
                 if (_client != null)
                 {
-                    _client.ServerMessage -= ReceiveMsg_FromPipeServerAgent;
+                    _client.ServerMessage -= Pipe_ReceiveMsg;
                     _client.Stop();
                     _client = null;
                 }
@@ -85,7 +84,7 @@ namespace HHITtoolsTray
                 _client = new NamedPipeClient<string>(_pipeName);
                 _client.AutoReconnect = true;
 
-                _client.ServerMessage += ReceiveMsg_FromPipeServerAgent;
+                _client.ServerMessage += Pipe_ReceiveMsg;
 
                 _client.Start();
             }
@@ -96,18 +95,18 @@ namespace HHITtoolsTray
         }
         #endregion
 
-        #region ReceiveMsg_FromPipeServerAgent(NamedPipeConnection<string, string> connection, string usbJson)
-        private void ReceiveMsg_FromPipeServerAgent(NamedPipeConnection<string, string> connection, string message)
+        #region Pipe_ReceiveMsg(NamedPipeConnection<string, string> connection, string usbJson)
+        private void Pipe_ReceiveMsg(NamedPipeConnection<string, string> connection, string message)
         {
             try
             {
                 //Debugger.Break();
-                var pipeMsg = JsonConvert.DeserializeObject<PipeMsg>(message);
-
-                if (pipeMsg == null)
+                if (string.IsNullOrEmpty(message))
                 {
-                    throw new Exception("TrayPipe: PipeMsg is Null.");
+                    throw new Exception("PipeClient_Tray.Pipe_ReceiveMsg(): message IsNullOrEmpty.");
                 }
+
+                var pipeMsg = JsonConvert.DeserializeObject<PipeMsg>(message);
 
                 if (_pipeMsgHandler.ContainsKey(pipeMsg.PipeMsgType))
                 {
@@ -115,31 +114,6 @@ namespace HHITtoolsTray
                 }
 
                 return;
-
-                #region switch
-                //switch (pipeMsg.PipeMsgType)
-                //{
-                //    case PipeMsgType.Message:
-                //        Handler_FromAgentMsg_MessageBox(pipeMsg.Message);
-                //        break;
-
-                //    case PipeMsgType.UsbDiskNotInWhitelist:
-                //        Handler_FromAgentMsg_UsbNotifyWindow(pipeMsg.UsbDisk);
-                //        break;
-
-                //    case PipeMsgType.CloseTray:
-                //        Handler_FromAgentMsg_ToCloseTray();
-                //        break;
-
-                //    case PipeMsgType.AddPrintTemplateCompleted:
-                //        Handler_FromAgentMsg_AddPrintTemplateCompleted(pipeMsg.Message);
-                //        break;
-
-                //    default:
-                //        break;
-                //}
-                #endregion
-
             }
             catch (Exception ex)
             {
@@ -155,10 +129,9 @@ namespace HHITtoolsTray
         {
             _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>()
             {
-                { PipeMsgType.Msg_ServerToTray, Handler_FromAgentMsg_MessageBox },
-                { PipeMsgType.UsbDiskNoRegister_USBToTray, Handler_FromAgentMsg_UsbNotifyWindow},
-                { PipeMsgType.CloseHHITtoolsTray, Handler_FromAgentMsg_ToCloseTray },
-                { PipeMsgType.AddPrintTemplateCompleted, Handler_FromAgentMsg_AddPrintTemplateCompleted },
+                { PipeMsgType.Msg_ServiceToTray, ReceiveMsgHandler_Message_ShowMessageBox },
+                { PipeMsgType.UsbDiskNoRegister_NotifyTray_ServiceToTray, ReceiveMsgHandler_UsbDiskNoRegister},
+                { PipeMsgType.CloseHHITtoolsTray, ReceiveMsgHandler_ToCloseTray },
                 { PipeMsgType.DeleteOldPrintersAndInstallDriverCompleted, Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted }
             };
         }
@@ -166,15 +139,15 @@ namespace HHITtoolsTray
 
         // Receive Msg From PipeServerAgent Handler
 
-        #region Handler_FromAgentMsg_MessageBox(PipeMsg pipeMsg)
-        private void Handler_FromAgentMsg_MessageBox(PipeMsg pipeMsg)
+        #region ReceiveMsgHandler_Message_ShowMessageBox(PipeMsg pipeMsg)
+        private void ReceiveMsgHandler_Message_ShowMessageBox(PipeMsg pipeMsg)
         {
             MessageBox.Show(pipeMsg.Message);
         }
         #endregion
 
-        #region Handler_FromAgentMsg_UsbNotifyWindow(PipeMsg pipeMsg)
-        private void Handler_FromAgentMsg_UsbNotifyWindow(PipeMsg pipeMsg)
+        #region ReceiveMsgHandler_UsbDiskNoRegister(PipeMsg pipeMsg)
+        private void ReceiveMsgHandler_UsbDiskNoRegister(PipeMsg pipeMsg)
         {
             App.Current.Dispatcher.Invoke(new Action(() =>
             {
@@ -193,8 +166,8 @@ namespace HHITtoolsTray
         }
         #endregion
 
-        #region Handler_FromAgentMsg_ToCloseTray(PipeMsg pipeMsg)
-        private void Handler_FromAgentMsg_ToCloseTray(PipeMsg pipeMsg)
+        #region ReceiveMsgHandler_ToCloseTray(PipeMsg pipeMsg)
+        private void ReceiveMsgHandler_ToCloseTray(PipeMsg pipeMsg)
         {
             try
             {
@@ -238,7 +211,7 @@ namespace HHITtoolsTray
                 StringBuilder sb = new StringBuilder();
                 try
                 {
-                    if (pipeMsg.PipeMsgType == PipeMsgType.Msg_ServerToTray)
+                    if (pipeMsg.PipeMsgType == PipeMsgType.Msg_ServiceToTray)
                     {
                         throw new Exception(pipeMsg.Message);
                     }
@@ -278,63 +251,47 @@ namespace HHITtoolsTray
         }
         #endregion
 
-        // push message
+        // send message
 
-        #region + public void PushMsg_ToAgent_CheckAndUpdateAgent()
-        public void PushMsg_ToAgent_CheckAndUpdateAgent()
+        #region + private void SendMsgToServer_By_PipeMsg(PipeMsg pipeMsg)
+        private void SendMsgToServer_By_PipeMsg(PipeMsg pipeMsg)
         {
             try
             {
-                var json = JsonConvert.SerializeObject(new PipeMsg(PipeMsgType.UpdateAgent));
-                _client?.PushMessage(json);
-            }
-            catch (Exception)
-            {
-            }
-        }
-        #endregion
-
-        #region + public void PushMsg_ToAgent_UpdateSetting()
-        public void PushMsg_ToAgent_UpdateSetting()
-        {
-            try
-            {
-                var json = JsonConvert.SerializeObject(new PipeMsg(PipeMsgType.UpdateSetting));
-                _client?.PushMessage(json);
-            }
-            catch (Exception)
-            {
-            }
-        }
-        #endregion
-
-        #region + public void PushMsg_ToAgent_AddPrintTemplate()
-        public void PushMsg_ToAgent_AddPrintTemplate()
-        {
-            try
-            {
-#if DEBUG
-                //Debugger.Break();
-#endif
-                // get template from http server 
-                var template = new AgentHttpHelp().GetPrintTemplate_Http();
-
-                //check FilePath(UNC) whether exist
-                var templateFile = new FileInfo(template.FilePath?.Trim());
-                if (!templateFile.Exists)
-                {
-                    throw new Exception("PrintTemplate file not exist.\r\nPath: " + template.FilePath);
-                }
-
-                // copy template file from unc to local data dir
-                var localTemplate = PrintTemplateHelp.CopyTemplateFileToLocal(templateFile);
-
-                var json = JsonConvert.SerializeObject(new PipeMsg(PipeMsgType.AddPrintTemplate) { PrintTemplateFile = localTemplate });
-                _client?.PushMessage(json);
+                var json = JsonConvert.SerializeObject(pipeMsg);
+                _client.PushMessage(json);
             }
             catch (Exception)
             {
                 throw;
+            }
+        }
+        #endregion
+
+        #region + public void SendMsg_CheckAndUpdateAgent()
+        public void SendMsg_CheckAndUpdateAgent()
+        {
+            try
+            {
+                var msg = new PipeMsg(PipeMsgType.UpdateAgent);
+                SendMsgToServer_By_PipeMsg(msg);
+            }
+            catch (Exception)
+            {
+            }
+        }
+        #endregion
+
+        #region + public void SendMsg_UpdateSetting()
+        public void SendMsg_UpdateSetting()
+        {
+            try
+            {
+                var msg = new PipeMsg(PipeMsgType.UpdateSetting);
+                SendMsgToServer_By_PipeMsg(msg);
+            }
+            catch (Exception)
+            {
             }
         }
         #endregion

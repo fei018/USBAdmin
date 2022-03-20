@@ -16,6 +16,13 @@ namespace HHITtoolsUSB
 #if DEBUG
             this.ShowInTaskbar = true;
 #endif
+
+            AppManager_Entity.PipeClient_USB.ToCloseHHITtoolsUSBEvent += PipeClient_USB_ToCloseHHITtoolsUSBEvent;
+        }
+
+        private void PipeClient_USB_ToCloseHHITtoolsUSBEvent(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         #region this.Closed()

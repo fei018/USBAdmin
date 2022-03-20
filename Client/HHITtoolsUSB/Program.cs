@@ -17,9 +17,7 @@ namespace HHITtoolsUSB
 
             OpenAppOneOnly();
 
-            AppManager.Startup();
-
-            Application.Run(AppManager_Entity.HHITtoolsUSBForm);
+            Application.Run(new HHITtoolsUSBForm());
         }
 
         #region OpenAppOneOnly()

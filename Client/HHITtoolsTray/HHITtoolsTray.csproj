@@ -98,7 +98,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="TrayModel\PipeClientTray.cs" />
+    <Compile Include="NamedPipe\PipeClient_Tray.cs" />
     <Compile Include="PrintWindow\SetPrinterWin.xaml.cs">
       <DependentUpon>SetPrinterWin.xaml</DependentUpon>
     </Compile>

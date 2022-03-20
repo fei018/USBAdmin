@@ -130,7 +130,7 @@ namespace HHITtoolsService
             {
                 { PipeMsgType.UpdateAgent, ReceiveMsgHandler_UpdateAgent },
                 { PipeMsgType.UpdateSetting, ReceiveMsgHandler_UpdateSetting},
-                { PipeMsgType.UsbDiskNoRegister_USBToTray, ReceiveMsgHandler_UsbDiskNoRegister },
+                { PipeMsgType.UsbDiskNoRegister_NotifyTray_USBToService, ReceiveMsgHandler_UsbDiskNoRegister },
                 { PipeMsgType.DeleteOldPrintersAndInstallDriver, Handler_PrinterDeleteOldAndInstallDriver },
                 { PipeMsgType.PrintJobNotifyRestart, Handler_PrintJobNotifyRestart }
             };
@@ -144,6 +144,7 @@ namespace HHITtoolsService
         {
             try
             {
+                pipeMsg.PipeMsgType = PipeMsgType.UsbDiskNoRegister_NotifyTray_ServiceToTray;
                 SendMsgToClient_By_PipeMsg(pipeMsg);
             }
             catch (Exception ex)
@@ -164,19 +165,19 @@ namespace HHITtoolsService
                     {
                         new AgentUpdate().Update();
 
-                        var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, "Download Agent done, wait for installation...");
+                        var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, "Download Agent done, wait for installation...");
                         SendMsgToClient_By_PipeMsg(msg);
                     }
                     else
                     {
-                        var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, "Agent is newest version.");
+                        var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, "Agent is newest version.");
                         SendMsgToClient_By_PipeMsg(msg);
                     }
                 }
                 catch (Exception ex)
                 {
                     AgentLogger.Error(ex.GetBaseException().Message);
-                    var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, ex.GetBaseException().Message);
+                    var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, ex.GetBaseException().Message);
                     SendMsgToClient_By_PipeMsg(msg);
                 }
             });
@@ -203,13 +204,13 @@ namespace HHITtoolsService
 
                     AgentTimer.ReloadTask();                    // reload agent timer
 
-                    var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, "Update Setting done.");
+                    var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, "Update Setting done.");
                     SendMsgToClient_By_PipeMsg(msg);
                 }
                 catch (Exception ex)
                 {
                     AgentLogger.Error(ex.GetBaseException().Message);
-                    var msg = new PipeMsg(PipeMsgType.Msg_ServerToTray, ex.GetBaseException().Message);
+                    var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, ex.GetBaseException().Message);
                     SendMsgToClient_By_PipeMsg(msg);
                 }
             });

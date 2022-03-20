@@ -11,8 +11,8 @@ namespace HHITtoolsTray
         {
             try
             {
-                PipeClientTray.Entity_Tray = new PipeClientTray();
-                PipeClientTray.Entity_Tray.Start();                
+                PipeClient_Tray.Entity_Tray = new PipeClient_Tray();
+                PipeClient_Tray.Entity_Tray.Start();                
             }
             catch (Exception ex)
             {
@@ -45,7 +45,7 @@ namespace HHITtoolsTray
 
             try
             {
-                PipeClientTray.Entity_Tray?.Stop();
+                PipeClient_Tray.Entity_Tray?.Stop();
             }
             catch (Exception)
             {

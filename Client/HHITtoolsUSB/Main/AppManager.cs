@@ -12,7 +12,7 @@ namespace HHITtoolsUSB
         #region Startup()
         public static void Startup()
         {
-            AppManager_Entity.InitialEntity();
+            AppManager_Entity.PipeClient_USB = new PipeClient_USB();
 
             AppManager_Entity.PipeClient_USB.Start();
         }
