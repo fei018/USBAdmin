@@ -8,8 +8,6 @@
 
         bool UsbFilterEnabled { get; set; }
 
-        bool UsbHistoryEnabled { get; set; }
-
         bool PrintJobHistoryEnabled { get; set; }
     }
 }

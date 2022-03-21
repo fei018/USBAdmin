@@ -66,5 +66,22 @@ namespace HHITtoolsUSB
             });
         }
         #endregion
+
+        #region + public static void UpdateUSBWhiltelist_And_FilterAllUSB()
+        public static void UpdateUSBWhiltelist_And_FilterAllUSB()
+        {
+            Task.Run(()=>
+            {
+                try
+                {
+                    new AgentHttpHelp().UpdateUSBWhitelist_Http();
+                    new UsbFilter().Filter_Scan_All_USB_Disk();
+                }
+                catch (Exception)
+                {
+                }
+            });
+        }
+        #endregion
     }
 }

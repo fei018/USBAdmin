@@ -86,7 +86,6 @@
     <Compile Include="USBFilter\UsbFilter2.cs" />
     <Compile Include="USBFilter\UsbWhitelistHelp.cs" />
     <Compile Include="Main\AgentUpdate.cs" />
-    <Compile Include="Main\ToolsManager.cs" />
     <Compile Include="Main\AgentTimer.cs" />
     <Compile Include="Printer\IPPrinterInfo.cs" />
     <Compile Include="Printer\PrinterHelp.cs" />

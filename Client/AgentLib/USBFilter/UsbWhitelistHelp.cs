@@ -17,8 +17,8 @@ namespace AgentLib
         private static readonly object _locker_CacheDb = new object();
 
 
-        #region + public void Reload_UsbFilterData()
-        public static void Reload_UsbWhitelist()
+        #region + public void Reload_UsbWhitelistCache()
+        public static void Reload_UsbWhitelistCache()
         {
             try
             {
@@ -58,7 +58,7 @@ namespace AgentLib
             {
                 if (CacheDb == null || CacheDb.Count <= 0)
                 {
-                    Reload_UsbWhitelist();
+                    Reload_UsbWhitelistCache();
                 }
 
                 if (CacheDb != null && CacheDb.Count > 0)
@@ -83,13 +83,13 @@ namespace AgentLib
         #endregion
 
         #region + public static void Set_UsbWhitelist_byHttp(UsbFilterDbHttp setting)
-        public static void Set_UsbWhitelist_byHttp(string usbWhitelist)
+        public static void Set_And_Load_UsbWhitelist_byHttp(string usbWhitelist)
         {
             try
             {
                 WriteFile_UsbWhitelist(usbWhitelist);
 
-                Reload_UsbWhitelist();
+                Reload_UsbWhitelistCache();
             }
             catch (Exception)
             {
@@ -123,7 +123,7 @@ namespace AgentLib
         }
         #endregion
 
-        #region + static void WriteFile_UsbWhitelist(string txt)
+        #region + private static void WriteFile_UsbWhitelist(string txt)
         private static void WriteFile_UsbWhitelist(string txt)
         {
             lock (_locker_UsbWhitelist)

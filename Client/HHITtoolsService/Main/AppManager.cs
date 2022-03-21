@@ -23,6 +23,7 @@ namespace HHITtoolsService
         #region Startup()
         public static void Startup()
         {
+            // HHITtoolsUSB
             try
             {
                 if (AgentRegistry.UsbFilterEnabled)
@@ -32,6 +33,7 @@ namespace HHITtoolsService
             }
             catch (Exception) { }
 
+            // PrintJobNotify
             try
             {
                 if (AgentRegistry.PrintJobHistoryEnabled)
@@ -41,8 +43,13 @@ namespace HHITtoolsService
             }
             catch (Exception) { }     
 
+            // HHITtoolsTray
             Startup_HHITtoolsTray();
-        }
+
+            // AppTimer
+            AppManager_Entity.AppTimer.ElapsedAction += AppTimer_ElapsedAction;
+            AppManager_Entity.AppTimer.Start();
+        }      
         #endregion
 
         #region Stop()
@@ -53,6 +60,32 @@ namespace HHITtoolsService
             Close_HHITtoolsTray();
 
             Close_PrintJobNotify();
+        }
+        #endregion
+
+        #region + private static void AppTimer_ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
+        private static void AppTimer_ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    new AgentHttpHelp().PostPerComputer_Http();
+                }
+                catch (Exception ex)
+                {
+                    AgentLogger.Error("HHITtoolsService.AppManager.AppTimer_ElapsedAction(): " + ex.Message);
+                }
+
+                try
+                {
+                    new AgentHttpHelp().GetAgentSetting_Http();
+                }
+                catch (Exception ex)
+                {
+                    AgentLogger.Error("HHITtoolsService.AppManager.AppTimer_ElapsedAction(): " + ex.Message);
+                }
+            });
         }
         #endregion
 
@@ -254,7 +287,7 @@ namespace HHITtoolsService
         #region + public static void Close_PrintJobNotify()
         public static void Close_PrintJobNotify()
         {
-            AppManager_Entity.PrintJobNotify.Stop();
+            AppManager_Entity.PrintJobNotify?.Stop();
         }
         #endregion
 

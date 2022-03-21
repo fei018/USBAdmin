@@ -19,19 +19,15 @@ namespace HHITtoolsService
 
         private NamedPipeServer<string> _server;
 
-        #region Construction
-        public PipeServer_Service()
-        {
-            _pipeName = AgentRegistry.AgentHttpKey;
-            InitialPipeMsgHandler();
-        }
-        #endregion
-
         #region + public void Start()
         public void Start()
         {
             try
             {
+                InitialPipeMsgHandler();
+
+                _pipeName = AgentRegistry.AgentHttpKey;
+
                 if (string.IsNullOrWhiteSpace(_pipeName))
                 {
                     AgentLogger.Error("PipeServer_Service.Start(): PipeName is empty");
@@ -198,11 +194,9 @@ namespace HHITtoolsService
 
                     new AgentHttpHelp().GetAgentSetting_Http(); // update agent setting
 
-                    new AgentHttpHelp().GetUsbWhitelist_Http(); // update usb whitelist
+                    new AgentHttpHelp().UpdateUSBWhitelist_Http(); // update usb whitelist
 
                     new UsbFilter().Filter_Scan_All_USB_Disk(); // filter all usb disk
-
-                    AgentTimer.ReloadTask();                    // reload agent timer
 
                     var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, "Update Setting done.");
                     SendMsgToClient_By_PipeMsg(msg);

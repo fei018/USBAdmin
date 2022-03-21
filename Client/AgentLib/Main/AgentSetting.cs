@@ -10,8 +10,6 @@ namespace AgentLib
 
         public bool UsbFilterEnabled { get; set; }
 
-        public bool UsbHistoryEnabled { get; set; }
-
         public bool PrintJobHistoryEnabled { get; set; }
     }
 }

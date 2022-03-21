@@ -151,14 +151,14 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public void GetUsbWhitelist_Http()
-        public void GetUsbWhitelist_Http()
+        #region + public void UpdateUSBWhitelist_Http()
+        public void UpdateUSBWhitelist_Http()
         {
             try
             {
                 var agentResult = HttpClient_Get(AgentRegistry.UsbWhitelistUrl);
 
-                UsbWhitelistHelp.Set_UsbWhitelist_byHttp(agentResult.UsbFilterData);
+                UsbWhitelistHelp.Set_And_Load_UsbWhitelist_byHttp(agentResult.UsbFilterData);
             }
             catch (Exception)
             {
@@ -180,7 +180,6 @@ namespace AgentLib
 
                 AgentRegistry.AgentTimerMinute = agentSetting.AgentTimerMinute;
                 AgentRegistry.UsbFilterEnabled = agentSetting.UsbFilterEnabled;
-                AgentRegistry.UsbHistoryEnabled = agentSetting.UsbHistoryEnabled;
                 AgentRegistry.PrintJobHistoryEnabled = agentSetting.PrintJobHistoryEnabled;
             }
             catch (Exception)

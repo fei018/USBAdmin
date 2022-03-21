@@ -1,56 +1,56 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 using System.Timers;
-using System;
 
 namespace AgentLib
 {
     public class AgentTimer
     {
-        private static Timer _Timer;
+        private Timer _timer;
 
-        public static void ReloadTask()
+        public event EventHandler<ElapsedEventArgs> ElapsedAction;
+
+        #region Start
+        public void Start()
         {
             try
             {
-                ClearTimerTask();
-                SetTimerTask();
+                SetTimer();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                AgentLogger.Error(ex.GetBaseException().Message);
-            }
-        }
-
-        #region + private static void ClearTimerTask()
-        public static void ClearTimerTask()
-        {
-            try
-            {
-                if (_Timer != null)
-                {
-                    _Timer.Elapsed -= TimerTask_Elapsed;
-                    _Timer.Stop();
-                    _Timer.Dispose();
-                }
-            }
-            catch (Exception ex)
-            {
-                AgentLogger.Error(ex.Message);
             }
         }
         #endregion
 
-        #region + private static void SetTimerTask()
-        private static void SetTimerTask()
+        #region + public void Stop()
+        public void Stop()
         {
             try
             {
-                _Timer = new Timer();
-                _Timer.Interval = TimeSpan.FromMinutes(AgentRegistry.AgentTimerMinute).TotalMilliseconds;
-                _Timer.AutoReset = true;
-                _Timer.Elapsed += TimerTask_Elapsed;
+                if (_timer != null)
+                {
+                    _timer.Elapsed -= _timer_Elapsed;
+                    _timer.Stop();
+                    _timer.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+        #endregion
 
-                _Timer.Start();                            
+        #region + private void SetTimer()
+        private void SetTimer()
+        {
+            try
+            {
+                _timer = new Timer();
+                _timer.Interval = GetInterval();
+                _timer.AutoReset = true;
+                _timer.Elapsed += _timer_Elapsed;
+
+                _timer.Start();
             }
             catch (Exception)
             {
@@ -59,37 +59,48 @@ namespace AgentLib
         }
         #endregion
 
-        #region + private static void TimerTask_Elapsed(object sender, ElapsedEventArgs e)
-        private static void TimerTask_Elapsed(object sender, ElapsedEventArgs e)
+        #region + private void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            _timer.Interval = GetInterval();
+
             try
             {
-                _Timer.Stop();
-
-                // post computer info
-                new AgentHttpHelp().PostPerComputer_Http();
-
-                // get Agent Setting
-                new AgentHttpHelp().GetAgentSetting_Http();
-
-                // get Usb Whitelist
-                if (AgentRegistry.UsbFilterEnabled)
-                {
-                    new AgentHttpHelp().GetUsbWhitelist_Http();
-                    new UsbFilter().Filter_Scan_All_USB_Disk();
-                }
-
-                // check agent update
-                AgentUpdate.CheckAndUpdate();
+                ElapsedAction?.Invoke(sender, e);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                AgentLogger.Error(ex.GetBaseException().Message);
             }
-            finally
+        }
+        #endregion
+
+        #region + private double GetInterval()
+        private double GetInterval()
+        {
+            int minutes = 10; // default minutes
+
+            try
             {
-                _Timer.Start();
+                minutes = AgentRegistry.AgentTimerMinute;
             }
+            catch (Exception)
+            {
+                return TimeSpan.FromMinutes(minutes).TotalMilliseconds;
+            }
+
+            // minimum 1 minutes
+            if (minutes < 1)
+            {
+                minutes = 1;
+            }
+
+            // maximum 24 hours
+            if (minutes > 1440)
+            {
+                minutes = 1440;
+            }
+
+            return TimeSpan.FromMinutes(minutes).TotalMilliseconds; ;
         }
         #endregion
     }

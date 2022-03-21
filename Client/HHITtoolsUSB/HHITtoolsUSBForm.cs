@@ -17,6 +17,8 @@ namespace HHITtoolsUSB
             this.ShowInTaskbar = true;
 #endif
 
+            AppManager.Startup();
+
             AppManager_Entity.PipeClient_USB.ToCloseHHITtoolsUSBEvent += PipeClient_USB_ToCloseHHITtoolsUSBEvent;
         }
 

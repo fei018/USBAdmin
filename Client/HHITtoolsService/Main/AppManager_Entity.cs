@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AgentLib;
+﻿using AgentLib;
 
 namespace HHITtoolsService
 {
@@ -13,17 +8,15 @@ namespace HHITtoolsService
 
         public static PrintJobNotify PrintJobNotify { get; set; }
 
+        public static AgentTimer AppTimer { get; set; }
+
         public static void Initial()
         {
-            try
-            {
-                PipeServer_Service = new PipeServer_Service();
+            PipeServer_Service = new PipeServer_Service();
 
-                PrintJobNotify = new PrintJobNotify();
-            }
-            catch (Exception)
-            {
-            }
+            PrintJobNotify = new PrintJobNotify();
+
+            AppTimer = new AgentTimer();
         }
     }
 }

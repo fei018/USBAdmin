@@ -186,23 +186,6 @@ namespace HHITtoolsTray
         }
         #endregion
 
-        #region Handler_FromAgentMsg_AddPrintTemplateCompleted(PipeMsg pipeMsg)
-        private void Handler_FromAgentMsg_AddPrintTemplateCompleted(PipeMsg pipeMsg)
-        {
-            try
-            {
-                AddPrintTemplateCompletedEvent?.Invoke(null, new PipeEventArgs(pipeMsg.Message));
-            }
-            catch (Exception ex)
-            {
-#if DEBUG
-                Debugger.Break();
-                Debug.WriteLine(ex.Message);
-#endif
-            }
-        }
-        #endregion
-
         #region Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted(PipeMsg pipeMsg) 
         private void Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted(PipeMsg pipeMsg)
         {
