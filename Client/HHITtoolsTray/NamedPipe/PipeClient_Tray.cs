@@ -129,9 +129,9 @@ namespace HHITtoolsTray
         {
             _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>()
             {
-                { PipeMsgType.Msg_ServiceToTray, ReceiveMsgHandler_Message_ShowMessageBox },
-                { PipeMsgType.UsbDiskNoRegister_NotifyTray_ServiceToTray, ReceiveMsgHandler_UsbDiskNoRegister},
-                { PipeMsgType.CloseHHITtoolsTray, ReceiveMsgHandler_ToCloseTray },
+                { PipeMsgType.Msg_TrayHandle, ReceiveMsgHandler_Message_ShowMessageBox },
+                { PipeMsgType.UsbDiskNoRegister_NotifyTray_TrayHandle, ReceiveMsgHandler_UsbDiskNoRegister},
+                { PipeMsgType.CloseHHITtoolsTray_TrayHandle, ReceiveMsgHandler_ToCloseTray },
                 { PipeMsgType.DeleteOldPrintersAndInstallDriverCompleted, Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted }
             };
         }
@@ -194,7 +194,7 @@ namespace HHITtoolsTray
                 StringBuilder sb = new StringBuilder();
                 try
                 {
-                    if (pipeMsg.PipeMsgType == PipeMsgType.Msg_ServiceToTray)
+                    if (pipeMsg.PipeMsgType == PipeMsgType.Msg_TrayHandle)
                     {
                         throw new Exception(pipeMsg.Message);
                     }
@@ -256,7 +256,7 @@ namespace HHITtoolsTray
         {
             try
             {
-                var msg = new PipeMsg(PipeMsgType.UpdateAgent);
+                var msg = new PipeMsg(PipeMsgType.UpdateAgent_ServerHandle);
                 SendMsgToServer_By_PipeMsg(msg);
             }
             catch (Exception)
@@ -270,7 +270,7 @@ namespace HHITtoolsTray
         {
             try
             {
-                var msg = new PipeMsg(PipeMsgType.UpdateSetting);
+                var msg = new PipeMsg(PipeMsgType.UpdateSetting_ServerHandle);
                 SendMsgToServer_By_PipeMsg(msg);
             }
             catch (Exception)
@@ -332,7 +332,7 @@ namespace HHITtoolsTray
                     // set PipeMsgType: PrinterDeleteOldAndInstallDriver
                     var pipemsg = new PipeMsg()
                     {
-                        PipeMsgType = PipeMsgType.DeleteOldPrintersAndInstallDriver,
+                        PipeMsgType = PipeMsgType.DeleteOldPrintersAndInstallDriver_ServerHandle,
                         SitePrinterToAddList = sitePrinterToAddList
                     };
 

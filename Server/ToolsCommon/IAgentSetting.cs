@@ -9,5 +9,7 @@
         bool UsbFilterEnabled { get; set; }
 
         bool PrintJobHistoryEnabled { get; set; }
+
+        bool UsbHistoryEnabled { get; set; }
     }
 }

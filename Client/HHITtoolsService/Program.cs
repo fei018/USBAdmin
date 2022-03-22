@@ -14,12 +14,23 @@ namespace HHITtoolsService
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            if (!Environment.UserInteractive)
             {
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[]
+                {
                 new ToolsService()
-            };
-            ServiceBase.Run(ServicesToRun);
+                };
+                ServiceBase.Run(ServicesToRun);
+            }
+            else
+            {
+                ToolsServiceHelp.Start_Service();
+                Console.WriteLine("start...");
+
+                Console.ReadLine();
+                ToolsServiceHelp.Stop_Service();
+            }
         }
     }
 }

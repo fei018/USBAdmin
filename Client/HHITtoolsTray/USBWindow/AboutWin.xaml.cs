@@ -28,7 +28,7 @@ namespace HHITtoolsTray.USBWindow
         {
             try
             {
-                PipeClient_Tray.Entity_Tray?.PushMsg_ToAgent_CheckAndUpdateAgent();
+                PipeClient_Tray.Entity_Tray?.SendMsg_CheckAndUpdateAgent();
             }
             catch (Exception ex)
             {

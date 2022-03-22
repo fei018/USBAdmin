@@ -13,7 +13,7 @@ namespace HHITtoolsService
         #region ServiceStart()
         public static void Start_Service()
         {
-            AppManager.Startup();
+            AppManager.Start();
         }
         #endregion
 

@@ -27,7 +27,7 @@ namespace AgentLib
 
         public PipeMsg(UsbDisk usbDisk)
         {
-            PipeMsgType = PipeMsgType.UsbDiskNoRegister_NotifyTray_USBToService;
+            PipeMsgType = PipeMsgType.UsbDiskNoRegister_NotifyTray_ServerForward;
             UsbDisk = usbDisk;
         }
 

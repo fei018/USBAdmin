@@ -72,7 +72,7 @@ namespace HHITtoolsTray
         {
             try
             {
-                PipeClient_Tray.Entity_Tray.PushMsg_ToAgent_UpdateSetting();
+                PipeClient_Tray.Entity_Tray.SendMsg_UpdateSetting();
             }
             catch (Exception ex)
             {
@@ -86,7 +86,7 @@ namespace HHITtoolsTray
         {
             try
             {
-                PipeClient_Tray.Entity_Tray.PushMsg_ToAgent_CheckAndUpdateAgent();
+                PipeClient_Tray.Entity_Tray.SendMsg_CheckAndUpdateAgent();
             }
             catch (Exception ex)
             {

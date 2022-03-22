@@ -80,6 +80,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manager\AppManagerHelp.cs" />
+    <Compile Include="Manager\IAppManager.cs" />
     <Compile Include="USBFilter\UsbBusController.cs" />
     <Compile Include="USBFilter\UsbBusController3.cs" />
     <Compile Include="USBFilter\UsbFilter.cs" />
@@ -137,5 +139,6 @@
       <Name>ToolsCommon</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

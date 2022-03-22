@@ -124,10 +124,10 @@ namespace HHITtoolsService
         {
             _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>()
             {
-                { PipeMsgType.UpdateAgent, ReceiveMsgHandler_UpdateAgent },
-                { PipeMsgType.UpdateSetting, ReceiveMsgHandler_UpdateSetting},
-                { PipeMsgType.UsbDiskNoRegister_NotifyTray_USBToService, ReceiveMsgHandler_UsbDiskNoRegister },
-                { PipeMsgType.DeleteOldPrintersAndInstallDriver, Handler_PrinterDeleteOldAndInstallDriver },
+                { PipeMsgType.UpdateAgent_ServerHandle, ReceiveMsgHandler_UpdateAgent },
+                { PipeMsgType.UpdateSetting_ServerHandle, ReceiveMsgHandler_UpdateSetting},
+                { PipeMsgType.UsbDiskNoRegister_NotifyTray_ServerForward, ReceiveMsgHandler_UsbDiskNoRegister },
+                { PipeMsgType.DeleteOldPrintersAndInstallDriver_ServerHandle, Handler_PrinterDeleteOldAndInstallDriver },
                 { PipeMsgType.PrintJobNotifyRestart, Handler_PrintJobNotifyRestart }
             };
         }
@@ -140,7 +140,7 @@ namespace HHITtoolsService
         {
             try
             {
-                pipeMsg.PipeMsgType = PipeMsgType.UsbDiskNoRegister_NotifyTray_ServiceToTray;
+                pipeMsg.PipeMsgType = PipeMsgType.UsbDiskNoRegister_NotifyTray_TrayHandle;
                 SendMsgToClient_By_PipeMsg(pipeMsg);
             }
             catch (Exception ex)
@@ -161,19 +161,19 @@ namespace HHITtoolsService
                     {
                         new AgentUpdate().Update();
 
-                        var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, "Download Agent done, wait for installation...");
+                        var msg = new PipeMsg(PipeMsgType.Msg_TrayHandle, "Download Agent done, wait for installation...");
                         SendMsgToClient_By_PipeMsg(msg);
                     }
                     else
                     {
-                        var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, "Agent is newest version.");
+                        var msg = new PipeMsg(PipeMsgType.Msg_TrayHandle, "Agent is newest version.");
                         SendMsgToClient_By_PipeMsg(msg);
                     }
                 }
                 catch (Exception ex)
                 {
                     AgentLogger.Error(ex.GetBaseException().Message);
-                    var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, ex.GetBaseException().Message);
+                    var msg = new PipeMsg(PipeMsgType.Msg_TrayHandle, ex.GetBaseException().Message);
                     SendMsgToClient_By_PipeMsg(msg);
                 }
             });
@@ -198,13 +198,13 @@ namespace HHITtoolsService
 
                     new UsbFilter().Filter_Scan_All_USB_Disk(); // filter all usb disk
 
-                    var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, "Update Setting done.");
+                    var msg = new PipeMsg(PipeMsgType.Msg_TrayHandle, "Update Setting done.");
                     SendMsgToClient_By_PipeMsg(msg);
                 }
                 catch (Exception ex)
                 {
                     AgentLogger.Error(ex.GetBaseException().Message);
-                    var msg = new PipeMsg(PipeMsgType.Msg_ServiceToTray, ex.GetBaseException().Message);
+                    var msg = new PipeMsg(PipeMsgType.Msg_TrayHandle, ex.GetBaseException().Message);
                     SendMsgToClient_By_PipeMsg(msg);
                 }
             });
@@ -277,8 +277,7 @@ namespace HHITtoolsService
         {
             try
             {
-                PrintJobNotify.Stop();
-                PrintJobNotify.Start();
+                
             }
             catch (Exception ex)
             {
@@ -309,7 +308,7 @@ namespace HHITtoolsService
         {
             try
             {
-                var msg = new PipeMsg(PipeMsgType.CloseHHITtoolsTray);
+                var msg = new PipeMsg(PipeMsgType.CloseHHITtoolsTray_TrayHandle);
 
                 SendMsgToClient_By_PipeMsg(msg);
             }
@@ -325,7 +324,7 @@ namespace HHITtoolsService
         {
             try
             {
-                var msg = new PipeMsg(PipeMsgType.CloseHHITtoolsUSB);
+                var msg = new PipeMsg(PipeMsgType.CloseHHITtoolsUSB_USBAppHandle);
                 SendMsgToClient_By_PipeMsg(msg);
             }
             catch (Exception ex)

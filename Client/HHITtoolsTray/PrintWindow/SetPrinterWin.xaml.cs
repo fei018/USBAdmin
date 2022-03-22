@@ -25,7 +25,6 @@ namespace HHITtoolsTray.PrintWindow
         {
             InitializeComponent();
           
-            PipeClient_Tray.Entity_Tray.AddPrintTemplateCompletedEvent += TrayPipe_AddPrintTemplateCompletedEvent;
             PipeClient_Tray.Entity_Tray.AddSitePrinterCompletedEvent += Entity_Tray_AddSitePrinterListCompletedEvent;
         }
 

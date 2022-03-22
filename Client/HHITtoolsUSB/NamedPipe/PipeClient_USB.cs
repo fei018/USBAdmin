@@ -114,7 +114,7 @@ namespace HHITtoolsUSB
         {
             _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>()
             {
-                { PipeMsgType.CloseHHITtoolsUSB, ReceiveMsgHandler_CloseHHITtoolsUSBApp },
+                { PipeMsgType.CloseHHITtoolsUSB_USBAppHandle, ReceiveMsgHandler_CloseHHITtoolsUSBApp },
             };
         }
         #endregion

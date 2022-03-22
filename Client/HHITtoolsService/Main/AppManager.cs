@@ -14,15 +14,25 @@ namespace HHITtoolsService
 {
     public class AppManager
     {
-        private static readonly Dictionary<AppProcessInfo, Process> _AppProcessDictionary = new Dictionary<AppProcessInfo, Process>();
+        private static List<AppProcessInfo> _AppProcessList_Multiple => new List<AppProcessInfo>();
 
-        private const int _timeoutMillisecond = 1000;
+        private static Dictionary<string, AppProcessInfo> _AppProcessList_Singleton => new Dictionary<string, AppProcessInfo>();
+
+        private const int _timeoutMillisecond = 2000;
 
         //
 
-        #region Startup()
-        public static void Startup()
+        #region Start()
+        public void Start()
         {
+            AppManager_Entity.Initial();
+
+            //
+            new AgentHttpHelp().PostPerComputer_Http();
+
+            // PipeServer_Service
+            AppManager_Entity.PipeServer_Service?.Start();
+
             // HHITtoolsUSB
             try
             {
@@ -38,33 +48,38 @@ namespace HHITtoolsService
             {
                 if (AgentRegistry.PrintJobHistoryEnabled)
                 {
-                    Startup_PrintJobNotify();
+                    //Startup_PrintJobNotify();
                 }
             }
-            catch (Exception) { }     
+            catch (Exception) { }
 
             // HHITtoolsTray
             Startup_HHITtoolsTray();
 
             // AppTimer
-            AppManager_Entity.AppTimer.ElapsedAction += AppTimer_ElapsedAction;
-            AppManager_Entity.AppTimer.Start();
-        }      
+            //AppManager_Entity.AppTimer.ElapsedAction += AppTimer_ElapsedAction;
+            //AppManager_Entity.AppTimer.Start();
+        }
         #endregion
 
         #region Stop()
-        public static void Stop()
+        public void Stop()
         {
             Close_HHITtoolsUSB();
 
             Close_HHITtoolsTray();
 
-            Close_PrintJobNotify();
+            //Close_PrintJobNotify();
+
+            //AppManager_Entity.AppTimer.ElapsedAction -= AppTimer_ElapsedAction;
+            //AppManager_Entity.AppTimer.Stop();
+
+            AppManager_Entity.PipeServer_Service?.Stop();
         }
         #endregion
 
-        #region + private static void AppTimer_ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
-        private static void AppTimer_ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
+        #region + private void AppTimer_ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
+        private void AppTimer_ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
         {
             Task.Run(() =>
             {
@@ -80,6 +95,19 @@ namespace HHITtoolsService
                 try
                 {
                     new AgentHttpHelp().GetAgentSetting_Http();
+
+                    if (AgentRegistry.UsbFilterEnabled)
+                    {
+                        if (!AppExist_Singleton(AgentRegistry.HHITtoolsUSBApp))
+                        {
+                            Startup_HHITtoolsUSB();
+                        }
+                    }
+
+                    if (AgentRegistry.PrintJobHistoryEnabled)
+                    {
+
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -91,88 +119,27 @@ namespace HHITtoolsService
 
         //
 
-        #region + private static Process StartupAppAsSystem(string appFullPath)
-        private static Process StartupAppAsSystem(string appFullPath)
-        {
-            try
-            {
-                var startinfo = new ProcessStartInfo()
-                {
-                    UserName = "SYSTEM",
-                    FileName = appFullPath
-                };
 
-                return Process.Start(startinfo);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
 
-        #region + private static Process StartupAppAsLogonUser(string appFullPath)
-        /// <summary>
-        ///  startup app as logon user
-        /// </summary>
-        private static Process StartupAppAsLogonUser(string appFullPath)
-        {
-            try
-            {
-                var sessionid = ProcessApiHelp.GetCurrentUserSessionID();
-                if (sessionid > 0)
-                {
-                    return ProcessApiHelp.CreateProcessAsUser(appFullPath, null);
-                }
-                else
-                {
-                    throw new Exception("HHITtoolsService.StartupAppAsLogonUser() fail: " + appFullPath);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region + private static void CloseOrKillProcess(Process process)
-        private static void CloseOrKillProcess(Process process)
-        {
-            try
-            {
-                if (process != null)
-                {
-                    if (!process.HasExited)
-                    {
-                        process.CloseMainWindow();
-                        if (!process.WaitForExit(_timeoutMillisecond))
-                        {
-                            process.Kill();
-                            process.Close();
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-        #endregion
-
-        #region + private static void CloseApp(string appFullPath)
+        #region + private void CloseApp(string appFullPath)
         /// <summary>
         /// 強制 close app
         /// </summary>
         /// <param name="appFullPath"></param>
-        private static void CloseApp(string appFullPath)
+        private void CloseApp(string appFullPath)
         {
             try
             {
                 var appinfos = _AppProcessDictionary.Keys.Where(k => k.AppFullPath == appFullPath);
+
+                if (appinfos == null || appinfos.Count() <= 0)
+                {
+                    return;
+                }
+
                 foreach (var app in appinfos)
                 {
-                    if (_AppProcessDictionary.TryGetValue(app,out Process process))
+                    if (_AppProcessDictionary.TryGetValue(app, out Process process))
                     {
                         CloseOrKillProcess(process);
                     }
@@ -180,7 +147,28 @@ namespace HHITtoolsService
             }
             catch (Exception)
             {
-                throw;
+            }
+        }
+        #endregion
+
+        #region + private bool AppExist_Single(string appPath)
+        private bool AppExist_Singleton(string appPath)
+        {
+            try
+            { 
+                if (_AppProcessList_Singleton.TryGetValue(appPath, out AppProcessInfo appInfo))
+                {
+                    if (appInfo.ProcessExsit())
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
         #endregion
@@ -190,14 +178,23 @@ namespace HHITtoolsService
         #region + public static void Startup_HHITtoolsUSB()
         public static void Startup_HHITtoolsUSB()
         {
+            string appPath = null;
             try
             {
-                string appName = AgentRegistry.HHITtoolsUSBApp;
+                appPath = AgentRegistry.HHITtoolsUSBApp;
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error("AgentRegistry.HHITtoolsUSBApp: " + ex.Message);
+                return;
+            }
 
-                var appinfo = _AppProcessDictionary.Keys.First(k => k.AppFullPath == appName);
+            try
+            {
+                var appinfo = _AppProcessDictionary.Keys.FirstOrDefault(k => k.AppFullPath == appPath);
                 if (appinfo != null)
                 {
-                    if (_AppProcessDictionary.TryGetValue(appinfo,out Process process))
+                    if (_AppProcessDictionary.TryGetValue(appinfo, out Process process))
                     {
                         CloseOrKillProcess(process);
                     }
@@ -206,7 +203,7 @@ namespace HHITtoolsService
                 var newProc = StartupAppAsSystem(AgentRegistry.HHITtoolsUSBApp);
                 var newAppInfo = new AppProcessInfo
                 {
-                    AppFullPath = appName,
+                    AppFullPath = appPath,
                     ProcessId = newProc.Id
                 };
 
@@ -240,14 +237,28 @@ namespace HHITtoolsService
         #region + public static void Startup_HHITtoolsTray()
         public static void Startup_HHITtoolsTray()
         {
+            string appPath = null;
             try
             {
-                string appName = AgentRegistry.HHITtoolsTrayApp;
-                var proc = StartupAppAsLogonUser(appName);
+                appPath = AgentRegistry.HHITtoolsTrayApp;
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error("AgentRegistry.HHITtoolsTrayApp: " + ex.Message);
+                return;
+            }
+
+            try
+            {
+#if DEBUG
+                var proc = Process.Start(appPath);
+#else
+                var proc = StartupAppAsLogonUser(appPath);
+#endif
 
                 AppProcessInfo appinfo = new AppProcessInfo
                 {
-                    AppFullPath = appName,
+                    AppFullPath = appPath,
                     ProcessId = proc.Id
                 };
                 _AppProcessDictionary.Add(appinfo, proc);
@@ -288,6 +299,13 @@ namespace HHITtoolsService
         public static void Close_PrintJobNotify()
         {
             AppManager_Entity.PrintJobNotify?.Stop();
+        }
+        #endregion
+
+        #region + public static void Restart_PrintJobNotify()
+        public static void Restart_PrintJobNotify()
+        {
+            AppManager_Entity.PrintJobNotify?.Restart();
         }
         #endregion
 

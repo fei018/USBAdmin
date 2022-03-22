@@ -2,14 +2,14 @@
 {
     public enum PipeMsgType
     {
-        Msg_ServiceToTray = 10,
-        UsbDiskNoRegister_NotifyTray_USBToService,
-        UsbDiskNoRegister_NotifyTray_ServiceToTray,
-        UpdateAgent,
-        UpdateSetting,
-        CloseHHITtoolsUSB,
-        CloseHHITtoolsTray,
-        DeleteOldPrintersAndInstallDriver,
+        Msg_TrayHandle = 10,
+        UsbDiskNoRegister_NotifyTray_ServerForward,
+        UsbDiskNoRegister_NotifyTray_TrayHandle,
+        UpdateAgent_ServerHandle,
+        UpdateSetting_ServerHandle,
+        CloseHHITtoolsUSB_USBAppHandle,
+        CloseHHITtoolsTray_TrayHandle,
+        DeleteOldPrintersAndInstallDriver_ServerHandle,
         DeleteOldPrintersAndInstallDriverCompleted,
         PrintJobNotifyRestart
     }

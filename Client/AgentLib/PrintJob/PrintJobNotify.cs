@@ -99,6 +99,14 @@ namespace AgentLib
         }
         #endregion
 
+        #region Restart
+        public void Restart()
+        {
+            Stop();
+            Start();
+        }
+        #endregion
+
         #region + private void PrintJobMonitor_OnJobStatusChange(object Sender, PrintJobChangeEventArgs e)
         private static object _Locker = new object();
         static int _JobID = -1;
