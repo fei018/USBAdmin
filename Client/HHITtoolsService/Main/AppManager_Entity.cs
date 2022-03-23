@@ -1,4 +1,5 @@
 ﻿using AgentLib;
+using System.Collections.Generic;
 
 namespace HHITtoolsService
 {
@@ -10,13 +11,9 @@ namespace HHITtoolsService
 
         public static AgentTimer AppTimer { get; set; }
 
-        public static void Initial()
-        {
-            PipeServer_Service = new PipeServer_Service();
+        public static AppProcessInfo HHITtoolsUSBApp { get; set; }
 
-            PrintJobNotify = new PrintJobNotify();
+        public static List<AppProcessInfo> HHITtoolsTrayList => new List<AppProcessInfo>();
 
-            AppTimer = new AgentTimer();
-        }
     }
 }

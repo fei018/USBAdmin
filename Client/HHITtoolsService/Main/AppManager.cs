@@ -25,12 +25,11 @@ namespace HHITtoolsService
         #region Start()
         public void Start()
         {
-            AppManager_Entity.Initial();
-
-            //
+            // post computer info to server
             new AgentHttpHelp().PostPerComputer_Http();
 
             // PipeServer_Service
+            AppManager_Entity.PipeServer_Service = new PipeServer_Service();
             AppManager_Entity.PipeServer_Service?.Start();
 
             // HHITtoolsUSB
@@ -38,7 +37,7 @@ namespace HHITtoolsService
             {
                 if (AgentRegistry.UsbFilterEnabled)
                 {
-                    Startup_HHITtoolsUSB();
+                    AppManager_Entity.HHITtoolsUSBApp = AppProcessInfo.StartupApp(AgentRegistry.HHITtoolsUSBApp);
                 }
             }
             catch (Exception) { }
@@ -54,7 +53,9 @@ namespace HHITtoolsService
             catch (Exception) { }
 
             // HHITtoolsTray
-            Startup_HHITtoolsTray();
+            var appTray = AppProcessInfo.StartupProcessAsLogonUser(AgentRegistry.HHITtoolsTrayApp);
+            if(appTray != null) AppManager_Entity.HHITtoolsTrayList.Add(appTray);
+
 
             // AppTimer
             //AppManager_Entity.AppTimer.ElapsedAction += AppTimer_ElapsedAction;
@@ -67,7 +68,7 @@ namespace HHITtoolsService
         {
             Close_HHITtoolsUSB();
 
-            Close_HHITtoolsTray();
+            HHITtoolsTray_Close();
 
             //Close_PrintJobNotify();
 
@@ -100,7 +101,7 @@ namespace HHITtoolsService
                     {
                         if (!AppExist_Singleton(AgentRegistry.HHITtoolsUSBApp))
                         {
-                            Startup_HHITtoolsUSB();
+                            HHITtoolsUSB_Startup();
                         }
                     }
 
@@ -117,39 +118,8 @@ namespace HHITtoolsService
         }
         #endregion
 
-        //
 
-
-
-        #region + private void CloseApp(string appFullPath)
-        /// <summary>
-        /// 強制 close app
-        /// </summary>
-        /// <param name="appFullPath"></param>
-        private void CloseApp(string appFullPath)
-        {
-            try
-            {
-                var appinfos = _AppProcessDictionary.Keys.Where(k => k.AppFullPath == appFullPath);
-
-                if (appinfos == null || appinfos.Count() <= 0)
-                {
-                    return;
-                }
-
-                foreach (var app in appinfos)
-                {
-                    if (_AppProcessDictionary.TryGetValue(app, out Process process))
-                    {
-                        CloseOrKillProcess(process);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-        #endregion
+        // Apps
 
         #region + private bool AppExist_Single(string appPath)
         private bool AppExist_Singleton(string appPath)
@@ -175,8 +145,8 @@ namespace HHITtoolsService
 
         // HHITtoolsUSB
 
-        #region + public static void Startup_HHITtoolsUSB()
-        public static void Startup_HHITtoolsUSB()
+        #region + public static void HHITtoolsUSB_Startup()
+        public static void HHITtoolsUSB_Startup()
         {
             string appPath = null;
             try
@@ -191,39 +161,24 @@ namespace HHITtoolsService
 
             try
             {
-                var appinfo = _AppProcessDictionary.Keys.FirstOrDefault(k => k.AppFullPath == appPath);
-                if (appinfo != null)
-                {
-                    if (_AppProcessDictionary.TryGetValue(appinfo, out Process process))
-                    {
-                        CloseOrKillProcess(process);
-                    }
-                }
-
-                var newProc = StartupAppAsSystem(AgentRegistry.HHITtoolsUSBApp);
-                var newAppInfo = new AppProcessInfo
-                {
-                    AppFullPath = appPath,
-                    ProcessId = newProc.Id
-                };
-
-                _AppProcessDictionary.Add(newAppInfo, newProc);
+                AppManager_Entity.HHITtoolsUSBApp = AppProcessInfo.StartupApp(AgentRegistry.HHITtoolsUSBApp);
             }
             catch (Exception ex)
             {
-                AgentLogger.Error(ex.Message);
+                AgentLogger.Error("AppManager.Startup_HHITtoolsUSB(): " + ex.Message);
             }
         }
         #endregion
 
-        #region + public static void Close_HHITtoolsUSB()
-        public static void Close_HHITtoolsUSB()
+        #region + public static void HHITtoolsUSB_Close()
+        public static void HHITtoolsUSB_Close()
         {
             try
             {
                 AppManager_Entity.PipeServer_Service?.SendMsg_CloseHHITtoolsUSB();
                 Thread.Sleep(TimeSpan.FromMilliseconds(_timeoutMillisecond));
-                CloseApp(AgentRegistry.HHITtoolsUSBApp);
+
+                AppManager_Entity.HHITtoolsUSBApp.CloseOrKillProcess();
             }
             catch (Exception ex)
             {
@@ -234,8 +189,8 @@ namespace HHITtoolsService
 
         // HHITtoolsTray
 
-        #region + public static void Startup_HHITtoolsTray()
-        public static void Startup_HHITtoolsTray()
+        #region + public static void HHITtoolsTray_Startup()
+        public static void HHITtoolsTray_Startup()
         {
             string appPath = null;
             try
@@ -251,17 +206,13 @@ namespace HHITtoolsService
             try
             {
 #if DEBUG
-                var proc = Process.Start(appPath);
+                var appTray = AppProcessInfo.StartupApp(appPath);
 #else
-                var proc = StartupAppAsLogonUser(appPath);
+                var appTray = AppProcessInfo.StartupProcessAsLogonUser(appPath);
 #endif
 
-                AppProcessInfo appinfo = new AppProcessInfo
-                {
-                    AppFullPath = appPath,
-                    ProcessId = proc.Id
-                };
-                _AppProcessDictionary.Add(appinfo, proc);
+                if(appTray != null) AppManager_Entity.HHITtoolsTrayList.Add(appTray);
+
             }
             catch (Exception ex)
             {
@@ -270,14 +221,15 @@ namespace HHITtoolsService
         }
         #endregion
 
-        #region + public static void Close_HHITtoolsTray()
-        public static void Close_HHITtoolsTray()
+        #region + public static void HHITtoolsTray_Close(int sessionId)
+        public static void HHITtoolsTray_Close(int sessionId)
         {
             try
             {
-                AppManager_Entity.PipeServer_Service?.SendMsg_CloseHHITtoolsTray();
+                AppManager_Entity.PipeServer_Service?.SendMsg_CloseHHITtoolsTray(sessionId);
                 Thread.Sleep(TimeSpan.FromMilliseconds(_timeoutMillisecond));
-                CloseApp(AgentRegistry.HHITtoolsTrayApp);
+
+                AppManager_Entity.HHITtoolsTrayList.FirstOrDefault(a => a.AppProcess.SessionId == sessionId)?.CloseOrKillProcess();
             }
             catch (Exception ex)
             {

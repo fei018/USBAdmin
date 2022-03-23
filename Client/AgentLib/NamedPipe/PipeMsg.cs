@@ -10,6 +10,8 @@ namespace AgentLib
 
         public string Message { get; set; }
 
+        public int WinlogonSessionId { get; set; }
+
         public SitePrinterToAddList SitePrinterToAddList { get; set; }
 
         public PipeMsg() { }

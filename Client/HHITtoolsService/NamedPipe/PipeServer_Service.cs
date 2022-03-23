@@ -304,11 +304,11 @@ namespace HHITtoolsService
         #endregion
 
         #region + public void SendMsg_CloseHHITtoolsTray()
-        public void SendMsg_CloseHHITtoolsTray()
+        public void SendMsg_CloseHHITtoolsTray(int winlogonSessionId)
         {
             try
             {
-                var msg = new PipeMsg(PipeMsgType.CloseHHITtoolsTray_TrayHandle);
+                var msg = new PipeMsg(PipeMsgType.CloseHHITtoolsTray_TrayHandle) { WinlogonSessionId = winlogonSessionId };
 
                 SendMsgToClient_By_PipeMsg(msg);
             }
