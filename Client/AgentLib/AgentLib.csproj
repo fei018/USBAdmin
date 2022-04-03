@@ -80,8 +80,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Manager\AppManagerHelp.cs" />
-    <Compile Include="Manager\IAppManager.cs" />
+    <Compile Include="AppService\AppProcessInfo.cs" />
+    <Compile Include="AppService\AppServiceType.cs" />
+    <Compile Include="AppService\IAppService.cs" />
     <Compile Include="USBFilter\UsbBusController.cs" />
     <Compile Include="USBFilter\UsbBusController3.cs" />
     <Compile Include="USBFilter\UsbFilter.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="USBFilter\UsbDisk.cs" />
     <Compile Include="Main\AgentRegistry.cs" />
     <Compile Include="Main\AgentLogger.cs" />
-    <Compile Include="USBFilter\PerUsbHistory.cs" />
+    <Compile Include="USBFilter\PerUsbLog.cs" />
     <Compile Include="Main\AgentHttpHelp.cs" />
     <Compile Include="Main\PerComputerHelp.cs" />
     <Compile Include="USBFilter\UsbRequest.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="NamedPipe\PipeMsgType.cs" />
     <Compile Include="PrintJob\PerPrintJob.cs" />
     <Compile Include="PrintJob\PrintJobChangeEventArgs.cs" />
-    <Compile Include="PrintJob\PrintJobNotify.cs" />
+    <Compile Include="PrintJob\PrintJobLog.cs" />
     <Compile Include="PrintJob\PrintQueueMonitor.cs" />
     <Compile Include="PrintJob\PrintSpoolAPI.cs" />
     <Compile Include="Printer\SitePrinterToAddList.cs" />

@@ -1,4 +1,5 @@
 ﻿using AgentLib;
+using AgentLib.AppService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,8 @@ namespace HHITtoolsUSB
                     if (!UsbWhitelistHelp.IsFind(usb))
                     {
                         AppManager_Entity.PipeClient_USB.SendMsgToTray_USBDiskNoRegister(usb);
+
+                        AppManager.AppServiceList.FirstOrDefault(a=>a.ServiceType == AppServiceType.HHITtoolsUSB)
                     }
                 }
                 catch (Exception ex)
@@ -74,7 +77,14 @@ namespace HHITtoolsUSB
             {
                 try
                 {
-                    new AgentHttpHelp().UpdateUSBWhitelist_Http();
+                    new AgentHttpHelp().UpdateUSBWhitelist_Http();                    
+                }
+                catch (Exception)
+                {
+                }
+
+                try
+                {
                     new UsbFilter().Filter_Scan_All_USB_Disk();
                 }
                 catch (Exception)

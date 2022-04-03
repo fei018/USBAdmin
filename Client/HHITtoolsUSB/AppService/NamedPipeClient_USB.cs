@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Pipes;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using AgentLib;
+﻿using AgentLib;
+using AgentLib.AppService;
 using NamedPipeWrapper;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace HHITtoolsUSB
 {
-    public class PipeClient_USB
+    public class NamedPipeClient_USB : IAppService
     {
         private string _pipeName;
 
         private NamedPipeClient<string> _client;
 
-        public event EventHandler ToCloseHHITtoolsUSBEvent;
+        public AppServiceType ServiceType => AppServiceType.HHITtoolsUSB;
+
 
         #region Construction
-        public PipeClient_USB()
+        public NamedPipeClient_USB()
         {
             _pipeName = AgentRegistry.AgentHttpKey;
             InitialPipeMsgHandler();
@@ -124,7 +120,7 @@ namespace HHITtoolsUSB
         #region + private void ReceiveMsgHandler_CloseHHITtoolsUSBApp(PipeMsg pipeMsg)
         private void ReceiveMsgHandler_CloseHHITtoolsUSBApp(PipeMsg pipeMsg)
         {
-            ToCloseHHITtoolsUSBEvent?.Invoke(null, null);
+            HHITtoolsUSBForm.HHToolsUSBForm.Close();
         }
         #endregion
 
@@ -155,7 +151,7 @@ namespace HHITtoolsUSB
             catch (Exception ex)
             {
                 AgentLogger.Error("PipeClient_USB.SendMsgToTray_USBDiskNoRegister(): " + ex.GetBaseException().Message);
-            }           
+            }
         }
         #endregion
     }

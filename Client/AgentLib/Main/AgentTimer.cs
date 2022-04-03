@@ -3,13 +3,16 @@ using System.Timers;
 
 namespace AgentLib
 {
+    /// <summary>
+    /// Interval : ( Min : 1 minute , Max : 24 housrs )
+    /// </summary>
     public class AgentTimer
     {
         private Timer _timer;
 
         public event EventHandler<ElapsedEventArgs> ElapsedAction;
 
-        #region Start
+        #region Start()
         public void Start()
         {
             try

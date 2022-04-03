@@ -31,14 +31,14 @@ namespace HHITtoolsService
             // startup tray
             if (sessionChange.Reason == SessionChangeReason.SessionLogon)
             {
-                AppManager.HHITtoolsTray_Startup();
+                
             }
 
             // user logoff windows
             // close tray
             if (sessionChange.Reason == SessionChangeReason.SessionLogoff)
             {
-                AppManager.HHITtoolsTray_Close(sessionChange.SessionId);
+                
             }
         }
         #endregion

@@ -115,17 +115,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppService\HHITtoolsTrayService.cs" />
+    <Compile Include="AppService\HHITtoolsUSBService.cs" />
+    <Compile Include="AppService\ServiceTimer.cs" />
     <Compile Include="Main\AppManager.cs" />
-    <Compile Include="Main\AppManager_Entity.cs" />
-    <Compile Include="Main\AppProcessInfo.cs" />
-    <Compile Include="NamedPipe\PipeServer_Service.cs" />
+    <Compile Include="AppService\NamedPipeServer_Service.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\ToolsServiceHelp.cs" />
+    <Compile Include="ToolsServiceHelp.cs" />
     <Compile Include="ToolsService.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -1,55 +1,30 @@
 ﻿using AgentLib.Win32API;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AgentLib;
 
-namespace HHITtoolsService
+namespace AgentLib.AppService
 {
     public class AppProcessInfo
     {
         private const int _timeoutMillisecond = 2000;
 
 
-        public Process AppProcess { get; set; }
+        public Process AppProcess { get; private set; }
 
-        public string AppFullPath { get; set; }      
+        public string AppFullPath { get; private set; }
 
-        #region + public bool ProcessExsit()
-        public bool ProcessExsit()
-        {
-            if (AppProcess == null)
-            {
-                return false;
-            }
-
-            try
-            {
-                if (AppProcess.HasExited)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-        #endregion
 
         #region + public void CloseOrKillProcess()
         public void CloseOrKillProcess()
         {
+            if (AppProcess == null)
+            {
+                return;
+            }
+
             try
             {
-                if (ProcessExsit())
+                if (!AppProcess.HasExited)
                 {
                     AppProcess.CloseMainWindow();
                     if (!AppProcess.WaitForExit(_timeoutMillisecond))
@@ -88,10 +63,9 @@ namespace HHITtoolsService
 
                 return appInfo;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                AgentLogger.Error("AppProcessInfo.StartupApp(): " + ex.Message);
-                return null;
+                throw;
             }
         }
         #endregion
@@ -100,7 +74,7 @@ namespace HHITtoolsService
         /// <summary>
         ///  startup app as logon user
         /// </summary>
-        public static AppProcessInfo StartupProcessAsLogonUser(string appFullPath)
+        public static AppProcessInfo StartupAppAsLogonUser(string appFullPath)
         {
             try
             {
@@ -124,10 +98,9 @@ namespace HHITtoolsService
 
                 return appinfo;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                AgentLogger.Error("AppProcessInfo.StartupProcessAsLogonUser(): " + ex.Message);
-                return null;
+                throw;
             }
         }
         #endregion

@@ -77,10 +77,10 @@ namespace AgentLib
             set => SetRegKey(nameof(UsbHistoryEnabled), value, RegistryValueKind.String);
         }
 
-        public static bool PrintJobHistoryEnabled
+        public static bool PrintJobLogEnabled
         {
-            get => Convert.ToBoolean(ReadRegKey(nameof(PrintJobHistoryEnabled)));
-            set => SetRegKey(nameof(PrintJobHistoryEnabled), value, RegistryValueKind.String);
+            get => Convert.ToBoolean(ReadRegKey(nameof(PrintJobLogEnabled)));
+            set => SetRegKey(nameof(PrintJobLogEnabled), value, RegistryValueKind.String);
         }
 
         public static string UsbWhitelistUrl

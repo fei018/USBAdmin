@@ -1,4 +1,5 @@
 ﻿using AgentLib;
+using AgentLib.AppService;
 using NamedPipeWrapper;
 using Newtonsoft.Json;
 using System;
@@ -13,11 +14,13 @@ using System.Threading.Tasks;
 
 namespace HHITtoolsService
 {
-    public class PipeServer_Service
+    public class NamedPipeServer_Service : IAppService
     {
         private string _pipeName;
 
         private NamedPipeServer<string> _server;
+
+        public AppServiceType ServiceType => AppServiceType.PipeServer_Service;
 
         #region + public void Start()
         public void Start()
@@ -246,7 +249,7 @@ namespace HHITtoolsService
                     if (driverList != null && driverList.Any())
                     {
                         foreach (var p in driverList)
-                        {                           
+                        {
                             try
                             {
                                 PrinterHelp.InstallPrinterDriver_WMI(p.DriverName, p.DriverInfLocalPath);
@@ -277,7 +280,7 @@ namespace HHITtoolsService
         {
             try
             {
-                
+
             }
             catch (Exception ex)
             {

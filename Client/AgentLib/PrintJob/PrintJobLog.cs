@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Printing;
+﻿using AgentLib.AppService;
 using AgentLib.PrintJob;
-using ToolsCommon;
-using System.Diagnostics;
-using System.Threading;
+using System;
+using System.Collections.Generic;
+using System.Printing;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace AgentLib
 {
-    public class PrintJobNotify
+    public class PrintJobLog : IAppService
     {
         private Dictionary<string, PrintQueueMonitor> _PrintJobMonitorList { get; set; }
+
+        public AppServiceType ServiceType => AppServiceType.PrintJobLog;
 
         #region Start
         public void Start()
@@ -25,37 +23,9 @@ namespace AgentLib
             {
                 _PrintJobMonitorList = _PrintJobMonitorList ?? new Dictionary<string, PrintQueueMonitor>();
 
-                // get all IP Printer
-                //using (var pQServer = new LocalPrintServer())
-                //using (var printerList = pQServer.GetPrintQueues())
-                //{
-                //    foreach (var printer in printerList)
-                //    {
-                //        if (Regex.IsMatch(printer.Name,"(Fax)+", RegexOptions.IgnoreCase))
-                //        {
-                //            continue;
-                //        }
-
-                //        if (Regex.IsMatch(printer.Name, "(PDF)+", RegexOptions.IgnoreCase))
-                //        {
-                //            continue;
-                //        }
-
-                //        var printJobMonitor = new PrintQueueMonitor(printer.Name);
-                //        printer.Dispose();
-
-                //        _PrintJobMonitorList.Add(printJobMonitor.PrinterName, printJobMonitor);
-
-                //        printJobMonitor.OnJobStatusChange += PrintJobMonitor_OnJobStatusChange;
-
-                //        // start printJob monitor
-                //        printJobMonitor.Start();
-                //    }
-                //}
-
                 var ipPrinters = PrinterHelp.GetIPPrinterList();
                 foreach (var printer in ipPrinters)
-                {                  
+                {
                     try
                     {
                         var printJobMonitor = new PrintQueueMonitor(printer.Name);
@@ -117,7 +87,7 @@ namespace AgentLib
 
             try
             {
-                
+
 
                 //Console.WriteLine(jobInfo.JobIdentifier);
                 //Console.WriteLine((int)jobInfo.JobStatus);
@@ -135,7 +105,7 @@ namespace AgentLib
                         {
                             return;
                         }
-                        _JobID =jobInfo.JobIdentifier;
+                        _JobID = jobInfo.JobIdentifier;
                     }
 
                     var job = new PerPrintJob()
@@ -155,12 +125,12 @@ namespace AgentLib
 #endif
                     Task.Run(() =>
                     {
-                        if (AgentRegistry.PrintJobHistoryEnabled)
+                        if (AgentRegistry.PrintJobLogEnabled)
                         {
                             new AgentHttpHelp().PostPerPrintJob_Http(job);
                         }
                     });
-                    
+
                 }
             }
             catch (Exception)
@@ -169,6 +139,47 @@ namespace AgentLib
             finally
             {
                 jobInfo?.Dispose();
+            }
+        }
+        #endregion
+
+        #region MyRegion
+        private void GetLocalPrinterName()
+        {
+            try
+            {
+                // get all IP Printer
+                using (var pQServer = new LocalPrintServer())
+                using (var printerList = pQServer.GetPrintQueues())
+                {
+                    foreach (var printer in printerList)
+                    {
+                        if (Regex.IsMatch(printer.Name, "(Fax)+", RegexOptions.IgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        if (Regex.IsMatch(printer.Name, "(PDF)+", RegexOptions.IgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        var printJobMonitor = new PrintQueueMonitor(printer.Name);
+                        printer.Dispose();
+
+                        _PrintJobMonitorList.Add(printJobMonitor.PrinterName, printJobMonitor);
+
+                        printJobMonitor.OnJobStatusChange += PrintJobMonitor_OnJobStatusChange;
+
+                        // start printJob monitor
+                        printJobMonitor.Start();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
         #endregion

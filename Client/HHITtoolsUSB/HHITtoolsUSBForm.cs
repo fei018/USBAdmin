@@ -9,9 +9,13 @@ namespace HHITtoolsUSB
 {
     public partial class HHITtoolsUSBForm : UsbMonitorForm
     {
+        public static HHITtoolsUSBForm HHToolsUSBForm { get; private set; }
+
         public HHITtoolsUSBForm()
         {
             InitializeComponent();
+
+            HHToolsUSBForm = this;
 
 #if DEBUG
             this.ShowInTaskbar = true;
@@ -19,12 +23,6 @@ namespace HHITtoolsUSB
 
             AppManager.Startup();
 
-            AppManager_Entity.PipeClient_USB.ToCloseHHITtoolsUSBEvent += PipeClient_USB_ToCloseHHITtoolsUSBEvent;
-        }
-
-        private void PipeClient_USB_ToCloseHHITtoolsUSBEvent(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         #region this.Closed()

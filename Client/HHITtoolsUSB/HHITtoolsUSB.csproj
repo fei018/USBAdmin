@@ -97,6 +97,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppService\USBAppTimer.cs" />
     <Compile Include="HHITtoolsUSBForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,7 +107,7 @@
     <Compile Include="Main\AppManager_Entity.cs" />
     <Compile Include="Main\AppManager.cs" />
     <Compile Include="Main\UsbHelp.cs" />
-    <Compile Include="NamedPipe\PipeClient_USB.cs" />
+    <Compile Include="AppService\NamedPipeClient_USB.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="HHITtoolsUSBForm.resx">

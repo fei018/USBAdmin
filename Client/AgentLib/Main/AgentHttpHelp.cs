@@ -180,7 +180,7 @@ namespace AgentLib
 
                 AgentRegistry.AgentTimerMinute = agentSetting.AgentTimerMinute;
                 AgentRegistry.UsbFilterEnabled = agentSetting.UsbFilterEnabled;
-                AgentRegistry.PrintJobHistoryEnabled = agentSetting.PrintJobHistoryEnabled;
+                AgentRegistry.PrintJobLogEnabled = agentSetting.PrintJobHistoryEnabled;
             }
             catch (Exception)
             {
@@ -213,7 +213,7 @@ namespace AgentLib
                 var comIdentity = PerComputerHelp.GetComputerIdentity();
                 var usb = new UsbFilter().Find_UsbDisk_By_DiskPath(diskPath);
 
-                IPerUsbHistory usbHistory = new PerUsbHistory
+                IPerUsbLog usbHistory = new PerUsbLog
                 {
                     ComputerIdentity = comIdentity,
                     DeviceDescription = usb.DeviceDescription,

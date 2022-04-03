@@ -4,39 +4,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AgentLib.AppService;
 
 namespace HHITtoolsUSB
 {
     public class AppManager
     {
+        public static List<IAppService> AppServiceList => new List<IAppService>();
+
+        #region MyRegion
+
+        #endregion
+
         #region Startup()
         public static void Startup()
         {
-            AppManager_Entity.Initial();
+            // NamedPipeClient_USB
+            IAppService namedPipeUSB = new NamedPipeClient_USB();
+            namedPipeUSB.Start();
+            AppServiceList.Add(namedPipeUSB);
 
-            AppManager_Entity.PipeClient_USB?.Start();
+            // USBAppTimer
+            IAppService apptimer = new USBAppTimer();
+            apptimer.Start();
+            AppServiceList.Add(apptimer);
 
-            AppManager_Entity.AppTimer.ElapsedAction += AgentTimer_ElapsedAction;
-            AppManager_Entity.AppTimer.Start();
-
+            // filter all usb
             UsbHelp.UpdateUSBWhiltelist_And_FilterAllUSB();
-        }
-        #endregion
-
-        #region + private static void AgentTimer_ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
-        private static void AgentTimer_ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            try
-            {
-                Task.Run(() =>
-                {
-                    new AgentHttpHelp().UpdateUSBWhitelist_Http();
-                    new UsbFilter().Filter_Scan_All_USB_Disk();
-                });
-            }
-            catch (Exception)
-            {
-            }
         }
         #endregion
 
@@ -44,9 +38,10 @@ namespace HHITtoolsUSB
         #region Close()
         public static void Close()
         {
-            AppManager_Entity.PipeClient_USB?.Stop();
-
-            AppManager_Entity.AppTimer.Stop();
+            AppServiceList.ForEach(app =>
+            {
+                app.Stop();
+            });
         }
         #endregion
       
