@@ -13,8 +13,6 @@ namespace HHITtoolsUSB
 
         private NamedPipeClient<string> _client;
 
-        public AppServiceType ServiceType => AppServiceType.HHITtoolsUSB;
-
 
         #region Construction
         public NamedPipeClient_USB()

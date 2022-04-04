@@ -5,24 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AgentLib;
+using System.Diagnostics;
 
 namespace HHITtoolsService
 {
     public class HHITtoolsUSBService : IAppService
     {
-        private AppProcessInfo _appProcess;
+        public Process AppProcess { get; private set; }
 
-        public AppServiceType ServiceType => AppServiceType.HHITtoolsUSB;
+        public string AppFullPath { get; private set; }
 
         public void Start()
         {
-            string appPath;
-
             try
             {
                 try
                 {
-                    appPath = AgentRegistry.HHITtoolsUSBApp;
+                    AppFullPath = AgentRegistry.HHITtoolsUSBApp;
                 }
                 catch (Exception ex)
                 {
@@ -31,7 +30,7 @@ namespace HHITtoolsService
 
                 try
                 {
-                    AppProcessInfo.StartupApp(appPath);
+                    AppProcess = AppProcessHelp.StartupApp(AppFullPath);
                 }
                 catch (Exception)
                 {
@@ -46,7 +45,7 @@ namespace HHITtoolsService
 
         public void Stop()
         {
-            _appProcess.CloseOrKillProcess();
+            AppProcessHelp.CloseOrKillProcess(AppProcess);
         }
     }
 }

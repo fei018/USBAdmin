@@ -21,7 +21,7 @@ namespace HHITtoolsUSB
             this.ShowInTaskbar = true;
 #endif
 
-            AppManager.Startup();
+            AppManager.Start();
 
         }
 
@@ -31,7 +31,7 @@ namespace HHITtoolsUSB
             // unregister usb notify
             Stop();
 
-            AppManager.Close();          
+            AppManager.Stop();          
         }
         #endregion
 

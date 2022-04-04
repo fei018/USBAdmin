@@ -80,9 +80,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppService\AppProcessInfo.cs" />
-    <Compile Include="AppService\AppServiceType.cs" />
+    <Compile Include="AppService\AppProcessHelp.cs" />
     <Compile Include="AppService\IAppService.cs" />
+    <Compile Include="Main\AgentRule.cs" />
     <Compile Include="USBFilter\UsbBusController.cs" />
     <Compile Include="USBFilter\UsbBusController3.cs" />
     <Compile Include="USBFilter\UsbFilter.cs" />

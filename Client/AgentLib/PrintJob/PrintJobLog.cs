@@ -12,8 +12,6 @@ namespace AgentLib
     {
         private Dictionary<string, PrintQueueMonitor> _PrintJobMonitorList { get; set; }
 
-        public AppServiceType ServiceType => AppServiceType.PrintJobLog;
-
         #region Start
         public void Start()
         {

@@ -57,7 +57,7 @@ namespace AgentLib
             {
                 var agentResult =  AgentHttpHelp.HttpClient_Get(AgentRegistry.AgentSettingUrl);
 
-                string newVersion = agentResult.AgentSetting.AgentVersion;
+                string newVersion = agentResult.AgentRule.AgentVersion;
 
                 if (AgentRegistry.AgentVersion.Equals(newVersion, StringComparison.OrdinalIgnoreCase))
                 {

@@ -15,59 +15,48 @@ namespace HHITtoolsService
 {
     public class AppManager
     {
-        public static List<IAppService> AppServicesList => new List<IAppService>();
-
-        //
 
         #region Start()
-        public void Start()
+        public static void Start()
         {
             // post computer info to server
             new AgentHttpHelp().PostPerComputer_Http();
 
             // PipeServer_Service
-            IAppService namedPipeService = new NamedPipeServer_Service();
-            namedPipeService.Start();
-            AppServicesList.Add(namedPipeService);
+            AppService.NamedPipeServer = new NamedPipeServer_Service();
+            AppService.NamedPipeServer.Start();
 
             // HHITtoolsUSB
             if (AgentRegistry.UsbFilterEnabled)
             {
-                IAppService appUsb = new HHITtoolsUSBService();
-                appUsb.Start();
-                AppServicesList.Add(appUsb);
+                AppService.HHITtoolsUSB = new HHITtoolsUSBService();
+                AppService.HHITtoolsUSB.Start();
             }
 
-            // PrintJobNotify
+            // PrintJobLog
             try
             {
-                if (AgentRegistry.PrintJobLogEnabled)
-                {
-                    
-                }
+                //if (AgentRegistry.PrintJobLogEnabled)
+                //{
+                //    AppService.PrintJobLogService = new PrintJobLog();
+                //    AppService.PrintJobLogService.Start();
+                //}
             }
             catch (Exception) { }
 
-            // HHITtoolsTray
-            IAppService appTray = new HHITtoolsTrayService();
-            appTray.Start();
-            AppServicesList.Add(appTray);
-
 
             // ServiceTimer
-            
+            AppService.ServiceTimer = new ServiceTimer();
+            AppService.ServiceTimer.Start();
         }
         #endregion
 
         #region Stop()
-        public void Stop()
+        public static void Stop()
         {
             try
             {
-                AppServicesList.ForEach(service =>
-                {
-                    service.Stop();
-                });
+
             }
             catch (Exception)
             {

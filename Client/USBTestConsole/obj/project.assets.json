@@ -1117,7 +1117,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "C:\\Users\\e_fei\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
@@ -1126,7 +1126,7 @@
       "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
       "projectName": "USBTestConsole",
       "projectPath": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
-      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
       "outputPath": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
@@ -1134,7 +1134,7 @@
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

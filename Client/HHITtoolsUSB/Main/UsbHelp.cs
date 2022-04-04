@@ -39,9 +39,7 @@ namespace HHITtoolsUSB
                     var usb = new UsbFilter().Find_UsbDisk_By_DiskPath(diskPath);
                     if (!UsbWhitelistHelp.IsFind(usb))
                     {
-                        AppManager_Entity.PipeClient_USB.SendMsgToTray_USBDiskNoRegister(usb);
-
-                        AppManager.AppServiceList.FirstOrDefault(a=>a.ServiceType == AppServiceType.HHITtoolsUSB)
+                        AppService.NamedPipeClient.SendMsgToTray_USBDiskNoRegister(usb);
                     }
                 }
                 catch (Exception ex)

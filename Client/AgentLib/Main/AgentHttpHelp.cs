@@ -135,8 +135,7 @@ namespace AgentLib
                 var settings = new JsonSerializerSettings
                 {
                     Converters = {
-                        new AbstractJsonConverter<AgentSetting, IAgentSetting>(),
-                        new AbstractJsonConverter<PrintTemplate, IPrintTemplate>(),
+                        new AbstractJsonConverter<AgentRule, IAgentRule>(),
                         new AbstractJsonConverter<IPPrinterInfo, IIPPrinterInfo>()
                     }
                 };
@@ -158,7 +157,7 @@ namespace AgentLib
             {
                 var agentResult = HttpClient_Get(AgentRegistry.UsbWhitelistUrl);
 
-                UsbWhitelistHelp.Set_And_Load_UsbWhitelist_byHttp(agentResult.UsbFilterData);
+                UsbWhitelistHelp.Set_And_Load_UsbWhitelist_byHttp(agentResult.UsbWhitelist);
             }
             catch (Exception)
             {
@@ -167,20 +166,20 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public void GetAgentSetting_Http()
-        public void GetAgentSetting_Http()
+        #region + public void GetAgentRule_Http()
+        public void GetAgentRule_Http()
         {
             try
             {
                 var comid = PerComputerHelp.GetComputerIdentity();
-                var url = AgentRegistry.AgentSettingUrl + "?computerIdentity=" + comid;
+                var url = AgentRegistry.AgentRuleUrl + "?computerIdentity=" + comid;
                 var agentResult = HttpClient_Get(AgentRegistry.AgentSettingUrl);
 
-                var agentSetting = agentResult.AgentSetting;
+                var agentRule = agentResult.AgentRule;
 
-                AgentRegistry.AgentTimerMinute = agentSetting.AgentTimerMinute;
-                AgentRegistry.UsbFilterEnabled = agentSetting.UsbFilterEnabled;
-                AgentRegistry.PrintJobLogEnabled = agentSetting.PrintJobHistoryEnabled;
+                AgentRegistry.AgentTimerMinute = agentRule.AgentTimerMinute;
+                AgentRegistry.UsbFilterEnabled = agentRule.UsbFilterEnabled;
+                AgentRegistry.PrintJobLogEnabled = agentRule.PrintJobLogEnabled;
             }
             catch (Exception)
             {
@@ -225,7 +224,7 @@ namespace AgentLib
                     PluginTime = DateTime.Now
                 };
 
-                HttpClient_Post(AgentRegistry.PostPerUsbHistoryUrl, usbHistory);
+                HttpClient_Post(AgentRegistry.PostPerUsbLogUrl, usbHistory);
             }
             catch (Exception)
             {
@@ -245,25 +244,6 @@ namespace AgentLib
             try
             {
                 HttpClient_Post(AgentRegistry.PostUsbRequestUrl, post);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region + public PrintTemplate GetPrintTemplate_Http()
-        public PrintTemplate GetPrintTemplate_Http()
-        {
-            try
-            {
-                var subnetAddr = PerComputerHelp.GetSubnetAddr();
-                string url = AgentRegistry.PrintTemplateUrl + "?SubnetAddr=" + subnetAddr;
-
-                var agentResult = HttpClient_Get(url);
-                var template = agentResult.PrintTemplate as PrintTemplate;
-                return template;
             }
             catch (Exception)
             {

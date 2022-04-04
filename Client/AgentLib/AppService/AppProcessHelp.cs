@@ -4,33 +4,28 @@ using System.Diagnostics;
 
 namespace AgentLib.AppService
 {
-    public class AppProcessInfo
+    public class AppProcessHelp
     {
         private const int _timeoutMillisecond = 2000;
 
 
-        public Process AppProcess { get; private set; }
-
-        public string AppFullPath { get; private set; }
-
-
-        #region + public void CloseOrKillProcess()
-        public void CloseOrKillProcess()
+        #region + public void CloseOrKillProcess(Process)
+        public static void CloseOrKillProcess(Process process)
         {
-            if (AppProcess == null)
+            if (process == null)
             {
                 return;
             }
 
             try
             {
-                if (!AppProcess.HasExited)
+                if (!process.HasExited)
                 {
-                    AppProcess.CloseMainWindow();
-                    if (!AppProcess.WaitForExit(_timeoutMillisecond))
+                    process.CloseMainWindow();
+                    if (!process.WaitForExit(_timeoutMillisecond))
                     {
-                        AppProcess.Kill();
-                        AppProcess.Close();
+                        process.Kill();
+                        process.Close();
                     }
                 }
             }
@@ -42,8 +37,8 @@ namespace AgentLib.AppService
 
         // static function
 
-        #region + public static AppProcessInfo StartupApp(string appFullPath, string userName=null)
-        public static AppProcessInfo StartupApp(string appFullPath, string userName = null)
+        #region + public static Process StartupApp(string appFullPath, string userName=null)
+        public static Process StartupApp(string appFullPath, string userName = null)
         {
             try
             {
@@ -55,13 +50,7 @@ namespace AgentLib.AppService
 
                 var proc = Process.Start(startinfo);
 
-                var appInfo = new AppProcessInfo
-                {
-                    AppFullPath = appFullPath,
-                    AppProcess = proc
-                };
-
-                return appInfo;
+                return proc;
             }
             catch (Exception)
             {
@@ -74,7 +63,7 @@ namespace AgentLib.AppService
         /// <summary>
         ///  startup app as logon user
         /// </summary>
-        public static AppProcessInfo StartupAppAsLogonUser(string appFullPath)
+        public static Process StartupAppAsLogonUser(string appFullPath)
         {
             try
             {
@@ -90,19 +79,13 @@ namespace AgentLib.AppService
                     throw new Exception("StartupProcessAsLogonUser() : ProcessApiHelp.GetCurrentUserSessionID() <= 0 , " + appFullPath);
                 }
 
-                var appinfo = new AppProcessInfo
-                {
-                    AppFullPath = appFullPath,
-                    AppProcess = proc
-                };
-
-                return appinfo;
+                return proc;
             }
             catch (Exception)
             {
                 throw;
             }
-        }
+        }       
         #endregion
     }
 }

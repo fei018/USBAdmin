@@ -20,8 +20,6 @@ namespace HHITtoolsService
 
         private NamedPipeServer<string> _server;
 
-        public AppServiceType ServiceType => AppServiceType.PipeServer_Service;
-
         #region + public void Start()
         public void Start()
         {
@@ -195,7 +193,7 @@ namespace HHITtoolsService
                 {
                     new AgentHttpHelp().PostPerComputer_Http(); // post computer info
 
-                    new AgentHttpHelp().GetAgentSetting_Http(); // update agent setting
+                    new AgentHttpHelp().GetAgentRule_Http(); // update agent setting
 
                     new AgentHttpHelp().UpdateUSBWhitelist_Http(); // update usb whitelist
 

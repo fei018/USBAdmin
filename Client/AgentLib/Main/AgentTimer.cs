@@ -37,7 +37,7 @@ namespace AgentLib
                     _timer.Dispose();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }

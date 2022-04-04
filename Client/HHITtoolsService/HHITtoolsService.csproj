@@ -115,6 +115,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppService\AppService.cs" />
     <Compile Include="AppService\HHITtoolsTrayService.cs" />
     <Compile Include="AppService\HHITtoolsUSBService.cs" />
     <Compile Include="AppService\ServiceTimer.cs" />

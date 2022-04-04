@@ -10,24 +10,17 @@ namespace HHITtoolsUSB
 {
     public class AppManager
     {
-        public static List<IAppService> AppServiceList => new List<IAppService>();
 
-        #region MyRegion
-
-        #endregion
-
-        #region Startup()
-        public static void Startup()
+        #region Start()
+        public static void Start()
         {
             // NamedPipeClient_USB
-            IAppService namedPipeUSB = new NamedPipeClient_USB();
-            namedPipeUSB.Start();
-            AppServiceList.Add(namedPipeUSB);
+            AppService.NamedPipeClient = new NamedPipeClient_USB();
+            AppService.NamedPipeClient.Start();
 
             // USBAppTimer
-            IAppService apptimer = new USBAppTimer();
-            apptimer.Start();
-            AppServiceList.Add(apptimer);
+            AppService.USBAppTimer = new USBAppTimer();
+            AppService.USBAppTimer.Start();
 
             // filter all usb
             UsbHelp.UpdateUSBWhiltelist_And_FilterAllUSB();
@@ -35,13 +28,16 @@ namespace HHITtoolsUSB
         #endregion
 
 
-        #region Close()
-        public static void Close()
+        #region Stop()
+        public static void Stop()
         {
-            AppServiceList.ForEach(app =>
+            try
             {
-                app.Stop();
-            });
+
+            }
+            catch (Exception)
+            {
+            }
         }
         #endregion
       

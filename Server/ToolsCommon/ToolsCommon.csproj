@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="AbstractJsonConverter.cs" />
     <Compile Include="AgentHttpResponseResult.cs" />
+    <Compile Include="IAgentRule.cs" />
     <Compile Include="IPrintJobInfo.cs" />
     <Compile Include="UtilityTools.cs" />
     <Compile Include="IAgentSetting.cs" />

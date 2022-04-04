@@ -2,8 +2,6 @@
 {
     public interface IAppService
     {
-        AppServiceType ServiceType { get; }
-
         void Start();
 
         void Stop();

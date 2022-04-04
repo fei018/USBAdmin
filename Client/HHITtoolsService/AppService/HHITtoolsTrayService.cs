@@ -5,24 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AgentLib;
+using System.Diagnostics;
 
 namespace HHITtoolsService
 {
     public class HHITtoolsTrayService : IAppService
     {
-        private AppProcessInfo _appProcess;
+        public Process AppProcess { get; private set; }
 
-        public AppServiceType ServiceType => AppServiceType.HHITtoolsTray;
+        public string AppFullPath { get; private set; }
 
         public void Start()
         {
-            string appPath;
-
             try
             {
                 try
                 {
-                    appPath = AgentRegistry.HHITtoolsTrayApp;
+                    AppFullPath = AgentRegistry.HHITtoolsTrayApp;
                 }
                 catch (Exception ex)
                 {
@@ -31,7 +30,7 @@ namespace HHITtoolsService
 
                 try
                 {
-                    AppProcessInfo.StartupAppAsLogonUser(appPath);
+                    AppProcess = AppProcessHelp.StartupAppAsLogonUser(AppFullPath);
                 }
                 catch (Exception)
                 {
@@ -46,7 +45,7 @@ namespace HHITtoolsService
 
         public void Stop()
         {
-            _appProcess.CloseOrKillProcess();
+            AppProcessHelp.CloseOrKillProcess(AppProcess);
         }
     }
 }

@@ -12,8 +12,6 @@ namespace HHITtoolsService
     {
         private AgentTimer _agentTimer;
 
-        public AppServiceType ServiceType => AppServiceType.AgentTimer;
-
         public ServiceTimer()
         {
             _agentTimer = new AgentTimer();
@@ -47,23 +45,19 @@ namespace HHITtoolsService
 
                 try
                 {
-                    new AgentHttpHelp().GetAgentSetting_Http();
+                    new AgentHttpHelp().GetAgentRule_Http();
 
                     if (AgentRegistry.UsbFilterEnabled)
                     {
-                        if (!AppManager.AppServicesList.Any(app=>app.ServiceType == AppServiceType.HHITtoolsUSB))
+                        if (AppService.HHITtoolsUSB == null)
                         {
-                            IAppService appUsb = new HHITtoolsUSBService();
-                            appUsb.Start();
-                            AppManager.AppServicesList.Add(appUsb);
+                            AppService.HHITtoolsUSB = new HHITtoolsUSBService();
+                            AppService.HHITtoolsUSB.Start();
                         }
-                    }
-
-                    if (AgentRegistry.PrintJobLogEnabled)
-                    {
-                        if (!AppManager.AppServicesList.Any(app => app.ServiceType == AppServiceType.PrintJobLog))
+                        else if(AppService.HHITtoolsUSB.AppProcess == null)
                         {
-
+                            AppService.HHITtoolsUSB = new HHITtoolsUSBService();
+                            AppService.HHITtoolsUSB.Start();
                         }
                     }
                 }
@@ -71,7 +65,23 @@ namespace HHITtoolsService
                 {
                     AgentLogger.Error("ServiceTimer.ElapsedAction(): " + ex.Message);
                 }
+
+                try
+                {
+                    //if (AgentRegistry.PrintJobLogEnabled)
+                    //{
+                    //    if (AppService.PrintJobLogService == null)
+                    //    {
+                    //        AppService.PrintJobLogService = new PrintJobLog();
+                    //        AppService.PrintJobLogService.Start();
+                    //    }
+                    //}
+                }
+                catch (Exception ex)
+                {
+                    AgentLogger.Error("ServiceTimer.ElapsedAction(): " + ex.Message);
+                }
             });
-        }     
+        }
     }
 }

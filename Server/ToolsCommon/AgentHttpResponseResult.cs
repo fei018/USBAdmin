@@ -14,11 +14,9 @@ namespace ToolsCommon
 
         public string Msg { get; set; }
 
-        public IAgentSetting AgentSetting { get; set; }
+        public IAgentRule AgentRule { get; set; }
 
-        public string UsbFilterData { get; set; }
-
-        public IPrintTemplate PrintTemplate { get; set; }
+        public string UsbWhitelist { get; set; }
 
         public List<IIPPrinterInfo> SitePrinterList { get; set; }
 

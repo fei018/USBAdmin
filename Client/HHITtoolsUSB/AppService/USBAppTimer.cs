@@ -12,8 +12,6 @@ namespace HHITtoolsUSB
     {
         private AgentTimer _agentTimer;
 
-        public AppServiceType ServiceType => AppServiceType.AgentTimer;
-
         public USBAppTimer()
         {
             _agentTimer = new AgentTimer();
