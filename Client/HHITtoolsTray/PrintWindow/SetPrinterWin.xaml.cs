@@ -25,7 +25,7 @@ namespace HHITtoolsTray.PrintWindow
         {
             InitializeComponent();
           
-            PipeClient_Tray.Entity_Tray.AddSitePrinterCompletedEvent += Entity_Tray_AddSitePrinterListCompletedEvent;
+            NamedPipeClient_Tray.Entity_Tray.AddSitePrinterCompletedEvent += Entity_Tray_AddSitePrinterListCompletedEvent;
         }
 
         private void Entity_Tray_AddSitePrinterListCompletedEvent(object sender, AgentLib.PipeEventArgs e)
@@ -74,7 +74,7 @@ namespace HHITtoolsTray.PrintWindow
                     try
                     {
                         var sitePrinterList = new AgentHttpHelp().GetSitePrinterList_Http();
-                        PipeClient_Tray.Entity_Tray?.PushMsg_ToAgent_SitePrinterToAdd(sitePrinterList);
+                        NamedPipeClient_Tray.Entity_Tray?.PushMsg_ToAgent_SitePrinterToAdd(sitePrinterList);
                     }
                     catch (Exception ex)
                     {

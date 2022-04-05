@@ -129,7 +129,7 @@ namespace HHITtoolsService
                 { PipeMsgType.UpdateSetting_ServerHandle, ReceiveMsgHandler_UpdateSetting},
                 { PipeMsgType.UsbDiskNoRegister_NotifyTray_ServerForward, ReceiveMsgHandler_UsbDiskNoRegister },
                 { PipeMsgType.DeleteOldPrintersAndInstallDriver_ServerHandle, Handler_PrinterDeleteOldAndInstallDriver },
-                { PipeMsgType.PrintJobNotifyRestart, Handler_PrintJobNotifyRestart }
+                { PipeMsgType.PrintJobLogRestart, Handler_PrintJobNotifyRestart }
             };
         }
         #endregion

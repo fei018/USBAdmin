@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace HHITtoolsTray
 {
-    public class PipeClient_Tray
+    public class NamedPipeClient_Tray
     {
         // private
         private string _pipeName;
@@ -21,7 +21,7 @@ namespace HHITtoolsTray
         private NamedPipeClient<string> _client;
 
         // public static
-        public static PipeClient_Tray Entity_Tray { get; set; }
+        public static NamedPipeClient_Tray Entity_Tray { get; set; }
 
         #region Event
 
@@ -29,7 +29,7 @@ namespace HHITtoolsTray
         #endregion
 
         #region Construction
-        public PipeClient_Tray()
+        public NamedPipeClient_Tray()
         {
             _pipeName = AgentRegistry.AgentHttpKey;
 
@@ -131,7 +131,6 @@ namespace HHITtoolsTray
             {
                 { PipeMsgType.Msg_TrayHandle, ReceiveMsgHandler_Message_ShowMessageBox },
                 { PipeMsgType.UsbDiskNoRegister_NotifyTray_TrayHandle, ReceiveMsgHandler_UsbDiskNoRegister},
-                { PipeMsgType.CloseHHITtoolsTray_TrayHandle, ReceiveMsgHandler_ToCloseTray },
                 { PipeMsgType.DeleteOldPrintersAndInstallDriverCompleted, Handler_FromAgentMsg_PrinterDeleteOldAndAddDriverCompleted }
             };
         }
@@ -163,26 +162,6 @@ namespace HHITtoolsTray
                     MessageBox.Show(ex.Message, "USB Control");
                 }
             }));
-        }
-        #endregion
-
-        #region ReceiveMsgHandler_ToCloseTray(PipeMsg pipeMsg)
-        private void ReceiveMsgHandler_ToCloseTray(PipeMsg pipeMsg)
-        {
-            try
-            {
-                App.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    App.Current.MainWindow.Close();
-                }));
-            }
-            catch (Exception ex)
-            {
-#if DEBUG
-                Debugger.Break();
-                Debug.WriteLine(ex.Message);
-#endif
-            }
         }
         #endregion
 
@@ -225,7 +204,7 @@ namespace HHITtoolsTray
 
                 try
                 {
-                    SendPipeMsgToServer_Agent(new PipeMsg(PipeMsgType.PrintJobNotifyRestart));
+                    SendPipeMsgToServer_Agent(new PipeMsg(PipeMsgType.PrintJobLogRestart));
                 }
                 catch (Exception)
                 {

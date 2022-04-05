@@ -56,11 +56,27 @@ namespace HHITtoolsService
         {
             try
             {
+                AppService.HHITtoolsUSB?.Stop();
+            }
+            catch (Exception) { }
 
-            }
-            catch (Exception)
+            try
             {
+                AppService.PrintJobLogService?.Stop();
             }
+            catch (Exception) { }
+
+            try
+            {
+                AppService.HHITtoolsTrayList.ForEach(t => t?.Stop());
+            }
+            catch (Exception) { }
+
+            try
+            {
+                AppService.NamedPipeServer?.Stop();
+            }
+            catch (Exception) { }
         }
         #endregion
 

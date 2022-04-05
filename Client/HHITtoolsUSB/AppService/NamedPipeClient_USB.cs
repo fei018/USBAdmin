@@ -106,10 +106,7 @@ namespace HHITtoolsUSB
 
         private void InitialPipeMsgHandler()
         {
-            _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>()
-            {
-                { PipeMsgType.CloseHHITtoolsUSB_USBAppHandle, ReceiveMsgHandler_CloseHHITtoolsUSBApp },
-            };
+            _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>();
         }
         #endregion
 
