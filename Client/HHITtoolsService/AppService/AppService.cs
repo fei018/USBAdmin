@@ -16,7 +16,7 @@ namespace HHITtoolsService
 
         public static HHITtoolsUSBService HHITtoolsUSB{ get; set; }
 
-        public static PrintJobLog PrintJobLogService { get; set; }
+        public static PrintJobLogService PrintJobLogService { get; set; }
 
         public static ServiceTimer ServiceTimer { get; set; }
     }

@@ -8,14 +8,14 @@ using ToolsCommon;
 
 namespace AgentLib
 {
-    public class PerComputerHelp
+    public class ComputerInfoHelp
     {
         #region + public static string GetComputerIdentity()
         public static string GetComputerIdentity()
         {
             try
             {
-                var com = new PerComputer();
+                var com = new ComputerInfo();
                 SetNetworkInfo(com);
                 SetBiosSerial(com);
 
@@ -32,15 +32,14 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public static PerComputer GetPerComputer()
-        public static PerComputer GetPerComputer()
+        #region + public static ComputerInfo GetComputerInfo()
+        public static ComputerInfo GetComputerInfo()
         {
             try
             {
-                PerComputer userComputer = new PerComputer();
+                ComputerInfo userComputer = new ComputerInfo();
                 userComputer.AgentVersion = AgentRegistry.AgentVersion;
                 userComputer.UsbFilterEnabled = AgentRegistry.UsbFilterEnabled;
-                userComputer.UsbHistoryEnabled = AgentRegistry.UsbHistoryEnabled;
                 userComputer.HostName = IPGlobalProperties.GetIPGlobalProperties().HostName;
                 userComputer.Domain = IPGlobalProperties.GetIPGlobalProperties().DomainName;
                 SetNetworkInfo(userComputer);
@@ -60,7 +59,7 @@ namespace AgentLib
         {
             try
             {
-                var com = new PerComputer();
+                var com = new ComputerInfo();
                 SetNetworkInfo(com);
                 return com.NetwordAddress;
             }
@@ -72,7 +71,7 @@ namespace AgentLib
         #endregion
 
         #region + public static void SetNetworkInfo()
-        public static void SetNetworkInfo(PerComputer com)
+        public static void SetNetworkInfo(ComputerInfo com)
         {
             var nic = NetworkInterface.GetAllNetworkInterfaces()
                                     .Where(n => n.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
@@ -113,7 +112,7 @@ namespace AgentLib
         /// if Bios Serial is null, to get mainboard serial
         /// </summary>
         /// <param name="userComputer"></param>
-        private static void SetBiosSerial(PerComputer userComputer)
+        private static void SetBiosSerial(ComputerInfo userComputer)
         {
             using (ManagementObjectSearcher ComSerial = new ManagementObjectSearcher("SELECT * FROM Win32_BIOS"))
             {

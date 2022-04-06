@@ -36,7 +36,7 @@ namespace HHITtoolsService
             {
                 try
                 {
-                    new AgentHttpHelp().PostPerComputer_Http();
+                    new AgentHttpHelp().PostComputerInfo_Http();
                 }
                 catch (Exception ex)
                 {

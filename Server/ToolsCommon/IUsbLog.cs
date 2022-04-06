@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ToolsCommon
 {
-    public interface IUsbLog : IUsbInfo
+    public interface IUsbLog : IUsbBase
     {
 
         string ComputerIdentity { get; set; }

@@ -7,7 +7,7 @@ using ToolsCommon;
 
 namespace AgentLib
 {
-    public class PerComputer : IPerComputer
+    public class ComputerInfo : IComputerInfo
     {
         public string HostName { get; set; }
 
@@ -27,9 +27,9 @@ namespace AgentLib
 
         public bool UsbFilterEnabled { get; set; }
 
-        public bool UsbHistoryEnabled { get; set; }
-
         public string AgentVersion { get; set; }
+
+        public string UserName { get; set; }
 
         public override string ToString()
         {

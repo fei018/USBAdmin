@@ -20,7 +20,7 @@ namespace HHITtoolsService
         public static void Start()
         {
             // post computer info to server
-            new AgentHttpHelp().PostPerComputer_Http();
+            new AgentHttpHelp().PostComputerInfo_Http();
 
             // PipeServer_Service
             AppService.NamedPipeServer = new NamedPipeServer_Service();

@@ -191,7 +191,7 @@ namespace HHITtoolsService
             {
                 try
                 {
-                    new AgentHttpHelp().PostPerComputer_Http(); // post computer info
+                    new AgentHttpHelp().PostComputerInfo_Http(); // post computer info
 
                     new AgentHttpHelp().GetAgentRule_Http(); // update agent setting
 

@@ -172,8 +172,8 @@ namespace AgentLib
                     return;
                 }
 
-                var com = new PerComputer();
-                PerComputerHelp.SetNetworkInfo(com);
+                var com = new ComputerInfo();
+                ComputerInfoHelp.SetNetworkInfo(com);
 
                 foreach (var printer in tcpPrinters)
                 {

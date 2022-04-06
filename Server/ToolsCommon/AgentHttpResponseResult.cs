@@ -18,8 +18,6 @@ namespace ToolsCommon
 
         public string UsbWhitelist { get; set; }
 
-        public List<ISitePrinter> SitePrinters { get; set; }
-
         public string DownloadFileBase64 { get; set; }
 
         // will be drop

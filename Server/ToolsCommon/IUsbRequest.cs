@@ -2,7 +2,7 @@
 
 namespace ToolsCommon
 {
-    public interface IUsbRequest : IUsbInfo
+    public interface IUsbRequest : IUsbBase
     {
         string RequestUserEmail { get; set; }
 

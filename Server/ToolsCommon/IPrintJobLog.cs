@@ -2,7 +2,7 @@
 
 namespace ToolsCommon
 {
-    public interface IPrintJobInfo
+    public interface IPrintJobLog
     {
         string FileName { get; set; }
 

@@ -171,7 +171,7 @@ namespace AgentLib
         {
             try
             {
-                var comid = PerComputerHelp.GetComputerIdentity();
+                var comid = ComputerInfoHelp.GetComputerIdentity();
                 var url = AgentRegistry.AgentRuleUrl + "?computerIdentity=" + comid;
                 var agentResult = HttpClient_Get(AgentRegistry.AgentSettingUrl);
 
@@ -188,14 +188,14 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public void PostPerComputer_Http()
-        public void PostPerComputer_Http()
+        #region + public void PostComputerInfo_Http()
+        public void PostComputerInfo_Http()
         {
             try
             {
-                var com = PerComputerHelp.GetPerComputer() as IPerComputer;
+                var com = ComputerInfoHelp.GetComputerInfo() as IComputerInfo;
 
-                HttpClient_Post(AgentRegistry.PostPerComputerUrl, com);
+                HttpClient_Post(AgentRegistry.PostComputerInfoUrl, com);
             }
             catch (Exception)
             {
@@ -204,15 +204,15 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public void PostPerUsbHistory_byDisk_Http(string diskPath)
-        public void PostPerUsbHistory_byDisk_Http(string diskPath)
+        #region + public void PostUsbLog_byDisk_Http(string diskPath)
+        public void PostUsbLog_byDisk_Http(string diskPath)
         {
             try
             {
-                var comIdentity = PerComputerHelp.GetComputerIdentity();
+                var comIdentity = ComputerInfoHelp.GetComputerIdentity();
                 var usb = new UsbFilter().Find_UsbDisk_By_DiskPath(diskPath);
 
-                IPerUsbLog usbHistory = new PerUsbLog
+                IUsbLog usbHistory = new UsbLog
                 {
                     ComputerIdentity = comIdentity,
                     DeviceDescription = usb.DeviceDescription,
@@ -224,7 +224,7 @@ namespace AgentLib
                     PluginTime = DateTime.Now
                 };
 
-                HttpClient_Post(AgentRegistry.PostPerUsbLogUrl, usbHistory);
+                HttpClient_Post(AgentRegistry.PostUsbLogUrl, usbHistory);
             }
             catch (Exception)
             {
@@ -257,7 +257,7 @@ namespace AgentLib
         {
             try
             {
-                var subnetAddr = PerComputerHelp.GetSubnetAddr();
+                var subnetAddr = ComputerInfoHelp.GetSubnetAddr();
                 string url = AgentRegistry.SitePrinterListUrl + "?subnetAddr=" + subnetAddr;
 
                 var agentResult = HttpClient_Get(url);
@@ -277,12 +277,12 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public void PostPerPrintJob_Http(PerPrintJob printJob)
-        public void PostPerPrintJob_Http(PerPrintJob printJob)
+        #region + public void PostPrintJobLog_Http(PrintJobLog printJob)
+        public void PostPrintJobLog_Http(PrintJobLog printJob)
         {
             try
             {
-                HttpClient_Post(AgentRegistry.PostPerPrintJobUrl, printJob);
+                HttpClient_Post(AgentRegistry.PostPrintJobLogUrl, printJob);
             }
             catch (Exception)
             {

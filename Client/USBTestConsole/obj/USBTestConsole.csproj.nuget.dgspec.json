@@ -1,26 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj": {}
+    "C:\\Code\\GitHub\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj": {}
   },
   "projects": {
-    "C:\\CodeRepos\\USBAdmin\\Client\\AgentLib\\AgentLib.csproj": {
+    "C:\\Code\\GitHub\\USBAdmin\\Client\\AgentLib\\AgentLib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Client\\AgentLib\\AgentLib.csproj",
+        "projectUniqueName": "C:\\Code\\GitHub\\USBAdmin\\Client\\AgentLib\\AgentLib.csproj",
         "projectName": "AgentLib",
-        "projectPath": "C:\\CodeRepos\\USBAdmin\\Client\\AgentLib\\AgentLib.csproj",
-        "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-        "outputPath": "C:\\CodeRepos\\USBAdmin\\Client\\AgentLib\\obj\\",
+        "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Client\\AgentLib\\AgentLib.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Code\\GitHub\\USBAdmin\\Client\\AgentLib\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net461"
@@ -32,8 +32,8 @@
         "frameworks": {
           "net461": {
             "projectReferences": {
-              "C:\\CodeRepos\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj": {
-                "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj"
+              "C:\\Code\\GitHub\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj": {
+                "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj"
               }
             }
           }
@@ -69,23 +69,23 @@
         }
       }
     },
-    "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj": {
+    "C:\\Code\\GitHub\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
+        "projectUniqueName": "C:\\Code\\GitHub\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
         "projectName": "USBTestConsole",
-        "projectPath": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
-        "packagesPath": "C:\\Users\\e_fei\\.nuget\\packages\\",
-        "outputPath": "C:\\CodeRepos\\USBAdmin\\Client\\USBTestConsole\\obj\\",
+        "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Client\\USBTestConsole\\USBTestConsole.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Code\\GitHub\\USBAdmin\\Client\\USBTestConsole\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\e_fei\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net461"
@@ -97,8 +97,8 @@
         "frameworks": {
           "net461": {
             "projectReferences": {
-              "C:\\CodeRepos\\USBAdmin\\Client\\AgentLib\\AgentLib.csproj": {
-                "projectPath": "C:\\CodeRepos\\USBAdmin\\Client\\AgentLib\\AgentLib.csproj"
+              "C:\\Code\\GitHub\\USBAdmin\\Client\\AgentLib\\AgentLib.csproj": {
+                "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Client\\AgentLib\\AgentLib.csproj"
               }
             }
           }
@@ -132,11 +132,11 @@
         }
       }
     },
-    "C:\\CodeRepos\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj": {
+    "C:\\Code\\GitHub\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\CodeRepos\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj",
+        "projectUniqueName": "C:\\Code\\GitHub\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj",
         "projectName": "ToolsCommon",
-        "projectPath": "C:\\CodeRepos\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj",
+        "projectPath": "C:\\Code\\GitHub\\USBAdmin\\Server\\ToolsCommon\\ToolsCommon.csproj",
         "frameworks": {
           "net461": {
             "projectReferences": {}

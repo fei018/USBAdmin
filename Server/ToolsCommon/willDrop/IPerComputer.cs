@@ -16,7 +16,6 @@
 
         string AgentVersion { get; set; }
 
-        string UserName { get; set; }
 
 
 

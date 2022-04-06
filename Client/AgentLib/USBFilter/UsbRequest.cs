@@ -23,7 +23,7 @@ namespace AgentLib
             DeviceDescription = usb.DeviceDescription;
 
             RequestUserEmail = userEmail;
-            RequestComputerIdentity = PerComputerHelp.GetComputerIdentity();
+            RequestComputerIdentity = ComputerInfoHelp.GetComputerIdentity();
             RequestTime = DateTime.Now;
             RequestReason = reason;
         }

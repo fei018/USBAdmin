@@ -1,6 +1,6 @@
 ﻿namespace ToolsCommon
 {
-    public interface IUsbInfo
+    public interface IUsbBase
     {
         int Vid { get; set; }
 

@@ -3,7 +3,7 @@ using ToolsCommon;
 
 namespace AgentLib
 {
-    public class PerUsbLog : IPerUsbLog
+    public class UsbLog : IUsbLog
     {
         public int Vid { get; set; }
         public int Pid { get; set; }

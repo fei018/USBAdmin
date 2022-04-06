@@ -119,16 +119,16 @@ namespace AgentLib
             set => SetRegKey(nameof(AgentUpdateUrl), value, RegistryValueKind.String);
         }
 
-        public static string PostPerComputerUrl
+        public static string PostComputerInfoUrl
         {
-            get => ReadRegKey(nameof(PostPerComputerUrl));
-            set => SetRegKey(nameof(PostPerComputerUrl), value, RegistryValueKind.String);
+            get => ReadRegKey(nameof(PostComputerInfoUrl));
+            set => SetRegKey(nameof(PostComputerInfoUrl), value, RegistryValueKind.String);
         }
 
-        public static string PostPerUsbLogUrl
+        public static string PostUsbLogUrl
         {
-            get => ReadRegKey(nameof(PostPerUsbLogUrl));
-            set => SetRegKey(nameof(PostPerUsbLogUrl), value, RegistryValueKind.String);
+            get => ReadRegKey(nameof(PostUsbLogUrl));
+            set => SetRegKey(nameof(PostUsbLogUrl), value, RegistryValueKind.String);
         }
 
         public static string PostUsbRequestUrl
@@ -143,10 +143,10 @@ namespace AgentLib
             set => SetRegKey(nameof(SitePrinterListUrl), value, RegistryValueKind.String);
         }
 
-        public static string PostPerPrintJobUrl
+        public static string PostPrintJobLogUrl
         {
-            get => ReadRegKey(nameof(PostPerPrintJobUrl));
-            set => SetRegKey(nameof(PostPerPrintJobUrl), value, RegistryValueKind.String);
+            get => ReadRegKey(nameof(PostPrintJobLogUrl));
+            set => SetRegKey(nameof(PostPrintJobLogUrl), value, RegistryValueKind.String);
         }
 
 
