@@ -54,7 +54,6 @@ C:\CodeRepos\USBAdmin\Server\USBModel\bin\Debug\net5.0\USBModel.dll
 C:\CodeRepos\USBAdmin\Server\USBModel\bin\Debug\net5.0\ref\USBModel.dll
 C:\CodeRepos\USBAdmin\Server\USBModel\bin\Debug\net5.0\USBModel.pdb
 C:\CodeRepos\USBAdmin\Server\USBModel\bin\Debug\net5.0\LoginUserManager.dll
-C:\CodeRepos\USBAdmin\Server\USBModel\bin\Debug\net5.0\USBCommon.dll
 C:\CodeRepos\USBAdmin\Server\USBModel\bin\Debug\net5.0\LoginUserManager.pdb
 C:\CodeRepos\USBAdmin\Server\USBModel\obj\Debug\net5.0\USBModel.csproj.AssemblyReference.cache
 C:\CodeRepos\USBAdmin\Server\USBModel\obj\Debug\net5.0\USBModel.GeneratedMSBuildEditorConfig.editorconfig
@@ -81,3 +80,4 @@ C:\Code\GitHub\USBAdmin\Server\USBModel\obj\Debug\net5.0\USBModel.csproj.CopyCom
 C:\Code\GitHub\USBAdmin\Server\USBModel\obj\Debug\net5.0\USBModel.dll
 C:\Code\GitHub\USBAdmin\Server\USBModel\obj\Debug\net5.0\ref\USBModel.dll
 C:\Code\GitHub\USBAdmin\Server\USBModel\obj\Debug\net5.0\USBModel.pdb
+C:\CodeRepos\USBAdmin\Server\USBModel\bin\Debug\net5.0\ToolsCommon.dll

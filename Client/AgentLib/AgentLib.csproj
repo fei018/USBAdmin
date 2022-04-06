@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="AppService\AppProcessHelp.cs" />
     <Compile Include="AppService\IAppService.cs" />
+    <Compile Include="Main\AbstractJsonConverter.cs" />
     <Compile Include="Main\AgentRule.cs" />
     <Compile Include="USBFilter\UsbBusController.cs" />
     <Compile Include="USBFilter\UsbBusController3.cs" />

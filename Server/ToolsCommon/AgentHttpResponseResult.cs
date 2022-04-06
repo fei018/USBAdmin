@@ -18,8 +18,17 @@ namespace ToolsCommon
 
         public string UsbWhitelist { get; set; }
 
-        public List<IIPPrinterInfo> SitePrinterList { get; set; }
+        public List<ISitePrinter> SitePrinters { get; set; }
 
         public string DownloadFileBase64 { get; set; }
+
+        // will be drop
+        public string UsbFilterData { get; set; }
+
+        public IAgentSetting AgentSetting { get; set; }
+
+        public IPrintTemplate PrintTemplate { get; set; }
+
+        public List<IIPPrinterInfo> SitePrinterList { get; set; }
     }
 }

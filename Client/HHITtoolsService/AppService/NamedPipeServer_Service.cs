@@ -129,7 +129,7 @@ namespace HHITtoolsService
                 { PipeMsgType.UpdateSetting_ServerHandle, ReceiveMsgHandler_UpdateSetting},
                 { PipeMsgType.UsbDiskNoRegister_NotifyTray_ServerForward, ReceiveMsgHandler_UsbDiskNoRegister },
                 { PipeMsgType.DeleteOldPrintersAndInstallDriver_ServerHandle, Handler_PrinterDeleteOldAndInstallDriver },
-                { PipeMsgType.PrintJobLogRestart, Handler_PrintJobNotifyRestart }
+                { PipeMsgType.PrintJobLogRestart, Handler_PrintJobLogRestart }
             };
         }
         #endregion
@@ -273,12 +273,13 @@ namespace HHITtoolsService
         }
         #endregion
 
-        #region + private void Handler_PrintJobNotifyRestart(PipeMsg pipeMsg)
-        private void Handler_PrintJobNotifyRestart(PipeMsg pipeMsg)
+        #region + private void Handler_PrintJobLogRestart(PipeMsg pipeMsg)
+        private void Handler_PrintJobLogRestart(PipeMsg pipeMsg)
         {
             try
             {
-
+                AppService.PrintJobLogService.Stop();
+                AppService.PrintJobLogService.Start();
             }
             catch (Exception ex)
             {
@@ -300,37 +301,6 @@ namespace HHITtoolsService
             catch (Exception)
             {
                 throw;
-            }
-        }
-        #endregion
-
-        #region + public void SendMsg_CloseHHITtoolsTray()
-        public void SendMsg_CloseHHITtoolsTray(int winlogonSessionId)
-        {
-            try
-            {
-                var msg = new PipeMsg(PipeMsgType.CloseHHITtoolsTray_TrayHandle) { WinlogonSessionId = winlogonSessionId };
-
-                SendMsgToClient_By_PipeMsg(msg);
-            }
-            catch (Exception ex)
-            {
-                AgentLogger.Error("PipeServer_Service.SendMsg_CloseHHITtoolsTray() : " + ex.Message);
-            }
-        }
-        #endregion
-
-        #region + public void SendMsg_CloseHHITtoolsUSB()
-        public void SendMsg_CloseHHITtoolsUSB()
-        {
-            try
-            {
-                var msg = new PipeMsg(PipeMsgType.CloseHHITtoolsUSB_USBAppHandle);
-                SendMsgToClient_By_PipeMsg(msg);
-            }
-            catch (Exception ex)
-            {
-                AgentLogger.Error(ex.Message);
             }
         }
         #endregion

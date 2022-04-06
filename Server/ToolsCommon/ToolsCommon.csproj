@@ -75,25 +75,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractJsonConverter.cs" />
     <Compile Include="AgentHttpResponseResult.cs" />
     <Compile Include="IAgentRule.cs" />
+    <Compile Include="ISitePrinter.cs" />
+    <Compile Include="IComputerInfo.cs" />
+    <Compile Include="willDrop\IPerUsbHistory.cs" />
     <Compile Include="IPrintJobInfo.cs" />
     <Compile Include="UtilityTools.cs" />
-    <Compile Include="IAgentSetting.cs" />
-    <Compile Include="IPrintTemplate.cs" />
+    <Compile Include="willDrop\IAgentSetting.cs" />
+    <Compile Include="willDrop\IPrintTemplate.cs" />
     <Compile Include="IUsbRequest.cs" />
-    <Compile Include="IPerComputer.cs" />
-    <Compile Include="IPerUsbHistory.cs" />
+    <Compile Include="willDrop\IPerComputer.cs" />
+    <Compile Include="IUsbLog.cs" />
     <Compile Include="MimeTypeMap.cs" />
     <Compile Include="IUsbInfo.cs" />
-    <Compile Include="IIPPrinterInfo.cs" />
+    <Compile Include="willDrop\IIPPrinterInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

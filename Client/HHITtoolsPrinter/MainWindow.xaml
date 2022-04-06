@@ -5,9 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HHITtoolsPrinter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <ListBox HorizontalAlignment="Left" Height="241" Margin="72,72,0,0" VerticalAlignment="Top" Width="480"/>
+        Title="Set Printer" Height="400" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="20px"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Canvas>
+                <Button x:Name="btnAddPrinter"  FontSize="14" Height="50px" Width="200" Canvas.Left="41" Canvas.Top="22">Add Local Network Printers</Button>
+                <Button x:Name="btnCancel"  FontSize="14" Height="50px" Width="200px" Canvas.Left="41" Canvas.Top="95">Cancel</Button>
+
+            </Canvas>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="2">
+            <ProgressBar x:Name="progressBar1" IsIndeterminate="True" Visibility="Hidden"></ProgressBar>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <TextBox x:Name="txtResult" IsReadOnly="True" TextWrapping="Wrap" BorderBrush="Gray" BorderThickness="1" Margin="2"/>
+        </Grid>
 
     </Grid>
 </Window>

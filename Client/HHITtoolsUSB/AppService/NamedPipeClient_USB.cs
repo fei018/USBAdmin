@@ -16,8 +16,7 @@ namespace HHITtoolsUSB
 
         #region Construction
         public NamedPipeClient_USB()
-        {
-            _pipeName = AgentRegistry.AgentHttpKey;
+        {          
             InitialPipeMsgHandler();
         }
         #endregion
@@ -27,13 +26,15 @@ namespace HHITtoolsUSB
         {
             try
             {
+                Stop();
+
+                _pipeName = AgentRegistry.AgentHttpKey;
+
                 if (string.IsNullOrWhiteSpace(_pipeName))
                 {
                     AgentLogger.Error("PipeClient_USB.Start(): PipeName is empty");
                     return;
                 }
-
-                Stop();
 
                 _client = new NamedPipeClient<string>(_pipeName);
 
@@ -111,13 +112,6 @@ namespace HHITtoolsUSB
         #endregion
 
         // ReceiveMsgHandler
-
-        #region + private void ReceiveMsgHandler_CloseHHITtoolsUSBApp(PipeMsg pipeMsg)
-        private void ReceiveMsgHandler_CloseHHITtoolsUSBApp(PipeMsg pipeMsg)
-        {
-            HHITtoolsUSBForm.HHToolsUSBForm.Close();
-        }
-        #endregion
 
         // PushMsg
         #region + private void SendMsgToServer_By_PipeMsg(PipeMsg pipeMsg)

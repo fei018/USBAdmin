@@ -51,7 +51,7 @@ namespace USBModel
                 _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PrintTemplate>();
                 _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterInfo>();
                 _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterSite>();
-                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PerPrintJob>();
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_PrintJobLog>();
                 _db.CodeFirst.SetStringDefaultLength(200).InitTables<Tbl_BitLockerInfo>();
             }
             catch (Exception)
@@ -82,6 +82,39 @@ namespace USBModel
                 throw;
             }
         }
+        #endregion
+
+        // AgentRule
+        #region + public async Task<Tbl_AgentRule> AgentRule_Get_By_ComputerIdentity(string computerIdentity)
+        public async Task<Tbl_AgentRule> AgentRule_Get_By_ComputerIdentity(string computerIdentity)
+        {
+            try
+            {
+                var com = await _db.Queryable<Tbl_ComputerInfo>()
+                             .FirstAsync(c => c.ComputerIdentity.Equals(computerIdentity, StringComparison.OrdinalIgnoreCase));
+
+                if (com == null)
+                {
+                    throw new Exception("Get AgentRule fail, cannot find the ComputerIdentity: " + computerIdentity);
+                }
+
+                Guid groupid = Guid.Parse(com.AgentRuleGroupId);
+
+                var rule = await _db.Queryable<Tbl_AgentRule>()
+                            .FirstAsync(r => r.GroupId.Equals(groupid));
+
+                if (rule == null)
+                {
+                    throw new Exception("Get AgentRule fail, cannot find the GroupId: " + groupid.ToString());
+                }
+
+                return rule;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        } 
         #endregion
 
         // UsbWhitelist
@@ -1163,7 +1196,7 @@ namespace USBModel
         // PerPrintJob
 
         #region + public async Task PerPrintJob_Insert(Tbl_PerPrintJob printJob)
-        public async Task PerPrintJob_Insert(Tbl_PerPrintJob printJob)
+        public async Task PerPrintJob_Insert(Tbl_PrintJobLog printJob)
         {
             try
             {
@@ -1177,12 +1210,12 @@ namespace USBModel
         #endregion
 
         #region + public async Task<(int total,List<Tbl_PerPrintJob> list)> PerPrintJob_Get_List_ByComputerIdentity(string comIdentity, int pageIndex, int size)
-        public async Task<(int total,List<Tbl_PerPrintJob> list)> PerPrintJob_Get_List_ByComputerIdentity(string comIdentity, int pageIndex, int size)
+        public async Task<(int total,List<Tbl_PrintJobLog> list)> PerPrintJob_Get_List_ByComputerIdentity(string comIdentity, int pageIndex, int size)
         {
             try
             {
                 RefAsync<int> total = new RefAsync<int>();
-                var list = await _db.Queryable<Tbl_PerPrintJob>()
+                var list = await _db.Queryable<Tbl_PrintJobLog>()
                                     .Where(p => p.ComputerIdentity == comIdentity)
                                     .OrderBy(p => p.PrintingTime, OrderByType.Desc)
                                     .ToPageListAsync(pageIndex, size, total);

@@ -83,16 +83,16 @@ namespace USBAdminWebMVC
         #endregion
 
         #region + public static Tbl_PerPrintJob Deserialize_IPrintJobInfo(string json)
-        public static Tbl_PerPrintJob Deserialize_IPrintJobInfo(string json)
+        public static Tbl_PrintJobLog Deserialize_IPrintJobInfo(string json)
         {
             var settings = new JsonSerializerSettings
             {
                 Converters = {
-                        new AbstractJsonConverter<Tbl_PerPrintJob, IPrintJobInfo>()
+                        new AbstractJsonConverter<Tbl_PrintJobLog, IPrintJobInfo>()
                     }
             };
 
-            var temp = JsonConvert.DeserializeObject<Tbl_PerPrintJob>(json, settings);
+            var temp = JsonConvert.DeserializeObject<Tbl_PrintJobLog>(json, settings);
             return temp;
         }
         #endregion

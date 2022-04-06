@@ -98,12 +98,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="NamedPipe\NamedPipeClient_Tray.cs" />
-    <Compile Include="PrintWindow\SetPrinterWin.xaml.cs">
-      <DependentUpon>SetPrinterWin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TrayModel\TrayManager.cs" />
-    <Compile Include="TrayModel\WinSingleOpen.cs" />
+    <Compile Include="AppService\AppService.cs" />
+    <Compile Include="AppService\NamedPipeClient_Tray.cs" />
+    <Compile Include="Main\AppManager.cs" />
+    <Compile Include="TrayIcon\WinSingleOpen.cs" />
     <Compile Include="USBWindow\AboutWin.xaml.cs">
       <DependentUpon>AboutWin.xaml</DependentUpon>
     </Compile>
@@ -128,15 +126,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TrayModel\TrayIcon.cs" />
+    <Compile Include="AppService\TrayIcon.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PrintWindow\SetPrinterWin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="USBWindow\AboutWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

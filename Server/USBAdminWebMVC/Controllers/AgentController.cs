@@ -210,7 +210,7 @@ namespace USBAdminWebMVC.Controllers
                 using StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
                 var post = await body.ReadToEndAsync();
 
-                Tbl_PerPrintJob printJob = JsonHttpConvert.Deserialize_IPrintJobInfo(post);
+                Tbl_PrintJobLog printJob = JsonHttpConvert.Deserialize_IPrintJobInfo(post);
 
                 await _usbDb.PerPrintJob_Insert(printJob);
 

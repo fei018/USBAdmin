@@ -31,7 +31,7 @@ namespace HHITtoolsTray
             Visibility = Visibility.Visible;
 #endif
 
-            TrayManager.Start();
+            AppManager.Start();
         }
 
         #region This.Close()
@@ -40,7 +40,7 @@ namespace HHITtoolsTray
 #if DEBUG
             //Debugger.Break();
 #endif
-            TrayManager.Stop();
+            AppManager.Stop();
         }
         #endregion
 
