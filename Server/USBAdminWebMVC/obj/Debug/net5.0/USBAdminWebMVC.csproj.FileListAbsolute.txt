@@ -445,14 +445,12 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.Razo
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\AgentSetting\Index.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Computer\Index.cshtml.g.cs
-C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Computer\UsbHistory.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\EmailSetting\Index.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Home\Welcome.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Shared\OK.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
-C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\USB\History.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\USB\Register.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\USB\RequestDetail.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
@@ -603,5 +601,7 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\dropPag
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\dropPage\RequestApprove.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\dropPage\RequestReject.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\dropPage\RequestReview.cshtml.g.cs
-C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\dropPage\Template.cshtml.g.cs
-C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\dropPage\TemplateEdit.cshtml.g.cs
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Computer\UsbLog.cshtml.g.cs
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\dropPage\History.cshtml.g.cs
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Debug\net5.0\wwwroot\api\InitMenu.json
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Debug\net5.0\wwwroot\api\debugMenu.json

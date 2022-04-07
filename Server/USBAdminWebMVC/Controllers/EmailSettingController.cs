@@ -9,10 +9,10 @@ namespace USBAdminWebMVC.Controllers
 {
     public class EmailSettingController : Controller
     {
-        private readonly USBAdminDatabaseHelp _usbDb;
+        private readonly USBDBHelp _usbDb;
 
 
-        public EmailSettingController(USBAdminDatabaseHelp usbDb)
+        public EmailSettingController(USBDBHelp usbDb)
         {
             _usbDb = usbDb;
         }

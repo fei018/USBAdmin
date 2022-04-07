@@ -56,3 +56,4 @@ C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManage
 C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.dll
 C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\ref\LoginUserManager.dll
 C:\Code\GitHub\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.pdb
+C:\CodeRepos\USBAdmin\Server\LoginUserManager\obj\Debug\net5.0\LoginUserManager.csproj.AssemblyReference.cache

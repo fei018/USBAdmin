@@ -25,7 +25,7 @@ namespace USBAdminDatabase
                
                 string conn = File.ReadAllText(sql)?.Trim();
                 Console.WriteLine(conn);
-                new USBAdminDatabaseHelp(conn).TryCreateDatabase();
+                new USBDBHelp(conn).TryCreateDatabase();
             }
             catch (Exception ex)
             {

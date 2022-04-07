@@ -71,11 +71,6 @@ namespace AgentLib
             set => SetRegKey(nameof(UsbFilterEnabled), value, RegistryValueKind.String);
         }
 
-        public static bool UsbHistoryEnabled
-        {
-            get => Convert.ToBoolean(ReadRegKey(nameof(UsbHistoryEnabled)));
-            set => SetRegKey(nameof(UsbHistoryEnabled), value, RegistryValueKind.String);
-        }
 
         public static bool PrintJobLogEnabled
         {

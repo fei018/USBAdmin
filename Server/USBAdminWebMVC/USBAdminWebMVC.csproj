@@ -20,6 +20,15 @@
     <Folder Include="Views\BitLockerInfo\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\api\debugMenu.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\api\InitMenu.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

@@ -9,10 +9,10 @@ namespace USBAdminWebMVC.Controllers
 {
     public class AgentSettingController : Controller
     {
-        private readonly USBAdminDatabaseHelp _usbDb;
+        private readonly USBDBHelp _usbDb;
 
 
-        public AgentSettingController(USBAdminDatabaseHelp usbDb)
+        public AgentSettingController(USBDBHelp usbDb)
         {
             _usbDb = usbDb;
         }

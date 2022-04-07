@@ -19,6 +19,8 @@ namespace HHITtoolsService
         {
             try
             {
+                Stop();
+
                 try
                 {
                     AppFullPath = AgentRegistry.HHITtoolsUSBApp;

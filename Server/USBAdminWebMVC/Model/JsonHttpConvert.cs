@@ -7,19 +7,19 @@ namespace USBAdminWebMVC
 {
     public class JsonHttpConvert
     {
-        #region + public static PostComUsbInfo Deserialize_PerUsbHistory(string json)
-        public static Tbl_PerUsbHistory Deserialize_PerUsbHistory(string postJson)
+        #region + public static PostComUsbInfo Deserialize_UsbLog(string json)
+        public static Tbl_UsbLog Deserialize_UsbLog(string postJson)
         {
             try
             {
                 var settings = new JsonSerializerSettings
                 {
                     Converters = {
-                        new AbstractJsonConverter<Tbl_PerUsbHistory, IPerUsbHistory>()
+                        new AbstractJsonConverter<Tbl_UsbLog, IUsbLog>()
                     }
                 };
 
-                var info = JsonConvert.DeserializeObject<Tbl_PerUsbHistory>(postJson, settings);
+                var info = JsonConvert.DeserializeObject<Tbl_UsbLog>(postJson, settings);
                 return info;
             }
             catch (Exception)
@@ -30,11 +30,11 @@ namespace USBAdminWebMVC
         #endregion
 
         #region + public static UserComputer Deserialize_PerComputer(string comJson)
-        public static Tbl_PerComputer Deserialize_PerComputer(string comJson)
+        public static Tbl_ComputerInfo Deserialize_ComputerInfo(string comJson)
         {
             try
             {
-                var com = JsonConvert.DeserializeObject<Tbl_PerComputer>(comJson);
+                var com = JsonConvert.DeserializeObject<Tbl_ComputerInfo>(comJson);
                 return com;
             }
             catch (Exception)
@@ -67,20 +67,6 @@ namespace USBAdminWebMVC
         }
         #endregion
 
-        #region + public static Tbl_PrintTemplate Deserialize_PrintTemplate(string json)
-        public static Tbl_PrintTemplate Deserialize_PrintTemplate(string json)
-        {
-            var settings = new JsonSerializerSettings
-            {
-                Converters = {
-                        new AbstractJsonConverter<Tbl_PrintTemplate, IPrintTemplate>()
-                    }
-            };
-
-            var temp = JsonConvert.DeserializeObject<Tbl_PrintTemplate>(json, settings);
-            return temp;
-        }
-        #endregion
 
         #region + public static Tbl_PerPrintJob Deserialize_IPrintJobInfo(string json)
         public static Tbl_PrintJobLog Deserialize_IPrintJobInfo(string json)
@@ -88,7 +74,7 @@ namespace USBAdminWebMVC
             var settings = new JsonSerializerSettings
             {
                 Converters = {
-                        new AbstractJsonConverter<Tbl_PrintJobLog, IPrintJobInfo>()
+                        new AbstractJsonConverter<Tbl_PrintJobLog, IPrintJobLog>()
                     }
             };
 

@@ -1,12 +1,12 @@
-﻿@model Tbl_PerComputer
+﻿@model Tbl_ComputerInfo
 @{ 
     var comIdentity = Model.ComputerIdentity;
-    var usbHistoryListUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/UsbHistoryList";
+    var usbLogListUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/UsbLogList";
 }
 
 <div>
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-        <legend>USB History: @Model.HostName</legend>
+        <legend>USB Log: @Model.HostName</legend>
     </fieldset>
 
     <table id="index" lay-filter="index" class="layui-hide">
@@ -22,7 +22,7 @@
 
             table.render({
                 elem: '#index'
-                , url: '@usbHistoryListUrl'
+                , url: '@usbLogListUrl'
                 , where: {comIdentity:'@comIdentity'}
                 , page: true
                 , cols: [[

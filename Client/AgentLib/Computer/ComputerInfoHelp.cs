@@ -44,11 +44,12 @@ namespace AgentLib
                 userComputer.Domain = IPGlobalProperties.GetIPGlobalProperties().DomainName;
                 SetNetworkInfo(userComputer);
                 SetBiosSerial(userComputer);
+                SetUserName(userComputer);
+
                 return userComputer;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -137,6 +138,23 @@ namespace AgentLib
                             userComputer.BiosSerial = Convert.ToString(b["SerialNumber"])?.Trim();
                             b?.Dispose();
                         }
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region + private static void SetUserName(ComputerInfo userComputer)
+        private static void SetUserName(ComputerInfo userComputer)
+        {
+            using (ManagementObjectSearcher comSystem = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystem"))
+            {
+                using (var wmi = comSystem.Get())
+                {
+                    foreach (var b in wmi)
+                    {
+                        userComputer.UserName = Convert.ToString(b["UserName"])?.Trim();
+                        b?.Dispose();
                     }
                 }
             }

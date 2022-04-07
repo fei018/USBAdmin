@@ -22,9 +22,9 @@ namespace USBAdminWebMVC
         private Tbl_EmailSetting _emailSetting;
 
         private readonly HttpContext _httpContext;
-        private readonly USBAdminDatabaseHelp _usbDb;
+        private readonly USBDBHelp _usbDb;
 
-        public EmailHelp(IHttpContextAccessor httpContextAccessor, USBAdminDatabaseHelp databaseHelp)
+        public EmailHelp(IHttpContextAccessor httpContextAccessor, USBDBHelp databaseHelp)
         {
             _httpContext = httpContextAccessor.HttpContext;
             _usbDb = databaseHelp;
@@ -122,7 +122,7 @@ namespace USBAdminWebMVC
         #endregion
 
         #region + public async Task Send_UsbRequest_Notify_Submit_ToUser(Tbl_UsbRequest usb, Tbl_PerComputer com)
-        public async Task Send_UsbRequest_Notify_Submit_ToUser(Tbl_UsbRequest usb, Tbl_PerComputer com)
+        public async Task Send_UsbRequest_Notify_Submit_ToUser(Tbl_UsbRequest usb, Tbl_ComputerInfo com)
         {
             try
             {

@@ -1,9 +1,5 @@
 ﻿using SqlSugar;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace USBModel
 {
@@ -18,7 +14,7 @@ namespace USBModel
 
         public string AdminName { get; set; }
 
-        
+
         [SugarColumn(ColumnDataType = "varchar(255)")]
         public string AdminEmailAddr { get; set; }
 
@@ -53,7 +49,7 @@ namespace USBModel
                 return emails;
             }
 
-           
+
             if (ForwardEmailAddrList.Contains(';'))
             {
                 var list = ForwardEmailAddrList.Split(';');

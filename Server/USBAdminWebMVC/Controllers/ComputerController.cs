@@ -11,9 +11,9 @@ namespace USBAdminWebMVC.Controllers
     [Authorize]
     public class ComputerController : Controller
     {
-        private readonly USBAdminDatabaseHelp _usbDb;
+        private readonly USBDBHelp _usbDb;
 
-        public ComputerController(USBAdminDatabaseHelp usbDbHelp)
+        public ComputerController(USBDBHelp usbDbHelp)
         {
             _usbDb = usbDbHelp;
         }
@@ -28,7 +28,7 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                var (totalCount, list) = await _usbDb.PerComputer_Get_List(page, limit);
+                var (totalCount, list) = await _usbDb.ComputerInfo_Get_List(page, limit);
                 return JsonResultHelp.LayuiTableData(totalCount, list);
             }
             catch (Exception ex)
@@ -38,12 +38,12 @@ namespace USBAdminWebMVC.Controllers
         }
         #endregion
 
-        #region UsbHistory
-        public async Task<IActionResult> UsbHistory(int Id)
+        #region UsbLog
+        public async Task<IActionResult> UsbLog(int Id)
         {
             try
             {
-                var query = await _usbDb.PerComputer_Get_ById(Id);
+                var query = await _usbDb.ComputerInfo_Get_ById(Id);
                 return View(query);
             }
             catch (Exception)
@@ -52,11 +52,11 @@ namespace USBAdminWebMVC.Controllers
             }
         }
 
-        public async Task<IActionResult> UsbHistoryList(string comIdentity, int page, int limit)
+        public async Task<IActionResult> UsbLogList(string comIdentity, int page, int limit)
         {
             try
             {
-                (int totalCount, List<Tbl_PerUsbHistory> list) = await _usbDb.Get_UsbHistoryListByComputerIdentity(comIdentity, page, limit);
+                (int totalCount, List<Tbl_UsbLog> list) = await _usbDb.UsbLog_Get_List_ByComputerIdentity(comIdentity, page, limit);
 
                 return JsonResultHelp.LayuiTableData(totalCount, list);
             }
@@ -72,7 +72,7 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                var query = await _usbDb.PerComputer_Get_ById(Id);
+                var query = await _usbDb.ComputerInfo_Get_ById(Id);
                 return View(query);
             }
             catch (Exception)
@@ -100,7 +100,7 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                await _usbDb.PerComputer_Delete_ById(id);
+                await _usbDb.ComputerInfo_Delete_ById(id);
                 return Json(new { msg = "Delete succeed." });
             }
             catch (Exception ex)

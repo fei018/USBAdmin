@@ -14,6 +14,8 @@ namespace USBModel
 
         public int AgentTimerMinute { get; set; }
 
+
+        [SugarColumn(ColumnDataType = "varchar(50)")]
         public string AgentVersion { get ; set ; }
 
         public bool UsbFilterEnabled { get; set; }

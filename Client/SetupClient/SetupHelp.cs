@@ -16,12 +16,12 @@ namespace SetupClient
     {
         public static string LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setup_log.txt");
 
-        string _newAppDir;
+        string _newAppDir; 
         string _newDataDir;
         string InstallUtilExe;
         string _serviceExe;
         string _setupDir;
-        string _setupiniPath;
+
         string _installServiceBatch;
         string _uninstallServiceBatch;
         string _dllDir;
@@ -37,9 +37,8 @@ namespace SetupClient
 
             _setupDir = AppDomain.CurrentDomain.BaseDirectory;
 
-            _setupiniPath = Path.Combine(_setupDir, "setup.ini");
-
-            GetNewAppAndDataDir();
+            _newAppDir = Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\HHITtools");
+            _newDataDir = Environment.ExpandEnvironmentVariables(@"%ProgramData%\HHITtools");
 
             _serviceExe = Path.Combine(_newAppDir, "HHITtoolsService.exe");
 
@@ -87,59 +86,59 @@ namespace SetupClient
         #endregion
 
         #region + private Setupini GetRegistryKey()
-        private Dictionary<string, string> GetRegistryKey()
-        {
-            try
-            {
-#if DEBUG
-                _setupiniPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setupDebug.ini");
-                Console.WriteLine(_setupiniPath);
-#endif
+//        private Dictionary<string, string> GetRegistryKey()
+//        {
+//            try
+//            {
+//#if DEBUG
+//                _setupiniPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setupDebug.ini");
+//                Console.WriteLine(_setupiniPath);
+//#endif
 
-                Dictionary<string, string> registry = new Dictionary<string, string>();
+//                Dictionary<string, string> registry = new Dictionary<string, string>();
 
-                var iniInfo = new FileInfo(_setupiniPath);
-                if (!iniInfo.Exists)
-                {
-                    throw new Exception("Setup.ini not exist.");
-                }
+//                var iniInfo = new FileInfo(_setupiniPath);
+//                if (!iniInfo.Exists)
+//                {
+//                    throw new Exception("Setup.ini not exist.");
+//                }
 
-                var ini = File.ReadAllLines(_setupiniPath);
-                if (ini.Length <= 0) throw new Exception("Setup.ini not exist.");
+//                var ini = File.ReadAllLines(_setupiniPath);
+//                if (ini.Length <= 0) throw new Exception("Setup.ini not exist.");
 
-                int count = -1;
+//                int count = -1;
 
-                for (int i = 0; i < ini.Length; i++)
-                {
-                    if (!string.IsNullOrWhiteSpace(ini[i]))
-                    {
-                        if (ini[i].Trim().ToLower() == "[registry]")
-                        {
-                            count = i;
-                            continue;
-                        }
-                        if (count >= 0)
-                        {
-                            if (Regex.IsMatch(ini[i].Trim().ToLower(), "\\[[a-z]{1,}\\]"))
-                            {
-                                break;
-                            }
+//                for (int i = 0; i < ini.Length; i++)
+//                {
+//                    if (!string.IsNullOrWhiteSpace(ini[i]))
+//                    {
+//                        if (ini[i].Trim().ToLower() == "[registry]")
+//                        {
+//                            count = i;
+//                            continue;
+//                        }
+//                        if (count >= 0)
+//                        {
+//                            if (Regex.IsMatch(ini[i].Trim().ToLower(), "\\[[a-z]{1,}\\]"))
+//                            {
+//                                break;
+//                            }
 
-                            if (ini[i].Contains('='))
-                            {
-                                registry.Add(ini[i].Split('=')[0].Trim(), ini[i].Split('=')[1].Trim());
-                            }
-                        }
-                    }
-                }
+//                            if (ini[i].Contains('='))
+//                            {
+//                                registry.Add(ini[i].Split('=')[0].Trim(), ini[i].Split('=')[1].Trim());
+//                            }
+//                        }
+//                    }
+//                }
 
-                return registry;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+//                return registry;
+//            }
+//            catch (Exception)
+//            {
+//                throw;
+//            }
+//        }
         #endregion
 
         #region + private void InitialRegistryKey()
@@ -147,7 +146,7 @@ namespace SetupClient
         {
             try
             {
-                var keys = GetRegistryKey();
+                var keys = AgentRegistryKey.Get_HHITtoolsKeys_Debug();
 
                 // Registry key location: Computer\HKEY_LOCAL_MACHINE
                 using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
@@ -178,16 +177,20 @@ namespace SetupClient
         {
             // _newAppDir
 
-            DirectoryInfo dir;
-            if (!Directory.Exists(_newAppDir))
+            DirectoryInfo dir = new DirectoryInfo(_newAppDir);
+
+            if (!dir.Exists)
             {
-                dir = Directory.CreateDirectory(_newAppDir);
+                dir.Create();
             }
             else
             {
-                dir = new DirectoryInfo(_newAppDir);
+                dir.Delete(true);
+                dir.Create();
             }
 
+
+            // 設置權限
             try
             {
                 var dirACL = dir.GetAccessControl();
@@ -200,7 +203,8 @@ namespace SetupClient
                 dir.SetAccessControl(dirACL);
             }
             catch (Exception) { }
-
+            
+            // 複製文件到 目的文件夾
             var files = Directory.GetFiles(_dllDir);
             foreach (var f in files)
             {
@@ -225,24 +229,17 @@ namespace SetupClient
 
             try
             {
-                if (Directory.Exists(_newDataDir))
+                var dir = new DirectoryInfo(_newDataDir);
+
+                if (!dir.Exists)
                 {
-                    var dir = new DirectoryInfo(_newDataDir);
-
-                    var dirACL = dir.GetAccessControl();
-
-                    dirACL.AddAccessRule(rule);
-                    dir.SetAccessControl(dirACL);
+                    dir.Create();
                 }
-                else
-                {
-                    var dir = Directory.CreateDirectory(_newDataDir);
 
-                    var dirACL = dir.GetAccessControl();
+                var dirACL = dir.GetAccessControl();
 
-                    dirACL.AddAccessRule(rule);
-                    dir.SetAccessControl(dirACL);
-                }
+                dirACL.AddAccessRule(rule);
+                dir.SetAccessControl(dirACL);
             }
             catch (Exception)
             {
@@ -393,43 +390,5 @@ namespace SetupClient
         }
         #endregion
 
-        #region GetNewAppAndDataDir()
-        private void GetNewAppAndDataDir()
-        {
-            try
-            {
-                if (File.Exists(_setupiniPath))
-                {
-                    var lines = File.ReadAllLines(_setupiniPath);
-                    if (lines == null || lines.Length <= 0)
-                    {
-                        return;
-                    }
-
-                    foreach (var l in lines)
-                    {
-                        if (l.Contains("newAppDir"))
-                        {
-                            var path = l.Split('=')[1];
-                            var dir = Environment.ExpandEnvironmentVariables(path);
-
-                            _newAppDir = dir;
-                        }
-
-                        if (l.Contains("newDataDir"))
-                        {
-                            var path = l.Split('=')[1];
-                            var dir = Environment.ExpandEnvironmentVariables(path);
-
-                            _newDataDir = dir;
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-        #endregion
     }
 }

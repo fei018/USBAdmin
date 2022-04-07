@@ -20,11 +20,19 @@ namespace HHITtoolsService
         public static void Start()
         {
             // post computer info to server
-            new AgentHttpHelp().PostComputerInfo_Http();
+            try
+            {
+                new AgentHttpHelp().PostComputerInfo_Http();
+            }
+            catch (Exception ex) { AgentLogger.Error("AgentHttpHelp().PostComputerInfo_Http(): " + ex.Message); }
 
             // PipeServer_Service
-            AppService.NamedPipeServer = new NamedPipeServer_Service();
-            AppService.NamedPipeServer.Start();
+            try
+            {
+                AppService.NamedPipeServer = new NamedPipeServer_Service();
+                AppService.NamedPipeServer.Start();
+            }
+            catch (Exception) { }
 
             // HHITtoolsUSB
             if (AgentRegistry.UsbFilterEnabled)
@@ -33,16 +41,10 @@ namespace HHITtoolsService
                 AppService.HHITtoolsUSB.Start();
             }
 
-            // PrintJobLog
-            try
-            {
-                //if (AgentRegistry.PrintJobLogEnabled)
-                //{
-                //    AppService.PrintJobLogService = new PrintJobLog();
-                //    AppService.PrintJobLogService.Start();
-                //}
-            }
-            catch (Exception) { }
+            //Tray
+            var tray = new HHITtoolsTrayService();
+            tray.Start();
+            AppService.HHITtoolsTrayList.Add(tray);
 
 
             // ServiceTimer
@@ -69,6 +71,12 @@ namespace HHITtoolsService
             try
             {
                 AppService.HHITtoolsTrayList.ForEach(t => t?.Stop());
+            }
+            catch (Exception) { }
+
+            try
+            {
+                AppService.ServiceTimer?.Stop();
             }
             catch (Exception) { }
 

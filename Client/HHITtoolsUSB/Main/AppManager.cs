@@ -33,7 +33,15 @@ namespace HHITtoolsUSB
         {
             try
             {
+                AppService.NamedPipeClient.Stop();
+            }
+            catch (Exception)
+            {
+            }
 
+            try
+            {
+                AppService.USBAppTimer.Stop();
             }
             catch (Exception)
             {

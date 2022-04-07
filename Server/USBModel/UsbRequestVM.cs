@@ -14,7 +14,7 @@ namespace USBModel
 
 
 
-        public UsbRequestVM(Tbl_UsbRequest usbRequest, Tbl_PerComputer com = null)
+        public UsbRequestVM(Tbl_UsbRequest usbRequest, Tbl_ComputerInfo com = null)
         {
             ComputerName = com?.HostName;
             RequestComputerIdentity = com?.ComputerIdentity;

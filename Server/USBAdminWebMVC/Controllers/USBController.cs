@@ -10,10 +10,10 @@ namespace USBAdminWebMVC.Controllers
     [Authorize]
     public class USBController : Controller
     {
-        private readonly USBAdminDatabaseHelp _usbDb;
+        private readonly USBDBHelp _usbDb;
         private readonly EmailHelp _email;
 
-        public USBController(USBAdminDatabaseHelp usbDb, EmailHelp emailHelp)
+        public USBController(USBDBHelp usbDb, EmailHelp emailHelp)
         {
             _usbDb = usbDb;          
             _email = emailHelp;
@@ -52,7 +52,7 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                var (totalCount, list) = await _usbDb.Get_UsbHistoryVMList(page, limit);
+                var (totalCount, list) = await _usbDb.UsbLog_Get_VMList(page, limit);
                 return JsonResultHelp.LayuiTableData(totalCount, list);
             }
             catch (Exception ex)

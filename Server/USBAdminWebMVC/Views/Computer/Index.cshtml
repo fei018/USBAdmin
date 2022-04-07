@@ -1,6 +1,6 @@
 ﻿@{ 
     var computerListUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/computerList";
-    var usbHistoryUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/usbhistory";
+    var usbLogUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/usbLog";
     var printJobUrl = USBAdminHelp.WebHttpUrlPrefix + "/Computer/printjob";
 
     var deleteUrl = USBAdminHelp.WebHttpUrlPrefix + "/computer/delete";
@@ -16,7 +16,7 @@
 </div>
 
 <script type="text/html" id="action">
-    <a class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs" href="javascript:;" layuimini-content-href="@usbHistoryUrl?Id={{d.id}}" data-title="USBHistory">USB</a>
+    <a class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs" href="javascript:;" layuimini-content-href="@usbLogUrl?Id={{d.id}}" data-title="USBLog">USBLog</a>
     <a class="layui-btn layui-btn-primary layui-border-blue layui-btn-xs" href="javascript:;" layuimini-content-href="@printJobUrl?Id={{d.id}}" data-title="PrintJob">PrintJob</a>
     <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" data-id="{{d.id}}" onclick="delComputer(this)">Delete</button>
 </script>
@@ -34,12 +34,13 @@
                 , page: true
                 , cols: [[
                     { field: 'hostName', title: 'HostName', width: 150, sort: true },
+                    { field: 'userName', title: 'UserName', width: 150 },
                     { field: 'lastSeenString', title: 'LastSeen', width: 200, sort: true },
-                    { field: 'agentVersion', title: 'AgentVer', width: 100, sort: true },
+                    { field: 'agentVersion', title: 'AgentVer', width: 150, sort: true },
                     { field: 'domain', title: 'domain', width: 150, sort: true },
                     { field: 'biosSerial', title: 'BiosSerial', width: 150, sort: true },
                     { field: 'ipAddress', title: 'IP', width: 150, sort: true },
-                    { field: 'macAddress', title: 'MAC', width: 180 },                   
+                    { field: 'macAddress', title: 'MAC', width: 180 },                    
                     { fixed: 'right', title: 'Action', toolbar: '#action', width: 300 }
                 ]]
             });

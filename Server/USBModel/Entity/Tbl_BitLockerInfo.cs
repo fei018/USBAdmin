@@ -1,9 +1,4 @@
 ﻿using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace USBModel
 {
@@ -18,6 +13,6 @@ namespace USBModel
         public string DistinguishedName { get; set; }
 
         [SugarColumn(IsNullable = true)]
-        public string Time { get; set; }        
+        public string Time { get; set; }
     }
 }

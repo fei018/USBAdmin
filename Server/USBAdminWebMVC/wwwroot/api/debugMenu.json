@@ -28,12 +28,6 @@
           "target": "_self",
           "child": [
             {
-              "title": "History",
-              "href": "/USB/History",
-              "icon": "fa fa-list-alt",
-              "target": "_self"
-            },
-            {
               "title": "Request",
               "href": "/USB/UsbRequest",
               "icon": "fa fa-list-alt",
@@ -67,12 +61,6 @@
           "icon": "fa fa-print",
           "target": "_self",
           "child": [
-            {
-              "title": "Template",
-              "href": "/Printer/Template",
-              "icon": "fa fa-list",
-              "target": "_self"
-            },
             {
               "title": "PrinterSite",
               "href": "/Printer/SiteIndex",

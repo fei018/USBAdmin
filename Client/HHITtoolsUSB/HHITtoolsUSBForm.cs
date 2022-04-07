@@ -58,39 +58,5 @@ namespace HHITtoolsUSB
 
         // OnUsbVolume
 
-        #region + public override void OnUsbVolume(UsbEventVolumeArgs args)
-        //public override void OnUsbVolume(UsbEventVolumeArgs args)
-        //{
-        //    if (args.Action == UsbDeviceChangeEvent.Arrival)
-        //    {
-        //        if (args.Flags == UsbVolumeFlags.Media)
-        //        {
-        //            foreach (char letter in args.Drives)
-        //            {
-        //                FilterUsbDisk(letter);
-        //            }
-        //        }
-        //    }
-        //}
-        #endregion
-
-        #region + private void FilterUsbDisk(char letter)
-        //private void FilterUsbDisk(char letter)
-        //{
-        //    Task.Run(() =>
-        //    {
-        //        try
-        //        {
-        //            if (!AgentRegistry.UsbFilterEnabled) return;
-
-        //            new UsbFilter().Filter_UsbDisk_By_DriveLetter(letter);
-        //        }
-        //        catch (Exception)
-        //        {
-        //        }
-        //    });
-        //}
-        #endregion
-
     }
 }

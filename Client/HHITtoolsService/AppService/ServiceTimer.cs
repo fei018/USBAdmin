@@ -68,14 +68,14 @@ namespace HHITtoolsService
 
                 try
                 {
-                    //if (AgentRegistry.PrintJobLogEnabled)
-                    //{
-                    //    if (AppService.PrintJobLogService == null)
-                    //    {
-                    //        AppService.PrintJobLogService = new PrintJobLog();
-                    //        AppService.PrintJobLogService.Start();
-                    //    }
-                    //}
+                    if (AgentRegistry.PrintJobLogEnabled)
+                    {
+                        if (AppService.PrintJobLogService == null)
+                        {
+                            AppService.PrintJobLogService = new PrintJobLogService();
+                            AppService.PrintJobLogService.Start();
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

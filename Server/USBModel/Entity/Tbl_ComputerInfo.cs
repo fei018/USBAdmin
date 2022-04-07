@@ -1,14 +1,10 @@
 ﻿using SqlSugar;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ToolsCommon;
 
 namespace USBModel
 {
-    public class Tbl_ComputerInfo:IComputerInfo
+    public class Tbl_ComputerInfo : IComputerInfo
     {
         [SugarColumn(IsIdentity = true, IsPrimaryKey = true)]
         public int Id { get; set; }
@@ -30,6 +26,7 @@ namespace USBModel
 
         public string AgentVersion { get; set; }
 
+        [SugarColumn(IsNullable = true)]
         public string UserName { get; set; }
 
         [SugarColumn(ColumnDataType = "char(36)")]

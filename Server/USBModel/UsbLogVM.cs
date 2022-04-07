@@ -1,11 +1,11 @@
 ﻿namespace USBModel
 {
-    public class PerUsbHistoryVM : Tbl_PerUsbHistory
+    public class UsbLogVM : Tbl_UsbLog
     {
         public string ComputerName { get; set; }
 
 
-        public PerUsbHistoryVM(Tbl_PerUsbHistory usbHistory, Tbl_PerComputer com = null)
+        public UsbLogVM(Tbl_UsbLog usbHistory, Tbl_ComputerInfo com = null)
         {
             ComputerName = com?.HostName;
             ComputerIdentity = com?.ComputerIdentity;

@@ -4,7 +4,7 @@ using ToolsCommon;
 
 namespace USBModel
 {
-    public class Tbl_PrintJobLog : IPrintJobInfo
+    public class Tbl_PrintJobLog : IPrintJobLog
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }

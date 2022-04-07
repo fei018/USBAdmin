@@ -14,6 +14,7 @@ namespace USBModel
 
         public bool UsbFilterEnabled { get; set; }
 
+        [SugarColumn(IsNullable = true)]
         public bool UsbHistoryEnabled { get; set; }
 
         [SugarColumn(IsNullable =true)]

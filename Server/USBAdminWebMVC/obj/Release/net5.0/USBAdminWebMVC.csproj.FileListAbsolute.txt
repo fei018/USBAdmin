@@ -443,14 +443,12 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\USBAdminWebMVC.Ra
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Account\Login.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\AgentSetting\Index.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Computer\Index.cshtml.g.cs
-C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Computer\UsbHistory.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\EmailSetting\Index.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Home\Welcome.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Shared\OK.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
-C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\USB\History.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\USB\Register.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\USB\RequestDetail.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\USB\UsbRequest.cshtml.g.cs
@@ -594,8 +592,6 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropP
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\RequestApprove.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\RequestReject.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\RequestReview.cshtml.g.cs
-C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\Template.cshtml.g.cs
-C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\TemplateEdit.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\HHITtoolsCommon.dll
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\History - 複製.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\RequestApprove.cshtml.g.cs
@@ -604,3 +600,7 @@ C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dro
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\Template.cshtml.g.cs
 C:\Code\GitHub\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\TemplateEdit.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\ToolsCommon.dll
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\wwwroot\api\debugMenu.json
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\wwwroot\api\InitMenu.json
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Computer\UsbLog.cshtml.g.cs
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\History.cshtml.g.cs

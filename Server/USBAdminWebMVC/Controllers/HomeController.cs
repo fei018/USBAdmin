@@ -11,9 +11,9 @@ namespace USBAdminWebMVC.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly USBAdminDatabaseHelp _usbDb;
+        private readonly USBDBHelp _usbDb;
 
-        public HomeController(USBAdminDatabaseHelp usbDb)
+        public HomeController(USBDBHelp usbDb)
         {
             _usbDb = usbDb;
         }
@@ -37,7 +37,7 @@ namespace USBAdminWebMVC.Controllers
                 welcomeVM.UsbRequestApproveCount = await _usbDb.UsbRequest_TotalCount_ByState(UsbRequestStateType.Approve);
                 welcomeVM.UsbRequestRejectCount = await _usbDb.UsbRequest_TotalCount_ByState(UsbRequestStateType.Reject);
                 welcomeVM.UsbRequestUnderReviewCount = await _usbDb.UsbRequest_TotalCount_ByState(UsbRequestStateType.UnderReview);
-                welcomeVM.ComputerCount = await _usbDb.PerComputer_Get_TotalCount();
+                welcomeVM.ComputerCount = await _usbDb.ComputerInfo_Get_TotalCount();
 
                 return View(welcomeVM);
             }

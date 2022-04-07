@@ -16,12 +16,12 @@ namespace USBAdminWebMVC.Controllers
     [AgentHttpKeyFilter]
     public class AgentController : Controller
     {
-        private readonly USBAdminDatabaseHelp _usbDb;
+        private readonly USBDBHelp _usbDb;
         private readonly HttpContext _httpContext;
 
         private readonly EmailHelp _email;
 
-        public AgentController(IHttpContextAccessor httpContextAccessor, USBAdminDatabaseHelp usbDb, EmailHelp emailHelp)
+        public AgentController(IHttpContextAccessor httpContextAccessor, USBDBHelp usbDb, EmailHelp emailHelp)
         {
             try
             {
@@ -96,8 +96,8 @@ namespace USBAdminWebMVC.Controllers
                 using StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
                 var comjosn = await body.ReadToEndAsync();
 
-                var com = JsonHttpConvert.Deserialize_PerComputer(comjosn);
-                await _usbDb.PerComputer_InsertOrUpdate(com);
+                var com = JsonHttpConvert.Deserialize_ComputerInfo(comjosn);
+                await _usbDb.ComputerInfo_InsertOrUpdate(com);
 
                 return Json(new AgentHttpResponseResult());
             }
@@ -119,9 +119,9 @@ namespace USBAdminWebMVC.Controllers
                 using StreamReader body = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
                 var post = await body.ReadToEndAsync();
 
-                var info = JsonHttpConvert.Deserialize_PerUsbHistory(post);
+                var info = JsonHttpConvert.Deserialize_UsbLog(post);
 
-                await _usbDb.Insert_UsbHistory(info);
+                await _usbDb.UsbLog_Insert(info);
 
                 return Json(new AgentHttpResponseResult());
             }
@@ -147,7 +147,7 @@ namespace USBAdminWebMVC.Controllers
 
                 var usbInDb = await _usbDb.UsbRequest_Insert(userPost_UsbRequest);
 
-                var com = await _usbDb.PerComputer_Get_ByIdentity(usbInDb.RequestComputerIdentity);
+                var com = await _usbDb.ComputerInfo_Get_ByIdentity(usbInDb.RequestComputerIdentity);
 
                 await _email.Send_UsbRequest_Notify_Submit_ToUser(usbInDb, com);
 
@@ -164,23 +164,6 @@ namespace USBAdminWebMVC.Controllers
         }
         #endregion
 
-        // PrintTemplate
-
-        #region PrintTemplate(string SubnetAddr)
-        public async Task<IActionResult> PrintTemplate(string SubnetAddr)
-        {
-            try
-            {
-                var template = await _usbDb.PrintTemplate_Get_BySubnetAddr(SubnetAddr);
-                var result = new AgentHttpResponseResult { Succeed = true, PrintTemplate = template };
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-                return Json(new AgentHttpResponseResult(false, ex.Message));
-            }
-        }
-        #endregion
 
         // IPPrinterInfo
 

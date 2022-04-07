@@ -64,7 +64,7 @@ namespace USBAdminWebMVC
             services.AddScoped(x => new LoginUserDb(connstring));
             services.AddScoped<LoginUserService>();
 
-            services.AddScoped(x => new USBAdminDatabaseHelp(connstring));
+            services.AddScoped(x => new USBDBHelp(connstring));
 
             services.AddScoped<EmailHelp>();
         }
