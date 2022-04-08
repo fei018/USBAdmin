@@ -9,6 +9,7 @@ using USBModel;
 
 namespace USBAdminWebMVC.Controllers
 {
+    [AgentHttpKeyFilter]
     public class ClientGetController : Controller
     {
         private readonly USBDBHelp _usbDb;
@@ -18,6 +19,23 @@ namespace USBAdminWebMVC.Controllers
             _usbDb = usbDb;
         }
 
+        // Agent Rule
+        #region AgentRule(string computerIdentity)
+        public async Task<IActionResult> AgentRule(string computerIdentity)
+        {
+            try
+            {
+                var rule = await _usbDb.AgentRule_Get_By_ComputerIdentity(computerIdentity) as IAgentRule;
+                var result = new AgentHttpResponseResult() { Succeed = true, AgentRule = rule };
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json(new AgentHttpResponseResult(false, ex.Message));
+            }
+        }
+        #endregion
 
         // Usb Whitelist
 
