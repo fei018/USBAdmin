@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Views\BitLockerInfo\" />
+    <Folder Include="Views\AgentRule\" />
   </ItemGroup>
 
   <ItemGroup>

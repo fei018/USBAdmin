@@ -121,8 +121,8 @@ namespace USBAdminWebMVC
         }
         #endregion
 
-        #region + public async Task Send_UsbRequest_Notify_Submit_ToUser(Tbl_UsbRequest usb, Tbl_PerComputer com)
-        public async Task Send_UsbRequest_Notify_Submit_ToUser(Tbl_UsbRequest usb, Tbl_ComputerInfo com)
+        #region + public async Task SendToUser_UsbRequest_SubmitForm_Received(Tbl_UsbRequest usb, Tbl_PerComputer com)
+        public async Task SendToUser_UsbRequest_SubmitForm_Received(Tbl_UsbRequest usb, Tbl_ComputerInfo com)
         {
             try
             {
@@ -155,8 +155,8 @@ namespace USBAdminWebMVC
         }
         #endregion
 
-        #region + public async Task Send_UsbReuqest_Notify_Result_ToUser(Tbl_UsbRequest usb)
-        public async Task Send_UsbReuqest_Notify_Result_ToUser(Tbl_UsbRequest usb)
+        #region + public async Task SendToUser_UsbReuqest_Result(Tbl_UsbRequest usb)
+        public async Task SendToUser_UsbReuqest_Result(Tbl_UsbRequest usb)
         {
             try
             {

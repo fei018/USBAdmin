@@ -97,7 +97,7 @@ namespace USBAdminWebMVC.Controllers
 
                 var com = await _usbDb.ComputerInfo_Get_ByIdentity(usbInDb.RequestComputerIdentity);
 
-                await _email.Send_UsbRequest_Notify_Submit_ToUser(usbInDb, com);
+                await _email.SendToUser_UsbRequest_SubmitForm_Received(usbInDb, com);
 
                 return Json(new AgentHttpResponseResult());
             }

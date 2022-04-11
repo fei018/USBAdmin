@@ -64,7 +64,7 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                var fileInfo = new FileInfo(USBAdminHelp.AgentUpdateFilePath);
+                var fileInfo = new FileInfo(USBAdminHelp.AgentClientApp);
                 if (!fileInfo.Exists)
                 {
                     throw new Exception("Update File not exist.");

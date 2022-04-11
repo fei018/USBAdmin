@@ -17,6 +17,8 @@ namespace USBAdminWebMVC
         {
             #region USBAdminHelp
             USBAdminHelp.WebHttpUrlPrefix = configuration.GetSection("WebHttpUrlPrefix").Value;
+
+            // home page menu
             USBAdminHelp.InitMenuName = configuration.GetSection("InitMenuName").Value;
 
             USBAdminHelp.AgentHttpKey = configuration.GetSection("AgentHttpKey").Value;
@@ -25,10 +27,11 @@ namespace USBAdminWebMVC
                 throw new Exception("USBAdminHelp.AgentHttpKey is empty.");
             }
 
-            USBAdminHelp.AgentUpdateFilePath = configuration.GetSection("Path").GetSection("AgentUpdateFile").Value;
-            if (string.IsNullOrWhiteSpace(USBAdminHelp.AgentUpdateFilePath))
+            // Agent Client .exe
+            USBAdminHelp.AgentClientApp = configuration.GetSection("Path").GetSection("AgentClientApp").Value;
+            if (string.IsNullOrWhiteSpace(USBAdminHelp.AgentClientApp))
             {
-                USBAdminHelp.AgentUpdateFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Update\\Agent", "Release.zip");
+                USBAdminHelp.AgentClientApp = Path.Combine(Directory.GetCurrentDirectory(), "Update\\Agent", "Release.zip");
             }
             #endregion
 

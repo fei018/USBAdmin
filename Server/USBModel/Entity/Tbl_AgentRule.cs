@@ -11,6 +11,9 @@ namespace USBModel
 
         public Guid GroupId { get; set; }
 
+        public string GroupName { get; set; }
+
+        // setting
 
         public int AgentTimerMinute { get; set; }
 

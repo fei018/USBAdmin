@@ -156,7 +156,7 @@ namespace USBAdminWebMVC.Controllers
             {
                 var usb = await _usbDb.UsbRequest_ToApprove_ById(id);
 
-                await _email.Send_UsbReuqest_Notify_Result_ToUser(usb);
+                await _email.SendToUser_UsbReuqest_Result(usb);
 
                 //ViewBag.OK = "Approve Succeed: " + usb.ToString();
                 return Ok();
@@ -179,7 +179,7 @@ namespace USBAdminWebMVC.Controllers
 
                 await _usbDb.UsbRequest_ToReject(usb);
 
-                await _email.Send_UsbReuqest_Notify_Result_ToUser(usb);
+                await _email.SendToUser_UsbReuqest_Result(usb);
 
                 return Ok();
             }
