@@ -29,8 +29,8 @@ namespace USBModel
         [SugarColumn(IsNullable = true)]
         public string UserName { get; set; }
 
-        [SugarColumn(ColumnDataType = "char(36)")]
-        public string AgentRuleGroupId { get; set; }
+        [SugarColumn(IsNullable = true)]
+        public string AgentRuleName { get; set; }
 
 
         // IsIgnore

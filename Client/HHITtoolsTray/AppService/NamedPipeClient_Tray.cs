@@ -110,7 +110,8 @@ namespace HHITtoolsTray
             _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>()
             {
                 { PipeMsgType.Msg_TrayHandle, ReceiveMsgHandler_Message_ShowMessageBox },
-                { PipeMsgType.UsbDiskNoRegister_NotifyTray_TrayHandle, ReceiveMsgHandler_UsbDiskNoRegister}
+                { PipeMsgType.UsbDiskNoRegister_NotifyTray_TrayHandle, ReceiveMsgHandler_UsbDiskNoRegister},
+                { PipeMsgType.ToCloseProcess_HHITtoolsTray_TrayHandle, ReceiveMsgHandler_ToCloseProcess_Tray }
             };
         }
         #endregion
@@ -141,6 +142,23 @@ namespace HHITtoolsTray
                     MessageBox.Show(ex.Message, "USB Control");
                 }
             }));
+        }
+        #endregion
+
+        #region ReceiveMsgHandler_ToCloseProcess_Tray(PipeMsg pipeMsg)
+        private void ReceiveMsgHandler_ToCloseProcess_Tray(PipeMsg pipeMsg)
+        {
+            try
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    App.Current.MainWindow.Close();
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         #endregion
 

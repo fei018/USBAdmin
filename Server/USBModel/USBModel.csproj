@@ -9,4 +9,8 @@
     <ProjectReference Include="..\ToolsCommon\ToolsCommon.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entity\WillDrop\" />
+  </ItemGroup>
+
 </Project>

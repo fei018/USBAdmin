@@ -55,9 +55,9 @@ namespace AgentLib
         {
             try
             {
-                var agentResult =  AgentHttpHelp.HttpClient_Get(AgentRegistry.AgentSettingUrl);
+                var agentResult =  AgentHttpHelp.HttpClient_Get(AgentRegistry.AgentConfigUrl);
 
-                string newVersion = agentResult.AgentRule.AgentVersion;
+                string newVersion = agentResult.AgentConfig.AgentVersion;
 
                 if (AgentRegistry.AgentVersion.Equals(newVersion, StringComparison.OrdinalIgnoreCase))
                 {
@@ -132,27 +132,6 @@ namespace AgentLib
         #region + private void DownloadFile()
         private void DownloadFile()
         {
-            //using (var http = AgentHttpHelp.CreateHttpClient())
-            //{
-            //    var response = http.GetAsync(AgentRegistry.AgentUpdateUrl).Result;
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var fbs = response.Content.ReadAsByteArrayAsync().Result;
-
-            //        using (FileStream fs = new FileStream(_updateZipFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-            //        {
-            //            fs.Write(fbs, 0, fbs.Length);
-            //        }
-
-            //        // unzip download file
-            //        ZipFile.ExtractToDirectory(_updateZipFile, _updateDir);
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("download File fail.");
-            //    }
-            //}
 
             try
             {

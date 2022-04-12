@@ -95,7 +95,7 @@ namespace HHITtoolsTray
         {
             try
             {
-                var vnc = Path.Combine(AgentRegistry.RemoteSupportApp);
+                var vnc = Path.Combine(AgentRegistry.RemoteSupportPath);
                 Process.Start(vnc);
             }
             catch (Exception ex)

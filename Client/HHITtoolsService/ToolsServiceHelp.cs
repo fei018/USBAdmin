@@ -1,12 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using AgentLib.AppService;
+using System;
 using System.ServiceProcess;
-using System.Threading;
-using AgentLib;
-using AgentLib.AppService;
-using AgentLib.Win32API;
 
 namespace HHITtoolsService
 {
@@ -45,21 +39,6 @@ namespace HHITtoolsService
             {
             }
 
-            // user logoff windows
-            // close tray
-            try
-            {
-                if (sessionChange.Reason == SessionChangeReason.SessionLogoff)
-                {
-                    var tray = AppService.HHITtoolsTrayList.Find(a => a.AppProcess.SessionId == sessionChange.SessionId);
-                    AppService.HHITtoolsTrayList.Remove(tray);
-
-                    AppProcessHelp.CloseOrKillProcess(tray.AppProcess);
-                }
-            }
-            catch (Exception)
-            {
-            }
         }
         #endregion
 

@@ -39,50 +39,50 @@ namespace USBAdminWebMVC.Controllers
         // Usb Whitelist
 
         #region UsbWhitelist()
-        public async Task<IActionResult> UsbWhitelist()
-        {
-            try
-            {
-                var query = await _usbDb.UsbWhitelist_Get();
+        //public async Task<IActionResult> UsbWhitelist()
+        //{
+        //    //try
+        //    //{
+        //    //    var query = await _usbDb.UsbWhitelist_Get();
 
-                var agent = new AgentHttpResponseResult { Succeed = true, UsbFilterData = query };
+        //    //    var agent = new AgentHttpResponseResult { Succeed = true, UsbFilterData = query };
 
-                return Json(agent);
-            }
-            catch (Exception ex)
-            {
-                return Json(new AgentHttpResponseResult(false, ex.Message));
-            }
-        }
+        //    //    return Json(agent);
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    return Json(new AgentHttpResponseResult(false, ex.Message));
+        //    //}
+        //}
         #endregion
 
         // AgentSetting
 
         #region AgentSetting()
-        public async Task<IActionResult> AgentSetting(string computerIdentity)
-        {
-            try
-            {
-                IAgentSetting setting = null;
+        //public async Task<IActionResult> AgentSetting(string computerIdentity)
+        //{
+        //    try
+        //    {
+        //        IAgentSetting setting = null;
 
-                if (string.IsNullOrEmpty(computerIdentity))
-                {
-                    // global agent setting
-                    setting = await _usbDb.Get_AgentSetting();
-                }
-                else
-                {
-                    // group agent setting
-                }
+        //        if (string.IsNullOrEmpty(computerIdentity))
+        //        {
+        //            // global agent setting
+        //            setting = await _usbDb.Get_AgentSetting();
+        //        }
+        //        else
+        //        {
+        //            // group agent setting
+        //        }
 
-                var agent = new AgentHttpResponseResult { Succeed = true, AgentSetting = setting };
-                return Json(agent);
-            }
-            catch (Exception ex)
-            {
-                return Json(new AgentHttpResponseResult(false,ex.Message));
-            }
-        }
+        //        var agent = new AgentHttpResponseResult { Succeed = true, AgentSetting = setting };
+        //        return Json(agent);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new AgentHttpResponseResult(false,ex.Message));
+        //    }
+        //}
         #endregion
 
         // Computer

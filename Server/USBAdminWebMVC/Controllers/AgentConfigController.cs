@@ -7,12 +7,12 @@ using USBModel;
 
 namespace USBAdminWebMVC.Controllers
 {
-    public class AgentSettingController : Controller
+    public class AgentConfigController : Controller
     {
         private readonly USBDBHelp _usbDb;
 
 
-        public AgentSettingController(USBDBHelp usbDb)
+        public AgentConfigController(USBDBHelp usbDb)
         {
             _usbDb = usbDb;
         }
@@ -21,7 +21,7 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                var query = await _usbDb.AgentSetting_Get();
+                var query = await _usbDb.AgentConfig_Get();
                 return View(query);
             }
             catch (Exception)
@@ -32,11 +32,11 @@ namespace USBAdminWebMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateSetting(Tbl_AgentSetting setting)
+        public async Task<IActionResult> UpdateConfig(Tbl_AgentConfig setting)
         {
             try
             {
-                await _usbDb.AgentSetting_Update(setting);
+                await _usbDb.AgentConfig_Update(setting);
 
                 return Ok();
             }

@@ -94,7 +94,7 @@
     <Compile Include="Printer\PrinterHelp.cs" />
     <Compile Include="Printer\LocalPrinterInfo.cs" />
     <Compile Include="Printer\PrintTemplateHelp.cs" />
-    <Compile Include="Main\AgentSetting.cs" />
+    <Compile Include="Main\AgentConfig.cs" />
     <Compile Include="Computer\ComputerInfo.cs" />
     <Compile Include="Printer\PrintTemplate.cs" />
     <Compile Include="USBFilter\UsbBase.cs" />

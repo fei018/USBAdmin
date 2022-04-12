@@ -34,7 +34,7 @@ namespace HHITtoolsUSB
             {
                 try
                 {
-                    new AgentHttpHelp().UpdateUSBWhitelist_Http();
+                    new AgentHttpHelp().UpdateUSBWhitelist();
                     new UsbFilter().Filter_Scan_All_USB_Disk();
                 }
                 catch (Exception)

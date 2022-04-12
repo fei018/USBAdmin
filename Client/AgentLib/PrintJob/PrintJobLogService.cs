@@ -17,32 +17,37 @@ namespace AgentLib
         {
             Stop();
 
-            try
+            Task.Run(() =>
             {
-                _PrintJobMonitorList = _PrintJobMonitorList ?? new Dictionary<string, PrintQueueMonitor>();
-
-                var ipPrinters = PrinterHelp.GetIPPrinterList();
-                foreach (var printer in ipPrinters)
+                try
                 {
-                    try
+                    _PrintJobMonitorList = _PrintJobMonitorList ?? new Dictionary<string, PrintQueueMonitor>();
+
+                    var ipPrinters = PrinterHelp.GetIPPrinterList();
+                    foreach (var printer in ipPrinters)
                     {
-                        var printJobMonitor = new PrintQueueMonitor(printer.Name);
+                        try
+                        {
+                            var printJobMonitor = new PrintQueueMonitor(printer.Name);
 
-                        printJobMonitor.OnJobStatusChange += PrintJobMonitor_OnJobStatusChange;
+                            printJobMonitor.OnJobStatusChange += PrintJobMonitor_OnJobStatusChange;
 
-                        // start printJob monitor
-                        printJobMonitor.Start();
+                            // start printJob monitor
+                            printJobMonitor.Start();
 
-                        _PrintJobMonitorList.Add(printJobMonitor.PrinterName, printJobMonitor);
-                    }
-                    catch (Exception)
-                    {
+                            _PrintJobMonitorList.Add(printJobMonitor.PrinterName, printJobMonitor);
+                        }
+                        catch (Exception ex)
+                        {
+                            AgentLogger.Error(ex.GetBaseException().Message);
+                        }
                     }
                 }
-            }
-            catch (Exception)
-            {
-            }
+                catch (Exception ex)
+                {
+                    AgentLogger.Error(ex.GetBaseException().Message);
+                }
+            });
         }
         #endregion
 
@@ -67,14 +72,6 @@ namespace AgentLib
         }
         #endregion
 
-        #region Restart
-        public void Restart()
-        {
-            Stop();
-            Start();
-        }
-        #endregion
-
         #region + private void PrintJobMonitor_OnJobStatusChange(object Sender, PrintJobChangeEventArgs e)
         private static object _Locker = new object();
         static int _JobID = -1;
@@ -85,16 +82,6 @@ namespace AgentLib
 
             try
             {
-
-
-                //Console.WriteLine(jobInfo.JobIdentifier);
-                //Console.WriteLine((int)jobInfo.JobStatus);
-                //Console.WriteLine(jobInfo.Submitter);
-                //Console.WriteLine(jobInfo.Name);
-                //Console.WriteLine(jobInfo.NumberOfPages);
-                //Console.WriteLine(jobInfo.JobSize);
-                //Console.WriteLine("--------------");
-                //Console.WriteLine("-----------");
                 if ((jobInfo.JobStatus & PrintJobStatus.Printing) == (PrintJobStatus.Printing))
                 {
                     lock (_Locker)
@@ -125,7 +112,14 @@ namespace AgentLib
                     {
                         if (AgentRegistry.PrintJobLogEnabled)
                         {
-                            new AgentHttpHelp().PostPrintJobLog_Http(job);
+                            try
+                            {
+                                new AgentHttpHelp().PostPrintJobLog(job);
+                            }
+                            catch (Exception ex)
+                            {
+                                AgentLogger.Error(ex.Message);
+                            }
                         }
                     });
 

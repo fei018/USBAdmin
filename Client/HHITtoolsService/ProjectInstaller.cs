@@ -15,18 +15,6 @@ namespace HHITtoolsService
         public ProjectInstaller()
         {
             InitializeComponent();
-
-            this.AfterInstall += ProjectInstaller_AfterInstall;
-        }
-
-        private void ProjectInstaller_AfterInstall(object sender, InstallEventArgs e)
-        {
-            ProjectInstaller serviceInstaller = (ProjectInstaller)sender;
-
-            using (ServiceController sc = new ServiceController(serviceInstaller.serviceInstaller1.ServiceName))
-            {
-                sc.Start();
-            }
         }
     }
 }

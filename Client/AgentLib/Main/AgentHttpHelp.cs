@@ -33,7 +33,7 @@ namespace AgentLib
                 if (!response.IsSuccessStatusCode)
                 {
                     string error = response.Content.ReadAsStringAsync().Result;
-                    throw new Exception($"Http StatusCode: {(int)response.StatusCode}\r\nContent: {error}");
+                    throw new Exception($"HttpUrl: {url}\r\nStatusCode: {(int)response.StatusCode}\r\nContent: {error}");
                 }
 
                 string resultJson = response.Content.ReadAsStringAsync().Result;
@@ -93,12 +93,12 @@ namespace AgentLib
                 if (!response.IsSuccessStatusCode)
                 {
                     string error = response.Content.ReadAsStringAsync().Result;
-                    throw new Exception($"Http StatusCode: {response.StatusCode}, Content: {error}");
+                    throw new Exception($"HttpUrl: {url}\r\nStatusCode: {(int)response.StatusCode}\r\nContent: {error}");
                 }
 
                 var resultJson = response.Content.ReadAsStringAsync().Result;
 
-                var agentResult = JsonConvert.DeserializeObject<AgentHttpResponseResult>(resultJson);
+                var agentResult = DeserialAgentResult(resultJson);
 
                 if (!agentResult.Succeed)
                 {
@@ -136,6 +136,7 @@ namespace AgentLib
                 {
                     Converters = {
                         new AbstractJsonConverter<AgentRule, IAgentRule>(),
+                        new AbstractJsonConverter<AgentConfig, IAgentConfig>(),
                         new AbstractJsonConverter<IPPrinterInfo, IIPPrinterInfo>()
                     }
                 };
@@ -150,8 +151,8 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public void UpdateUSBWhitelist_Http()
-        public void UpdateUSBWhitelist_Http()
+        #region + public void UpdateUSBWhitelist()
+        public void UpdateUSBWhitelist()
         {
             try
             {
@@ -159,21 +160,21 @@ namespace AgentLib
 
                 UsbWhitelistHelp.Set_And_Load_UsbWhitelist_byHttp(agentResult.UsbWhitelist);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("AgentHttpHelp.UpdateUSBWhitelist():\r\n" + ex.Message);
             }
         }
         #endregion
 
-        #region + public void GetAgentRule_Http()
-        public void GetAgentRule_Http()
+        #region + public void GetAgentRule()
+        public void GetAgentRule()
         {
             try
             {
                 var comid = ComputerInfoHelp.GetComputerIdentity();
                 var url = AgentRegistry.AgentRuleUrl + "?computerIdentity=" + comid;
-                var agentResult = HttpClient_Get(AgentRegistry.AgentSettingUrl);
+                var agentResult = HttpClient_Get(url);
 
                 var agentRule = agentResult.AgentRule;
 
@@ -181,15 +182,15 @@ namespace AgentLib
                 AgentRegistry.UsbFilterEnabled = agentRule.UsbFilterEnabled;
                 AgentRegistry.PrintJobLogEnabled = agentRule.PrintJobLogEnabled;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("AgentHttpHelp.GetAgentRule():\r\n" + ex.Message);
             }
         }
         #endregion
 
-        #region + public void PostComputerInfo_Http()
-        public void PostComputerInfo_Http()
+        #region + public void PostComputerInfo()
+        public void PostComputerInfo()
         {
             try
             {
@@ -197,15 +198,15 @@ namespace AgentLib
 
                 HttpClient_Post(AgentRegistry.PostComputerInfoUrl, com);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("AgentHttpHelp.PostComputerInfo():\r\n" + ex.Message);
             }
         }
         #endregion
 
-        #region + public void PostUsbLog_byDisk_Http(string diskPath)
-        public void PostUsbLog_byDisk_Http(string diskPath)
+        #region + public void PostUsbLog_byDisk(string diskPath)
+        public void PostUsbLog_byDisk(string diskPath)
         {
             try
             {
@@ -226,34 +227,34 @@ namespace AgentLib
 
                 HttpClient_Post(AgentRegistry.PostUsbLogUrl, usbHistory);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("AgentHttpHelp.PostUsbLog_byDisk():\r\n" + ex.Message);
             }
         }
         #endregion
 
-        #region + public void PostUsbRequest_Http(UsbRequest usb)
+        #region + public void PostUsbRequest(UsbRequest usb)
         /// <summary>
         /// 
         /// </summary>
         /// <param name="usb"></param>
         /// <exception cref="throw"></exception>
-        public void PostUsbRequest_Http(UsbRequest post)
+        public void PostUsbRequest(UsbRequest post)
         {
             try
             {
                 HttpClient_Post(AgentRegistry.PostUsbRequestUrl, post);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("AgentHttpHelp.PostUsbRequest():\r\n" + ex.Message);
             }
         }
         #endregion
 
-        #region + public List<IIPPrinterInfo> GetSitePrinterList_Http()
-        public List<IPPrinterInfo> GetSitePrinterList_Http()
+        #region + public List<IIPPrinterInfo> GetSitePrinterList()
+        public List<IPPrinterInfo> GetSitePrinterList()
         {
             try
             {
@@ -270,23 +271,23 @@ namespace AgentLib
                 }
                 return list;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("AgentHttpHelp.GetSitePrinterList():\r\n" + ex.Message);
             }
         }
         #endregion
 
-        #region + public void PostPrintJobLog_Http(PrintJobLog printJob)
-        public void PostPrintJobLog_Http(PrintJobLog printJob)
+        #region + public void PostPrintJobLog(PrintJobLog printJob)
+        public void PostPrintJobLog(PrintJobLog printJob)
         {
             try
             {
                 HttpClient_Post(AgentRegistry.PostPrintJobLogUrl, printJob);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("AgentHttpHelp.PostPrintJobLog():\r\n" + ex.Message);
             }
         }
         #endregion

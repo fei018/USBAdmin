@@ -45,7 +45,7 @@ namespace USBModel
 
                 _db.CodeFirst.SetStringDefaultLength(200).InitTables<Tbl_UsbLog>();
                 _db.CodeFirst.SetStringDefaultLength(200).InitTables<Tbl_ComputerInfo>();
-                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_AgentSetting>();
+                _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_AgentConfig>();
                 _db.CodeFirst.SetStringDefaultLength(200).InitTables<Tbl_UsbRequest>();
                 _db.CodeFirst.SetStringDefaultLength(200).InitTables<Tbl_EmailSetting>();
                 _db.CodeFirst.SetStringDefaultLength(100).InitTables<Tbl_IPPrinterInfo>();
@@ -62,25 +62,10 @@ namespace USBModel
         }
         #endregion
 
-        // AgentSetting
-
-        #region + public async Task<t_AgentSetting> Get_AgentSetting()
-        public async Task<IAgentSetting> Get_AgentSetting()
+        #region SeedData()
+        public void SeedData()
         {
-            try
-            {
-                var query = await _db.Queryable<Tbl_AgentSetting>().FirstAsync();
-                if (query == null)
-                {
-                    throw new Exception("AgentSetting is null.");
-                }
 
-                return query;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
         #endregion
 
@@ -98,14 +83,17 @@ namespace USBModel
                     throw new Exception("Get AgentRule fail, cannot find the ComputerIdentity: " + computerIdentity);
                 }
 
-                Guid groupid = Guid.Parse(com.AgentRuleGroupId);
+                if (string.IsNullOrWhiteSpace(com.AgentRuleName))
+                {
+                    com.AgentRuleName = "default";
+                }
 
                 var rule = await _db.Queryable<Tbl_AgentRule>()
-                            .FirstAsync(r => r.GroupId.Equals(groupid));
+                            .FirstAsync(r => r.RuleName.Equals(com.AgentRuleName, StringComparison.OrdinalIgnoreCase));
 
                 if (rule == null)
                 {
-                    throw new Exception("Get AgentRule fail, cannot find the GroupId: " + groupid.ToString());
+                    throw new Exception("Get AgentRule fail, cannot find the AgentRuleName: " + com.AgentRuleName);
                 }
 
                 return rule;
@@ -149,87 +137,19 @@ namespace USBModel
         }
         #endregion
 
-        // UsbRegistry
 
-        #region UsbRegistry
-        //#region + public async Task Insert_UsbRegistered(UsbInfo usb)
-        //public async Task Insert_UsbRegistered(Tbl_UsbRegistered usb)
-        //{
-        //    try
-        //    {
-        //        var usbInDb = await _db.Queryable<Tbl_UsbRegistered>()
-        //                             .Where(u => u.UsbIdentity == usb.UsbIdentity)
-        //                             .FirstAsync();
+        // Tbl_AgentConfig
 
-        //        if (usbInDb == null)
-        //        {
-        //            var succeed = await _db.Insertable(usb).ExecuteCommandIdentityIntoEntityAsync();
-        //            if (!succeed)
-        //            {
-        //                throw new Exception("UsbRegistered insert fail.");
-        //            }
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-        //#endregion
-
-        //#region + public async Task<int> Get_RegisteredUsbCount()
-        //public async Task<int> Get_RegisteredUsbCount()
-        //{
-        //    try
-        //    {
-        //        var query = await _db.Queryable<Tbl_UsbRegistered>().CountAsync();
-
-        //        return query;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-        //#endregion
-
-        //#region + public async Task<(int total, List<Tbl_UsbRegistered> list)> Get_UsbRegisteredList(int pageIndex, int pageSize)
-        //public async Task<(int total, List<Tbl_UsbRegistered> list)> Get_UsbRegisteredList(int pageIndex, int pageSize)
-        //{
-        //    try
-        //    {
-        //        RefAsync<int> total = new RefAsync<int>();
-        //        var query = await _db.Queryable<Tbl_UsbRegistered>()
-        //                                .OrderBy(u => u.Id, OrderByType.Desc)
-        //                                .ToPageListAsync(pageIndex, pageSize, total);
-
-        //        if (query == null || query.Count <= 0)
-        //        {
-        //            throw new Exception("Nothing UsbRegistered in Database.");
-        //        }
-
-        //        return (total.Value, query);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-        //#endregion
-        #endregion
-
-        // AgentSetting
-
-        #region + public async Task<Tbl_AgentSetting> AgentSetting_Get()
-        public async Task<Tbl_AgentSetting> AgentSetting_Get()
+        #region + public async Task<Tbl_AgentConfig> AgentConfig_Get()
+        public async Task<Tbl_AgentConfig> AgentConfig_Get()
         {
             try
             {
-                var query = await _db.Queryable<Tbl_AgentSetting>().FirstAsync();
+                var query = await _db.Queryable<Tbl_AgentConfig>().FirstAsync();
 
                 if (query == null)
                 {
-                    throw new Exception("Cannot find Tbl_AgentSetting.");
+                    throw new Exception("Tbl_AgentConfig is null.");
                 }
 
                 return query;
@@ -241,19 +161,19 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<Tbl_AgentSetting> AgentSetting_Update(Tbl_AgentSetting setting)
-        public async Task<Tbl_AgentSetting> AgentSetting_Update(Tbl_AgentSetting setting)
+        #region + public async Task<Tbl_AgentConfig> AgentConfig_Update(Tbl_AgentConfig config)
+        public async Task<Tbl_AgentConfig> AgentConfig_Update(Tbl_AgentConfig config)
         {
             try
             {
-                var isUpdate = await _db.Updateable(setting).ExecuteCommandHasChangeAsync();
+                var isUpdate = await _db.Updateable(config).ExecuteCommandHasChangeAsync();
 
                 if (!isUpdate)
                 {
-                    throw new Exception("Tbl_AgentSetting update fail.");
+                    throw new Exception("Tbl_AgentConfig update fail.");
                 }
 
-                return setting;
+                return config;
             }
             catch (Exception)
             {

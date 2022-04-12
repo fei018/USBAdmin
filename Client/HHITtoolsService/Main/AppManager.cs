@@ -22,9 +22,9 @@ namespace HHITtoolsService
             // post computer info to server
             try
             {
-                new AgentHttpHelp().PostComputerInfo_Http();
+                new AgentHttpHelp().PostComputerInfo();
             }
-            catch (Exception ex) { AgentLogger.Error("AgentHttpHelp().PostComputerInfo_Http(): " + ex.Message); }
+            catch (Exception ex) { AgentLogger.Error("HHITtoolsService.AppManager.Start(): " + ex.Message); }
 
             // PipeServer_Service
             try
@@ -42,14 +42,21 @@ namespace HHITtoolsService
             }
 
             //Tray
+            AppService.HHITtoolsTrayList = new List<HHITtoolsTrayService>();
+
             var tray = new HHITtoolsTrayService();
             tray.Start();
+
             AppService.HHITtoolsTrayList.Add(tray);
 
 
             // ServiceTimer
             AppService.ServiceTimer = new ServiceTimer();
             AppService.ServiceTimer.Start();
+
+            //
+            AppService.PrintJobLogService = new PrintJobLogService();
+            AppService.PrintJobLogService.Start();
         }
         #endregion
 
@@ -70,9 +77,12 @@ namespace HHITtoolsService
 
             try
             {
-                AppService.HHITtoolsTrayList.ForEach(t => t?.Stop());
+                foreach (var tray in AppService.HHITtoolsTrayList)
+                {
+                    tray?.Stop();
+                }
             }
-            catch (Exception) { }
+            catch (Exception ex) { AgentLogger.Error(ex.GetBaseException().Message); }
 
             try
             {
@@ -85,6 +95,14 @@ namespace HHITtoolsService
                 AppService.NamedPipeServer?.Stop();
             }
             catch (Exception) { }
+
+            try
+            {
+                AppService.PrintJobLogService.Stop();
+            }
+            catch (Exception)
+            {
+            }
         }
         #endregion
 

@@ -9,6 +9,8 @@
         UpdateSetting_ServerHandle,
         DeleteOldPrintersAndInstallDriver_ServerHandle,
         DeleteOldPrintersAndInstallDriverCompleted,
-        PrintJobLogRestart
+        PrintJobLogRestart,
+        ToCloseProcess_HHITtoolsTray_TrayHandle,
+        ToCloseProcess_HHITtoolsUSB_USBHandle
     }
 }

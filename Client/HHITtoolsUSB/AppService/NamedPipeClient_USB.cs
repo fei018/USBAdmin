@@ -16,7 +16,7 @@ namespace HHITtoolsUSB
 
         #region Construction
         public NamedPipeClient_USB()
-        {          
+        {
             InitialPipeMsgHandler();
         }
         #endregion
@@ -107,11 +107,30 @@ namespace HHITtoolsUSB
 
         private void InitialPipeMsgHandler()
         {
-            _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>();
+            _pipeMsgHandler = new Dictionary<PipeMsgType, Action<PipeMsg>>()
+            {
+                { PipeMsgType.ToCloseProcess_HHITtoolsUSB_USBHandle , ReceiveMsgHandler_ToCloseProcess_HHITtoolsUSB_USBHandle}
+            };
         }
         #endregion
 
         // ReceiveMsgHandler
+
+        #region ReceiveMsgHandler_ToCloseProcess_HHITtoolsUSB_USBHandle
+        private void ReceiveMsgHandler_ToCloseProcess_HHITtoolsUSB_USBHandle(PipeMsg pipeMsg)
+        {
+            try
+            {
+                HHITtoolsUSBForm.HHToolsUSBForm.Invoke(new Action(() =>
+                {
+                    HHITtoolsUSBForm.HHToolsUSBForm.Close();
+                }));
+            }
+            catch (Exception)
+            {                
+            }
+        }
+        #endregion
 
         // PushMsg
         #region + private void SendMsgToServer_By_PipeMsg(PipeMsg pipeMsg)

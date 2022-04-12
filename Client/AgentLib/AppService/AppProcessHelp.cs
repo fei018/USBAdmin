@@ -19,14 +19,16 @@ namespace AgentLib.AppService
 
             try
             {
-                if (!process.HasExited)
+                if (process.HasExited)
                 {
-                    process.CloseMainWindow();
-                    if (!process.WaitForExit(_timeoutMillisecond))
-                    {
-                        process.Kill();
-                        process.Close();
-                    }
+                    return;
+                }
+
+                process.CloseMainWindow();
+                if (!process.WaitForExit(_timeoutMillisecond))
+                {
+                    process.Kill();
+                    process.Close();
                 }
             }
             catch (Exception)

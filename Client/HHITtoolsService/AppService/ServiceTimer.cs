@@ -36,7 +36,7 @@ namespace HHITtoolsService
             {
                 try
                 {
-                    new AgentHttpHelp().PostComputerInfo_Http();
+                    new AgentHttpHelp().PostComputerInfo();
                 }
                 catch (Exception ex)
                 {
@@ -45,7 +45,7 @@ namespace HHITtoolsService
 
                 try
                 {
-                    new AgentHttpHelp().GetAgentRule_Http();
+                    new AgentHttpHelp().GetAgentRule();
 
                     if (AgentRegistry.UsbFilterEnabled)
                     {

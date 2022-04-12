@@ -89,7 +89,7 @@ namespace HHITtoolsTray.USBWindow
             try
             {
                 var usbRequest = new UsbRequest(_UsbDiskInfo, e.UserEmailAddress, e.RequestReason);
-                new AgentHttpHelp().PostUsbRequest_Http(usbRequest);
+                new AgentHttpHelp().PostUsbRequest(usbRequest);
 
                 // 顯示 UsbRequestSubmitResult Page
                 var usbRequestResultPage = new UsbRequestSubmitResultPage();

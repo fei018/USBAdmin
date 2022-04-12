@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AgentLib;
 using System.Diagnostics;
+using System.Threading;
 
 namespace HHITtoolsService
 {
@@ -23,7 +24,7 @@ namespace HHITtoolsService
 
                 try
                 {
-                    AppFullPath = AgentRegistry.HHITtoolsUSBApp;
+                    AppFullPath = AgentRegistry.HHITtoolsUSBPath;
                 }
                 catch (Exception ex)
                 {
@@ -47,6 +48,8 @@ namespace HHITtoolsService
 
         public void Stop()
         {
+            AppService.NamedPipeServer.SendMsg_ToCloseProcess_HHITtoolsUSB();
+            Thread.Sleep(2000);
             AppProcessHelp.CloseOrKillProcess(AppProcess);
         }
     }

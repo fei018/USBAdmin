@@ -604,3 +604,4 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\wwwroot\api\debug
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Release\net5.0\wwwroot\api\InitMenu.json
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\Computer\UsbLog.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\History.cshtml.g.cs
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Release\net5.0\Razor\Views\dropPage\Index AgentSetting.cshtml.g.cs

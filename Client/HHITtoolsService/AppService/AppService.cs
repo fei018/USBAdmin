@@ -10,7 +10,7 @@ namespace HHITtoolsService
 {
     public static class AppService
     {
-        public static List<HHITtoolsTrayService> HHITtoolsTrayList => new List<HHITtoolsTrayService>();
+        public static List<HHITtoolsTrayService> HHITtoolsTrayList { get; set; }
 
         public static NamedPipeServer_Service NamedPipeServer { get; set; }
 

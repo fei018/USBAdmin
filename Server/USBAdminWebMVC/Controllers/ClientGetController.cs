@@ -19,9 +19,28 @@ namespace USBAdminWebMVC.Controllers
             _usbDb = usbDb;
         }
 
+        // AgentConfig
+
+        #region AgentConfig()
+        public async Task<IActionResult> AgentConfig()
+        {
+            try
+            {
+                IAgentConfig config = await _usbDb.AgentConfig_Get();
+
+                var agent = new AgentHttpResponseResult { Succeed = true, AgentConfig = config };
+                return Json(agent);
+            }
+            catch (Exception ex)
+            {
+                return Json(new AgentHttpResponseResult(false, ex.Message));
+            }
+        }
+        #endregion
+
         // Agent Rule
         #region AgentRule(string computerIdentity)
-        public async Task<IActionResult> AgentRule(string computerIdentity)
+        public async Task<IActionResult> AgentRule([FromQuery]string computerIdentity)
         {
             try
             {
@@ -59,8 +78,8 @@ namespace USBAdminWebMVC.Controllers
 
         // AgentDownload
 
-        #region AgentDownload()
-        public async Task<IActionResult> AgentDownload()
+        #region AgentUpdate()
+        public async Task<IActionResult> AgentUpdate()
         {
             try
             {

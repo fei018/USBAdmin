@@ -443,7 +443,6 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.TagH
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.TagHelpers.output.cache
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\USBAdminWebMVC.RazorCoreGenerate.cache
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
-C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\AgentSetting\Index.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Computer\Index.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\EmailSetting\Index.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
@@ -605,3 +604,4 @@ C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\Compute
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\dropPage\History.cshtml.g.cs
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Debug\net5.0\wwwroot\api\InitMenu.json
 C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\bin\Debug\net5.0\wwwroot\api\debugMenu.json
+C:\CodeRepos\USBAdmin\Server\USBAdminWebMVC\obj\Debug\net5.0\Razor\Views\AgentConfig\Index.cshtml.g.cs

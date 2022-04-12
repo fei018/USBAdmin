@@ -17,11 +17,11 @@ namespace AgentLib
             set => SetRegKey(nameof(AgentHttpKey), value, RegistryValueKind.String);
         }
 
-        public static string AgentAppDir
-        {
-            get => Environment.ExpandEnvironmentVariables(ReadRegKey(nameof(AgentAppDir)));
-            set => SetRegKey(nameof(AgentAppDir), value, RegistryValueKind.String);
-        }
+        //public static string AgentAppDir
+        //{
+        //    get => Environment.ExpandEnvironmentVariables(ReadRegKey(nameof(AgentAppDir)));
+        //    set => SetRegKey(nameof(AgentAppDir), value, RegistryValueKind.String);
+        //}
 
         public static string AgentDataDir
         {
@@ -32,37 +32,37 @@ namespace AgentLib
         /// <summary>
         /// "HHITtoolsService.exe" full path
         /// </summary>
-        public static string HHITtoolsServiceApp
+        public static string HHITtoolsServicePath
         {
-            get => Path.Combine(AgentAppDir, ReadRegKey(nameof(HHITtoolsServiceApp)));
-            set => SetRegKey(nameof(HHITtoolsServiceApp), value, RegistryValueKind.String);
+            get => Environment.ExpandEnvironmentVariables(ReadRegKey(nameof(HHITtoolsServicePath)));
+            set => SetRegKey(nameof(HHITtoolsServicePath), value, RegistryValueKind.String);
         }
 
         /// <summary>
         /// "HHITtoolsUSB.exe" full path
         /// </summary>
-        public static string HHITtoolsUSBApp
+        public static string HHITtoolsUSBPath
         {
-            get => Path.Combine(AgentAppDir, ReadRegKey(nameof(HHITtoolsUSBApp)));
-            set => SetRegKey(nameof(HHITtoolsUSBApp), value, RegistryValueKind.String);
+            get => Environment.ExpandEnvironmentVariables(ReadRegKey(nameof(HHITtoolsUSBPath)));
+            set => SetRegKey(nameof(HHITtoolsUSBPath), value, RegistryValueKind.String);
         }
 
         /// <summary>
         /// "HHITtoolsTray.exe" full path
         /// </summary>
-        public static string HHITtoolsTrayApp
+        public static string HHITtoolsTrayPath
         {
-            get => Path.Combine(AgentAppDir, ReadRegKey(nameof(HHITtoolsTrayApp)));
-            set => SetRegKey(nameof(HHITtoolsTrayApp), value, RegistryValueKind.String);
+            get => Environment.ExpandEnvironmentVariables(ReadRegKey(nameof(HHITtoolsTrayPath)));
+            set => SetRegKey(nameof(HHITtoolsTrayPath), value, RegistryValueKind.String);
         }
 
         /// <summary>
         /// "RemoteSupportApp" full path
         /// </summary>
-        public static string RemoteSupportApp
+        public static string RemoteSupportPath
         {
-            get => Path.Combine(AgentAppDir, ReadRegKey(nameof(RemoteSupportApp)));
-            set => SetRegKey(nameof(RemoteSupportApp), value, RegistryValueKind.String);
+            get => Environment.ExpandEnvironmentVariables(ReadRegKey(nameof(RemoteSupportPath)));
+            set => SetRegKey(nameof(RemoteSupportPath), value, RegistryValueKind.String);
         }
 
         public static bool UsbFilterEnabled
@@ -84,10 +84,10 @@ namespace AgentLib
             set => SetRegKey(nameof(UsbWhitelistUrl), value, RegistryValueKind.String);
         }
 
-        public static string AgentSettingUrl
+        public static string AgentConfigUrl
         {
-            get => ReadRegKey(nameof(AgentSettingUrl));
-            set => SetRegKey(nameof(AgentSettingUrl), value, RegistryValueKind.String);
+            get => ReadRegKey(nameof(AgentConfigUrl));
+            set => SetRegKey(nameof(AgentConfigUrl), value, RegistryValueKind.String);
         }
 
         public static string AgentRuleUrl

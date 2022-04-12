@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AgentLib;
 using System.Diagnostics;
+using System.Threading;
 
 namespace HHITtoolsService
 {
@@ -21,7 +22,7 @@ namespace HHITtoolsService
             {
                 try
                 {
-                    AppFullPath = AgentRegistry.HHITtoolsTrayApp;
+                    AppFullPath = AgentRegistry.HHITtoolsTrayPath;
                 }
                 catch (Exception ex)
                 {
@@ -45,7 +46,16 @@ namespace HHITtoolsService
 
         public void Stop()
         {
-            AppProcessHelp.CloseOrKillProcess(AppProcess);
+            try
+            {
+                AppService.NamedPipeServer.SendMsg_ToCloseProcess_HHITtoolsTray();
+                Thread.Sleep(2000);
+                AppProcessHelp.CloseOrKillProcess(AppProcess);
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error("HHITtoolsTrayService.Stop(): " + ex.GetBaseException().Message);
+            }
         }
     }
 }

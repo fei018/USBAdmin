@@ -81,7 +81,7 @@
     <Compile Include="willDrop\IPerUsbHistory.cs" />
     <Compile Include="IPrintJobLog.cs" />
     <Compile Include="UtilityTools.cs" />
-    <Compile Include="willDrop\IAgentSetting.cs" />
+    <Compile Include="IAgentConfig.cs" />
     <Compile Include="willDrop\IPrintTemplate.cs" />
     <Compile Include="IUsbRequest.cs" />
     <Compile Include="willDrop\IPerComputer.cs" />

@@ -191,11 +191,11 @@ namespace HHITtoolsService
             {
                 try
                 {
-                    new AgentHttpHelp().PostComputerInfo_Http(); // post computer info
+                    new AgentHttpHelp().PostComputerInfo(); // post computer info
 
-                    new AgentHttpHelp().GetAgentRule_Http(); // update agent setting
+                    new AgentHttpHelp().GetAgentRule(); // update agent setting
 
-                    new AgentHttpHelp().UpdateUSBWhitelist_Http(); // update usb whitelist
+                    new AgentHttpHelp().UpdateUSBWhitelist(); // update usb whitelist
 
                     new UsbFilter().Filter_Scan_All_USB_Disk(); // filter all usb disk
 
@@ -297,6 +297,37 @@ namespace HHITtoolsService
             {
                 var json = JsonConvert.SerializeObject(pipeMsg);
                 _server.PushMessage(json);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public void SendMsg_ToCloseProcess_HHITtoolsTray()
+        public void SendMsg_ToCloseProcess_HHITtoolsTray()
+        {
+            try
+            {
+                var msg = new PipeMsg() { PipeMsgType = PipeMsgType.ToCloseProcess_HHITtoolsTray_TrayHandle };
+                SendMsgToClient_By_PipeMsg(msg);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+        #region + public void SendMsg_ToCloseProcess_HHITtoolsUSB()
+        public void SendMsg_ToCloseProcess_HHITtoolsUSB()
+        {
+            try
+            {
+                var msg = new PipeMsg() { PipeMsgType = PipeMsgType.ToCloseProcess_HHITtoolsUSB_USBHandle };
+                SendMsgToClient_By_PipeMsg(msg);
             }
             catch (Exception)
             {

@@ -14,19 +14,15 @@ namespace ToolsCommon
 
         public string Msg { get; set; }
 
+        public IAgentConfig AgentConfig { get; set; }
+
         public IAgentRule AgentRule { get; set; }
 
         public string UsbWhitelist { get; set; }
 
-        public string DownloadFileBase64 { get; set; }
-
-        // will be drop
-        public string UsbFilterData { get; set; }
-
-        public IAgentSetting AgentSetting { get; set; }
-
-        public IPrintTemplate PrintTemplate { get; set; }
-
         public List<IIPPrinterInfo> SitePrinterList { get; set; }
+
+        public string DownloadFileBase64 { get; set; }  
+        
     }
 }

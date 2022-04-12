@@ -18,7 +18,7 @@ namespace HHITtoolsUSB
                 try
                 {
                     // post usb history to server
-                    new AgentHttpHelp().PostUsbLog_byDisk_Http(diskPath);
+                    new AgentHttpHelp().PostUsbLog_byDisk(diskPath);
                 }
                 catch (Exception ex)
                 {
@@ -75,7 +75,7 @@ namespace HHITtoolsUSB
             {
                 try
                 {
-                    new AgentHttpHelp().UpdateUSBWhitelist_Http();                    
+                    new AgentHttpHelp().UpdateUSBWhitelist();                    
                 }
                 catch (Exception)
                 {
