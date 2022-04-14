@@ -294,8 +294,8 @@ namespace USBModel
 
         // PerPrintJob
 
-        #region + public async Task PerPrintJob_Insert(Tbl_PerPrintJob printJob)
-        public async Task PerPrintJob_Insert(Tbl_PrintJobLog printJob)
+        #region + public async Task PrintJobLog_Insert(Tbl_PerPrintJob printJob)
+        public async Task PrintJobLog_Insert(Tbl_PrintJobLog printJob)
         {
             try
             {
@@ -308,8 +308,8 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<(int total,List<Tbl_PerPrintJob> list)> PerPrintJob_Get_List_ByComputerIdentity(string comIdentity, int pageIndex, int size)
-        public async Task<(int total, List<Tbl_PrintJobLog> list)> PerPrintJob_Get_List_ByComputerIdentity(string comIdentity, int pageIndex, int size)
+        #region + public async Task<(int total,List<Tbl_PerPrintJob> list)> PrintJobLog_Get_List_ByComputerIdentity(string comIdentity, int pageIndex, int size)
+        public async Task<(int total, List<Tbl_PrintJobLog> list)> PrintJobLog_Get_List_ByComputerIdentity(string comIdentity, int pageIndex, int size)
         {
             try
             {
@@ -321,7 +321,7 @@ namespace USBModel
 
                 if (list == null || list.Count <= 0)
                 {
-                    throw new Exception("PrintJob is empty.");
+                    throw new Exception("PrintJobLog is empty.");
                 }
 
                 return (total.Value, list);

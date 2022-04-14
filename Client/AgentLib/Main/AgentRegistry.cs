@@ -29,6 +29,12 @@ namespace AgentLib
             set => SetRegKey(nameof(AgentDataDir), value, RegistryValueKind.String);
         }
 
+        public static string UsbWhitelistPath
+        {
+            get => Environment.ExpandEnvironmentVariables(ReadRegKey(nameof(UsbWhitelistPath)));
+            set => SetRegKey(nameof(UsbWhitelistPath), value, RegistryValueKind.String);
+        }
+
         /// <summary>
         /// "HHITtoolsService.exe" full path
         /// </summary>

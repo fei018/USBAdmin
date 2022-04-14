@@ -36,7 +36,7 @@
           "LoginUserManager": "1.0.0",
           "MailKit": "3.0.0",
           "Newtonsoft.Json": "13.0.1",
-          "USBCommon": "1.0.0",
+          "ToolsCommon": "1.0.0",
           "USBModel": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions.Reference": "5.0.0.0",
@@ -1988,18 +1988,18 @@
           "LoginUserManager.dll": {}
         }
       },
-      "USBCommon/1.0.0": {
+      "ToolsCommon/1.0.0": {
         "runtime": {
-          "USBCommon.dll": {}
+          "ToolsCommon.dll": {}
         },
         "compile": {
-          "USBCommon.dll": {}
+          "ToolsCommon.dll": {}
         }
       },
       "USBModel/1.0.0": {
         "dependencies": {
           "LoginUserManager": "1.0.0",
-          "USBCommon": "1.0.0"
+          "ToolsCommon": "1.0.0"
         },
         "runtime": {
           "USBModel.dll": {}
@@ -4860,7 +4860,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "USBCommon/1.0.0": {
+    "ToolsCommon/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

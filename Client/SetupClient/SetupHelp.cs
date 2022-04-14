@@ -146,7 +146,7 @@ namespace SetupClient
         {
             try
             {
-                var keys = AgentRegistryKey.Get_HHITtoolsKeys_Debug();
+                var keys = AgentRegistryKey.Get_HHITtoolsKeys();
 
                 // Registry key location: Computer\HKEY_LOCAL_MACHINE
                 using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))

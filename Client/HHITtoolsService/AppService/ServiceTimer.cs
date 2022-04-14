@@ -1,36 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AgentLib;
+﻿using AgentLib;
 using AgentLib.AppService;
+using System;
+using System.Threading.Tasks;
+using System.Timers;
 
 namespace HHITtoolsService
 {
     public class ServiceTimer : IAppService
     {
-        private AgentTimer _agentTimer;
-
-        public ServiceTimer()
-        {
-            _agentTimer = new AgentTimer();
-        }
+        private Timer _timer;
 
         public void Start()
         {
-            _agentTimer.ElapsedAction += ElapsedAction;
+            try
+            {
+                _timer = new Timer();
+                _timer.AutoReset = true;
+                _timer.Interval = GetInterval();
+                _timer.Elapsed += ElapsedAction;
 
-            _agentTimer.Start();
+                _timer.Start();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public void Stop()
         {
-            _agentTimer.ElapsedAction -= ElapsedAction;
-            _agentTimer.Stop();
+            if (_timer != null)
+            {
+                try
+                {
+                    _timer.Elapsed -= ElapsedAction;
+                    _timer.Stop();
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
 
-        private void ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
+        private void ElapsedAction(object sender, ElapsedEventArgs e)
         {
             Task.Run(() =>
             {
@@ -50,11 +61,6 @@ namespace HHITtoolsService
                     if (AgentRegistry.UsbFilterEnabled)
                     {
                         if (AppService.HHITtoolsUSB == null)
-                        {
-                            AppService.HHITtoolsUSB = new HHITtoolsUSBService();
-                            AppService.HHITtoolsUSB.Start();
-                        }
-                        else if(AppService.HHITtoolsUSB.AppProcess == null)
                         {
                             AppService.HHITtoolsUSB = new HHITtoolsUSBService();
                             AppService.HHITtoolsUSB.Start();
@@ -81,7 +87,62 @@ namespace HHITtoolsService
                 {
                     AgentLogger.Error("ServiceTimer.ElapsedAction(): " + ex.Message);
                 }
-            });
+
+                // Agent update
+                try
+                {
+                    AgentUpdate.CheckAndUpdate();
+                }
+                catch (Exception ex)
+                {
+                    AgentLogger.Error("ServiceTimer.ElapsedAction(): " + ex.Message);
+                }
+
+                try
+                {
+                    _timerRestart();
+                }
+                catch (Exception)
+                {
+                }
+            });           
         }
+
+        private void _timerRestart()
+        {
+            _timer.Enabled = false;
+            _timer.Interval = GetInterval();
+            _timer.Enabled = true;
+        }
+
+        #region + private double GetInterval()
+        private double GetInterval()
+        {
+            int minutes;
+
+            try
+            {
+                minutes = AgentRegistry.AgentTimerMinute;
+            }
+            catch (Exception)
+            {
+                return TimeSpan.FromMinutes(10).TotalMilliseconds;
+            }
+
+            // minimum 1 minutes
+            if (minutes < 1)
+            {
+                minutes = 1;
+            }
+
+            // maximum 24 hours
+            if (minutes > 1440)
+            {
+                minutes = 1440;
+            }
+
+            return TimeSpan.FromMinutes(minutes).TotalMilliseconds; ;
+        }
+        #endregion
     }
 }

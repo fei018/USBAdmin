@@ -158,7 +158,7 @@ namespace AgentLib
             {
                 var agentResult = HttpClient_Get(AgentRegistry.UsbWhitelistUrl);
 
-                UsbWhitelistHelp.Set_And_Load_UsbWhitelist_byHttp(agentResult.UsbWhitelist);
+                UsbWhitelist.Set_And_Load_UsbWhitelist_byHttp(agentResult.UsbWhitelist);
             }
             catch (Exception ex)
             {

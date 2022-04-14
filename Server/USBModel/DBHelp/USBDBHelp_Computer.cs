@@ -10,7 +10,7 @@ namespace USBModel
 
         // PerComputer
 
-        #region public async Task<int> PerComputer_Get_TotalCount()
+        #region public async Task<int> ComputerInfo_Get_TotalCount()
         public async Task<int> ComputerInfo_Get_TotalCount()
         {
             try
@@ -24,7 +24,7 @@ namespace USBModel
         }
         #endregion
 
-        #region +  public async Task<Tbl_ComputerInfo> PerComputer_Get_ById(int id)
+        #region +  public async Task<Tbl_ComputerInfo> ComputerInfo_Get_ById(int id)
         public async Task<Tbl_ComputerInfo> ComputerInfo_Get_ById(int id)
         {
             try
@@ -44,7 +44,7 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<(int totalCount,List<Tbl_PerComputer> list)> PerComputer_Get_List(int index, int size)
+        #region + public async Task<(int totalCount,List<Tbl_ComputerInfo> list)> ComputerInfo_Get_List(int index, int size)
         public async Task<(int totalCount, List<Tbl_ComputerInfo> list)> ComputerInfo_Get_List(int index, int size)
         {
             try
@@ -68,7 +68,7 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<List<Tbl_PerComputer>> PerComputer_Get_ByIdentity(string computerIdentity)
+        #region + public async Task<List<Tbl_ComputerInfo>> ComputerInfo_Get_ByIdentity(string computerIdentity)
         public async Task<Tbl_ComputerInfo> ComputerInfo_Get_ByIdentity(string computerIdentity)
         {
             try
@@ -88,7 +88,7 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task PerComputer_InsertOrUpdate(Tbl_PerComputer com)
+        #region + public async Task ComputerInfo_InsertOrUpdate(Tbl_PerComputer com)
         public async Task ComputerInfo_InsertOrUpdate(Tbl_ComputerInfo com)
         {
             try
@@ -118,7 +118,7 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task PerComputer_Delete_ById(int id)
+        #region + public async Task ComputerInfo_Delete_ById(int id)
         public async Task ComputerInfo_Delete_ById(int id)
         {
             try

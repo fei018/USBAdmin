@@ -13,6 +13,7 @@ namespace SetupClient
             var keys = new Dictionary<string, string>()
             {
                 {"AgentDataDir",@"%ProgramData%\HHITtools"},
+                {"UsbWhitelistPath",@"%ProgramFiles%\HHITtools\UsbWhitelist.dat"},
                 {"RemoteSupportPath",@"%ProgramFiles%\HHITtools\RemoteSupport.exe"},
                 {"HHITtoolsServicePath",@"%ProgramFiles%\HHITtools\HHITtoolsService.exe"},
                 {"HHITtoolsUSBPath",@"%ProgramFiles%\HHITtools\HHITtoolsUSB.exe"},
@@ -20,7 +21,7 @@ namespace SetupClient
                 {"UsbFilterEnabled","true"},
                 {"PrintJobLogEnabled","true"},
                 {"AgentTimerMinute","10"},
-                {"AgentVersion","1.0.6"},
+                {"AgentVersion","1.0.7"},
                 {"AgentHttpKey","usbb50ae7e95f144874a2739e119e8791e1"},
                 {"UsbWhitelistUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientGet/UsbWhitelist"},
                 {"AgentConfigUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientGet/AgentConfig"},

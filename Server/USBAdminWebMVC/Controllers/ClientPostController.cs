@@ -124,7 +124,7 @@ namespace USBAdminWebMVC.Controllers
 
                 Tbl_PrintJobLog printJob = JsonHttpConvert.Deserialize_IPrintJobInfo(post);
 
-                await _usbDb.PerPrintJob_Insert(printJob);
+                await _usbDb.PrintJobLog_Insert(printJob);
 
                 return Json(new AgentHttpResponseResult());
             }

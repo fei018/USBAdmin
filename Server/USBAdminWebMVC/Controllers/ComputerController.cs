@@ -85,7 +85,7 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                var (total, list) = await _usbDb.PerPrintJob_Get_List_ByComputerIdentity(computerIdentity, page, limit);
+                var (total, list) = await _usbDb.PrintJobLog_Get_List_ByComputerIdentity(computerIdentity, page, limit);
                 return JsonResultHelp.LayuiTableData(total, list);
             }
             catch (Exception ex)

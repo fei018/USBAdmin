@@ -31,13 +31,13 @@ namespace HHITtoolsUSB
         #region + public static void CheckUsbRegister_PluginUSB()
         public static void CheckUsbRegister_PluginUSB(string diskPath)
         {
-            Task.Run(() =>
+            Task.Run((Action)(() =>
             {
                 try
                 {
                     // push usbmessage to agent tray pipe
                     var usb = new UsbFilter().Find_UsbDisk_By_DiskPath(diskPath);
-                    if (!UsbWhitelistHelp.IsFind(usb))
+                    if (!UsbWhitelist.IsFind((UsbDisk)usb))
                     {
                         AppService.NamedPipeClient.SendMsgToTray_USBDiskNoRegister(usb);
                     }
@@ -46,7 +46,7 @@ namespace HHITtoolsUSB
                 {
                     AgentLogger.Error(ex.ToString());
                 }
-            });
+            }));
         }
         #endregion
 

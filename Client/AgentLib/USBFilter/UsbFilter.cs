@@ -56,7 +56,7 @@ namespace AgentLib
                     return;
                 }
 
-                if (UsbWhitelistHelp.IsFind(usb))
+                if (UsbWhitelist.IsFind(usb))
                 {
                     Rule_Match_In_UsbFilterData(usb);
                     return;

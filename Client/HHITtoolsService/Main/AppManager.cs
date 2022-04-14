@@ -54,9 +54,18 @@ namespace HHITtoolsService
             AppService.ServiceTimer = new ServiceTimer();
             AppService.ServiceTimer.Start();
 
-            //
-            AppService.PrintJobLogService = new PrintJobLogService();
-            AppService.PrintJobLogService.Start();
+            // PrintJobLogService
+            try
+            {
+                if (AgentRegistry.PrintJobLogEnabled)
+                {
+                    AppService.PrintJobLogService = new PrintJobLogService();
+                    AppService.PrintJobLogService.Start();
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
         #endregion
 

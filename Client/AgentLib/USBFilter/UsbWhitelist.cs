@@ -8,17 +8,28 @@ using ToolsCommon;
 
 namespace AgentLib
 {
-    public class UsbWhitelist1
+    public class UsbWhitelist
     {
-        private static string _UsbWhitelistFile => Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"usbwhitelist.dat");
+        private static string _UsbWhitelistFile;
 
         private static HashSet<string> CacheDb { get; set; }
 
         private static readonly object _locker_CacheDb = new object();
 
+        public UsbWhitelist()
+        {
+            try
+            {
+                _UsbWhitelistFile = AgentRegistry.UsbWhitelistPath ?? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "usbwhitelist.dat");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-        #region + public void Reload_UsbWhitelistCache()
-        public static void Reload_UsbWhitelistCache()
+        #region + private void Reload_UsbWhitelistCache()
+        private void Reload_UsbWhitelistCache()
         {
             try
             {
@@ -51,14 +62,56 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public bool IsFind(UsbDisk usb)
+        #region + private string[] ReadFile_UsbWhitelist()
+        private static readonly object _locker_UsbWhitelist = new object();
+        private string[] ReadFile_UsbWhitelist()
+        {
+            lock (_locker_UsbWhitelist)
+            {
+                try
+                {
+                    if (File.Exists(_UsbWhitelistFile))
+                    {
+                        return File.ReadAllLines(_UsbWhitelistFile, new UTF8Encoding(false));
+                    }
+                    else
+                    {
+                        throw new Exception("USB Whitelist File not exist.");
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+        #endregion
+
+        #region + private void WriteFile_UsbWhitelist(string txt)
+        private void WriteFile_UsbWhitelist(string txt)
+        {
+            lock (_locker_UsbWhitelist)
+            {
+                try
+                {
+                    File.WriteAllText(_UsbWhitelistFile, txt, new UTF8Encoding(false));
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Write down USB Whitelist Error:\r\n" + ex.GetBaseException().Message);
+                }
+            }
+        }
+        #endregion
+
+        #region + public static bool IsFind(UsbDisk usb)
         public static bool IsFind(UsbDisk usb)
         {
             try
             {
                 if (CacheDb == null || CacheDb.Count <= 0)
                 {
-                    Reload_UsbWhitelistCache();
+                    new UsbWhitelist().Reload_UsbWhitelistCache();
                 }
 
                 if (CacheDb != null && CacheDb.Count > 0)
@@ -87,57 +140,15 @@ namespace AgentLib
         {
             try
             {
-                WriteFile_UsbWhitelist(usbWhitelist);
+                new UsbWhitelist().WriteFile_UsbWhitelist(usbWhitelist);
 
-                Reload_UsbWhitelistCache();
+                new UsbWhitelist().Reload_UsbWhitelistCache();
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        #endregion
-
-        #region + private static string[] ReadFile_UsbWhitelist()
-        private static readonly object _locker_UsbWhitelist = new object();
-        private static string[] ReadFile_UsbWhitelist()
-        {
-            lock (_locker_UsbWhitelist)
-            {
-                try
-                {
-                    if (File.Exists(_UsbWhitelistFile))
-                    {
-                        return File.ReadAllLines(_UsbWhitelistFile, new UTF8Encoding(false));
-                    }
-                    else
-                    {
-                        throw new Exception("USB Whitelist File not exist.");
-                    }
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-        }
-        #endregion
-
-        #region + private static void WriteFile_UsbWhitelist(string txt)
-        private static void WriteFile_UsbWhitelist(string txt)
-        {
-            lock (_locker_UsbWhitelist)
-            {
-                try
-                {
-                    File.WriteAllText(_UsbWhitelistFile, txt, new UTF8Encoding(false));
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Write down USB Whitelist Error:\r\n" + ex.GetBaseException().Message);
-                }
-            }
-        }
-        #endregion
+        #endregion      
     }
 }

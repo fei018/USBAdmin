@@ -195,10 +195,13 @@ namespace HHITtoolsService
 
                     new AgentHttpHelp().GetAgentRule(); // update agent setting
 
-                    new AgentHttpHelp().UpdateUSBWhitelist(); // update usb whitelist
-
-                    new UsbFilter().Filter_Scan_All_USB_Disk(); // filter all usb disk
-
+                    // update usb whitelist
+                    if (AgentRegistry.UsbFilterEnabled)
+                    {
+                        new AgentHttpHelp().UpdateUSBWhitelist();
+                        new UsbFilter().Filter_Scan_All_USB_Disk(); // filter all usb disk
+                    }
+                  
                     var msg = new PipeMsg(PipeMsgType.Msg_TrayHandle, "Update Setting done.");
                     SendMsgToClient_By_PipeMsg(msg);
                 }
