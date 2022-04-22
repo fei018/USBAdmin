@@ -12,11 +12,13 @@ namespace USBAdminWebMVC.Controllers
     {
         private readonly USBDBHelp _usbDb;
         private readonly EmailHelp _email;
+        private readonly HttpContext _httpContext;
 
-        public USBController(USBDBHelp usbDb, EmailHelp emailHelp)
+        public USBController(USBDBHelp usbDb, EmailHelp emailHelp, IHttpContextAccessor httpContextAccessor)
         {
             _usbDb = usbDb;          
             _email = emailHelp;
+            _httpContext = httpContextAccessor.HttpContext;
         }
 
 
@@ -36,28 +38,6 @@ namespace USBAdminWebMVC.Controllers
             catch (Exception ex)
             {
                 return JsonResultHelp.Error(ex.Message);
-            }
-        }
-        #endregion
-
-        // UsbHistory
-
-        #region History
-        public IActionResult History()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> HistoryList(int page, int limit)
-        {
-            try
-            {
-                var (totalCount, list) = await _usbDb.UsbLog_Get_VMList(page, limit);
-                return JsonResultHelp.LayuiTableData(totalCount, list);
-            }
-            catch (Exception ex)
-            {
-                return JsonResultHelp.LayuiTableData(ex.Message);
             }
         }
         #endregion
@@ -154,7 +134,10 @@ namespace USBAdminWebMVC.Controllers
         {
             try
             {
-                var usb = await _usbDb.UsbRequest_ToApprove_ById(id);
+                var usb = await _usbDb.UsbRequest_Get_ById(id);
+                usb.RequestStateChangeBy = _httpContext.User?.Identity?.Name;
+
+                await _usbDb.UsbRequest_ToApprove(usb);
 
                 await _email.SendToUser_UsbReuqest_Result(usb);
 
@@ -176,6 +159,7 @@ namespace USBAdminWebMVC.Controllers
             {
                 var usb = await _usbDb.UsbRequest_Get_ById(id);
                 usb.RejectReason = RejectReason;
+                usb.RequestStateChangeBy = _httpContext.User?.Identity?.Name;
 
                 await _usbDb.UsbRequest_ToReject(usb);
 

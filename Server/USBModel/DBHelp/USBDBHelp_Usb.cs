@@ -137,19 +137,17 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<Tbl_UsbRequest> UsbRequest_ToApprove_ById(int id)
-        public async Task<Tbl_UsbRequest> UsbRequest_ToApprove_ById(int id)
+        #region + public async Task<Tbl_UsbRequest> UsbRequest_ToApprove(Tbl_UsbRequest usb)
+        public async Task<Tbl_UsbRequest> UsbRequest_ToApprove(Tbl_UsbRequest usb)
         {
             try
             {
-                var usbRegRequest = await UsbRequest_Get_ById(id);
-
                 // set Tbl_UsbRegRequest state is Approve
-                usbRegRequest.RequestState = UsbRequestStateType.Approve;
-                usbRegRequest.RequestStateChangeTime = DateTime.Now;
-                await _db.Updateable(usbRegRequest).ExecuteCommandAsync();
+                usb.RequestState = UsbRequestStateType.Approve;
+                usb.RequestStateChangeTime = DateTime.Now;
+                await _db.Updateable(usb).ExecuteCommandAsync();
 
-                return usbRegRequest;
+                return usb;
             }
             catch (Exception)
             {
@@ -158,7 +156,7 @@ namespace USBModel
         }
         #endregion
 
-        #region + public async Task<Tbl_UsbRequest> UsbRequest_ToReject()
+        #region + public async Task<Tbl_UsbRequest> UsbRequest_ToReject(Tbl_UsbRequest usbRequest)
         public async Task<Tbl_UsbRequest> UsbRequest_ToReject(Tbl_UsbRequest usbRequest)
         {
             try

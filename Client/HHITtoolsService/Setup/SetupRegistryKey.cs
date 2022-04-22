@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace SetupClient
+namespace HHITtoolsService.Setup
 {
-    public class AgentRegistryKey
+    public class SetupRegistryKey
     {
         public static Dictionary<string, string> Get_HHITtoolsKeys()
         {
             var keys = new Dictionary<string, string>()
             {
+                {"ProductCode","{1E92FB92-5B55-4869-868E-0C46811C3C60}"},
+                {"AgentVersion","1.0.8"},
                 {"AgentDataDir",@"%ProgramData%\HHITtools"},
                 {"UsbWhitelistPath",@"%ProgramFiles%\HHITtools\UsbWhitelist.dat"},
                 {"RemoteSupportPath",@"%ProgramFiles%\HHITtools\RemoteSupport.exe"},
@@ -20,8 +18,7 @@ namespace SetupClient
                 {"HHITtoolsTrayPath",@"%ProgramFiles%\HHITtools\HHITtoolsTray.exe"},
                 {"UsbFilterEnabled","true"},
                 {"PrintJobLogEnabled","true"},
-                {"AgentTimerMinute","10"},
-                {"AgentVersion","1.0.7"},
+                {"AgentTimerMinute","10"},                
                 {"AgentHttpKey","usbb50ae7e95f144874a2739e119e8791e1"},
                 {"UsbWhitelistUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientGet/UsbWhitelist"},
                 {"AgentConfigUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientGet/AgentConfig"},

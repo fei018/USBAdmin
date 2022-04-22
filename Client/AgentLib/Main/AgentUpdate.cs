@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
-using System.Security.AccessControl;
 using ToolsCommon;
 
 namespace AgentLib
@@ -12,25 +10,17 @@ namespace AgentLib
         // C:\ProgramData\HHITtools
         private string _baseDir;
 
-        private string _downloadFileDir;
-
-        private string _updateZipFile;
-
-        private string _updateDir;
+        private string _downloadDir;
 
         private string _setupExe;
 
         public AgentUpdate()
         {
-            _baseDir = AgentRegistry.AgentDataDir;
+            _baseDir = Environment.ExpandEnvironmentVariables(@"%ProgramData%\HHITtools");
 
-            _downloadFileDir = Path.Combine(_baseDir, "download");
+            _downloadDir = Path.Combine(_baseDir, "download");
 
-            _updateZipFile = Path.Combine(_downloadFileDir, "update.zip");
-
-            _updateDir = Path.Combine(_baseDir, "update");
-
-            _setupExe = Path.Combine(_updateDir, "Setup.exe");
+            _setupExe = Path.Combine(_downloadDir, "Setup.exe");
         }
 
         #region + public static void CheckAndUpdate()
@@ -55,7 +45,7 @@ namespace AgentLib
         {
             try
             {
-                var agentResult =  AgentHttpHelp.HttpClient_Get(AgentRegistry.AgentConfigUrl);
+                var agentResult = AgentHttpHelp.HttpClient_Get(AgentRegistry.AgentConfigUrl);
 
                 string newVersion = agentResult.AgentConfig.AgentVersion;
 
@@ -81,7 +71,7 @@ namespace AgentLib
         {
             try
             {
-                CleanUpdateDir();
+                CleanDownloadDir();
 
                 DownloadFile();
 
@@ -102,25 +92,18 @@ namespace AgentLib
         }
         #endregion
 
-        #region + private void CleanUpdateDir()
-        private void CleanUpdateDir()
+        #region + private void CleanDownloadDir()
+        private void CleanDownloadDir()
         {
             try
             {
-
-                if (Directory.Exists(_updateDir))
+                if (Directory.Exists(_downloadDir))
                 {
-                    Directory.Delete(_updateDir, true);
+                    Directory.Delete(_downloadDir, true);
                 }
-                Directory.CreateDirectory(_updateDir);
-                UtilityTools.SetDirACL_AuthenticatedUsers_Modify(_updateDir);
 
-                if (Directory.Exists(_downloadFileDir))
-                {
-                    Directory.Delete(_downloadFileDir, true);
-                }
-                Directory.CreateDirectory(_downloadFileDir);
-                UtilityTools.SetDirACL_AuthenticatedUsers_Modify(_downloadFileDir);
+                Directory.CreateDirectory(_downloadDir);
+                UtilityTools.SetDirACL_AuthenticatedUsers_Modify(_downloadDir);
             }
             catch (Exception)
             {
@@ -139,13 +122,10 @@ namespace AgentLib
 
                 byte[] downloadFile = Convert.FromBase64String(agentResult.DownloadFileBase64); // convert base64String to byte[]
 
-                using (FileStream fs = new FileStream(_updateZipFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                using (FileStream fs = new FileStream(_setupExe, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                 {
                     fs.Write(downloadFile, 0, downloadFile.Length);
                 }
-
-                // unzip download file
-                ZipFile.ExtractToDirectory(_updateZipFile, _updateDir);
             }
             catch (Exception)
             {

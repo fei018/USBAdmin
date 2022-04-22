@@ -1,5 +1,6 @@
 ﻿
 function loadingToReloadPage(second) {
+    let layer = layui.layer;
     layer.load(1, { time: second * 1000 });
     setTimeout(function () {
         window.location.reload();

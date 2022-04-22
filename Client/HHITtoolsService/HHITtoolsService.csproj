@@ -119,6 +119,8 @@
     <Compile Include="AppService\HHITtoolsTrayService.cs" />
     <Compile Include="AppService\HHITtoolsUSBService.cs" />
     <Compile Include="AppService\ServiceTimer.cs" />
+    <Compile Include="Setup\SetupRegistryKey.cs" />
+    <Compile Include="Setup\SetupHelp.cs" />
     <Compile Include="Main\AppManager.cs" />
     <Compile Include="AppService\NamedPipeServer_Service.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -160,7 +162,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Server\ToolsCommon\ToolsCommon.csproj">
       <Project>{90fd865d-6202-4a76-b765-4d5414b4204d}</Project>
-      <Name>HHITtoolsCommon</Name>
+      <Name>ToolsCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\AgentLib\AgentLib.csproj">
       <Project>{bbdb4699-103a-4cd5-92db-6a9cf675161f}</Project>
@@ -183,6 +185,5 @@
       <Version>13.0.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

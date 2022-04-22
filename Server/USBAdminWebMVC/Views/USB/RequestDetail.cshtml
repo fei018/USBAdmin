@@ -1,5 +1,10 @@
 ﻿@model UsbRequestVM
 
+<style>
+    div.usb-detail span{
+        color:red;
+    }
+</style>
 
 <div class="layui-row layui-col-space15">
 
@@ -7,24 +12,25 @@
 
         <div class="layui-panel">
 
-            <div style="padding: 30px;">
-                <div>USB Detial: ( current state: @Model.RequestState )</div>
+            <div style="padding: 30px;" class="usb-detail">
+                <div>USB Detial: ( current state: <span>@Model.RequestState</span> )</div>
                 <hr />
-                <div>Manufacturer: @Model.Manufacturer</div><br />
-                <div>Product: @Model.Product</div><br />
-                <div>Description: @Model.DeviceDescription</div><br />
-                <div>Vid: @Model.Vid_Hex</div><br />
-                <div>Pid: @Model.Pid_Hex</div><br />
-                <div>SerialNumber: @Model.SerialNumber</div><br />
-                <div>Request State: @Model.RequestState</div><br />
-                <div>State Change Time: @Model.RequestStateChangeTimeString</div><br />
-                <div>Request Computer Name: @Model.ComputerName</div><br />
-                <div>Request IP: @Model.IP</div><br />
-                <div>Request User Email: @Model.RequestUserEmail</div><br />
+                <div>Manufacturer: <span>@Model.Manufacturer</span></div><br />
+                <div>Product: <span>@Model.Product</span></div><br />
+                <div>Description: <span>@Model.DeviceDescription</span></div><br />
+                <div>Vid: <span>@Model.Vid_Hex</span></div><br />
+                <div>Pid: <span>@Model.Pid_Hex</span></div><br />
+                <div>SerialNumber: <span>@Model.SerialNumber</span></div><br />
+                <div>Request State: <span>@Model.RequestState</span></div><br />
+                <div>State Change Time: <span>@Model.RequestStateChangeTimeString</span></div><br />
+                <div>Request State Change By: <span>@Model.RequestStateChangeBy</span></div><br />
+                <div>Request Computer Name: <span>@Model.ComputerName</span></div><br />
+                <div>Request IP: <span>@Model.IP</span></div><br />
+                <div>Request User Email: <span>@Model.RequestUserEmail</span></div><br />
                 <hr />
-                <div>Request Time: @Model.RequestTimeString</div><br />
+                <div>Request Time: <span>@Model.RequestTimeString</span></div><br />
                 <div>Request Reason:</div><br />
-                <div>@Model.RequestReason</div><br />
+                <div style="color:red">@Model.RequestReason</div><br />
 
                 @if (Model.RequestState == UsbRequestStateType.Reject)
                 {
@@ -104,7 +110,7 @@
                 let url = $(id).attr('action');
                 let data = $(id).serializeArray();
 
-                $.post(url, data, function () {
+                $.post(url, data, function (json) {
                     loadingToReloadPage(2);
                 });
 

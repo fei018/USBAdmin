@@ -33,6 +33,9 @@ namespace USBModel
         [SugarColumn(DefaultValue = "UnderReview")]
         public string RequestState { get; set; }
 
+        [SugarColumn(IsNullable = true)]
+        public string RequestStateChangeBy { get; set; }
+
         public DateTime RequestStateChangeTime { get; set; }
 
 
@@ -47,6 +50,8 @@ namespace USBModel
 
         [SugarColumn(IsNullable = true, ColumnDataType = "nvarchar(max)")]
         public string RejectReason { get; set; }
+
+
 
         // IsIgnore
 

@@ -109,7 +109,7 @@ namespace AgentLib
                                 var result = disk.InvokeMethod("SetAttributes", inParams, null)["ReturnValue"].ToString();
                                 if (!string.IsNullOrWhiteSpace(result))
                                 {
-                                    AgentLogger.Log("DiskNumber: " + diskNumber + "\r\n" + "Set readOnly result: \r\n");
+                                    AgentLogger.Log("DiskNumber: " + diskNumber + "\r\n" + "Set readOnly result: \r\n" + result);
                                 }
                             }
                         }
@@ -145,7 +145,7 @@ namespace AgentLib
                             var result = Set_Disk_IsReadOnly_WMI(d, isReadOnly);
                             if (!string.IsNullOrWhiteSpace(result))
                             {
-                                AgentLogger.Log(diskPath + "\r\n" + "Set readOnly result: \r\n");
+                                AgentLogger.Log(diskPath + "\r\n" + "Set readOnly result: \r\n" + result);
                             }
                         }
                     }
@@ -192,7 +192,7 @@ namespace AgentLib
 
                     foreach (ManagementObject disk in disks)
                     {
-                        var usb = new UsbDisk { DiskPath = Convert.ToString((disk["Path"])) };
+                        var usb = new UsbDisk { DiskPath = Convert.ToString(disk["Path"]) };
                         list.Add(usb);
                     }
                     return list;
@@ -201,13 +201,6 @@ namespace AgentLib
         }
         #endregion
 
-        #region + private void NotMatchSendMessage(NotifyUSB usb)
-        private void NotMatchSendMessage(UsbDisk usb)
-        {
-            string s = "No Register USB Device:\r\n\r\n" + usb.ToString();
-            WTSSendMessageApi.ShowMessageBox(s, "USB Warning");
-        }
-        #endregion
 
         #region SetupDi
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Management;
 using System.Security.AccessControl;
@@ -24,7 +25,7 @@ namespace SetupClient
 
         string _installServiceBatch;
         string _uninstallServiceBatch;
-        string _dllDir;
+
         string _registryKeyLocation;
 
         string _serviceName;
@@ -46,8 +47,6 @@ namespace SetupClient
 
             _uninstallServiceBatch = Path.Combine(_newAppDir, "Service_Uninstall.bat");
 
-            _dllDir = Path.Combine(_setupDir, "dll");
-
             _registryKeyLocation = "SOFTWARE\\HipHing\\HHITtools";
 
         }
@@ -62,21 +61,16 @@ namespace SetupClient
                     File.Delete(LogPath);
                 }
 
-                UninstallService(out string error);
-                Console.WriteLine(error);
-                File.AppendAllText(LogPath, error + "\r\n");
+                UninstallService();
 
-                CreateAndCopyNewAppDir();
+                CreateNewAppDir();
 
-                WriteBatchFile();
-
-                InitialRegistryKey();
-
-                InstallService(out error);
-                Console.WriteLine(error);
-                File.AppendAllText(LogPath, error + "\r\n");
+                UnzipDll();
 
                 CheckNewDataDir();
+
+                InstallService();
+                
             }
             catch (Exception)
             {
@@ -85,95 +79,9 @@ namespace SetupClient
         }
         #endregion
 
-        #region + private Setupini GetRegistryKey()
-//        private Dictionary<string, string> GetRegistryKey()
-//        {
-//            try
-//            {
-//#if DEBUG
-//                _setupiniPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setupDebug.ini");
-//                Console.WriteLine(_setupiniPath);
-//#endif
 
-//                Dictionary<string, string> registry = new Dictionary<string, string>();
-
-//                var iniInfo = new FileInfo(_setupiniPath);
-//                if (!iniInfo.Exists)
-//                {
-//                    throw new Exception("Setup.ini not exist.");
-//                }
-
-//                var ini = File.ReadAllLines(_setupiniPath);
-//                if (ini.Length <= 0) throw new Exception("Setup.ini not exist.");
-
-//                int count = -1;
-
-//                for (int i = 0; i < ini.Length; i++)
-//                {
-//                    if (!string.IsNullOrWhiteSpace(ini[i]))
-//                    {
-//                        if (ini[i].Trim().ToLower() == "[registry]")
-//                        {
-//                            count = i;
-//                            continue;
-//                        }
-//                        if (count >= 0)
-//                        {
-//                            if (Regex.IsMatch(ini[i].Trim().ToLower(), "\\[[a-z]{1,}\\]"))
-//                            {
-//                                break;
-//                            }
-
-//                            if (ini[i].Contains('='))
-//                            {
-//                                registry.Add(ini[i].Split('=')[0].Trim(), ini[i].Split('=')[1].Trim());
-//                            }
-//                        }
-//                    }
-//                }
-
-//                return registry;
-//            }
-//            catch (Exception)
-//            {
-//                throw;
-//            }
-//        }
-        #endregion
-
-        #region + private void InitialRegistryKey()
-        public void InitialRegistryKey()
-        {
-            try
-            {
-                var keys = AgentRegistryKey.Get_HHITtoolsKeys();
-
-                // Registry key location: Computer\HKEY_LOCAL_MACHINE
-                using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
-                {
-                    var subKey = _registryKeyLocation;
-
-                    // delete old key
-                    hklm.DeleteSubKey(subKey, false);
-
-                    using (var usbKey = hklm.CreateSubKey(subKey, true))
-                    {
-                        foreach (var s in keys)
-                        {
-                            usbKey.SetValue(s.Key, s.Value, RegistryValueKind.String);
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region + private void CreateAndCopyInstallDir()
-        private void CreateAndCopyNewAppDir()
+        #region + private void CreateNewAppDir()
+        private void CreateNewAppDir()
         {
             // _newAppDir
 
@@ -189,6 +97,10 @@ namespace SetupClient
                 dir.Create();
             }
 
+            if (!dir.Exists)
+            {
+                throw new Exception("Error: " + dir.FullName + " not exist.");
+            }
 
             // 設置權限
             try
@@ -202,23 +114,16 @@ namespace SetupClient
                 dirACL.AddAccessRule(rule);
                 dir.SetAccessControl(dirACL);
             }
-            catch (Exception) { }
-            
-            // 複製文件到 目的文件夾
-            var files = Directory.GetFiles(_dllDir);
-            foreach (var f in files)
-            {
-                try
-                {
-                    File.Copy(f, Path.Combine(_newAppDir, Path.GetFileName(f)), true);
-                }
-                catch (Exception ex)
-                {
-                    File.AppendAllText(LogPath,ex.Message + "\r\n");
-                }
+            catch (Exception ex) 
+            { 
+                File.AppendAllText(LogPath, ex.Message+"\r\n"); 
             }
         }
 
+
+        #endregion
+
+        #region CheckNewDataDir
         private void CheckNewDataDir()
         {
             var rule = new FileSystemAccessRule("Authenticated Users",
@@ -241,14 +146,15 @@ namespace SetupClient
                 dirACL.AddAccessRule(rule);
                 dir.SetAccessControl(dirACL);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                File.AppendAllText(LogPath, ex.Message + "\r\n");
             }
         }
         #endregion
 
-        #region + private bool InstallService(out string error)
-        private bool InstallService(out string error)
+        #region + private bool InstallService()
+        private void InstallService()
         {
             var start = new ProcessStartInfo();
             start.FileName = "cmd.exe";
@@ -265,73 +171,52 @@ namespace SetupClient
 
                 var run = p.Start();
 
-                p.StandardInput.WriteLine($"\"{InstallUtilExe}\" \"{_serviceExe}\"");
+                p.StandardInput.WriteLine($"call \"{_installServiceBatch}\"");
 
                 p.StandardInput.WriteLine("exit");
 
                 p.WaitForExit();
 
-                error = p.StandardOutput.ReadToEnd();
-            }
+                string output = p.StandardOutput.ReadToEnd();
 
-            // service
-
-            var serviceExist = ServiceController.GetServices().Any(s => s.ServiceName == _serviceName);
-            if (!serviceExist)
-            {
-                throw new Exception("HHITtoolsService install error and not exist.");
-            }
-
-            using (var serv = new ServiceController(_serviceName))
-            {
-                if (serv.Status == ServiceControllerStatus.Stopped)
+                if (!string.IsNullOrWhiteSpace(output))
                 {
-                    serv.Start();
-
-                    serv.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromMinutes(2));
+                    File.AppendAllText(LogPath, output + "\r\n");
                 }
-               
             }
 
-            return true;
+            using (ServiceController sc = new ServiceController(_serviceName))
+            {
+                if (sc == null)
+                {
+                    throw new Exception("Error: InstallService(): Service not exist.");
+                }
+
+                if (sc.Status == ServiceControllerStatus.Stopped)
+                {
+                    sc.Start();
+                }
+            }
+
+            return;
         }
         #endregion
 
-        #region + private bool UninstallService(out string error)
-        private bool UninstallService(out string error)
+        #region + private bool UninstallService()
+        private void UninstallService()
         {
-            var serviceExist = ServiceController.GetServices().Any(s => Regex.IsMatch(s.ServiceName, _serviceName, RegexOptions.IgnoreCase));
-            if (!serviceExist)
-            {
-                error = null;
-                return true;
-            }
-
-            string unistallServicePath = null;
-
-            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Service"))
-            using (ManagementObjectCollection collection = searcher.Get())
-            {
-                foreach (ManagementObject obj in collection)
-                {
-                    string name = obj["Name"] as string;
-                    string pathName = obj["PathName"] as string;
-
-                    if (name.Trim().ToLower() == _serviceName.ToLower())
-                    {
-                        unistallServicePath = pathName;
-                    }
-                }
-            }
-
             using (var serv = new ServiceController(_serviceName))
             {
-                if (serv.CanStop)
+                if (serv == null)
+                {
+                    return;
+                }
+
+                if (serv.Status == ServiceControllerStatus.Running)
                 {
                     serv.Stop();
-                }
-
-                serv.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromMinutes(2));
+                    serv.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(10));
+                }                
             }
 
             var start = new ProcessStartInfo();
@@ -349,15 +234,20 @@ namespace SetupClient
 
                 var run = p.Start();
 
-                p.StandardInput.WriteLine($"\"{InstallUtilExe}\" /u {unistallServicePath}");
+                p.StandardInput.WriteLine($"call \"{_uninstallServiceBatch}\"");
 
                 p.StandardInput.WriteLine("exit");
 
                 p.WaitForExit();
 
-                error = p.StandardOutput.ReadToEnd();
+                string output = p.StandardOutput.ReadToEnd();
 
-                return run;
+                if (!string.IsNullOrWhiteSpace(output))
+                {
+                    File.AppendAllText(LogPath, output + "\r\n");
+                }
+
+                return;
             }
         }
         #endregion
@@ -390,5 +280,22 @@ namespace SetupClient
         }
         #endregion
 
+
+        #region + private void UnzipDll()
+        private void UnzipDll()
+        {
+            string zip = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dll.zip");
+
+            if (File.Exists(zip))
+            {
+                File.Delete(zip);
+            }
+
+            byte[] cache = SetupClient.Properties.Resources.dll;
+            File.WriteAllBytes(zip, cache);
+
+            ZipFile.ExtractToDirectory(zip, _newAppDir);
+        }
+        #endregion
     }
 }
