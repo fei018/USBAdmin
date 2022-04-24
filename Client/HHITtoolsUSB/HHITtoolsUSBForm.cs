@@ -45,8 +45,6 @@ namespace HHITtoolsUSB
             {
                 if (args.DeviceInterface == UsbMonitor.UsbDeviceInterface.Disk)
                 {
-                    UsbHelp.FilterUsbDisk(args.Name);
-
                     UsbHelp.CheckUsbRegister_PluginUSB(args.Name);
 
                     UsbHelp.PostUsbHistoryToHttpServer(args.Name);

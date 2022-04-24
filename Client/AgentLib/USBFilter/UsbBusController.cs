@@ -12,11 +12,11 @@ namespace AgentLib
 
         #region + public bool Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(UsbDisk pluginUsb)
         /// <summary>
-        /// if found, set Vid, Pid, SerialNumber to notifyUsb
+        /// if found, set Vid, Pid, SerialNumber to UsbDisk
         /// </summary>
         /// <param name="pluginUsb"></param>
         /// <returns></returns>
-        public bool Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(UsbDisk pluginUsb)
+        public bool Fill_USB_Info_By_USBDeviceId(UsbDisk pluginUsb)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace AgentLib
                 {
                     if (!ScanUsbBus())
                     {
-                        throw new Exception("Cannot find any usb device in USB Controller. (should not happen)"); // should not happen
+                        throw new Exception("UsbBusController.ConnectedUSBList.Count <= 0, (should not happen)"); // should not happen
                     }
                 }
 

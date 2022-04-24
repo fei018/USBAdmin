@@ -31,38 +31,23 @@ namespace HHITtoolsUSB
         #region + public static void CheckUsbRegister_PluginUSB()
         public static void CheckUsbRegister_PluginUSB(string diskPath)
         {
-            Task.Run((Action)(() =>
+            Task.Run(() =>
             {
                 try
                 {
-                    // push usbmessage to agent tray pipe
-                    var usb = new UsbFilter().Find_UsbDisk_By_DiskPath(diskPath);
-                    if (!UsbWhitelist.IsFind((UsbDisk)usb))
+                    // check usbwhiltelist to set readonly
+                    new UsbFilter().Filter_UsbDisk_By_DiskPath(diskPath);
+
+                    var usb = new UsbFilter().Find_USBInfo_FromUsbDisk_By_DiskPath(diskPath);
+                    if (!UsbWhitelist.IsFind(usb))
                     {
+                        // push usbmessage to tray pipe
                         AppService.NamedPipeClient.SendMsgToTray_USBDiskNoRegister(usb);
                     }
                 }
                 catch (Exception ex)
                 {
                     AgentLogger.Error(ex.ToString());
-                }
-            }));
-        }
-        #endregion
-
-        #region + public static void FilterUsbDisk(string diskPath)
-        public static void FilterUsbDisk(string diskPath)
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    var disk = new UsbDisk { DiskPath = diskPath };
-                    new UsbFilter().Filter_UsbDisk_By_DiskPath(disk);
-                }
-                catch (Exception ex)
-                {
-                    AgentLogger.Error(ex.Message);
                 }
             });
         }
@@ -83,7 +68,7 @@ namespace HHITtoolsUSB
 
                 try
                 {
-                    new UsbFilter().Filter_Scan_All_USB_Disk();
+                    new UsbFilter().Filter_Scan_All_USBDisk();
                 }
                 catch (Exception)
                 {

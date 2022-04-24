@@ -19,21 +19,17 @@ namespace SetupClient
 
         string _newAppDir; 
         string _newDataDir;
-        string InstallUtilExe;
+
         string _serviceExe;
         string _setupDir;
 
         string _installServiceBatch;
         string _uninstallServiceBatch;
 
-        string _registryKeyLocation;
-
         string _serviceName;
 
         public SetupHelp()
         {
-            InstallUtilExe = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\InstallUtil.exe";
-
             _serviceName = "HHITtoolsService";
 
             _setupDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -47,8 +43,6 @@ namespace SetupClient
 
             _uninstallServiceBatch = Path.Combine(_newAppDir, "Service_Uninstall.bat");
 
-            _registryKeyLocation = "SOFTWARE\\HipHing\\HHITtools";
-
         }
 
         #region + public void Install()
@@ -60,6 +54,8 @@ namespace SetupClient
                 {
                     File.Delete(LogPath);
                 }
+
+                SetupRegistryKey.InitialRegistryKey();              
 
                 UninstallService();
 
@@ -171,7 +167,7 @@ namespace SetupClient
 
                 var run = p.Start();
 
-                p.StandardInput.WriteLine($"call \"{_installServiceBatch}\"");
+                p.StandardInput.WriteLine($"call \"{_installServiceBatch}\" {_serviceName} {_serviceExe}");
 
                 p.StandardInput.WriteLine("exit");
 
@@ -212,11 +208,11 @@ namespace SetupClient
                     return;
                 }
 
-                if (serv.Status == ServiceControllerStatus.Running)
-                {
-                    serv.Stop();
-                    serv.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(10));
-                }                
+                //if (serv.Status == ServiceControllerStatus.Running)
+                //{
+                //    serv.Stop();
+                //    serv.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(10));
+                //}
             }
 
             var start = new ProcessStartInfo();
@@ -234,7 +230,7 @@ namespace SetupClient
 
                 var run = p.Start();
 
-                p.StandardInput.WriteLine($"call \"{_uninstallServiceBatch}\"");
+                p.StandardInput.WriteLine($"call \"{_uninstallServiceBatch}\" {_serviceName} {_serviceExe}");
 
                 p.StandardInput.WriteLine("exit");
 
@@ -251,35 +247,6 @@ namespace SetupClient
             }
         }
         #endregion
-
-        #region WriteBatchFile
-        private string WriteBatchFile()
-        {
-            var sb = new StringBuilder();
-
-            try
-            {
-                // service_install.bat
-                sb.AppendLine($"\"{InstallUtilExe}\" \"{_serviceExe}\"");
-                sb.AppendLine($"net start {_serviceName}");
-
-                File.WriteAllText(_installServiceBatch, sb.ToString(), new UTF8Encoding(false));
-
-                // service_uninstall.bat
-                sb.Clear();
-                sb.AppendLine($"net stop {_serviceName}");
-                sb.AppendLine($"\"{InstallUtilExe}\" /u \"{_serviceExe}\"");
-                File.WriteAllText(_uninstallServiceBatch, sb.ToString(), new UTF8Encoding(false));
-            }
-            catch (Exception ex)
-            {
-                File.AppendAllText(LogPath, ex.Message+"\r\n");
-            }
-
-            return _installServiceBatch;
-        }
-        #endregion
-
 
         #region + private void UnzipDll()
         private void UnzipDll()

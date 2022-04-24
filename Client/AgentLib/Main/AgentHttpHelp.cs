@@ -211,7 +211,7 @@ namespace AgentLib
             try
             {
                 var comIdentity = ComputerInfoHelp.GetComputerIdentity();
-                var usb = new UsbFilter().Find_UsbDisk_By_DiskPath(diskPath);
+                var usb = new UsbFilter().Find_USBInfo_FromUsbDisk_By_DiskPath(diskPath);
 
                 IUsbLog usbHistory = new UsbLog
                 {

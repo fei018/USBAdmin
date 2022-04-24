@@ -206,7 +206,7 @@ namespace AgentLib
 
         #region + Find_UsbDeviceId_By_DiskPath_SetupDi(UsbDisk usbDisk)
         /// <summary>
-        /// ref NotifyUSB notifyUsb 需要賦值 notifyUsb.DiskPath <br />
+        /// ref UsbDisk usbDisk 需要賦值 usbDisk.DiskPath <br />
         /// 只匹配 DeviceId format: ^USB\xxxx 
         /// </summary>
         /// <param name="notifyPath"></param>
@@ -240,8 +240,8 @@ namespace AgentLib
                             // match enum path and notify path
                             if (devPath.ToLower() == usbDisk.DiskPath.ToLower())
                             {
-                                usbDisk.DiskDeviceId = GetDiskDeviceId(devInfoData.devInst);
-                                usbDisk.UsbDeviceId = GetUsbDeviceIdByChildDiskInstance(devInfoData.devInst);
+                                usbDisk.DiskDeviceId = Get_DevInterface_DeviceId(devInfoData.devInst);
+                                usbDisk.UsbDeviceId = Get_UsbDeviceId_Use_Recursion_ParentDev(devInfoData.devInst);
                                 if (string.IsNullOrEmpty(usbDisk.UsbDeviceId))
                                 {
                                     return false;
@@ -274,8 +274,8 @@ namespace AgentLib
         }
         #endregion
 
-        #region + GetDiskDeviceID(uint devInst)
-        private string GetDiskDeviceId(uint devInst)
+        #region + Get_DevInterface_DeviceId(uint devInst)
+        private string Get_DevInterface_DeviceId(uint devInst)
         {
             if (USetupApi.CM_Get_Device_ID_Size(out uint size, devInst, 0) == 0)
             {
@@ -290,8 +290,13 @@ namespace AgentLib
         }
         #endregion
 
-        #region + GetUsbDeviceIDbyChildDiskInstance(uint devInst)
-        private string GetUsbDeviceIdByChildDiskInstance(uint devInst)
+        #region + Get_UsbDeviceId_Use_Recursion_ParentDev(uint devInst)
+        /// <summary>
+        /// 遞歸 查詢 符合 USB\VID_0000&PID_FFFF 路徑格式的 DeviceId
+        /// </summary>
+        /// <param name="devInst"></param>
+        /// <returns></returns>
+        private string Get_UsbDeviceId_Use_Recursion_ParentDev(uint devInst)
         {
             if (USetupApi.CM_Get_Parent(out uint parentInst, devInst, 0) == 0)
             {
@@ -301,14 +306,14 @@ namespace AgentLib
 
                     if (USetupApi.CM_Get_Device_ID(parentInst, deviceID, size, 0) == 0)
                     {
-                        var regex = RegexDeviceIdPrefix(deviceID.ToString());
+                        var regex = RegexDeviceIdPrefix_USB(deviceID.ToString());
 
                         if (!string.IsNullOrEmpty(regex))
                         {
                             return regex;
                         }
 
-                        return GetUsbDeviceIdByChildDiskInstance(parentInst);
+                        return Get_UsbDeviceId_Use_Recursion_ParentDev(parentInst);
                     }
                 }
             }
@@ -316,7 +321,7 @@ namespace AgentLib
             return null;
         }
 
-        private string RegexDeviceIdPrefix(string path)
+        private string RegexDeviceIdPrefix_USB(string path)
         {
             if (string.IsNullOrEmpty(path)) return null;
 

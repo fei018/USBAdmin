@@ -46,7 +46,7 @@ namespace SetupClient
         {
             try
             {
-                new SetupHelp().InitialRegistryKey();
+                
             }
             catch (Exception ex)
             {

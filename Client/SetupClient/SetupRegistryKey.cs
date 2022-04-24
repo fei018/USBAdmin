@@ -72,7 +72,7 @@ namespace SetupClient
 
         static string _registryKeyLocation = "SOFTWARE\\HipHing\\HHITtools";
 
-        #region + private void InitialRegistryKey()
+        #region + public void InitialRegistryKey()
         public static void InitialRegistryKey()
         {
             try

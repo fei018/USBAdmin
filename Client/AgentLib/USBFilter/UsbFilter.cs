@@ -21,7 +21,7 @@ namespace AgentLib
                 var usb = Get_UsbDisk_DiskPath_by_DriveLetter_WMI(driveLetter);
                 if (usb != null)
                 {
-                    Filter_UsbDisk_By_DiskPath(usb);
+                    Filter_UsbDisk_By_DiskPath(usb.DiskPath);
                 }
                 else
                 {
@@ -37,20 +37,22 @@ namespace AgentLib
 
         #region + public viod Filter_UsbDisk_By_DiskPath(UsbDisk usb)
         /// <summary>
-        /// 只需 notifyUsb.DiskPath 賦值
+        /// 只需 UsbDisk.DiskPath 賦值
         /// </summary>
         /// <param name="notifyUsb"></param>
-        public void Filter_UsbDisk_By_DiskPath(UsbDisk usb)
+        public void Filter_UsbDisk_By_DiskPath(string diskPaht)
         {
             try
             {
-                if (!Find_UsbDeviceId_By_DiskPath_SetupDi(usb))
-                {
-                    Rule_NotFound_UsbDeviceID_By_DiskPath_SetupDi(usb);
-                    return;
-                }
+                var usb = Find_USBInfo_FromUsbDisk_By_DiskPath(diskPaht);
 
-                if (!_usbBus.Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(usb))
+                if (usb == null)
+                {
+                    Rule_NotFound_UsbDeviceID_By_DiskPath(usb);
+                    return;
+                }            
+
+                if (!_usbBus.Fill_USB_Info_By_USBDeviceId(usb))
                 {
                     Rule_NotFound_UsbDisk_Detail_In_UsbBus(usb);
                     return;
@@ -73,11 +75,11 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public void Filter_Scan_All_USB_Disk()
+        #region + public void Filter_Scan_All_USBDisk()
         /// <summary>
         /// 重新全局 scan usb disk to filter
         /// </summary>
-        public void Filter_Scan_All_USB_Disk()
+        public void Filter_Scan_All_USBDisk()
         {
             try
             {
@@ -86,7 +88,7 @@ namespace AgentLib
                 {
                     foreach (var usb in usbList)
                     {
-                        Filter_UsbDisk_By_DiskPath(usb);
+                        Filter_UsbDisk_By_DiskPath(usb.DiskPath);
                     }
                 }
             }
@@ -109,7 +111,7 @@ namespace AgentLib
                 {
                     if (Find_UsbDeviceId_By_DiskPath_SetupDi(usb))
                     {
-                        if (_usbBus.Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(usb))
+                        if (_usbBus.Fill_USB_Info_By_USBDeviceId(usb))
                         {
                             return usb;
                         }
@@ -124,15 +126,15 @@ namespace AgentLib
         }
         #endregion
 
-        #region + public UsbDisk Find_UsbDisk_By_DiskPath(string diskPath)
-        public UsbDisk Find_UsbDisk_By_DiskPath(string diskPath)
+        #region + public UsbDisk Find_USBInfo_FromUsbDisk_By_DiskPath(string diskPath)
+        public UsbDisk Find_USBInfo_FromUsbDisk_By_DiskPath(string diskPath)
         {
             try
             {
                 var usb = new UsbDisk { DiskPath = diskPath };
                 if (Find_UsbDeviceId_By_DiskPath_SetupDi(usb))
                 {
-                    if (_usbBus.Find_PluginUSB_Detail_In_UsbBus_By_USBDeviceId(usb))
+                    if (_usbBus.Fill_USB_Info_By_USBDeviceId(usb))
                     {
                         return usb;
                     }
@@ -153,9 +155,9 @@ namespace AgentLib
         /// 找不到 大多數係 非 USB device
         /// </summary>
         /// <param name="usb"></param>
-        private void Rule_NotFound_UsbDeviceID_By_DiskPath_SetupDi(UsbDisk usb)
+        private void Rule_NotFound_UsbDeviceID_By_DiskPath(UsbDisk usb)
         {
-            AgentLogger.Log("Not Find In SetupDi Usb DeviceId:\r\n" + usb.ToString());
+            AgentLogger.Log("Rule_NotFound_UsbDeviceID_By_DiskPath():\r\n" + usb.ToString());
         }
         #endregion
 
