@@ -27,7 +27,7 @@ namespace USBAdminWebMVC
                 throw new Exception("USBAdminHelp.AgentHttpKey is empty.");
             }
 
-            // Agent Client .exe
+            // AgentUpdate
             USBAdminHelp.AgentClientApp = configuration.GetSection("Path").GetSection("AgentClientApp").Value;
             if (string.IsNullOrWhiteSpace(USBAdminHelp.AgentClientApp))
             {

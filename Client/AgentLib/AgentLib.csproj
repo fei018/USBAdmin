@@ -69,6 +69,7 @@
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
     <Reference Include="System.Printing" />
@@ -92,10 +93,8 @@
     <Compile Include="Printer\IPPrinterInfo.cs" />
     <Compile Include="Printer\PrinterHelp.cs" />
     <Compile Include="Printer\LocalPrinterInfo.cs" />
-    <Compile Include="Printer\PrintTemplateHelp.cs" />
     <Compile Include="Main\AgentConfig.cs" />
     <Compile Include="Computer\ComputerInfo.cs" />
-    <Compile Include="Printer\PrintTemplate.cs" />
     <Compile Include="USBFilter\UsbBase.cs" />
     <Compile Include="USBFilter\UsbDisk.cs" />
     <Compile Include="Main\AgentRegistry.cs" />

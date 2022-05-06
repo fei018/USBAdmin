@@ -21,17 +21,23 @@ namespace HHITtoolsService
             };
             ServiceBase.Run(ServicesToRun);
 
-            //if (!Environment.UserInteractive)
-            //{
-
-            //}
-            //else
+            //if (Environment.UserInteractive)
             //{
             //    ToolsServiceHelp.Start_Service();
             //    Console.WriteLine("start...");
 
             //    Console.ReadLine();
             //    ToolsServiceHelp.Stop_Service();
+            //    Console.WriteLine("stop.");
+            //}
+            //else
+            //{
+            //    ServiceBase[] ServicesToRun;
+            //    ServicesToRun = new ServiceBase[]
+            //    {
+            //    new ToolsService()
+            //    };
+            //    ServiceBase.Run(ServicesToRun);
             //}
         }
     }

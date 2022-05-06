@@ -19,14 +19,14 @@ namespace HHITtoolsService
         #region Start()
         public static void Start()
         {
-            // post computer info to server
+            // post computer info to server-----
             try
             {
                 new AgentHttpHelp().PostComputerInfo();
             }
             catch (Exception ex) { AgentLogger.Error("HHITtoolsService.AppManager.Start(): " + ex.Message); }
 
-            // PipeServer_Service
+            // PipeServer_Service----
             try
             {
                 AppService.NamedPipeServer = new NamedPipeServer_Service();
@@ -34,14 +34,17 @@ namespace HHITtoolsService
             }
             catch (Exception) { }
 
-            // HHITtoolsUSB
-            if (AgentRegistry.UsbFilterEnabled)
+            // HHITtoolsUSB-----
+            try
             {
                 AppService.HHITtoolsUSB = new HHITtoolsUSBService();
                 AppService.HHITtoolsUSB.Start();
             }
+            catch (Exception)
+            {
+            }
 
-            //Tray
+            //Tray------
             AppService.HHITtoolsTrayList = new List<HHITtoolsTrayService>();
 
             var tray = new HHITtoolsTrayService();
@@ -50,11 +53,11 @@ namespace HHITtoolsService
             AppService.HHITtoolsTrayList.Add(tray);
 
 
-            // ServiceTimer
+            // ServiceTimer-----
             AppService.ServiceTimer = new ServiceTimer();
             AppService.ServiceTimer.Start();
 
-            // PrintJobLogService
+            // PrintJobLogService------
             try
             {
                 if (AgentRegistry.PrintJobLogEnabled)

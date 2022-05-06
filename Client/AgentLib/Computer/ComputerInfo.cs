@@ -23,7 +23,7 @@ namespace AgentLib
 
         public string NetwordAddress { get; set; }
 
-        public string ComputerIdentity => (BiosSerial + MacAddress)?.ToLower();
+        public string ComputerIdentity => (HostName + BiosSerial)?.ToLower();
 
         public bool UsbFilterEnabled { get; set; }
 

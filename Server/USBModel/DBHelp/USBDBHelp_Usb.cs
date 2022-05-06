@@ -323,7 +323,7 @@ namespace USBModel
 
                 if (query == null || query.Count <= 0)
                 {
-                    throw new Exception("Nothing UsbHistory in database.");
+                    throw new Exception("Tbl_UsbLog is empty.");
                 }
 
                 return (total.Value, query);

@@ -33,6 +33,7 @@ namespace USBModel
             RequestReason = usbRequest.RequestReason;
             RequestUserEmail = usbRequest.RequestUserEmail;
             RejectReason = usbRequest.RejectReason;
+            RequestStateChangeBy = usbRequest.RequestStateChangeBy;
         }
     }
 }

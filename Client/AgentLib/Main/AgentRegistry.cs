@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace AgentLib
 {
@@ -77,6 +78,11 @@ namespace AgentLib
             set => SetRegKey(nameof(UsbFilterEnabled), value, RegistryValueKind.String);
         }
 
+        public static bool UsbLogEnabled
+        {
+            get => Convert.ToBoolean(ReadRegKey(nameof(UsbLogEnabled)));
+            set => SetRegKey(nameof(UsbLogEnabled), value, RegistryValueKind.String);
+        }
 
         public static bool PrintJobLogEnabled
         {
@@ -113,6 +119,23 @@ namespace AgentLib
             get => ReadRegKey(nameof(AgentVersion));
             set => SetRegKey(nameof(AgentVersion), value, RegistryValueKind.String);
         }
+
+        //public static string AgentVersion
+        //{
+        //    get
+        //    {
+        //        try
+        //        {
+        //            var ver = Assembly.LoadFile(AgentRegistry.HHITtoolsServicePath).GetName().Version;
+        //            string verString = $"{ver.Major}.{ver.Minor}.{ver.Build}";
+        //            return verString;
+        //        }
+        //        catch (Exception)
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //}
 
         public static string AgentUpdateUrl
         {

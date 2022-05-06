@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using ToolsCommon;
 
 namespace AgentLib
@@ -14,6 +15,8 @@ namespace AgentLib
 
         private string _setupExe;
 
+        private string _zipFile;
+
         public AgentUpdate()
         {
             _baseDir = Environment.ExpandEnvironmentVariables(@"%ProgramData%\HHITtools");
@@ -21,6 +24,8 @@ namespace AgentLib
             _downloadDir = Path.Combine(_baseDir, "download");
 
             _setupExe = Path.Combine(_downloadDir, "Setup.exe");
+
+            _zipFile = Path.Combine(_downloadDir, "Release.zip");
         }
 
         #region + public static void CheckAndUpdate()
@@ -49,7 +54,10 @@ namespace AgentLib
 
                 string newVersion = agentResult.AgentConfig.AgentVersion;
 
-                if (AgentRegistry.AgentVersion.Equals(newVersion, StringComparison.OrdinalIgnoreCase))
+                // get local version
+                var ver = AgentRegistry.AgentVersion;
+
+                if (ver.Equals(newVersion, StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }
@@ -81,7 +89,7 @@ namespace AgentLib
                 }
                 else
                 {
-                    throw new Exception("setup.exe not exist.");
+                    throw new Exception("AgentUpdate.Update(): setup.exe download failed.");
                 }
             }
             catch (Exception ex)
@@ -105,9 +113,9 @@ namespace AgentLib
                 Directory.CreateDirectory(_downloadDir);
                 UtilityTools.SetDirACL_AuthenticatedUsers_Modify(_downloadDir);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("AgentUpdate.CleanDownloadDir(): " + ex.Message);
             }
         }
         #endregion
@@ -120,16 +128,23 @@ namespace AgentLib
             {
                 var agentResult = AgentHttpHelp.HttpClient_Get(AgentRegistry.AgentUpdateUrl);
 
-                byte[] downloadFile = Convert.FromBase64String(agentResult.DownloadFileBase64); // convert base64String to byte[]
+                byte[] downloadCache = Convert.FromBase64String(agentResult.DownloadFileBase64); // convert base64String to byte[]
 
-                using (FileStream fs = new FileStream(_setupExe, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                using (FileStream fs = new FileStream(_zipFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                 {
-                    fs.Write(downloadFile, 0, downloadFile.Length);
+                    fs.Write(downloadCache, 0, downloadCache.Length);
                 }
+
+                if (!File.Exists(_zipFile))
+                {
+                    throw new Exception("File.Exists(_zipFile) failed.");
+                }
+
+                ZipFile.ExtractToDirectory(_zipFile, _downloadDir);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("AgentUpdate.DownloadFile(): " + ex.Message);
             }
         }
         #endregion

@@ -15,6 +15,7 @@ using System.Printing;
 using System.Management;
 using System.Printing.IndexedProperties;
 using System.Collections;
+using System.Reflection;
 
 namespace USBTestConsole
 {
@@ -26,12 +27,8 @@ namespace USBTestConsole
             {
                 Console.WriteLine("Start...");
 
-                var proces = Process.GetProcesses();
-
-                foreach (var p in proces)
-                {
-                    Console.WriteLine(p.ProcessName);
-                }
+                var ver = Assembly.GetExecutingAssembly().GetName().Version;
+                Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Version);
 
             }
             catch (Exception ex)

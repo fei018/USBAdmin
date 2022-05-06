@@ -132,7 +132,11 @@ namespace HHITtoolsTray
             {
                 try
                 {
-                    //Debugger.Break();
+                    if (pipeMsg.UsbDisk == null)
+                    {
+                        throw new Exception("NamedPipeClient_Tray.ReceiveMsgHandler_UsbDiskNoRegister(): pipeMsg.UsbDisk == null");
+                    }
+
                     var usbWin = new UsbRequestWin();
                     usbWin.ShowPageUsbRequestNotify(pipeMsg.UsbDisk);
                     usbWin.Show();

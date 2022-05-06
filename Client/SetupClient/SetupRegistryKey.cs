@@ -1,9 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SetupClient
 {
@@ -12,16 +9,17 @@ namespace SetupClient
         static Dictionary<string, string> Get_HHITtoolsKeys()
         {
             var keys = new Dictionary<string, string>()
-            {               
+            {
                 {"AgentDataDir",@"%ProgramData%\HHITtools"},
                 {"UsbWhitelistPath",@"%ProgramFiles%\HHITtools\UsbWhitelist.dat"},
                 {"RemoteSupportPath",@"%ProgramFiles%\HHITtools\RemoteSupport.exe"},
                 {"HHITtoolsServicePath",@"%ProgramFiles%\HHITtools\HHITtoolsService.exe"},
                 {"HHITtoolsUSBPath",@"%ProgramFiles%\HHITtools\HHITtoolsUSB.exe"},
                 {"HHITtoolsTrayPath",@"%ProgramFiles%\HHITtools\HHITtoolsTray.exe"},
-                {"UsbFilterEnabled","true"},
+                {"UsbFilterEnabled","False"},
+                {"UsbLogEnabled","true"},
                 {"PrintJobLogEnabled","true"},
-                {"AgentTimerMinute","10"},               
+                {"AgentTimerMinute","10"},
                 {"AgentHttpKey","usbb50ae7e95f144874a2739e119e8791e1"},
                 {"UsbWhitelistUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientGet/UsbWhitelist"},
                 {"AgentConfigUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientGet/AgentConfig"},
@@ -34,8 +32,8 @@ namespace SetupClient
                 {"PostPrintJobLogUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientPost/PostPrintJobLog"}
             };
 
-            
-            keys.Add("AgentVersion", "1.0.7");
+
+            keys.Add("AgentVersion", "1.0.10");
 
             return keys;
         }

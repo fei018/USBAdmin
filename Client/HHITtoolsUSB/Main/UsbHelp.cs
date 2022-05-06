@@ -11,7 +11,7 @@ namespace HHITtoolsUSB
     public class UsbHelp
     {
         #region + public static void PostUsbHistoryToHttpServer()
-        public static void PostUsbHistoryToHttpServer(string diskPath)
+        public static void PostUsbLogToHttpServer(string diskPath)
         {
             Task.Run(() =>
             {

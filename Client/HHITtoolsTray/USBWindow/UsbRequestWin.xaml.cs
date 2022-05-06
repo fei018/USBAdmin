@@ -48,10 +48,6 @@ namespace HHITtoolsTray.USBWindow
                 _UsbDiskInfo = usbDisk;
 
                 var notifyPage = new UsbRequestNotifyPage();
-                if (_UsbDiskInfo == null)
-                {
-                    throw new Exception("UsbDiskInfo is null");
-                }
 
                 notifyPage.txtBrand.Text = _UsbDiskInfo.Manufacturer;
                 notifyPage.txtProduct.Text = _UsbDiskInfo.Product;

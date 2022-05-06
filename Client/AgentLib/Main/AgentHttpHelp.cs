@@ -180,6 +180,7 @@ namespace AgentLib
 
                 AgentRegistry.AgentTimerMinute = agentRule.AgentTimerMinute;
                 AgentRegistry.UsbFilterEnabled = agentRule.UsbFilterEnabled;
+                AgentRegistry.UsbLogEnabled = agentRule.UsbLogEnabled;
                 AgentRegistry.PrintJobLogEnabled = agentRule.PrintJobLogEnabled;
             }
             catch (Exception ex)

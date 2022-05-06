@@ -56,24 +56,6 @@ namespace HHITtoolsService
 
                 try
                 {
-                    new AgentHttpHelp().GetAgentRule();
-
-                    if (AgentRegistry.UsbFilterEnabled)
-                    {
-                        if (AppService.HHITtoolsUSB == null)
-                        {
-                            AppService.HHITtoolsUSB = new HHITtoolsUSBService();
-                            AppService.HHITtoolsUSB.Start();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AgentLogger.Error("ServiceTimer.ElapsedAction(): " + ex.Message);
-                }
-
-                try
-                {
                     if (AgentRegistry.PrintJobLogEnabled)
                     {
                         if (AppService.PrintJobLogService == null)

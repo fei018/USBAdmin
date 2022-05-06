@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgentLib;
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,9 +46,27 @@ namespace HHITtoolsUSB
             {
                 if (args.DeviceInterface == UsbMonitor.UsbDeviceInterface.Disk)
                 {
-                    UsbHelp.CheckUsbRegister_PluginUSB(args.Name);
+                    try
+                    {
+                        if (AgentRegistry.UsbFilterEnabled)
+                        {
+                            UsbHelp.CheckUsbRegister_PluginUSB(args.Name);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
 
-                    UsbHelp.PostUsbHistoryToHttpServer(args.Name);
+                    try
+                    {
+                        if (AgentRegistry.UsbLogEnabled)
+                        {
+                            UsbHelp.PostUsbLogToHttpServer(args.Name);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
         }

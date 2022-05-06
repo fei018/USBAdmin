@@ -4,6 +4,7 @@ using System.Configuration.Install;
 using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
+using HHITtoolsService.Setup;
 
 namespace HHITtoolsService
 {
@@ -14,9 +15,27 @@ namespace HHITtoolsService
         {
             InitializeComponent();
 
-            this.BeforeUninstall += ProjectInstaller_BeforeUninstall;
+            this.Committed += ProjectInstaller_Committed;
         }
 
+        private void ProjectInstaller_Committed(object sender, InstallEventArgs e)
+        {
+            try
+            {
+                SetupRegistryKey.InitialRegistryKey();
+
+                using (ServiceController sc = new ServiceController(this.serviceInstaller1.ServiceName))
+                {
+                    if (sc.Status == ServiceControllerStatus.Stopped)
+                    {
+                        sc.Start();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
 
         private void ProjectInstaller_BeforeUninstall(object sender, InstallEventArgs e)
         {
@@ -24,14 +43,11 @@ namespace HHITtoolsService
             {
                 using (ServiceController sc = new ServiceController(this.serviceInstaller1.ServiceName))
                 {
-                    if (sc != null)
+                    if (sc.Status == ServiceControllerStatus.Running)
                     {
-                        if (sc.Status == ServiceControllerStatus.Running)
-                        {
-                            sc.Stop();
+                        sc.Stop();
 
-                            sc.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(5));
-                        }
+                        sc.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(5));
                     }
                 }
             }

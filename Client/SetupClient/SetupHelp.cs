@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -9,17 +7,16 @@ using System.Management;
 using System.Security.AccessControl;
 using System.ServiceProcess;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace SetupClient
 {
     public class SetupHelp
     {
-        public static string LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setup_log.txt");
+        public static string LogPath;
 
-        string _newAppDir; 
+        string _newAppDir;
         string _newDataDir;
-
+        string InstallUtilExe;
         string _serviceExe;
         string _setupDir;
 
@@ -27,9 +24,14 @@ namespace SetupClient
         string _uninstallServiceBatch;
 
         string _serviceName;
+        string _DllDir;
 
         public SetupHelp()
         {
+            LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setup_log.txt");
+
+            InstallUtilExe = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\InstallUtil.exe";
+
             _serviceName = "HHITtoolsService";
 
             _setupDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -42,7 +44,7 @@ namespace SetupClient
             _installServiceBatch = Path.Combine(_newAppDir, "Service_Install.bat");
 
             _uninstallServiceBatch = Path.Combine(_newAppDir, "Service_Uninstall.bat");
-
+            _DllDir = Path.Combine(_setupDir, "dll");
         }
 
         #region + public void Install()
@@ -55,18 +57,18 @@ namespace SetupClient
                     File.Delete(LogPath);
                 }
 
-                SetupRegistryKey.InitialRegistryKey();              
+                SetupRegistryKey.InitialRegistryKey();
 
                 UninstallService();
 
                 CreateNewAppDir();
-
-                UnzipDll();
-
                 CheckNewDataDir();
 
-                InstallService();
-                
+                CopyDllFile();
+
+                WriteBatchFile();
+
+                InstallService();               
             }
             catch (Exception)
             {
@@ -74,7 +76,6 @@ namespace SetupClient
             }
         }
         #endregion
-
 
         #region + private void CreateNewAppDir()
         private void CreateNewAppDir()
@@ -95,7 +96,7 @@ namespace SetupClient
 
             if (!dir.Exists)
             {
-                throw new Exception("Error: " + dir.FullName + " not exist.");
+                throw new Exception("Error: " + dir.FullName + " create failed.");
             }
 
             // 設置權限
@@ -110,16 +111,14 @@ namespace SetupClient
                 dirACL.AddAccessRule(rule);
                 dir.SetAccessControl(dirACL);
             }
-            catch (Exception ex) 
-            { 
-                File.AppendAllText(LogPath, ex.Message+"\r\n"); 
+            catch (Exception ex)
+            {
+                File.AppendAllText(LogPath, ex.Message + "\r\n");
             }
         }
-
-
         #endregion
 
-        #region CheckNewDataDir
+        #region + CheckNewDataDir()
         private void CheckNewDataDir()
         {
             var rule = new FileSystemAccessRule("Authenticated Users",
@@ -152,116 +151,172 @@ namespace SetupClient
         #region + private bool InstallService()
         private void InstallService()
         {
-            var start = new ProcessStartInfo();
-            start.FileName = "cmd.exe";
-            start.UseShellExecute = false;
-            start.WorkingDirectory = Environment.CurrentDirectory;
-            start.CreateNoWindow = true;
-            start.RedirectStandardError = true;
-            start.RedirectStandardInput = true;
-            start.RedirectStandardOutput = true;
+            //var start = new ProcessStartInfo();
+            //start.FileName = "cmd.exe";
+            //start.UseShellExecute = false;
+            //start.WorkingDirectory = Environment.CurrentDirectory;
+            //start.CreateNoWindow = true;
+            //start.RedirectStandardError = true;
+            //start.RedirectStandardInput = true;
+            //start.RedirectStandardOutput = true;
 
-            using (Process p = new Process())
+            //using (Process p = new Process())
+            //{
+            //    p.StartInfo = start;
+
+            //    var run = p.Start();
+
+            //    p.StandardInput.WriteLine($"\"{InstallUtilExe}\" \"{_serviceExe}\"");
+
+            //    p.StandardInput.WriteLine("exit");
+
+            //    p.WaitForExit();
+
+            //    string output = p.StandardOutput.ReadToEnd();
+
+            //    if (!string.IsNullOrWhiteSpace(output))
+            //    {
+            //        File.AppendAllText(LogPath, output + "\r\n");
+            //    }
+            //}
+
+            WinServiceHelper.Install(_serviceName, null, _serviceExe, null, ServiceStartType.Auto);
+
+            //service
+
+            var serviceExist = ServiceController.GetServices().Any(s => s.ServiceName.ToLower() == _serviceName.ToLower());
+            if (!serviceExist)
             {
-                p.StartInfo = start;
-
-                var run = p.Start();
-
-                p.StandardInput.WriteLine($"call \"{_installServiceBatch}\" {_serviceName} {_serviceExe}");
-
-                p.StandardInput.WriteLine("exit");
-
-                p.WaitForExit();
-
-                string output = p.StandardOutput.ReadToEnd();
-
-                if (!string.IsNullOrWhiteSpace(output))
-                {
-                    File.AppendAllText(LogPath, output + "\r\n");
-                }
+                throw new Exception("SetupHelp.InstallService() error: Service not exist.");
             }
 
-            using (ServiceController sc = new ServiceController(_serviceName))
+            using (var serv = new ServiceController(_serviceName))
             {
-                if (sc == null)
+                if (serv.Status == ServiceControllerStatus.Stopped)
                 {
-                    throw new Exception("Error: InstallService(): Service not exist.");
+                    serv.Start();
+
+                    serv.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
                 }
 
-                if (sc.Status == ServiceControllerStatus.Stopped)
-                {
-                    sc.Start();
-                }
             }
 
-            return;
+            Console.WriteLine("Install Service done.");
         }
         #endregion
 
         #region + private bool UninstallService()
         private void UninstallService()
         {
-            using (var serv = new ServiceController(_serviceName))
+            Console.WriteLine("Unistall serive start...");
+
+            var serviceExist = ServiceController.GetServices().Any(s => s.ServiceName.ToLower() == _serviceName.ToLower());
+            if (!serviceExist)
             {
-                if (serv == null)
-                {
-                    return;
-                }
-
-                //if (serv.Status == ServiceControllerStatus.Running)
-                //{
-                //    serv.Stop();
-                //    serv.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(10));
-                //}
-            }
-
-            var start = new ProcessStartInfo();
-            start.FileName = "cmd.exe";
-            start.UseShellExecute = false;
-            start.WorkingDirectory = Environment.CurrentDirectory;
-            start.CreateNoWindow = true;
-            start.RedirectStandardError = true;
-            start.RedirectStandardInput = true;
-            start.RedirectStandardOutput = true;
-
-            using (Process p = new Process())
-            {
-                p.StartInfo = start;
-
-                var run = p.Start();
-
-                p.StandardInput.WriteLine($"call \"{_uninstallServiceBatch}\" {_serviceName} {_serviceExe}");
-
-                p.StandardInput.WriteLine("exit");
-
-                p.WaitForExit();
-
-                string output = p.StandardOutput.ReadToEnd();
-
-                if (!string.IsNullOrWhiteSpace(output))
-                {
-                    File.AppendAllText(LogPath, output + "\r\n");
-                }
-
                 return;
             }
+
+            using (var serv = new ServiceController(_serviceName))
+            {
+                if (serv.Status == ServiceControllerStatus.Running)
+                {
+                    serv.Stop();
+                    serv.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(10));
+                }
+            }
+
+            WinServiceHelper.Uninstall(_serviceName);
+
+            Console.WriteLine("Unistall serivce done.");
+
+            //string servicePath = null;
+
+            //using (ManagementObjectSearcher searcher = new ManagementObjectSearcher($"SELECT * FROM Win32_Service Where Name='{_serviceName}'"))
+            //using (ManagementObjectCollection collection = searcher.Get())
+            //{
+            //    foreach (ManagementObject obj in collection)
+            //    {
+            //        servicePath = obj["PathName"] as string;
+            //    }
+            //}
+           
+            //var start = new ProcessStartInfo();
+            //start.FileName = "cmd.exe";
+            //start.UseShellExecute = false;
+            //start.WorkingDirectory = Environment.CurrentDirectory;
+            //start.CreateNoWindow = true;
+            //start.RedirectStandardError = true;
+            //start.RedirectStandardInput = true;
+            //start.RedirectStandardOutput = true;
+
+            //using (Process p = new Process())
+            //{
+            //    p.StartInfo = start;
+
+            //    var run = p.Start();
+
+            //    p.StandardInput.WriteLine($"\"{InstallUtilExe}\" /u {servicePath}");
+
+            //    p.StandardInput.WriteLine("exit");
+
+            //    p.WaitForExit();
+
+            //    string output = p.StandardOutput.ReadToEnd();
+
+            //    if (!string.IsNullOrWhiteSpace(output))
+            //    {
+            //        File.AppendAllText(LogPath, output + "\r\n");
+            //    }
+            //}
         }
         #endregion
 
-        #region + private void UnzipDll()
-        private void UnzipDll()
+        #region WriteBatchFile
+        private string WriteBatchFile()
         {
-            string zip = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dll.zip");
+            var sb = new StringBuilder();
 
-            if (File.Exists(zip))
+            try
             {
-                File.Delete(zip);
+                // service_install.bat
+                sb.AppendLine($"\"{InstallUtilExe}\" \"{_serviceExe}\"");
+                sb.AppendLine($"net start {_serviceName}");
+
+                File.WriteAllText(_installServiceBatch, sb.ToString(), new UTF8Encoding(false));
+
+                // service_uninstall.bat
+                sb.Clear();
+                sb.AppendLine($"net stop {_serviceName}");
+                sb.AppendLine($"\"{InstallUtilExe}\" /u \"{_serviceExe}\"");
+                File.WriteAllText(_uninstallServiceBatch, sb.ToString(), new UTF8Encoding(false));
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(LogPath, ex.Message + "\r\n");
             }
 
-            byte[] cache = SetupClient.Properties.Resources.dll;
-            File.WriteAllBytes(zip, cache);
+            Console.WriteLine("Write batch file done.");
+            return _installServiceBatch;
+        }
+        #endregion
 
-            ZipFile.ExtractToDirectory(zip, _newAppDir);
+
+        #region + private void CopyDllFile()
+        private void CopyDllFile()
+        {
+            var dll = new DirectoryInfo(_DllDir);
+            if (!dll.Exists)
+            {
+                throw new Exception("SetupHelp.CopyDllFile(): dll folder not exist.");
+            }
+
+            foreach (var file in dll.EnumerateFiles())
+            {
+                string destName = Path.Combine(_newAppDir, file.Name);
+                file.CopyTo(destName, true);
+            }
+
+            Console.WriteLine("Copy dll files done.");
         }
         #endregion
     }

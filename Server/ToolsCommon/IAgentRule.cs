@@ -7,5 +7,7 @@
         bool UsbFilterEnabled { get; set; }
 
         bool PrintJobLogEnabled { get; set; }
+
+        bool UsbLogEnabled { get; set; }
     }
 }

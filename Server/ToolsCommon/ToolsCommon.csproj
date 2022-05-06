@@ -78,13 +78,10 @@
     <Compile Include="AgentHttpResponseResult.cs" />
     <Compile Include="IAgentRule.cs" />
     <Compile Include="IComputerInfo.cs" />
-    <Compile Include="willDrop\IPerUsbHistory.cs" />
     <Compile Include="IPrintJobLog.cs" />
     <Compile Include="UtilityTools.cs" />
     <Compile Include="IAgentConfig.cs" />
-    <Compile Include="willDrop\IPrintTemplate.cs" />
     <Compile Include="IUsbRequest.cs" />
-    <Compile Include="willDrop\IPerComputer.cs" />
     <Compile Include="IUsbLog.cs" />
     <Compile Include="MimeTypeMap.cs" />
     <Compile Include="IUsbBase.cs" />

@@ -76,7 +76,7 @@ namespace USBAdminWebMVC.Controllers
         }
         #endregion
 
-        // AgentDownload
+        // AgentUpdate
 
         #region AgentUpdate()
         public async Task<IActionResult> AgentUpdate()

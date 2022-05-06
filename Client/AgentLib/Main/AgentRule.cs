@@ -9,5 +9,7 @@ namespace AgentLib
         public bool UsbFilterEnabled { get; set; }
 
         public bool PrintJobLogEnabled { get; set; }
+
+        public bool UsbLogEnabled { get; set; }
     }
 }
