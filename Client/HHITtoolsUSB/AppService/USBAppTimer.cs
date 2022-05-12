@@ -48,7 +48,7 @@ namespace HHITtoolsUSB
                 try
                 {
                     new AgentHttpHelp().UpdateUSBWhitelist();
-                    new UsbFilter().Filter_Scan_All_USBDisk();
+                    new UsbFilter().Filter_ScanAll_USBDisk();
 
                     _timerRestart();
                 }

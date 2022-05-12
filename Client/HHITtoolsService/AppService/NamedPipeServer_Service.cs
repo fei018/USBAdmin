@@ -199,7 +199,7 @@ namespace HHITtoolsService
                     if (AgentRegistry.UsbFilterEnabled)
                     {
                         new AgentHttpHelp().UpdateUSBWhitelist();
-                        new UsbFilter().Filter_Scan_All_USBDisk(); // filter all usb disk
+                        new UsbFilter().Filter_ScanAll_USBDisk(); // filter all usb disk
                     }
                   
                     var msg = new PipeMsg(PipeMsgType.Msg_TrayHandle, "Update Setting done.");

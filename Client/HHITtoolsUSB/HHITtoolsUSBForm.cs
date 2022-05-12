@@ -52,6 +52,10 @@ namespace HHITtoolsUSB
                         {
                             UsbHelp.CheckUsbRegister_PluginUSB(args.Name);
                         }
+                        else
+                        {
+                            UsbHelp.DiskSetReadWrite(args.Name);
+                        }
                     }
                     catch (Exception)
                     {

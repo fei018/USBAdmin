@@ -28,7 +28,7 @@ namespace USBTestConsole
                 Console.WriteLine("Start...");
 
                 var ver = Assembly.GetExecutingAssembly().GetName().Version;
-                Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Version);
+                Console.WriteLine(Environment.MachineName);
 
             }
             catch (Exception ex)

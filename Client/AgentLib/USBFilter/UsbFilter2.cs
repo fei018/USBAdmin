@@ -129,7 +129,7 @@ namespace AgentLib
         /// </summary>
         /// <param name="diskPath"></param>
         /// <param name="isReadOnly"></param>
-        private void Set_Disk_IsReadOnly_by_DiskPath_WMI(string diskPath, bool isReadOnly)
+        public void Set_Disk_IsReadOnly_by_DiskPath_WMI(string diskPath, bool isReadOnly)
         {
             try
             {
@@ -143,9 +143,9 @@ namespace AgentLib
                         foreach (ManagementObject d in disks)
                         {
                             var result = Set_Disk_IsReadOnly_WMI(d, isReadOnly);
-                            if (!string.IsNullOrWhiteSpace(result))
+                            if (!string.IsNullOrWhiteSpace(result) && result != "0")
                             {
-                                AgentLogger.Log(diskPath + "\r\n" + "Set readOnly result: \r\n" + result);
+                                AgentLogger.Log(diskPath + "\r\n" + "Set ReadOnly result: \r\n" + result);
                             }
                         }
                     }

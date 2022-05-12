@@ -79,7 +79,7 @@ namespace AgentLib
         /// <summary>
         /// 重新全局 scan usb disk to filter
         /// </summary>
-        public void Filter_Scan_All_USBDisk()
+        public void Filter_ScanAll_USBDisk()
         {
             try
             {
@@ -89,6 +89,27 @@ namespace AgentLib
                     foreach (var usb in usbList)
                     {
                         Filter_UsbDisk_By_DiskPath(usb.DiskPath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region + public void Filter_ScanAll_USBDisk_Set_ReadWrite()
+        public void Filter_ScanAll_USBDisk_Set_ReadWrite()
+        {
+            try
+            {
+                var usbList = Get_All_UsbDisk_DiskPath_by_BusType_USB_WMI();
+                if (usbList.Count > 0)
+                {
+                    foreach (var usb in usbList)
+                    {
+                        Set_Disk_IsReadOnly_by_DiskPath_WMI(usb.DiskPath, false);
                     }
                 }
             }

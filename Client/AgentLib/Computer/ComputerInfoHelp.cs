@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Management;
-using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using ToolsCommon;
@@ -16,7 +15,7 @@ namespace AgentLib
             try
             {
                 var com = new ComputerInfo();
-                SetNetworkInfo(com);
+                com.HostName = IPGlobalProperties.GetIPGlobalProperties().HostName;
                 SetBiosSerial(com);
 
                 if (string.IsNullOrWhiteSpace(com.ComputerIdentity))
@@ -42,6 +41,12 @@ namespace AgentLib
                 userComputer.UsbFilterEnabled = AgentRegistry.UsbFilterEnabled;
                 userComputer.HostName = IPGlobalProperties.GetIPGlobalProperties().HostName;
                 userComputer.Domain = IPGlobalProperties.GetIPGlobalProperties().DomainName;
+                //try
+                //{
+                //    userComputer.Domain = System.DirectoryServices.ActiveDirectory.Domain.GetComputerDomain().Name;
+                //}
+                //catch (Exception) { }
+
                 SetNetworkInfo(userComputer);
                 SetBiosSerial(userComputer);
                 SetUserName(userComputer);
@@ -176,6 +181,6 @@ namespace AgentLib
             return mac.ToString();
         }
         #endregion
-        
+
     }
 }

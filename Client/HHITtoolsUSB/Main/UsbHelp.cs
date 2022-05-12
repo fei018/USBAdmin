@@ -47,7 +47,24 @@ namespace HHITtoolsUSB
                 }
                 catch (Exception ex)
                 {
-                    AgentLogger.Error(ex.ToString());
+                    AgentLogger.Error("HHITtoolsUSB.CheckUsbRegister_PluginUSB(): " + ex.Message);
+                }
+            });
+        }
+        #endregion
+
+        #region + public static void DiskSetReadWrite(string diskPath)
+        public static void DiskSetReadWrite(string diskPath)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    new UsbFilter().Set_Disk_IsReadOnly_by_DiskPath_WMI(diskPath, false);
+                }
+                catch (Exception ex)
+                {
+                    AgentLogger.Error("HHITtoolsUSB.DiskSetReadWrite(): " + ex.Message);
                 }
             });
         }
@@ -68,7 +85,7 @@ namespace HHITtoolsUSB
 
                 try
                 {
-                    new UsbFilter().Filter_Scan_All_USBDisk();
+                    new UsbFilter().Filter_ScanAll_USBDisk();
                 }
                 catch (Exception)
                 {

@@ -33,7 +33,7 @@ namespace SetupClient
             };
 
 
-            keys.Add("AgentVersion", "1.0.10");
+            keys.Add("AgentVersion", "1.0.13");
 
             return keys;
         }
