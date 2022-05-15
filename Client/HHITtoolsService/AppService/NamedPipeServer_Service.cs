@@ -128,8 +128,8 @@ namespace HHITtoolsService
                 { PipeMsgType.UpdateAgent_ServerHandle, ReceiveMsgHandler_UpdateAgent },
                 { PipeMsgType.UpdateSetting_ServerHandle, ReceiveMsgHandler_UpdateSetting},
                 { PipeMsgType.UsbDiskNoRegister_NotifyTray_ServerForward, ReceiveMsgHandler_UsbDiskNoRegister },
-                { PipeMsgType.DeleteOldPrintersAndInstallDriver_ServerHandle, Handler_PrinterDeleteOldAndInstallDriver },
-                { PipeMsgType.PrintJobLogRestart, Handler_PrintJobLogRestart }
+                { PipeMsgType.ToStopMeshAgentService_ServerHandle, ReceiveMsgHandler_StopMeshAgentService },
+                { PipeMsgType.PrintJobLogRestart, ReceiveMsgHandler_PrintJobLogRestart }
             };
         }
         #endregion
@@ -215,69 +215,8 @@ namespace HHITtoolsService
         }
         #endregion
 
-        #region + private void Handler_PrinterDeleteOldAndInstallDriver(PipeMsg pipeMsg)
-        private void Handler_PrinterDeleteOldAndInstallDriver(PipeMsg pipeMsg)
-        {
-            Task.Run(() =>
-            {
-#if DEBUG
-                Debugger.Break();
-#endif
-                try
-                {
-                    pipeMsg.PipeMsgType = PipeMsgType.DeleteOldPrintersAndInstallDriverCompleted;
-
-                    // delete old subnet printer
-                    PrinterHelp.DeleteOldIPPrinters_OtherSubnet();
-
-                    // delete old same name printer
-                    foreach (var p in pipeMsg.SitePrinterToAddList.PrinterList)
-                    {
-                        try
-                        {
-                            PrinterHelp.DeletePrinter_ByName(p.PrinterName);
-                            PrinterHelp.DeleteTcpIPPort_ByName(p.PortIPAddr);
-                        }
-                        catch (Exception)
-                        {
-                        }
-                    }
-
-                    StringBuilder output = new StringBuilder();
-
-                    //// add driver
-                    var driverList = pipeMsg.SitePrinterToAddList.DriverList;
-                    if (driverList != null && driverList.Any())
-                    {
-                        foreach (var p in driverList)
-                        {
-                            try
-                            {
-                                PrinterHelp.InstallPrinterDriver_WMI(p.DriverName, p.DriverInfLocalPath);
-                                output.AppendLine("Add printer driver: " + p.DriverName);
-                            }
-                            catch (Exception ex)
-                            {
-                                output.AppendLine(ex.GetBaseException().Message);
-                            }
-                        }
-                    }
-
-                    pipeMsg.Message = pipeMsg.Message + "\r\n" + output.ToString() + "\r\n";
-                    SendMsgToClient_By_PipeMsg(pipeMsg);
-                }
-                catch (Exception ex)
-                {
-
-                    pipeMsg.Message = pipeMsg.Message + "\r\n" + ex.GetBaseException().Message + "\r\n";
-                    SendMsgToClient_By_PipeMsg(pipeMsg);
-                }
-            });
-        }
-        #endregion
-
-        #region + private void Handler_PrintJobLogRestart(PipeMsg pipeMsg)
-        private void Handler_PrintJobLogRestart(PipeMsg pipeMsg)
+        #region + private void ReceiveMsgHandler_PrintJobLogRestart(PipeMsg pipeMsg)
+        private void ReceiveMsgHandler_PrintJobLogRestart(PipeMsg pipeMsg)
         {
             try
             {
@@ -287,6 +226,19 @@ namespace HHITtoolsService
             catch (Exception ex)
             {
                 AgentLogger.Error("Handler_PrintJobNotifyRestart: " + ex.Message);
+            }
+        }
+        #endregion
+
+        #region + private void ReceiveMsgHandler_StopMeshAgentService(PipeMsg pipeMsg)
+        private void ReceiveMsgHandler_StopMeshAgentService(PipeMsg pipeMsg)
+        {
+            try
+            {
+                AppService.MeshAgentServiceMonitor.StopMeshAgentService();
+            }
+            catch (Exception)
+            {
             }
         }
         #endregion

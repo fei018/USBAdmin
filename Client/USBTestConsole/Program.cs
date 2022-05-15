@@ -23,12 +23,12 @@ namespace USBTestConsole
     {
         static void Main(string[] args)
         {
+            ManagementEventWatcher watcher = null;
             try
             {
                 Console.WriteLine("Start...");
 
-                var ver = Assembly.GetExecutingAssembly().GetName().Version;
-                Console.WriteLine(Environment.MachineName);
+                watcher = WMIService("HHITtoolsservice");
 
             }
             catch (Exception ex)
@@ -37,10 +37,11 @@ namespace USBTestConsole
                 //Console.WriteLine("!!!!!!!!!!!!!!!!!!$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             }
 
-            Console.WriteLine("##############################################");
+            Console.WriteLine("Stop.");
             Console.ReadLine();
+            watcher.Stop();
 
-            //PrintJobNotify.Entity.Stop();
+            Console.ReadLine();
         }
 
         #region UsbFormProcess
@@ -235,6 +236,33 @@ namespace USBTestConsole
         }
         #endregion
 
- 
+        #region MyRegion
+        static ManagementEventWatcher WMIService(string name)
+        {
+            WqlEventQuery query =
+            new WqlEventQuery("__InstanceModificationEvent",
+            new TimeSpan(0, 0, 1),
+            $"TargetInstance isa \"Win32_Service\" and TargetInstance.Name = \"{name}\"");
+
+            ManagementEventWatcher watcher = new ManagementEventWatcher(query);
+            //watcher.Options.Timeout = TimeSpan.FromSeconds(10);
+
+            watcher.EventArrived += Watcher_EventArrived;
+            watcher.Stopped += Watcher_Stopped;
+            watcher.Start();
+            return watcher;
+        }
+
+        private static void Watcher_Stopped(object sender, StoppedEventArgs e)
+        {
+            Console.WriteLine(e.Status);
+        }
+
+        private static void Watcher_EventArrived(object sender, EventArrivedEventArgs e)
+        {
+            ManagementBaseObject e1 = e.NewEvent.GetPropertyValue("TargetInstance") as ManagementBaseObject;
+            Console.WriteLine(e1.GetPropertyValue("State").ToString());
+        }
+        #endregion
     }
 }

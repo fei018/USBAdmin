@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AgentLib
@@ -27,6 +28,8 @@ namespace AgentLib
         }
 
         private readonly static object _locker = new object();
+        private const string _lockerGuid = "91825b3e-7810-475d-9559-baf831952561";
+
         static void LogToFile(string path, string log)
         {
             if (!File.Exists(_baseDir))
@@ -36,16 +39,34 @@ namespace AgentLib
 
             Task.Run(() =>
             {
-                lock (_locker)
+                //lock (_locker)
+                //{
+                //    try
+                //    {
+                //        var l = Environment.NewLine + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine + log + Environment.NewLine;
+                //        File.AppendAllText(path, l);
+                //    }
+                //    catch (Exception)
+                //    {
+                //    }
+                //}
+
+                // lock multi process write one file
+                Mutex mutex = null;
+                try
                 {
-                    try
-                    {
-                        var l = Environment.NewLine + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine + log + Environment.NewLine;
-                        File.AppendAllText(path, l);
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    mutex = new Mutex(false, _lockerGuid);
+                    mutex.WaitOne();
+
+                    var l = Environment.NewLine + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine + log + Environment.NewLine;
+                    File.AppendAllText(path, l);
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    mutex.ReleaseMutex();
                 }
             });         
         }

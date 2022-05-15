@@ -1,0 +1,20 @@
+﻿<Window x:Class="HHITtoolsMeshAgentNotify.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HHITtoolsMeshAgentNotify"
+        mc:Ignorable="d"
+        Title="Remote Agent" Height="120" Width="150" ResizeMode="NoResize" WindowStyle="ToolWindow" Opacity="0.8" Closed="Window_Closed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Name="txtbAgentServiceState"
+                   Text="Running" FontSize="18" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Grid.Row="1" Width="80" Height="30" Click="btnAgentService_Click"
+                Name="btnAgentService" Content="Stop"></Button>
+    </Grid>
+</Window>

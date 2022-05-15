@@ -7,10 +7,9 @@
         UsbDiskNoRegister_NotifyTray_TrayHandle,
         UpdateAgent_ServerHandle,
         UpdateSetting_ServerHandle,
-        DeleteOldPrintersAndInstallDriver_ServerHandle,
-        DeleteOldPrintersAndInstallDriverCompleted,
         PrintJobLogRestart,
         ToCloseProcess_HHITtoolsTray_TrayHandle,
-        ToCloseProcess_HHITtoolsUSB_USBHandle
+        ToCloseProcess_HHITtoolsUSB_USBHandle,
+        ToStopMeshAgentService_ServerHandle
     }
 }

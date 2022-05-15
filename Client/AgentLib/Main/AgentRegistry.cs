@@ -7,7 +7,7 @@ namespace AgentLib
 {
     public class AgentRegistry
     {
-        private const string _usbRegistryKey = "SOFTWARE\\HipHing\\HHITtools";
+        private const string _agentRegistryKey = "SOFTWARE\\HipHing\\HHITtools";
 
 
         // Registry
@@ -88,25 +88,7 @@ namespace AgentLib
         {
             get => Convert.ToBoolean(ReadRegKey(nameof(PrintJobLogEnabled)));
             set => SetRegKey(nameof(PrintJobLogEnabled), value, RegistryValueKind.String);
-        }
-
-        public static string UsbWhitelistUrl
-        {
-            get => ReadRegKey(nameof(UsbWhitelistUrl));
-            set => SetRegKey(nameof(UsbWhitelistUrl), value, RegistryValueKind.String);
-        }
-
-        public static string AgentConfigUrl
-        {
-            get => ReadRegKey(nameof(AgentConfigUrl));
-            set => SetRegKey(nameof(AgentConfigUrl), value, RegistryValueKind.String);
-        }
-
-        public static string AgentRuleUrl
-        {
-            get => ReadRegKey(nameof(AgentRuleUrl));
-            set => SetRegKey(nameof(AgentRuleUrl), value, RegistryValueKind.String);
-        }
+        }      
 
         public static int AgentTimerMinute
         {
@@ -136,6 +118,35 @@ namespace AgentLib
         //        }
         //    }
         //}
+
+        /// <summary>
+        /// 表示 remote control 進行中
+        /// </summary>
+        public static bool IsRemoteControl
+        {
+            get => Convert.ToBoolean(ReadRegKey(nameof(IsRemoteControl)));
+            set => SetRegKey(nameof(IsRemoteControl), value, RegistryValueKind.String);
+        }
+
+        //========== Url
+
+        public static string UsbWhitelistUrl
+        {
+            get => ReadRegKey(nameof(UsbWhitelistUrl));
+            set => SetRegKey(nameof(UsbWhitelistUrl), value, RegistryValueKind.String);
+        }
+
+        public static string AgentConfigUrl
+        {
+            get => ReadRegKey(nameof(AgentConfigUrl));
+            set => SetRegKey(nameof(AgentConfigUrl), value, RegistryValueKind.String);
+        }
+
+        public static string AgentRuleUrl
+        {
+            get => ReadRegKey(nameof(AgentRuleUrl));
+            set => SetRegKey(nameof(AgentRuleUrl), value, RegistryValueKind.String);
+        }
 
         public static string AgentUpdateUrl
         {
@@ -181,16 +192,16 @@ namespace AgentLib
             {
                 using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
                 {
-                    using (var usbKey = hklm.OpenSubKey(_usbRegistryKey))
+                    using (var subKey = hklm.OpenSubKey(_agentRegistryKey))
                     {
-                        var value = usbKey.GetValue(name) as string;
+                        var value = subKey.GetValue(name) as string;
                         return value;
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception($"AgentRegistry.ReadRegKey({name}): " + ex.Message);
             }
         }
         #endregion
@@ -202,16 +213,15 @@ namespace AgentLib
             {
                 using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
                 {
-                    using (var usb = hklm.CreateSubKey(_usbRegistryKey))
+                    using (var sub = hklm.CreateSubKey(_agentRegistryKey))
                     {
-                        usb.SetValue(name, value, kind);
+                        sub.SetValue(name, value, kind);
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception($"AgentRegistry.SetRegKey({name}): " + ex.Message);
             }
         }
         #endregion

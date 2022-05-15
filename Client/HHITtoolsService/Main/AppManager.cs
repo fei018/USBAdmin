@@ -19,14 +19,14 @@ namespace HHITtoolsService
         #region Start()
         public static void Start()
         {
-            // post computer info to server-----
+            //--- post computer info to server
             try
             {
                 new AgentHttpHelp().PostComputerInfo();
             }
             catch (Exception ex) { AgentLogger.Error("HHITtoolsService.AppManager.Start(): " + ex.Message); }
 
-            // PipeServer_Service----
+            //--- PipeServer_Service
             try
             {
                 AppService.NamedPipeServer = new NamedPipeServer_Service();
@@ -34,7 +34,7 @@ namespace HHITtoolsService
             }
             catch (Exception) { }
 
-            // HHITtoolsUSB-----
+            //--- HHITtoolsUSB
             try
             {
                 AppService.HHITtoolsUSB = new HHITtoolsUSBService();
@@ -44,7 +44,7 @@ namespace HHITtoolsService
             {
             }
 
-            //Tray------
+            //--- Tray
             AppService.HHITtoolsTrayList = new List<HHITtoolsTrayService>();
 
             var tray = new HHITtoolsTrayService();
@@ -52,12 +52,12 @@ namespace HHITtoolsService
 
             AppService.HHITtoolsTrayList.Add(tray);
 
-
-            // ServiceTimer-----
+            
+            //--- ServiceTimer
             AppService.ServiceTimer = new ServiceTimer();
             AppService.ServiceTimer.Start();
 
-            // PrintJobLogService------
+            //--- PrintJobLogService
             try
             {
                 if (AgentRegistry.PrintJobLogEnabled)
@@ -69,24 +69,37 @@ namespace HHITtoolsService
             catch (Exception)
             {
             }
+
+            //----- MeshCentralAgentServiceMonitor
+            try
+            {
+                AppService.MeshAgentServiceMonitor = new MeshAgentServiceMonitor();
+                AppService.MeshAgentServiceMonitor.Start();
+            }
+            catch (Exception)
+            {
+            }
         }
         #endregion
 
         #region Stop()
         public static void Stop()
         {
+            //--- HHITtoolsUSB
             try
             {
                 AppService.HHITtoolsUSB?.Stop();
             }
             catch (Exception) { }
 
+            //--- PrintJobLogService
             try
             {
                 AppService.PrintJobLogService?.Stop();
             }
             catch (Exception) { }
 
+            //--- HHITtoolsTrayList
             try
             {
                 foreach (var tray in AppService.HHITtoolsTrayList)
@@ -96,25 +109,28 @@ namespace HHITtoolsService
             }
             catch (Exception ex) { AgentLogger.Error(ex.GetBaseException().Message); }
 
+            //--- ServiceTimer
             try
             {
                 AppService.ServiceTimer?.Stop();
             }
             catch (Exception) { }
 
+            //----- MeshCentralAgentServiceMonitor
             try
             {
-                AppService.NamedPipeServer?.Stop();
-            }
-            catch (Exception) { }
-
-            try
-            {
-                AppService.PrintJobLogService.Stop();
+                AppService.MeshAgentServiceMonitor?.Stop(); ;
             }
             catch (Exception)
             {
             }
+
+            //------- NamedPipeServer ------ last stop
+            try
+            {
+                AppService.NamedPipeServer?.Stop();
+            }
+            catch (Exception) { }           
         }
         #endregion
 
