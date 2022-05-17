@@ -44,7 +44,7 @@ namespace HHITtoolsTray
 
                 _trayIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
 
-                //_trayIcon.ContextMenuStrip.Items.Add("Remote Support", null, RunRemoteSupportVNC_Click);
+                _trayIcon.ContextMenuStrip.Items.Add("Remote Support", null, RunRemoteSupport_Click);
                 //_trayIcon.ContextMenuStrip.Items.Add("Set Printer", null, SetPrinter_Click);
                 _trayIcon.ContextMenuStrip.Items.Add("Update Setting", null, UpdateSettingItem_Click);         
                 _trayIcon.ContextMenuStrip.Items.Add("About", null, AboutItem_Click);
@@ -90,13 +90,13 @@ namespace HHITtoolsTray
         }
         #endregion
 
-        #region RunRemoteSupportVNC_Click
-        private void RunRemoteSupportVNC_Click(object sender, EventArgs e)
+        #region RunRemoteSupport_Click
+        private void RunRemoteSupport_Click(object sender, EventArgs e)
         {
             try
             {
-                var vnc = Path.Combine(AgentRegistry.RemoteSupportPath);
-                Process.Start(vnc);
+                var meshAgent = Path.Combine(AgentRegistry.HHITtoolsMeshAgentNotifyPath);
+                Process.Start(meshAgent);
             }
             catch (Exception ex)
             {

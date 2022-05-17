@@ -23,7 +23,14 @@ namespace HHITtoolsUSB
             AppService.USBAppTimer.Start();
 
             // filter all usb
-            UsbHelp.UpdateUSBWhiltelist_And_FilterAllUSB();
+            try
+            {
+                if (AgentRegistry.UsbFilterEnabled)
+                {
+                    UsbHelp.UpdateUSBWhiltelist_And_FilterAllUSB();
+                }
+            }
+            catch (Exception) { }
         }
         #endregion
 

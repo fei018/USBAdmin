@@ -226,12 +226,8 @@ namespace AgentLib.PrintJob
                 _waitHandle = ThreadPool.RegisterWaitForSingleObject(_mrEvent, new WaitOrTimerCallback(PrinterNotifyWaitCallback), _mrEvent, -1, true);
                 #endregion
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-#if DEBUG
-                Console.WriteLine(ex.GetBaseException().Message);
-                Debug.WriteLine(ex.GetBaseException().Message);
-#endif
             }
         }
         #endregion

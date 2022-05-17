@@ -174,6 +174,10 @@
       <Project>{bbdb4699-103a-4cd5-92db-6a9cf675161f}</Project>
       <Name>AgentLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HHITtoolsMeshAgentNotify\HHITtoolsMeshAgentNotify.csproj">
+      <Project>{ca659d1a-5505-4cde-8f52-699259032d34}</Project>
+      <Name>HHITtoolsMeshAgentNotify</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HHITtoolsTray\HHITtoolsTray.csproj">
       <Project>{316a81c6-67b8-45cc-8783-4f96b56a151f}</Project>
       <Name>HHITtoolsTray</Name>

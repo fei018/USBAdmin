@@ -72,6 +72,14 @@ namespace AgentLib
             set => SetRegKey(nameof(RemoteSupportPath), value, RegistryValueKind.String);
         }
 
+        public static string HHITtoolsMeshAgentNotifyPath
+        {
+            get => Environment.ExpandEnvironmentVariables(ReadRegKey(nameof(HHITtoolsMeshAgentNotifyPath)));
+            set => SetRegKey(nameof(HHITtoolsMeshAgentNotifyPath), value, RegistryValueKind.String);
+        }
+
+        //-------------
+
         public static bool UsbFilterEnabled
         {
             get => Convert.ToBoolean(ReadRegKey(nameof(UsbFilterEnabled)));
@@ -201,7 +209,7 @@ namespace AgentLib
             }
             catch (Exception ex)
             {
-                throw new Exception($"AgentRegistry.ReadRegKey({name}): " + ex.Message);
+                throw new Exception($"AgentRegistry.ReadRegKey({name}):\r\n" + ex.Message);
             }
         }
         #endregion
@@ -221,7 +229,7 @@ namespace AgentLib
             }
             catch (Exception ex)
             {
-                throw new Exception($"AgentRegistry.SetRegKey({name}): " + ex.Message);
+                throw new Exception($"AgentRegistry.SetRegKey({name}):\r\n" + ex.Message);
             }
         }
         #endregion

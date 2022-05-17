@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgentLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +21,19 @@ namespace HHITtoolsMeshAgentNotify
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MeshAgentServiceHelp _agentServiceHelp;
+        public MainWindow()
+        {
+            InitializeComponent();
 
+            ShowWinLocationRightBottom();
+
+            AppManger.Start();
+
+            AppService.MeshAgentServiceHelp.AgentServiceStateChangeEvent += AgentServiceStateChangeEvent;
+            AppService.MeshAgentServiceHelp.Start();
+        }
+
+        #region MyRegion
         /// <summary>
         /// 右下角 顯示 Window
         /// </summary>
@@ -31,19 +43,14 @@ namespace HHITtoolsMeshAgentNotify
             this.Left = SystemParameters.WorkArea.Right - this.Width;
         }
 
-        public MainWindow()
+        private void Window_Closed(object sender, EventArgs e)
         {
-            InitializeComponent();
-
-            ShowWinLocationRightBottom();
-
-            _agentServiceHelp = new MeshAgentServiceHelp();
-            _agentServiceHelp.AgentServiceStateChangeEvent += _agentServiceHelp_AgentServiceStateChangeEvent;
-            _agentServiceHelp.Start();
+            AppManger.Stop();
         }
+        #endregion
 
-        #region + private void _agentServiceHelp_AgentServiceStateChangeEvent(object sender, MeshAgentServiceState e)
-        private void _agentServiceHelp_AgentServiceStateChangeEvent(object sender, MeshAgentServiceState e)
+        #region + private void AgentServiceStateChangeEvent(object sender, MeshAgentServiceState e)
+        public void AgentServiceStateChangeEvent(object sender, MeshAgentServiceState e)
         {
             try
             {
@@ -82,29 +89,50 @@ namespace HHITtoolsMeshAgentNotify
                 MessageBox.Show(ex.Message, "Error");
             }
         }
-        #endregion
+        #endregion      
 
-        private void Window_Closed(object sender, EventArgs e)
+        private async void btnAgentService_Click(object sender, RoutedEventArgs e)
         {
-            _agentServiceHelp.Stop();
+            DisableButton(true);
+
+            try
+            {
+                if (e.Source is Button btn)
+                {
+                    if (btn.Content.ToString() == "Start")
+                    {
+                        // send msg to Start service
+                        AppService.NamedPipeClient_MeshAgentNotify.SendMsg_ToStartMeshAgentService();
+                    }
+                    else
+                    {
+                        // send msg to Stop service
+                        AppService.NamedPipeClient_MeshAgentNotify.SendMsg_ToStopMeshAgentService();
+                    }
+
+                    await Task.Delay(4000);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+            DisableButton(false);
         }
 
-        private void btnAgentService_Click(object sender, RoutedEventArgs e)
+        #region + private void DisableButton(bool disbale)
+        private void DisableButton(bool disbale)
         {
-            Button btn = e.Source as Button;
-            if (btn != null)
+            try
             {
-                if(btn.Content.ToString() == "Start")
-                {
-                    // send msg to stop service
-                }
-                else
-                {
-                    // send msg to start service
-                }
-
+                btnAgentService.IsEnabled = !disbale;
+            }
+            catch (Exception)
+            {
             }
         }
+        #endregion
 
     }
 }

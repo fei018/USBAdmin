@@ -16,6 +16,7 @@ namespace SetupClient
                 {"HHITtoolsServicePath",@"%ProgramFiles%\HHITtools\HHITtoolsService.exe"},
                 {"HHITtoolsUSBPath",@"%ProgramFiles%\HHITtools\HHITtoolsUSB.exe"},
                 {"HHITtoolsTrayPath",@"%ProgramFiles%\HHITtools\HHITtoolsTray.exe"},
+                {"HHITtoolsMeshAgentNotifyPath",@"%ProgramFiles%\HHITtools\HHITtoolsMeshAgentNotify.exe"},
                 {"UsbFilterEnabled","False"},
                 {"UsbLogEnabled","true"},
                 {"PrintJobLogEnabled","true"},

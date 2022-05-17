@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Management;
 using System.ServiceProcess;
+using System.Windows;
 
 namespace HHITtoolsMeshAgentNotify
 {
-    class MeshAgentServiceHelp
+    public class MeshAgentServiceHelp
     {
         private const string _agentServiceName = "Mesh Agent";
 
@@ -19,17 +17,8 @@ namespace HHITtoolsMeshAgentNotify
         #region + public void Start()
         public void Start()
         {
-            try
-            {
-                if (!ServiceController.GetServices().Any(s => s.ServiceName == _agentServiceName))
-                {
-                    AgentServiceStateChangeEvent?.Invoke(null, MeshAgentServiceState.NoService);
-                }
-            }
-            catch (Exception)
-            {
-            }
-
+          
+            // 綁定 meshagent service state change event
             try
             {
                 WqlEventQuery query = new WqlEventQuery("__InstanceModificationEvent",
@@ -40,9 +29,63 @@ namespace HHITtoolsMeshAgentNotify
 
                 _watcher.EventArrived += _watcher_EventArrived;
                 _watcher.Start();
+
+                CheckServiceStateToInvokeEvent();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.GetBaseException().Message);
+            }
+        }
+        #endregion
+
+        #region + private void CheckServiceStateToInvokeEvent()
+        private void CheckServiceStateToInvokeEvent()
+        {
+            try
+            {
+                if (!ServiceController.GetServices().Any(s => s.ServiceName == _agentServiceName))
+                {
+                    AgentServiceStateChangeEvent?.Invoke(null, MeshAgentServiceState.NoService);
+                }
+                else
+                {
+                    using (ServiceController sc = new ServiceController(_agentServiceName))
+                    {
+                        switch (sc.Status)
+                        {
+                            case ServiceControllerStatus.ContinuePending:
+                                break;
+
+                            case ServiceControllerStatus.Paused:
+                                break;
+
+                            case ServiceControllerStatus.PausePending:
+                                break;
+
+                            case ServiceControllerStatus.Running:
+                                AgentServiceStateChangeEvent?.Invoke(null, MeshAgentServiceState.Running);
+                                break;
+
+                            case ServiceControllerStatus.StartPending:
+                                break;
+
+                            case ServiceControllerStatus.Stopped:
+                                AgentServiceStateChangeEvent?.Invoke(null, MeshAgentServiceState.Stopped);
+                                break;
+
+                            case ServiceControllerStatus.StopPending:
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                }
             }
             catch (Exception)
             {
+                throw;
             }
         }
         #endregion

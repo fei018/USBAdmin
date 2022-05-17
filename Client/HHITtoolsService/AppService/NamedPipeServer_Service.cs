@@ -127,9 +127,10 @@ namespace HHITtoolsService
             {
                 { PipeMsgType.UpdateAgent_ServerHandle, ReceiveMsgHandler_UpdateAgent },
                 { PipeMsgType.UpdateSetting_ServerHandle, ReceiveMsgHandler_UpdateSetting},
-                { PipeMsgType.UsbDiskNoRegister_NotifyTray_ServerForward, ReceiveMsgHandler_UsbDiskNoRegister },
-                { PipeMsgType.ToStopMeshAgentService_ServerHandle, ReceiveMsgHandler_StopMeshAgentService },
-                { PipeMsgType.PrintJobLogRestart, ReceiveMsgHandler_PrintJobLogRestart }
+                { PipeMsgType.UsbDiskNoRegister_NotifyTray_ServerForward, ReceiveMsgHandler_UsbDiskNoRegister },              
+                { PipeMsgType.PrintJobLogRestart, ReceiveMsgHandler_PrintJobLogRestart },
+                { PipeMsgType.ToStartMeshAgentService_ServerHandle, ReceiveMsgHandler_StartMeshAgentService },
+                { PipeMsgType.ToStopMeshAgentService_ServerHandle, ReceiveMsgHandler_StopMeshAgentService }
             };
         }
         #endregion
@@ -230,16 +231,39 @@ namespace HHITtoolsService
         }
         #endregion
 
+        #region + private void ReceiveMsgHandler_StartMeshAgentService(PipeMsg pipeMsg)
+        private void ReceiveMsgHandler_StartMeshAgentService(PipeMsg pipeMsg)
+        {
+            Task.Factory.StartNew(async () =>
+            {
+                try
+                {
+                    AgentRegistry.IsRemoteControl = true;
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    AppService.MeshAgentServiceMonitor.StartMeshAgentService();
+                }
+                catch (Exception)
+                {
+                }
+            });
+        }
+        #endregion
+
         #region + private void ReceiveMsgHandler_StopMeshAgentService(PipeMsg pipeMsg)
         private void ReceiveMsgHandler_StopMeshAgentService(PipeMsg pipeMsg)
         {
-            try
+            Task.Factory.StartNew(async () =>
             {
-                AppService.MeshAgentServiceMonitor.StopMeshAgentService();
-            }
-            catch (Exception)
-            {
-            }
+                try
+                {
+                    AgentRegistry.IsRemoteControl = false;
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    AppService.MeshAgentServiceMonitor.StopMeshAgentService();
+                }
+                catch (Exception)
+                {
+                }
+            });
         }
         #endregion
 

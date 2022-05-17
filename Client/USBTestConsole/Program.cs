@@ -23,24 +23,21 @@ namespace USBTestConsole
     {
         static void Main(string[] args)
         {
-            ManagementEventWatcher watcher = null;
+            
             try
             {
                 Console.WriteLine("Start...");
 
-                watcher = WMIService("HHITtoolsservice");
+                MeshAgent();
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                //Console.WriteLine("!!!!!!!!!!!!!!!!!!$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                
             }
 
             Console.WriteLine("Stop.");
-            Console.ReadLine();
-            watcher.Stop();
-
             Console.ReadLine();
         }
 
@@ -236,7 +233,7 @@ namespace USBTestConsole
         }
         #endregion
 
-        #region MyRegion
+        #region WMIService
         static ManagementEventWatcher WMIService(string name)
         {
             WqlEventQuery query =
@@ -262,6 +259,37 @@ namespace USBTestConsole
         {
             ManagementBaseObject e1 = e.NewEvent.GetPropertyValue("TargetInstance") as ManagementBaseObject;
             Console.WriteLine(e1.GetPropertyValue("State").ToString());
+        }
+        #endregion
+
+        #region MyRegion
+        
+        static void MeshAgent()
+        {
+            ProcessStartInfo sinfo = new ProcessStartInfo();
+            sinfo.FileName = "C:\\meshagent64.exe";
+            sinfo.Arguments = "connect";
+            sinfo.WorkingDirectory = Environment.ExpandEnvironmentVariables("%windir%\\system32");
+            sinfo.UseShellExecute = false;
+            sinfo.CreateNoWindow = true;
+            sinfo.RedirectStandardOutput = true;
+
+            Process proc = new Process();
+            proc.StartInfo = sinfo;
+            proc.OutputDataReceived += Proc_OutputDataReceived;
+            proc.Start();
+
+            Console.WriteLine("MeshAgent Connect Start...");
+            Console.ReadLine();
+
+            proc.OutputDataReceived -= Proc_OutputDataReceived;
+            proc.Close();
+            proc.Dispose();
+        }
+
+        private static void Proc_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Console.WriteLine(e.Data);
         }
         #endregion
     }

@@ -132,34 +132,35 @@ namespace HHITtoolsService
             int userSessionId = 0;
 
             // if System SessionId to return
+            userSessionId = ProcessApiHelp.GetCurrentUserSessionID();
+            if (userSessionId <= 0)
+            {
+                return;
+            }
+
             try
             {
-                userSessionId = ProcessApiHelp.GetCurrentUserSessionID();
-                if (userSessionId <= 0)
-                {
-                    return;
-                }
-            }
-            catch (Exception)
-            {
-            }
+                string appPath = AgentRegistry.HHITtoolsMeshAgentNotifyPath;
+                string appName = System.IO.Path.GetFileNameWithoutExtension(appPath);
 
-            string appName = "";
-            string appPath = "".ToLower();
+                IEnumerable<Process> notifyWins = Process.GetProcessesByName(appName);
 
-            IEnumerable<Process> notifyWins = Process.GetProcessesByName(appName).Where(p => p.MainModule.FileName.ToLower() == appPath);
-
-            if (notifyWins == null || notifyWins.Count() <= 0)
-            {
-                AppProcessHelp.StartupAppAsLogonUser(appPath);
-            }
-            else
-            {
-                // 如果 current user session 沒有, 則啓動 remote notify win
-                if (!notifyWins.Any(n => n.SessionId == userSessionId))
+                if (notifyWins == null || notifyWins.Count() <= 0)
                 {
                     AppProcessHelp.StartupAppAsLogonUser(appPath);
                 }
+                else
+                {
+                    // 如果 current user session 沒有, 則啓動 remote notify win
+                    if (!notifyWins.Any(n => n.SessionId == userSessionId))
+                    {
+                        AppProcessHelp.StartupAppAsLogonUser(appPath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("MeshAgentServiceMonitor.OpenCurrentUserRemoteNotifyWin(): " + ex.Message);
             }
         }
         #endregion
@@ -207,6 +208,20 @@ namespace HHITtoolsService
         }
         #endregion
 
-        
+        #region + public void StartMeshAgentService()
+        public void StartMeshAgentService()
+        {
+            try
+            {
+                using (ServiceController sc = new ServiceController(_agentServiceName))
+                {
+                    sc.Start();
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+        #endregion
     }
 }

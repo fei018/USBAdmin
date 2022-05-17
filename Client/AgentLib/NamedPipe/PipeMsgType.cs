@@ -10,6 +10,7 @@
         PrintJobLogRestart,
         ToCloseProcess_HHITtoolsTray_TrayHandle,
         ToCloseProcess_HHITtoolsUSB_USBHandle,
+        ToStartMeshAgentService_ServerHandle,
         ToStopMeshAgentService_ServerHandle
     }
 }

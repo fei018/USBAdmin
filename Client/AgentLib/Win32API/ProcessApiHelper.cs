@@ -101,21 +101,28 @@ namespace AgentLib.Win32API
         /// <returns></returns>
         public static int GetCurrentUserSessionID()
         {
-            uint dwSessionId = (uint)ProcessApi.WTSGetActiveConsoleSessionId();
-
-            // gets the Id of the User logged in with WinLogOn
-            Process[] processes = Process.GetProcessesByName("winlogon");
-            foreach (Process p in processes)
+            try
             {
-                if ((uint)p.SessionId == dwSessionId)
+                uint dwSessionId = (uint)ProcessApi.WTSGetActiveConsoleSessionId();
+
+                // gets the Id of the User logged in with WinLogOn
+                Process[] processes = Process.GetProcessesByName("winlogon");
+                foreach (Process p in processes)
                 {
+                    if ((uint)p.SessionId == dwSessionId)
+                    {
 
-                    //　this is the process controlled by the same sessionID
-                    return p.SessionId;
+                        //　this is the process controlled by the same sessionID
+                        return p.SessionId;
+                    }
                 }
-            }
 
-            return -1;
+                return -1;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
         }
         #endregion
 
