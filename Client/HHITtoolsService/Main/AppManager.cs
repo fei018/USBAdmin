@@ -69,16 +69,6 @@ namespace HHITtoolsService
             catch (Exception)
             {
             }
-
-            //----- MeshCentralAgentServiceMonitor
-            try
-            {
-                AppService.MeshAgentServiceMonitor = new MeshAgentServiceMonitor();
-                AppService.MeshAgentServiceMonitor.Start();
-            }
-            catch (Exception)
-            {
-            }
         }
         #endregion
 
@@ -115,15 +105,6 @@ namespace HHITtoolsService
                 AppService.ServiceTimer?.Stop();
             }
             catch (Exception) { }
-
-            //----- MeshCentralAgentServiceMonitor
-            try
-            {
-                AppService.MeshAgentServiceMonitor?.Stop(); ;
-            }
-            catch (Exception)
-            {
-            }
 
             //------- NamedPipeServer ------ last stop
             try

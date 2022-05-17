@@ -19,7 +19,5 @@ namespace HHITtoolsService
         public static PrintJobLogService PrintJobLogService { get; set; }
 
         public static ServiceTimer ServiceTimer { get; set; }
-
-        public static MeshAgentServiceMonitor MeshAgentServiceMonitor { get; set; }
     }
 }

@@ -122,7 +122,6 @@
     <Compile Include="AppService\AppService.cs" />
     <Compile Include="AppService\HHITtoolsTrayService.cs" />
     <Compile Include="AppService\HHITtoolsUSBService.cs" />
-    <Compile Include="AppService\MeshAgentServiceMonitor.cs" />
     <Compile Include="AppService\ServiceTimer.cs" />
     <Compile Include="Main\AppManager.cs" />
     <Compile Include="AppService\NamedPipeServer_Service.cs" />
