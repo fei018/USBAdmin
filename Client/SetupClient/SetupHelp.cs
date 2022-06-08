@@ -7,6 +7,7 @@ using System.Management;
 using System.Security.AccessControl;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 
 namespace SetupClient
 {
@@ -47,8 +48,8 @@ namespace SetupClient
             _DllDir = Path.Combine(_setupDir, "dll");
         }
 
-        #region + public void Install()
-        public void Install()
+        #region + public void Setup()
+        public void Setup()
         {
             try
             {
@@ -201,7 +202,8 @@ namespace SetupClient
 
             }
 
-            Console.WriteLine("Install Service done.");
+            Console.WriteLine("Install service done.");
+            File.AppendAllText(LogPath, "Install service done.");
         }
         #endregion
 
@@ -228,6 +230,7 @@ namespace SetupClient
             WinServiceHelper.Uninstall(_serviceName);
 
             Console.WriteLine("Unistall serivce done.");
+            File.AppendAllText(LogPath, "Unistall service done.");
 
             //string servicePath = null;
 
@@ -239,7 +242,7 @@ namespace SetupClient
             //        servicePath = obj["PathName"] as string;
             //    }
             //}
-           
+
             //var start = new ProcessStartInfo();
             //start.FileName = "cmd.exe";
             //start.UseShellExecute = false;
@@ -296,6 +299,7 @@ namespace SetupClient
             }
 
             Console.WriteLine("Write batch file done.");
+            File.AppendAllText(LogPath, "Write batch file done.");
             return _installServiceBatch;
         }
         #endregion
@@ -317,6 +321,42 @@ namespace SetupClient
             }
 
             Console.WriteLine("Copy dll files done.");
+            File.AppendAllText(LogPath, "Copy dll files done.");
+        }
+        #endregion
+
+
+        // unsetup
+
+        #region + public void UnSetup()
+        public void UnSetup()
+        {
+            try
+            {
+                UninstallService();
+
+                Thread.Sleep(2000);
+
+                DeleteAllFile();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region + private void DeleteAllFile()
+        private void DeleteAllFile()
+        {
+            try
+            {
+                Directory.Delete(_newAppDir, true);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
     }

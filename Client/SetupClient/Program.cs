@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace SetupClient
 {
@@ -12,12 +8,24 @@ namespace SetupClient
     {
         static void Main(string[] args)
         {
-#if DEBUG
-            InitKey();
-#else
-            Setup();
-#endif
-           
+            try
+            {
+                if (args.Count() > 0)
+                {
+                    if (args[0].ToLower() == "uninstall")
+                    {
+                        UnSetup();
+                    }
+                }
+                else
+                {
+                    Setup();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         static void Setup()
@@ -27,7 +35,7 @@ namespace SetupClient
                 Console.WriteLine("Setup Start ...");
                 Console.WriteLine();
 
-                new SetupHelp().Install();
+                new SetupHelp().Setup();
 
                 Console.WriteLine("Setup Done !!!");
                 File.AppendAllText(SetupHelp.LogPath, "Setup done.");
@@ -38,23 +46,25 @@ namespace SetupClient
 
                 File.AppendAllText(SetupHelp.LogPath, ex.Message);
             }
-
-            Environment.Exit(0);
         }
 
-        static void InitKey()
+        static void UnSetup()
         {
             try
             {
-                
+                Console.WriteLine("UnSetup Start ...");
+
+                new SetupHelp().UnSetup();
+
+                Console.WriteLine("UnSetup Done !!!");
+                File.AppendAllText(SetupHelp.LogPath, "UnSetup done.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-            }
 
-            Console.WriteLine("Done.");
-            Console.ReadLine();
+                File.AppendAllText(SetupHelp.LogPath, ex.Message);
+            }
         }
     }
 }
