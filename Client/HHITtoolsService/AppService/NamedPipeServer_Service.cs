@@ -128,7 +128,6 @@ namespace HHITtoolsService
                 { PipeMsgType.UpdateAgent_ServerHandle, ReceiveMsgHandler_UpdateAgent },
                 { PipeMsgType.UpdateSetting_ServerHandle, ReceiveMsgHandler_UpdateSetting},
                 { PipeMsgType.UsbDiskNoRegister_NotifyTray_ServerForward, ReceiveMsgHandler_UsbDiskNoRegister },
-                { PipeMsgType.ToStopMeshAgentService_ServerHandle, ReceiveMsgHandler_StopMeshAgentService },
                 { PipeMsgType.PrintJobLogRestart, ReceiveMsgHandler_PrintJobLogRestart }
             };
         }
@@ -230,18 +229,6 @@ namespace HHITtoolsService
         }
         #endregion
 
-        #region + private void ReceiveMsgHandler_StopMeshAgentService(PipeMsg pipeMsg)
-        private void ReceiveMsgHandler_StopMeshAgentService(PipeMsg pipeMsg)
-        {
-            try
-            {
-                AppService.MeshAgentServiceMonitor.StopMeshAgentService();
-            }
-            catch (Exception)
-            {
-            }
-        }
-        #endregion
 
         // Sned message func
 

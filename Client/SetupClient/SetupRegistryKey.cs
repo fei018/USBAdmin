@@ -21,7 +21,6 @@ namespace SetupClient
                 {"PrintJobLogEnabled","true"},
                 {"AgentTimerMinute","10"},
                 {"AgentHttpKey","usbb50ae7e95f144874a2739e119e8791e1"},
-                {"IsRemoteControl","false"},
                 {"UsbWhitelistUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientGet/UsbWhitelist"},
                 {"AgentConfigUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientGet/AgentConfig"},
                 {"AgentRuleUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientGet/AgentRule"},
@@ -33,8 +32,7 @@ namespace SetupClient
                 {"PostPrintJobLogUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientPost/PostPrintJobLog"}
             };
 
-
-            keys.Add("AgentVersion", "1.0.13");
+            keys.Add("AgentVersion", "1.0.14");
 
             return keys;
         }

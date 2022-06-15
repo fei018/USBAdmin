@@ -9,7 +9,6 @@
         UpdateSetting_ServerHandle,
         PrintJobLogRestart,
         ToCloseProcess_HHITtoolsTray_TrayHandle,
-        ToCloseProcess_HHITtoolsUSB_USBHandle,
-        ToStopMeshAgentService_ServerHandle
+        ToCloseProcess_HHITtoolsUSB_USBHandle
     }
 }
