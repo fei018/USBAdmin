@@ -11,6 +11,7 @@ using HHITtoolsTray.USBWindow;
 using AgentLib;
 using System.Diagnostics;
 using AgentLib.AppService;
+using HHITtoolsTray.USBQRCode;
 
 namespace HHITtoolsTray
 {
@@ -59,7 +60,7 @@ namespace HHITtoolsTray
                 {
                     AgentLogger.Error("NamedPipeClient_Tray PipeName is empty");
                     return;
-                }               
+                }
 
                 _client = new NamedPipeClient<string>(_pipeName);
                 _client.AutoReconnect = true;
@@ -128,6 +129,25 @@ namespace HHITtoolsTray
         #region ReceiveMsgHandler_UsbDiskNoRegister(PipeMsg pipeMsg)
         private void ReceiveMsgHandler_UsbDiskNoRegister(PipeMsg pipeMsg)
         {
+            //App.Current.Dispatcher.Invoke(new Action(() =>
+            //{
+            //    try
+            //    {
+            //        if (pipeMsg.UsbDisk == null)
+            //        {
+            //            throw new Exception("NamedPipeClient_Tray.ReceiveMsgHandler_UsbDiskNoRegister(): pipeMsg.UsbDisk == null");
+            //        }
+
+            //        var usbWin = new UsbRequestWin();
+            //        usbWin.ShowPageUsbRequestNotify(pipeMsg.UsbDisk);
+            //        usbWin.Show();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message, "USB Control");
+            //    }
+            //}));
+
             App.Current.Dispatcher.Invoke(new Action(() =>
             {
                 try
@@ -137,9 +157,9 @@ namespace HHITtoolsTray
                         throw new Exception("NamedPipeClient_Tray.ReceiveMsgHandler_UsbDiskNoRegister(): pipeMsg.UsbDisk == null");
                     }
 
-                    var usbWin = new UsbRequestWin();
-                    usbWin.ShowPageUsbRequestNotify(pipeMsg.UsbDisk);
-                    usbWin.Show();
+                    var usbQRWin = new USBQRCodeWin();
+                    usbQRWin.SetUSBInfo(pipeMsg.UsbDisk);
+                    usbQRWin.Show();
                 }
                 catch (Exception ex)
                 {

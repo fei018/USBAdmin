@@ -10,70 +10,63 @@ namespace HHITtoolsUSB
 {
     public class UsbHelp
     {
-        #region + public static void PostUsbHistoryToHttpServer()
-        public static void PostUsbLogToHttpServer(string diskPath)
+        #region + public void PostUsbHistoryToHttpServer()
+        public void PostUsbLogToHttpServer(string diskPath)
         {
-            Task.Run(() =>
+            try
             {
-                try
-                {
-                    // post usb history to server
-                    new AgentHttpHelp().PostUsbLog_byDisk(diskPath);
-                }
-                catch (Exception ex)
-                {
-                    AgentLogger.Error(ex.Message);
-                }
-            });
+                // post usb history to server
+                new AgentHttpHelp().PostUsbLog_byDisk(diskPath);
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error(ex.Message);
+            }
         }
         #endregion
 
-        #region + public static void CheckUsbRegister_PluginUSB()
-        public static void CheckUsbRegister_PluginUSB(string diskPath)
+        #region + public void CheckUsbWhitelist_Arrival()
+        public void CheckUsbWhitelist_Arrival(string diskPath)
         {
-            Task.Run(() =>
+            try
             {
-                try
-                {
-                    // check usbwhiltelist to set readonly
-                    new UsbFilter().Filter_UsbDisk_By_DiskPath(diskPath);
+                // check usbwhiltelist to set readonly
+                new UsbFilter().Filter_UsbDisk_By_DiskPath(diskPath);
 
-                    var usb = new UsbFilter().Find_USBInfo_FromUsbDisk_By_DiskPath(diskPath);
-                    if (!UsbWhitelist.IsFind(usb))
-                    {
-                        // push usbmessage to tray pipe
-                        AppService.NamedPipeClient.SendMsgToTray_USBDiskNoRegister(usb);
-                    }
-                }
-                catch (Exception ex)
+                var usb = new UsbFilter().Find_USBInfo_FromUsbDisk_By_DiskPath(diskPath);
+                if (!UsbWhitelist.IsFind(usb))
                 {
-                    AgentLogger.Error("HHITtoolsUSB.CheckUsbRegister_PluginUSB(): " + ex.Message);
+                    // push usbmessage to tray pipe
+                    AppService.NamedPipeClient.SendMsgToTray_USBDiskNoRegister(usb);
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error("HHITtoolsUSB.CheckUsbRegister_PluginUSB(): " + ex.Message);
+            }
         }
         #endregion
 
-        #region + public static void DiskSetReadWrite(string diskPath)
-        public static void DiskSetReadWrite(string diskPath)
+        #region + public void DiskSetReadWrite(string diskPath)
+        public void DiskSetReadWrite(string diskPath)
         {
-            Task.Run(() =>
+            try
             {
-                try
-                {
-                    new UsbFilter().Set_Disk_IsReadOnly_by_DiskPath_WMI(diskPath, false);
-                }
-                catch (Exception ex)
-                {
-                    AgentLogger.Error("HHITtoolsUSB.DiskSetReadWrite(): " + ex.Message);
-                }
-            });
+                new UsbFilter().Set_Disk_IsReadOnly_by_DiskPath_WMI(diskPath, false);
+            }
+            catch (Exception ex)
+            {
+                AgentLogger.Error("HHITtoolsUSB.DiskSetReadWrite(): " + ex.Message);
+            }
         }
         #endregion
+
+        // static
 
         #region + public static void UpdateUSBWhiltelist_And_FilterAllUSB()
         public static void UpdateUSBWhiltelist_And_FilterAllUSB()
         {
-            Task.Run(()=>
+            Task.Factory.StartNew(()=>
             {
                 try
                 {
@@ -86,6 +79,40 @@ namespace HHITtoolsUSB
                 try
                 {
                     new UsbFilter().Filter_ScanAll_USBDisk();
+                }
+                catch (Exception)
+                {
+                }
+            });
+        }
+        #endregion
+
+        #region + public static void USBDisk_Arrival(string diskPath)
+        public static void USBDisk_Arrival(string diskPath)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    if (AgentRegistry.UsbFilterEnabled)
+                    {
+                        new UsbHelp().CheckUsbWhitelist_Arrival(diskPath);
+                    }
+                    else
+                    {
+                        new UsbHelp().DiskSetReadWrite(diskPath);
+                    }
+                }
+                catch (Exception)
+                {
+                }
+
+                try
+                {
+                    if (AgentRegistry.UsbLogEnabled)
+                    {
+                        new UsbHelp().PostUsbLogToHttpServer(diskPath);
+                    }
                 }
                 catch (Exception)
                 {

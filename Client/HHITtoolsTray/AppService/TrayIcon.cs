@@ -44,8 +44,7 @@ namespace HHITtoolsTray
 
                 _trayIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
 
-                //_trayIcon.ContextMenuStrip.Items.Add("Remote Support", null, RunRemoteSupportVNC_Click);
-                //_trayIcon.ContextMenuStrip.Items.Add("Set Printer", null, SetPrinter_Click);
+
                 _trayIcon.ContextMenuStrip.Items.Add("Update Setting", null, UpdateSettingItem_Click);         
                 _trayIcon.ContextMenuStrip.Items.Add("About", null, AboutItem_Click);
                 //_trayIcon.ContextMenuStrip.Items.Add("Close", null, CloseTrayItem_Click);
@@ -72,53 +71,6 @@ namespace HHITtoolsTray
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-        }
-        #endregion
-
-        #region UpdateAgentItem_Click
-        private void UpdateAgentItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                AppService.NamedPipeClient.SendMsg_CheckAndUpdateAgent();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error");
-            }
-        }
-        #endregion
-
-        #region RunRemoteSupportVNC_Click
-        private void RunRemoteSupportVNC_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var vnc = Path.Combine(AgentRegistry.RemoteSupportPath);
-                Process.Start(vnc);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        #endregion
-
-        #region SetPrinter_Click
-        private void SetPrinter_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (WinSingleOpen.SetPrinterWin)
-                {
-                    return;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
             }
         }
         #endregion

@@ -32,7 +32,7 @@ namespace SetupClient
                 {"PostPrintJobLogUrl","http://hhdmstest02.hiphing.com.hk/USBAdmin/ClientPost/PostPrintJobLog"}
             };
 
-            keys.Add("AgentVersion", "1.0.14");
+            keys.Add("AgentVersion", "1.0.15");
 
             return keys;
         }

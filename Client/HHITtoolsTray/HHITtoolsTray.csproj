@@ -101,7 +101,11 @@
     <Compile Include="AppService\AppService.cs" />
     <Compile Include="AppService\NamedPipeClient_Tray.cs" />
     <Compile Include="Main\AppManager.cs" />
-    <Compile Include="TrayIcon\WinSingleOpen.cs" />
+    <Compile Include="AppService\WinSingleOpen.cs" />
+    <Compile Include="USBQRCode\USBQRCodeHelp.cs" />
+    <Compile Include="USBQRCode\USBQRCodeWin.xaml.cs">
+      <DependentUpon>USBQRCodeWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="USBWindow\AboutWin.xaml.cs">
       <DependentUpon>AboutWin.xaml</DependentUpon>
     </Compile>
@@ -131,6 +135,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="USBQRCode\USBQRCodeWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="USBWindow\AboutWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -199,6 +207,10 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>
+    <PackageReference Include="ZXing.Net">
+      <Version>0.16.8</Version>
+    </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

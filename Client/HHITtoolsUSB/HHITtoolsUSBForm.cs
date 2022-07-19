@@ -46,31 +46,7 @@ namespace HHITtoolsUSB
             {
                 if (args.DeviceInterface == UsbMonitor.UsbDeviceInterface.Disk)
                 {
-                    try
-                    {
-                        if (AgentRegistry.UsbFilterEnabled)
-                        {
-                            UsbHelp.CheckUsbRegister_PluginUSB(args.Name);
-                        }
-                        else
-                        {
-                            UsbHelp.DiskSetReadWrite(args.Name);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                    }
-
-                    try
-                    {
-                        if (AgentRegistry.UsbLogEnabled)
-                        {
-                            UsbHelp.PostUsbLogToHttpServer(args.Name);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    UsbHelp.USBDisk_Arrival(args.Name);
                 }
             }
         }
